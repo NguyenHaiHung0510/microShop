@@ -5,6 +5,9 @@ import com.zaxxer.hikari.HikariDataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+// Code chưa có tự đóng kết nối khi tắt chương trình
+// Giờ thì có rồi, nguy hiểm phết
+
 public class DBContext {
     
     /*
@@ -36,16 +39,22 @@ public class DBContext {
 
             dataSource = new HikariDataSource(config);
 
-            System.out.println("Connection Pool (HikariCP) đã được khởi tạo thành công!");
+            System.out.println("Connection Pool (HikariCP) duoc khoi tao thanh cong");
         } catch (Exception e) {
             e.printStackTrace();
-            throw new RuntimeException("Có lỗi khi khởi tạo Connection Pool: " + e.getMessage());
+            throw new RuntimeException("Loi khi tao Connection Pool: " + e.getMessage());
         }
     }
 
     public static Connection getConnection() throws SQLException {
         return dataSource.getConnection();
     }
+    
+    public static void shutdown() {
+        if (dataSource != null && !dataSource.isClosed()) {
+            dataSource.close();
+        }
+    }   
 
     private DBContext() {}
 }

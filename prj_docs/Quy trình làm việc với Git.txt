@@ -7,6 +7,7 @@
 # Phải thực hiện theo các bước bên dưới để tạo nhánh mới và t sẽ merge
 
  + Trước khi ae code, hãy đảm bảo lấy code mới nhất từ develop
+     - git clone https://github.com/NguyenHaiHung0510/microShop.git đối với lần đầu
      - git checkout develop: chuyển sang nhánh develop ở local ( dùng "git checkout -b develop origin/develop" nếu không có )
      - git pull origin develop: kéo code mới nhất về
 

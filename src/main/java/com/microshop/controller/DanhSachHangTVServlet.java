@@ -26,6 +26,8 @@ public class DanhSachHangTVServlet extends HttpServlet {
         HangThanhVienDAO dao = new HangThanhVienDAO();
         List<HangThanhVien> danhSach = dao.getAll();
 
+        for (HangThanhVien x : danhSach) System.out.println(x);
+        
         // Gửi danh sách sang JSP
         request.setAttribute("dsHang", danhSach);
         RequestDispatcher rd = request.getRequestDispatcher("hangthanhvien.jsp");

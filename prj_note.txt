@@ -1,0 +1,2 @@
+<> Những vấn đề để ngỏ <>
+    - Chưa có cơ chế timeout khi không lấy được dữ liệu hoặc lấy quá lâu

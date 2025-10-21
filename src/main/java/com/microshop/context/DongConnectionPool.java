@@ -17,6 +17,6 @@ public class DongConnectionPool implements ServletContextListener {
     public void contextDestroyed(ServletContextEvent sce) {
         System.out.println("Web da ngung hoat dong, thuc hien thu hoi Connection Pool");
         DBContext.shutdown();
-        System.out.println("Connection Pool da thu hoi thanh cong");
+        System.out.println("Connection Pool da duoc thu hoi thanh cong");
     }
 }

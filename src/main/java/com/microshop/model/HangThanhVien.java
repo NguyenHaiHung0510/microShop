@@ -3,6 +3,7 @@ package com.microshop.model;
 import java.math.BigDecimal;
 
 // test DAO thôi, class này gpt gen
+// Viết lại cái này nhé
 
 /**
  * Lớp mô tả bảng HANGTHANHVIEN trong cơ sở dữ liệu.

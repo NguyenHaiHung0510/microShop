@@ -25,8 +25,8 @@ public class HangThanhVienDAO {
 
         // try-with-resources: tự động đóng Connection, Statement, ResultSet
         try (Connection conn = DBContext.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
                 HangThanhVien h = new HangThanhVien();

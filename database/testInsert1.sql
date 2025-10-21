@@ -5,10 +5,16 @@ INSERT INTO `DANHMUC` (`TenDanhMuc`) VALUES
 ('Tài khoản Riot Games');
 
 INSERT INTO `HANGTHANHVIEN` (`TenHang`, `MucChiTieuToiThieu`, `ChietKhau`) VALUES
-('Đồng', 0, 0.00),
-('Bạc', 5000000, 0.03),
-('Vàng', 20000000, 0.05);
+('Kim cương', 100000, 8.00);
 
+INSERT INTO `HANGTHANHVIEN` (`TenHang`, `MucChiTieuToiThieu`, `ChietKhau`) VALUES
+('Bạc', 1000, 1.00);
+
+INSERT INTO `HANGTHANHVIEN` (`TenHang`, `MucChiTieuToiThieu`, `ChietKhau`) VALUES
+('Vàng', 1000, 3.00);
+
+INSERT INTO `HANGTHANHVIEN` (`TenHang`, `MucChiTieuToiThieu`, `ChietKhau`) VALUES
+('Bạch Kim', 10000, 5.00);
 
 INSERT INTO `NGUOIDUNG` (`TenDangNhap`, `MatKhau`, `Email`, `VaiTro`, `MaHangThanhVien`) VALUES
 ('hungnv', 'hashed_password_123', 'hung.nv@email.com', 'CUSTOMER', 1);

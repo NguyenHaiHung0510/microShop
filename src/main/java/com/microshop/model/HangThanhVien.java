@@ -2,85 +2,79 @@ package com.microshop.model;
 
 import java.math.BigDecimal;
 
-// test DAO thôi, class này gpt gen
-// Viết lại cái này nhé
-
-/**
- * Lớp mô tả bảng HANGTHANHVIEN trong cơ sở dữ liệu.
- *
- * Cấu trúc bảng: MaHang (INT, PK) TenHang (VARCHAR) MucChiTieuToiThieu
- * (DECIMAL) DuongDanIcon (VARCHAR) ChietKhau (DECIMAL)
- */
 public class HangThanhVien {
 
-    private int maHang;
-    private String tenHang;
-    private BigDecimal mucChiTieuToiThieu;
-    private String duongDanIcon;
-    private BigDecimal chietKhau;
+    private Integer MaHang;
+    private String TenHang;
+    private BigDecimal MucChiTieuToiThieu;
+    private String DuongDanIcon;
+    private BigDecimal ChietKhau;
 
-    // ===== Constructor =====
+    // Constructor không tham số
     public HangThanhVien() {
     }
 
-    public HangThanhVien(int maHang, String tenHang, BigDecimal mucChiTieuToiThieu,
-            String duongDanIcon, BigDecimal chietKhau) {
-        this.maHang = maHang;
-        this.tenHang = tenHang;
-        this.mucChiTieuToiThieu = mucChiTieuToiThieu;
-        this.duongDanIcon = duongDanIcon;
-        this.chietKhau = chietKhau;
+    // Constructor đầy đủ tham số
+    public HangThanhVien(Integer MaHang, String TenHang, BigDecimal MucChiTieuToiThieu,
+                         String DuongDanIcon, BigDecimal ChietKhau) {
+        this.MaHang = MaHang;
+        this.TenHang = TenHang;
+        this.MucChiTieuToiThieu = MucChiTieuToiThieu;
+        this.DuongDanIcon = DuongDanIcon;
+        this.ChietKhau = ChietKhau;
     }
 
-    // ===== Getter & Setter =====
-    public int getMaHang() {
-        return maHang;
-    }
-
-    public void setMaHang(int maHang) {
-        this.maHang = maHang;
+    // Getter
+    public Integer getMaHang() {
+        return MaHang;
     }
 
     public String getTenHang() {
-        return tenHang;
-    }
-
-    public void setTenHang(String tenHang) {
-        this.tenHang = tenHang;
+        return TenHang;
     }
 
     public BigDecimal getMucChiTieuToiThieu() {
-        return mucChiTieuToiThieu;
-    }
-
-    public void setMucChiTieuToiThieu(BigDecimal mucChiTieuToiThieu) {
-        this.mucChiTieuToiThieu = mucChiTieuToiThieu;
+        return MucChiTieuToiThieu;
     }
 
     public String getDuongDanIcon() {
-        return duongDanIcon;
-    }
-
-    public void setDuongDanIcon(String duongDanIcon) {
-        this.duongDanIcon = duongDanIcon;
+        return DuongDanIcon;
     }
 
     public BigDecimal getChietKhau() {
-        return chietKhau;
+        return ChietKhau;
     }
 
-    public void setChietKhau(BigDecimal chietKhau) {
-        this.chietKhau = chietKhau;
+    // Setter
+    public void setMaHang(Integer MaHang) {
+        this.MaHang = MaHang;
     }
 
+    public void setTenHang(String TenHang) {
+        this.TenHang = TenHang;
+    }
+
+    public void setMucChiTieuToiThieu(BigDecimal MucChiTieuToiThieu) {
+        this.MucChiTieuToiThieu = MucChiTieuToiThieu;
+    }
+
+    public void setDuongDanIcon(String DuongDanIcon) {
+        this.DuongDanIcon = DuongDanIcon;
+    }
+
+    public void setChietKhau(BigDecimal ChietKhau) {
+        this.ChietKhau = ChietKhau;
+    }
+
+    // toString
     @Override
     public String toString() {
-        return "HangThanhVien{"
-                + "maHang=" + maHang
-                + ", tenHang='" + tenHang + '\''
-                + ", mucChiTieuToiThieu=" + mucChiTieuToiThieu
-                + ", duongDanIcon='" + duongDanIcon + '\''
-                + ", chietKhau=" + chietKhau
-                + '}';
+        return "HangThanhVien{" +
+                "MaHang=" + MaHang +
+                ", TenHang='" + TenHang + '\'' +
+                ", MucChiTieuToiThieu=" + MucChiTieuToiThieu +
+                ", DuongDanIcon='" + DuongDanIcon + '\'' +
+                ", ChietKhau=" + ChietKhau +
+                '}';
     }
 }

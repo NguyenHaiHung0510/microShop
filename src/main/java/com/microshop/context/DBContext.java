@@ -7,10 +7,9 @@ import java.sql.SQLException;
 
 public class DBContext {
     
-    /*
-    jdbc:mysql - định dạng kết nối JDBC cho MySQL
-    */
+    // jdbc:mysql - định dạng kết nối JDBC cho MySQL
     private static final String DB_URL = "jdbc:mysql://localhost:3306/microshop_db";
+    // Cái này là tài khoản root của MySQL server trên máy của <Hưng>
     private static final String DB_USER = "root";
     private static final String DB_PASSWORD = "hung";
 

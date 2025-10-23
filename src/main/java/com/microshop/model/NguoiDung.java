@@ -1,7 +1,7 @@
 package com.microshop.model;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class NguoiDung {
 
@@ -13,7 +13,7 @@ public class NguoiDung {
     private String VaiTro;               // VARCHAR
     private BigDecimal TongTienDaChi;    // DECIMAL
     private String MaHangThanhVien;      // FK
-    private LocalDate ThoiGianTao;       // DATETIME
+    private LocalDateTime ThoiGianTao;   // DATETIME với giờ và phút
 
     // Constructor không tham số
     public NguoiDung() {
@@ -22,7 +22,7 @@ public class NguoiDung {
     // Constructor đầy đủ tham số
     public NguoiDung(Integer MaNguoiDung, String TenDangNhap, String MatKhau, String Email,
                       String SoDienThoai, String VaiTro, BigDecimal TongTienDaChi,
-                      String MaHangThanhVien, LocalDate ThoiGianTao) {
+                      String MaHangThanhVien, LocalDateTime ThoiGianTao) {
         this.MaNguoiDung = MaNguoiDung;
         this.TenDangNhap = TenDangNhap;
         this.MatKhau = MatKhau;
@@ -67,7 +67,7 @@ public class NguoiDung {
         return MaHangThanhVien;
     }
 
-    public LocalDate getThoiGianTao() {
+    public LocalDateTime getThoiGianTao() {
         return ThoiGianTao;
     }
 
@@ -104,7 +104,7 @@ public class NguoiDung {
         this.MaHangThanhVien = MaHangThanhVien;
     }
 
-    public void setThoiGianTao(LocalDate ThoiGianTao) {
+    public void setThoiGianTao(LocalDateTime ThoiGianTao) {
         this.ThoiGianTao = ThoiGianTao;
     }
 

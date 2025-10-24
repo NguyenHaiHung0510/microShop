@@ -1,2 +1,4 @@
 <> Những vấn đề để ngỏ <>
     - Chưa có cơ chế timeout khi không lấy được dữ liệu hoặc lấy quá lâu
+    - Chưa có cơ chế băm 1 chiều cho matKhau của NguoiDung
+    - Chưa có cơ chế mã hóa cho matKhau của các tài khoản

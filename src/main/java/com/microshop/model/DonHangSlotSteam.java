@@ -6,21 +6,20 @@ import java.time.format.DateTimeFormatter;
 
 public class DonHangSlotSteam {
 
-    private int maDonHangSlot;
-    private int maNguoiDung;
-    private int maGameSteam;
-    private int maTaiKhoanSteam;
+    private Integer maDonHangSlot;
+    private Integer maNguoiDung;
+    private Integer maGameSteam;
+    private Integer maTaiKhoanSteam;
     private BigDecimal giaMua;
     private LocalDateTime thoiGianMua;
     private String trangThai;
     private LocalDateTime thoiGianTao;
 
     public DonHangSlotSteam() {
-
     }
 
-    public DonHangSlotSteam(int maDonHangSlot, int maNguoiDung, int maGameSteam,
-            int maTaiKhoanSteam, BigDecimal giaMua, LocalDateTime thoiGianMua,
+    public DonHangSlotSteam(Integer maDonHangSlot, Integer maNguoiDung, Integer maGameSteam,
+            Integer maTaiKhoanSteam, BigDecimal giaMua, LocalDateTime thoiGianMua,
             String trangThai, LocalDateTime thoiGianTao) {
         this.maDonHangSlot = maDonHangSlot;
         this.maNguoiDung = maNguoiDung;
@@ -32,19 +31,19 @@ public class DonHangSlotSteam {
         this.thoiGianTao = thoiGianTao;
     }
 
-    public int getMaDonHangSlot() {
+    public Integer getMaDonHangSlot() {
         return maDonHangSlot;
     }
 
-    public int getMaNguoiDung() {
+    public Integer getMaNguoiDung() {
         return maNguoiDung;
     }
 
-    public int getMaGameSteam() {
+    public Integer getMaGameSteam() {
         return maGameSteam;
     }
 
-    public int getMaTaiKhoanSteam() {
+    public Integer getMaTaiKhoanSteam() {
         return maTaiKhoanSteam;
     }
 
@@ -64,19 +63,19 @@ public class DonHangSlotSteam {
         return thoiGianTao;
     }
 
-    public void setMaDonHangSlot(int maDonHangSlot) {
+    public void setMaDonHangSlot(Integer maDonHangSlot) {
         this.maDonHangSlot = maDonHangSlot;
     }
 
-    public void setMaNguoiDung(int maNguoiDung) {
+    public void setMaNguoiDung(Integer maNguoiDung) {
         this.maNguoiDung = maNguoiDung;
     }
 
-    public void setMaGameSteam(int maGameSteam) {
+    public void setMaGameSteam(Integer maGameSteam) {
         this.maGameSteam = maGameSteam;
     }
 
-    public void setMaTaiKhoanSteam(int maTaiKhoanSteam) {
+    public void setMaTaiKhoanSteam(Integer maTaiKhoanSteam) {
         this.maTaiKhoanSteam = maTaiKhoanSteam;
     }
 
@@ -111,5 +110,4 @@ public class DonHangSlotSteam {
                 + ", thoiGianTao=" + (thoiGianTao != null ? thoiGianTao.format(FORMATTER) : "null")
                 + '}';
     }
-
 }

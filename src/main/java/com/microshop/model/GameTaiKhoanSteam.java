@@ -2,31 +2,30 @@ package com.microshop.model;
 
 public class GameTaiKhoanSteam {
 
-    private int maGameSteam;
-    private int maTaiKhoanSteam;
+    private Integer maGameSteam;
+    private Integer maTaiKhoanSteam;
 
     public GameTaiKhoanSteam() {
-
     }
 
-    public GameTaiKhoanSteam(int maGameSteam, int maTaiKhoanSteam) {
+    public GameTaiKhoanSteam(Integer maGameSteam, Integer maTaiKhoanSteam) {
         this.maGameSteam = maGameSteam;
         this.maTaiKhoanSteam = maTaiKhoanSteam;
     }
 
-    public int getMaGameSteam() {
+    public Integer getMaGameSteam() {
         return maGameSteam;
     }
 
-    public int getMaTaiKhoanSteam() {
+    public Integer getMaTaiKhoanSteam() {
         return maTaiKhoanSteam;
     }
 
-    public void setMaGameSteam(int maGameSteam) {
+    public void setMaGameSteam(Integer maGameSteam) {
         this.maGameSteam = maGameSteam;
     }
 
-    public void setMaTaiKhoanSteam(int maTaiKhoanSteam) {
+    public void setMaTaiKhoanSteam(Integer maTaiKhoanSteam) {
         this.maTaiKhoanSteam = maTaiKhoanSteam;
     }
 

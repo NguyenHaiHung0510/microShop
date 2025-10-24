@@ -2,17 +2,17 @@ package com.microshop.model;
 
 public class TaiKhoanSteam {
 
-    private int maTaiKhoanSteam;
+    private Integer maTaiKhoanSteam;
     private String tenDangNhapSteam;
     private String matKhauSteam;
-    private int tongSoSlot;
-    private int soSlotDaBan;
+    private Integer tongSoSlot;
+    private Integer soSlotDaBan;
 
     public TaiKhoanSteam() {
     }
 
-    public TaiKhoanSteam(int maTaiKhoanSteam, String tenDangNhapSteam,
-            String matKhauSteam, int tongSoSlot, int soSlotDaBan) {
+    public TaiKhoanSteam(Integer maTaiKhoanSteam, String tenDangNhapSteam,
+            String matKhauSteam, Integer tongSoSlot, Integer soSlotDaBan) {
         this.maTaiKhoanSteam = maTaiKhoanSteam;
         this.tenDangNhapSteam = tenDangNhapSteam;
         this.matKhauSteam = matKhauSteam;
@@ -20,23 +20,27 @@ public class TaiKhoanSteam {
         this.soSlotDaBan = soSlotDaBan;
     }
 
-    public int getMaTaiKhoanSteam() {
+    public Integer getMaTaiKhoanSteam() {
         return maTaiKhoanSteam;
+    }
+
+    public String getTenDangNhapSteam() {
+        return tenDangNhapSteam;
     }
 
     public String getMatKhauSteam() {
         return matKhauSteam;
     }
 
-    public int getTongSoSlot() {
+    public Integer getTongSoSlot() {
         return tongSoSlot;
     }
 
-    public int getSoSlotDaBan() {
+    public Integer getSoSlotDaBan() {
         return soSlotDaBan;
     }
 
-    public void setMaTaiKhoanSteam(int maTaiKhoanSteam) {
+    public void setMaTaiKhoanSteam(Integer maTaiKhoanSteam) {
         this.maTaiKhoanSteam = maTaiKhoanSteam;
     }
 
@@ -48,11 +52,11 @@ public class TaiKhoanSteam {
         this.matKhauSteam = matKhauSteam;
     }
 
-    public void setTongSoSlot(int tongSoSlot) {
+    public void setTongSoSlot(Integer tongSoSlot) {
         this.tongSoSlot = tongSoSlot;
     }
 
-    public void setSoSlotDaBan(int soSlotDaBan) {
+    public void setSoSlotDaBan(Integer soSlotDaBan) {
         this.soSlotDaBan = soSlotDaBan;
     }
 
@@ -62,8 +66,8 @@ public class TaiKhoanSteam {
                 + "maTaiKhoanSteam=" + maTaiKhoanSteam
                 + ", tenDangNhapSteam='" + tenDangNhapSteam + '\''
                 + ", matKhauSteam='" + "[PROTECTED]" + '\''
-                + // Không bao giờ in mật khẩu ra log
-                ", tongSoSlot=" + tongSoSlot
+                // Không bao giờ in mật khẩu ra log
+                + ", tongSoSlot=" + tongSoSlot
                 + ", soSlotDaBan=" + soSlotDaBan
                 + '}';
     }

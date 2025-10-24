@@ -5,8 +5,8 @@ import java.time.format.DateTimeFormatter;
 
 public class BaiVietGioiThieu {
 
-    private int maBaiViet;
-    private int maGameSteam;
+    private Integer maBaiViet;
+    private Integer maGameSteam;
     private String tieuDeBaiViet;
     private String noiDung;
     private LocalDateTime thoiGianTao;
@@ -15,7 +15,7 @@ public class BaiVietGioiThieu {
     public BaiVietGioiThieu() {
     }
 
-    public BaiVietGioiThieu(int maBaiViet, int maGameSteam, String tieuDeBaiViet,
+    public BaiVietGioiThieu(Integer maBaiViet, Integer maGameSteam, String tieuDeBaiViet,
             String noiDung, LocalDateTime thoiGianTao, LocalDateTime thoiGianCapNhatCuoi) {
         this.maBaiViet = maBaiViet;
         this.maGameSteam = maGameSteam;
@@ -25,11 +25,11 @@ public class BaiVietGioiThieu {
         this.thoiGianCapNhatCuoi = thoiGianCapNhatCuoi;
     }
 
-    public int getMaBaiViet() {
+    public Integer getMaBaiViet() {
         return maBaiViet;
     }
 
-    public int getMaGameSteam() {
+    public Integer getMaGameSteam() {
         return maGameSteam;
     }
 
@@ -49,11 +49,11 @@ public class BaiVietGioiThieu {
         return thoiGianCapNhatCuoi;
     }
 
-    public void setMaBaiViet(int maBaiViet) {
+    public void setMaBaiViet(Integer maBaiViet) {
         this.maBaiViet = maBaiViet;
     }
 
-    public void setMaGameSteam(int maGameSteam) {
+    public void setMaGameSteam(Integer maGameSteam) {
         this.maGameSteam = maGameSteam;
     }
 

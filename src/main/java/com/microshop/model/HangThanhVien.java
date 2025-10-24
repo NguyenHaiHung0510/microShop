@@ -2,28 +2,21 @@ package com.microshop.model;
 
 import java.math.BigDecimal;
 
-// test DAO thôi, class này gpt gen
-// Viết lại cái này nhé
-
-/**
- * Lớp mô tả bảng HANGTHANHVIEN trong cơ sở dữ liệu.
- *
- * Cấu trúc bảng: MaHang (INT, PK) TenHang (VARCHAR) MucChiTieuToiThieu
- * (DECIMAL) DuongDanIcon (VARCHAR) ChietKhau (DECIMAL)
- */
 public class HangThanhVien {
 
-    private int maHang;
+    // Đã sửa hết tên thuộc tính thành dạng camelCase - Hưng
+    private Integer maHang;
     private String tenHang;
     private BigDecimal mucChiTieuToiThieu;
     private String duongDanIcon;
     private BigDecimal chietKhau;
 
-    // ===== Constructor =====
+    // Constructor không tham số
     public HangThanhVien() {
     }
 
-    public HangThanhVien(int maHang, String tenHang, BigDecimal mucChiTieuToiThieu,
+    // Constructor đầy đủ tham số 
+    public HangThanhVien(Integer maHang, String tenHang, BigDecimal mucChiTieuToiThieu,
             String duongDanIcon, BigDecimal chietKhau) {
         this.maHang = maHang;
         this.tenHang = tenHang;
@@ -32,47 +25,49 @@ public class HangThanhVien {
         this.chietKhau = chietKhau;
     }
 
-    // ===== Getter & Setter =====
-    public int getMaHang() {
+    // Getter 
+    public Integer getMaHang() {
         return maHang;
-    }
-
-    public void setMaHang(int maHang) {
-        this.maHang = maHang;
     }
 
     public String getTenHang() {
         return tenHang;
     }
 
-    public void setTenHang(String tenHang) {
-        this.tenHang = tenHang;
-    }
-
     public BigDecimal getMucChiTieuToiThieu() {
         return mucChiTieuToiThieu;
-    }
-
-    public void setMucChiTieuToiThieu(BigDecimal mucChiTieuToiThieu) {
-        this.mucChiTieuToiThieu = mucChiTieuToiThieu;
     }
 
     public String getDuongDanIcon() {
         return duongDanIcon;
     }
 
-    public void setDuongDanIcon(String duongDanIcon) {
-        this.duongDanIcon = duongDanIcon;
-    }
-
     public BigDecimal getChietKhau() {
         return chietKhau;
+    }
+
+    // Setter 
+    public void setMaHang(Integer maHang) {
+        this.maHang = maHang;
+    }
+
+    public void setTenHang(String tenHang) {
+        this.tenHang = tenHang;
+    }
+
+    public void setMucChiTieuToiThieu(BigDecimal mucChiTieuToiThieu) {
+        this.mucChiTieuToiThieu = mucChiTieuToiThieu;
+    }
+
+    public void setDuongDanIcon(String duongDanIcon) {
+        this.duongDanIcon = duongDanIcon;
     }
 
     public void setChietKhau(BigDecimal chietKhau) {
         this.chietKhau = chietKhau;
     }
 
+    // toString 
     @Override
     public String toString() {
         return "HangThanhVien{"

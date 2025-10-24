@@ -6,24 +6,26 @@ import java.time.LocalDateTime;
 public class TaiKhoan {
 
     private Integer maTaiKhoan;
-    private String tenDangNhap;
-    private String matKhau;
+    private Integer maDanhMuc;
+    private BigDecimal giaGoc;
     private BigDecimal giaBan;
     private String trangThai;
-    private Integer maNguoiBan;
+    private String diemNoiBat;
+    private Integer luotXem;
     private LocalDateTime thoiGianDang;
 
     public TaiKhoan() {
     }
 
-    public TaiKhoan(Integer maTaiKhoan, String tenDangNhap, String matKhau, BigDecimal giaBan,
-                    String trangThai, Integer maNguoiBan, LocalDateTime thoiGianDang) {
+    public TaiKhoan(Integer maTaiKhoan, Integer maDanhMuc, BigDecimal giaGoc, BigDecimal giaBan,
+                    String trangThai, String diemNoiBat, Integer luotXem, LocalDateTime thoiGianDang) {
         this.maTaiKhoan = maTaiKhoan;
-        this.tenDangNhap = tenDangNhap;
-        this.matKhau = matKhau;
+        this.maDanhMuc = maDanhMuc;
+        this.giaGoc = giaGoc;
         this.giaBan = giaBan;
         this.trangThai = trangThai;
-        this.maNguoiBan = maNguoiBan;
+        this.diemNoiBat = diemNoiBat;
+        this.luotXem = luotXem;
         this.thoiGianDang = thoiGianDang;
     }
 
@@ -31,52 +33,60 @@ public class TaiKhoan {
         return maTaiKhoan;
     }
 
-    public String getTenDangNhap() {
-        return tenDangNhap;
+    public void setMaTaiKhoan(Integer maTaiKhoan) {
+        this.maTaiKhoan = maTaiKhoan;
     }
 
-    public String getMatKhau() {
-        return matKhau;
+    public Integer getMaDanhMuc() {
+        return maDanhMuc;
+    }
+
+    public void setMaDanhMuc(Integer maDanhMuc) {
+        this.maDanhMuc = maDanhMuc;
+    }
+
+    public BigDecimal getGiaGoc() {
+        return giaGoc;
+    }
+
+    public void setGiaGoc(BigDecimal giaGoc) {
+        this.giaGoc = giaGoc;
     }
 
     public BigDecimal getGiaBan() {
         return giaBan;
     }
 
-    public String getTrangThai() {
-        return trangThai;
-    }
-
-    public Integer getMaNguoiBan() {
-        return maNguoiBan;
-    }
-
-    public LocalDateTime getThoiGianDang() {
-        return thoiGianDang;
-    }
-
-    public void setMaTaiKhoan(Integer maTaiKhoan) {
-        this.maTaiKhoan = maTaiKhoan;
-    }
-
-    public void setTenDangNhap(String tenDangNhap) {
-        this.tenDangNhap = tenDangNhap;
-    }
-
-    public void setMatKhau(String matKhau) {
-        this.matKhau = matKhau;
-    }
-
     public void setGiaBan(BigDecimal giaBan) {
         this.giaBan = giaBan;
+    }
+
+    public String getTrangThai() {
+        return trangThai;
     }
 
     public void setTrangThai(String trangThai) {
         this.trangThai = trangThai;
     }
 
-    public void setMaNguoiBan(Integer maNguoiBan) {
-        this.maNguoiBan = maNguoiBan;
+    public String getDiemNoiBat() {
+        return diemNoiBat;
+    }
+
+    public void setDiemNoiBat(String diemNoiBat) {
+        this.diemNoiBat = diemNoiBat;
+    }
+
+    public Integer getLuotXem() {
+        return luotXem;
+    }
+
+    public void setLuotXem(Integer luotXem) {
+        this.luotXem = luotXem;
+    }
+
+    public LocalDateTime getThoiGianDang() {
+        return thoiGianDang;
     }
 
     public void setThoiGianDang(LocalDateTime thoiGianDang) {
@@ -85,14 +95,15 @@ public class TaiKhoan {
 
     @Override
     public String toString() {
-        return "TaiKhoan{"
-                + "maTaiKhoan=" + maTaiKhoan
-                + ", tenDangNhap='" + tenDangNhap + '\''
-                + ", matKhau='" + matKhau + '\''
-                + ", giaBan=" + giaBan
-                + ", trangThai='" + trangThai + '\''
-                + ", maNguoiBan=" + maNguoiBan
-                + ", thoiGianDang=" + thoiGianDang
-                + '}';
+        return "TaiKhoan{" +
+                "maTaiKhoan=" + maTaiKhoan +
+                ", maDanhMuc=" + maDanhMuc +
+                ", giaGoc=" + giaGoc +
+                ", giaBan=" + giaBan +
+                ", trangThai='" + trangThai + '\'' +
+                ", diemNoiBat='" + diemNoiBat + '\'' +
+                ", luotXem=" + luotXem +
+                ", thoiGianDang=" + thoiGianDang +
+                '}';
     }
 }

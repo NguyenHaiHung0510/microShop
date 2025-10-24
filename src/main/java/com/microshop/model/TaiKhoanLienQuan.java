@@ -1,79 +1,86 @@
 package com.microshop.model;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-
 public class TaiKhoanLienQuan extends TaiKhoan {
 
+    private Integer maTaiKhoanLienQuan;
+    private String hangRank;
     private Integer soTuong;
     private Integer soTrangPhuc;
-    private String hangHienTai;
-    private String mucNap;
-    private String moTa;
+    private Integer bacNgoc;
+    private String loaiDangKy;
 
     public TaiKhoanLienQuan() {
     }
 
-    public TaiKhoanLienQuan(Integer maTaiKhoan, String tenDangNhap, String matKhau,
-                            BigDecimal giaBan, String trangThai, Integer maNguoiBan,
-                            LocalDateTime thoiGianDang, Integer soTuong, Integer soTrangPhuc,
-                            String hangHienTai, String mucNap, String moTa) {
-        super(maTaiKhoan, tenDangNhap, matKhau, giaBan, trangThai, maNguoiBan, thoiGianDang);
+    public TaiKhoanLienQuan(Integer maTaiKhoan, Integer maTaiKhoanLienQuan, String hangRank,
+                            Integer soTuong, Integer soTrangPhuc, Integer bacNgoc, String loaiDangKy) {
+        super();
+        this.maTaiKhoanLienQuan = maTaiKhoanLienQuan;
+        this.hangRank = hangRank;
         this.soTuong = soTuong;
         this.soTrangPhuc = soTrangPhuc;
-        this.hangHienTai = hangHienTai;
-        this.mucNap = mucNap;
-        this.moTa = moTa;
+        this.bacNgoc = bacNgoc;
+        this.loaiDangKy = loaiDangKy;
+        this.setMaTaiKhoan(maTaiKhoan);
+    }
+
+    public Integer getMaTaiKhoanLienQuan() {
+        return maTaiKhoanLienQuan;
+    }
+
+    public void setMaTaiKhoanLienQuan(Integer maTaiKhoanLienQuan) {
+        this.maTaiKhoanLienQuan = maTaiKhoanLienQuan;
+    }
+
+    public String getHangRank() {
+        return hangRank;
+    }
+
+    public void setHangRank(String hangRank) {
+        this.hangRank = hangRank;
     }
 
     public Integer getSoTuong() {
         return soTuong;
     }
 
-    public Integer getSoTrangPhuc() {
-        return soTrangPhuc;
-    }
-
-    public String getHangHienTai() {
-        return hangHienTai;
-    }
-
-    public String getMucNap() {
-        return mucNap;
-    }
-
-    public String getMoTa() {
-        return moTa;
-    }
-
     public void setSoTuong(Integer soTuong) {
         this.soTuong = soTuong;
+    }
+
+    public Integer getSoTrangPhuc() {
+        return soTrangPhuc;
     }
 
     public void setSoTrangPhuc(Integer soTrangPhuc) {
         this.soTrangPhuc = soTrangPhuc;
     }
 
-    public void setHangHienTai(String hangHienTai) {
-        this.hangHienTai = hangHienTai;
+    public Integer getBacNgoc() {
+        return bacNgoc;
     }
 
-    public void setMucNap(String mucNap) {
-        this.mucNap = mucNap;
+    public void setBacNgoc(Integer bacNgoc) {
+        this.bacNgoc = bacNgoc;
     }
 
-    public void setMoTa(String moTa) {
-        this.moTa = moTa;
+    public String getLoaiDangKy() {
+        return loaiDangKy;
+    }
+
+    public void setLoaiDangKy(String loaiDangKy) {
+        this.loaiDangKy = loaiDangKy;
     }
 
     @Override
     public String toString() {
         return "TaiKhoanLienQuan{" +
-                "soTuong=" + soTuong +
+                "maTaiKhoanLienQuan=" + maTaiKhoanLienQuan +
+                ", hangRank='" + hangRank + '\'' +
+                ", soTuong=" + soTuong +
                 ", soTrangPhuc=" + soTrangPhuc +
-                ", hangHienTai='" + hangHienTai + '\'' +
-                ", mucNap='" + mucNap + '\'' +
-                ", moTa='" + moTa + '\'' +
-                "} " + super.toString();
+                ", bacNgoc=" + bacNgoc +
+                ", loaiDangKy='" + loaiDangKy + '\'' +
+                '}';
     }
 }

@@ -5,8 +5,8 @@ import java.time.format.DateTimeFormatter;
 
 public class BaiVietGioiThieu {
 
-    private int maBaiViet;
-    private int maGameSteam;
+    private Integer maBaiViet;
+    private Integer maGameSteam;
     private String tieuDeBaiViet;
     private String noiDung;
     private LocalDateTime thoiGianTao;
@@ -15,7 +15,7 @@ public class BaiVietGioiThieu {
     public BaiVietGioiThieu() {
     }
 
-    public BaiVietGioiThieu(int maBaiViet, int maGameSteam, String tieuDeBaiViet,
+    public BaiVietGioiThieu(Integer maBaiViet, Integer maGameSteam, String tieuDeBaiViet,
             String noiDung, LocalDateTime thoiGianTao, LocalDateTime thoiGianCapNhatCuoi) {
         this.maBaiViet = maBaiViet;
         this.maGameSteam = maGameSteam;
@@ -25,51 +25,51 @@ public class BaiVietGioiThieu {
         this.thoiGianCapNhatCuoi = thoiGianCapNhatCuoi;
     }
 
-    public int getMaBaiViet() {
+    public Integer getMaBaiViet() {
         return maBaiViet;
     }
 
-    public int getMaGameSteam() {
+    public void setMaBaiViet(Integer maBaiViet) {
+        this.maBaiViet = maBaiViet;
+    }
+
+    public Integer getMaGameSteam() {
         return maGameSteam;
+    }
+
+    public void setMaGameSteam(Integer maGameSteam) {
+        this.maGameSteam = maGameSteam;
     }
 
     public String getTieuDeBaiViet() {
         return tieuDeBaiViet;
     }
 
-    public String getNoiDung() {
-        return noiDung;
-    }
-
-    public LocalDateTime getThoiGianTao() {
-        return thoiGianTao;
-    }
-
-    public LocalDateTime getThoiGianCapNhatCuoi() {
-        return thoiGianCapNhatCuoi;
-    }
-
-    public void setMaBaiViet(int maBaiViet) {
-        this.maBaiViet = maBaiViet;
-    }
-
-    public void setMaGameSteam(int maGameSteam) {
-        this.maGameSteam = maGameSteam;
-    }
-
     public void setTieuDeBaiViet(String tieuDeBaiViet) {
         this.tieuDeBaiViet = tieuDeBaiViet;
+    }
+
+    public String getNoiDung() {
+        return noiDung;
     }
 
     public void setNoiDung(String noiDung) {
         this.noiDung = noiDung;
     }
 
+    public LocalDateTime getThoiGianTao() {
+        return thoiGianTao;
+    }
+
     public void setThoiGianTao(LocalDateTime thoiGianTao) {
         this.thoiGianTao = thoiGianTao;
     }
 
-    public void setThoiGianCapNhatCuoi(LocalDateTime thoiGianCapNhatCuoi) {
+    public LocalDateTime getThoiGianCapNhatCuoi() { 
+        return thoiGianCapNhatCuoi;
+    }
+
+    public void setThoiGianCapNhatCuoi(LocalDateTime thoiGianCapNhatCuoi) { 
         this.thoiGianCapNhatCuoi = thoiGianCapNhatCuoi;
     }
 

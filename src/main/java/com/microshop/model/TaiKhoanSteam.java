@@ -2,17 +2,17 @@ package com.microshop.model;
 
 public class TaiKhoanSteam {
 
-    private int maTaiKhoanSteam;
+    private Integer maTaiKhoanSteam;
     private String tenDangNhapSteam;
     private String matKhauSteam;
-    private int tongSoSlot;
-    private int soSlotDaBan;
+    private Integer tongSoSlot;
+    private Integer soSlotDaBan;
 
     public TaiKhoanSteam() {
     }
 
-    public TaiKhoanSteam(int maTaiKhoanSteam, String tenDangNhapSteam,
-            String matKhauSteam, int tongSoSlot, int soSlotDaBan) {
+    public TaiKhoanSteam(Integer maTaiKhoanSteam, String tenDangNhapSteam,
+            String matKhauSteam, Integer tongSoSlot, Integer soSlotDaBan) {
         this.maTaiKhoanSteam = maTaiKhoanSteam;
         this.tenDangNhapSteam = tenDangNhapSteam;
         this.matKhauSteam = matKhauSteam;
@@ -20,39 +20,43 @@ public class TaiKhoanSteam {
         this.soSlotDaBan = soSlotDaBan;
     }
 
-    public int getMaTaiKhoanSteam() {
+    public Integer getMaTaiKhoanSteam() {
         return maTaiKhoanSteam;
     }
 
-    public String getMatKhauSteam() {
-        return matKhauSteam;
-    }
-
-    public int getTongSoSlot() {
-        return tongSoSlot;
-    }
-
-    public int getSoSlotDaBan() {
-        return soSlotDaBan;
-    }
-
-    public void setMaTaiKhoanSteam(int maTaiKhoanSteam) {
+    public void setMaTaiKhoanSteam(Integer maTaiKhoanSteam) {
         this.maTaiKhoanSteam = maTaiKhoanSteam;
+    }
+
+    public String getTenDangNhapSteam() {
+        return tenDangNhapSteam;
     }
 
     public void setTenDangNhapSteam(String tenDangNhapSteam) {
         this.tenDangNhapSteam = tenDangNhapSteam;
     }
 
+    public String getMatKhauSteam() {
+        return matKhauSteam;
+    }
+
     public void setMatKhauSteam(String matKhauSteam) {
         this.matKhauSteam = matKhauSteam;
     }
 
-    public void setTongSoSlot(int tongSoSlot) {
+    public Integer getTongSoSlot() {
+        return tongSoSlot;
+    }
+
+    public void setTongSoSlot(Integer tongSoSlot) {
         this.tongSoSlot = tongSoSlot;
     }
 
-    public void setSoSlotDaBan(int soSlotDaBan) {
+    public Integer getSoSlotDaBan() {
+        return soSlotDaBan;
+    }
+
+    public void setSoSlotDaBan(Integer soSlotDaBan) {
         this.soSlotDaBan = soSlotDaBan;
     }
 
@@ -62,8 +66,7 @@ public class TaiKhoanSteam {
                 + "maTaiKhoanSteam=" + maTaiKhoanSteam
                 + ", tenDangNhapSteam='" + tenDangNhapSteam + '\''
                 + ", matKhauSteam='" + "[PROTECTED]" + '\''
-                + // Không bao giờ in mật khẩu ra log
-                ", tongSoSlot=" + tongSoSlot
+                + ", tongSoSlot=" + tongSoSlot
                 + ", soSlotDaBan=" + soSlotDaBan
                 + '}';
     }

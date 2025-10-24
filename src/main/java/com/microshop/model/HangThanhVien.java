@@ -4,77 +4,78 @@ import java.math.BigDecimal;
 
 public class HangThanhVien {
 
-    private Integer MaHang;
-    private String TenHang;
-    private BigDecimal MucChiTieuToiThieu;
-    private String DuongDanIcon;
-    private BigDecimal ChietKhau;
+    // Đã sửa hết tên thuộc tính thành dạng camelCase - Hưng
+    private Integer maHang;
+    private String tenHang;
+    private BigDecimal mucChiTieuToiThieu;
+    private String duongDanIcon;
+    private BigDecimal chietKhau;
 
     // Constructor không tham số
     public HangThanhVien() {
     }
 
-    // Constructor đầy đủ tham số
-    public HangThanhVien(Integer MaHang, String TenHang, BigDecimal MucChiTieuToiThieu,
-                         String DuongDanIcon, BigDecimal ChietKhau) {
-        this.MaHang = MaHang;
-        this.TenHang = TenHang;
-        this.MucChiTieuToiThieu = MucChiTieuToiThieu;
-        this.DuongDanIcon = DuongDanIcon;
-        this.ChietKhau = ChietKhau;
+    // Constructor đầy đủ tham số 
+    public HangThanhVien(Integer maHang, String tenHang, BigDecimal mucChiTieuToiThieu,
+            String duongDanIcon, BigDecimal chietKhau) {
+        this.maHang = maHang;
+        this.tenHang = tenHang;
+        this.mucChiTieuToiThieu = mucChiTieuToiThieu;
+        this.duongDanIcon = duongDanIcon;
+        this.chietKhau = chietKhau;
     }
 
-    // Getter
+    // Getter 
     public Integer getMaHang() {
-        return MaHang;
+        return maHang;
     }
 
     public String getTenHang() {
-        return TenHang;
+        return tenHang;
     }
 
     public BigDecimal getMucChiTieuToiThieu() {
-        return MucChiTieuToiThieu;
+        return mucChiTieuToiThieu;
     }
 
     public String getDuongDanIcon() {
-        return DuongDanIcon;
+        return duongDanIcon;
     }
 
     public BigDecimal getChietKhau() {
-        return ChietKhau;
+        return chietKhau;
     }
 
-    // Setter
-    public void setMaHang(Integer MaHang) {
-        this.MaHang = MaHang;
+    // Setter 
+    public void setMaHang(Integer maHang) {
+        this.maHang = maHang;
     }
 
-    public void setTenHang(String TenHang) {
-        this.TenHang = TenHang;
+    public void setTenHang(String tenHang) {
+        this.tenHang = tenHang;
     }
 
-    public void setMucChiTieuToiThieu(BigDecimal MucChiTieuToiThieu) {
-        this.MucChiTieuToiThieu = MucChiTieuToiThieu;
+    public void setMucChiTieuToiThieu(BigDecimal mucChiTieuToiThieu) {
+        this.mucChiTieuToiThieu = mucChiTieuToiThieu;
     }
 
-    public void setDuongDanIcon(String DuongDanIcon) {
-        this.DuongDanIcon = DuongDanIcon;
+    public void setDuongDanIcon(String duongDanIcon) {
+        this.duongDanIcon = duongDanIcon;
     }
 
-    public void setChietKhau(BigDecimal ChietKhau) {
-        this.ChietKhau = ChietKhau;
+    public void setChietKhau(BigDecimal chietKhau) {
+        this.chietKhau = chietKhau;
     }
 
-    // toString
+    // toString 
     @Override
     public String toString() {
-        return "HangThanhVien{" +
-                "MaHang=" + MaHang +
-                ", TenHang='" + TenHang + '\'' +
-                ", MucChiTieuToiThieu=" + MucChiTieuToiThieu +
-                ", DuongDanIcon='" + DuongDanIcon + '\'' +
-                ", ChietKhau=" + ChietKhau +
-                '}';
+        return "HangThanhVien{"
+                + "maHang=" + maHang
+                + ", tenHang='" + tenHang + '\''
+                + ", mucChiTieuToiThieu=" + mucChiTieuToiThieu
+                + ", duongDanIcon='" + duongDanIcon + '\''
+                + ", chietKhau=" + chietKhau
+                + '}';
     }
 }

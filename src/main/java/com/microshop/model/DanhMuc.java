@@ -2,43 +2,44 @@ package com.microshop.model;
 
 public class DanhMuc {
 
-    private Integer MaDanhMuc;
-    private String TenDanhMuc;
+    // Đã đổi hết tên biến về dạng camelCase - Hưng
+    private Integer maDanhMuc;
+    private String tenDanhMuc;
 
     // Constructor không tham số
     public DanhMuc() {
     }
 
     // Constructor đầy đủ tham số
-    public DanhMuc(Integer MaDanhMuc, String TenDanhMuc) {
-        this.MaDanhMuc = MaDanhMuc;
-        this.TenDanhMuc = TenDanhMuc;
+    public DanhMuc(Integer maDanhMuc, String tenDanhMuc) {
+        this.maDanhMuc = maDanhMuc;
+        this.tenDanhMuc = tenDanhMuc;
     }
 
-    // Getter
+    // Getter 
     public Integer getMaDanhMuc() {
-        return MaDanhMuc;
+        return maDanhMuc;
     }
 
     public String getTenDanhMuc() {
-        return TenDanhMuc;
+        return tenDanhMuc;
     }
 
-    // Setter
-    public void setMaDanhMuc(Integer MaDanhMuc) {
-        this.MaDanhMuc = MaDanhMuc;
+    // Setter 
+    public void setMaDanhMuc(Integer maDanhMuc) {
+        this.maDanhMuc = maDanhMuc;
     }
 
-    public void setTenDanhMuc(String TenDanhMuc) {
-        this.TenDanhMuc = TenDanhMuc;
+    public void setTenDanhMuc(String tenDanhMuc) {
+        this.tenDanhMuc = tenDanhMuc;
     }
 
     // toString
     @Override
     public String toString() {
-        return "DanhMuc{" +
-                "MaDanhMuc=" + MaDanhMuc +
-                ", TenDanhMuc='" + TenDanhMuc + '\'' +
-                '}';
+        return "DanhMuc{"
+                + "maDanhMuc=" + maDanhMuc
+                + ", tenDanhMuc='" + tenDanhMuc + '\''
+                + '}';
     }
 }

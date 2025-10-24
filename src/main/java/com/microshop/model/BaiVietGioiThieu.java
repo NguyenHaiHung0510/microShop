@@ -29,47 +29,47 @@ public class BaiVietGioiThieu {
         return maBaiViet;
     }
 
-    public void setMaBaiViet(Integer maBaiViet) {
-        this.maBaiViet = maBaiViet;
-    }
-
     public Integer getMaGameSteam() {
         return maGameSteam;
-    }
-
-    public void setMaGameSteam(Integer maGameSteam) {
-        this.maGameSteam = maGameSteam;
     }
 
     public String getTieuDeBaiViet() {
         return tieuDeBaiViet;
     }
 
-    public void setTieuDeBaiViet(String tieuDeBaiViet) {
-        this.tieuDeBaiViet = tieuDeBaiViet;
-    }
-
     public String getNoiDung() {
         return noiDung;
-    }
-
-    public void setNoiDung(String noiDung) {
-        this.noiDung = noiDung;
     }
 
     public LocalDateTime getThoiGianTao() {
         return thoiGianTao;
     }
 
+    public LocalDateTime getThoiGianCapNhatCuoi() {
+        return thoiGianCapNhatCuoi;
+    }
+
+    public void setMaBaiViet(Integer maBaiViet) {
+        this.maBaiViet = maBaiViet;
+    }
+
+    public void setMaGameSteam(Integer maGameSteam) {
+        this.maGameSteam = maGameSteam;
+    }
+
+    public void setTieuDeBaiViet(String tieuDeBaiViet) {
+        this.tieuDeBaiViet = tieuDeBaiViet;
+    }
+
+    public void setNoiDung(String noiDung) {
+        this.noiDung = noiDung;
+    }
+
     public void setThoiGianTao(LocalDateTime thoiGianTao) {
         this.thoiGianTao = thoiGianTao;
     }
 
-    public LocalDateTime getThoiGianCapNhatCuoi() { 
-        return thoiGianCapNhatCuoi;
-    }
-
-    public void setThoiGianCapNhatCuoi(LocalDateTime thoiGianCapNhatCuoi) { 
+    public void setThoiGianCapNhatCuoi(LocalDateTime thoiGianCapNhatCuoi) {
         this.thoiGianCapNhatCuoi = thoiGianCapNhatCuoi;
     }
 

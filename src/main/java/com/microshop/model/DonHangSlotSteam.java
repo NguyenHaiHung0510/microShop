@@ -6,8 +6,8 @@ import java.time.format.DateTimeFormatter;
 
 public class DonHangSlotSteam {
 
-    private Integer maDonHangSlot; 
-    private Integer maNguoiDung; 
+    private Integer maDonHangSlot;
+    private Integer maNguoiDung;
     private Integer maGameSteam;
     private Integer maTaiKhoanSteam;
     private BigDecimal giaMua;
@@ -35,60 +35,60 @@ public class DonHangSlotSteam {
         return maDonHangSlot;
     }
 
-    public void setMaDonHangSlot(Integer maDonHangSlot) {
-        this.maDonHangSlot = maDonHangSlot;
-    }
-
     public Integer getMaNguoiDung() {
         return maNguoiDung;
-    }
-
-    public void setMaNguoiDung(Integer maNguoiDung) {
-        this.maNguoiDung = maNguoiDung;
     }
 
     public Integer getMaGameSteam() {
         return maGameSteam;
     }
 
-    public void setMaGameSteam(Integer maGameSteam) {
-        this.maGameSteam = maGameSteam;
-    }
-
     public Integer getMaTaiKhoanSteam() {
         return maTaiKhoanSteam;
-    }
-
-    public void setMaTaiKhoanSteam(Integer maTaiKhoanSteam) {
-        this.maTaiKhoanSteam = maTaiKhoanSteam;
     }
 
     public BigDecimal getGiaMua() {
         return giaMua;
     }
 
-    public void setGiaMua(BigDecimal giaMua) {
-        this.giaMua = giaMua;
-    }
-
     public LocalDateTime getThoiGianMua() {
         return thoiGianMua;
-    }
-
-    public void setThoiGianMua(LocalDateTime thoiGianMua) {
-        this.thoiGianMua = thoiGianMua;
     }
 
     public String getTrangThai() {
         return trangThai;
     }
 
-    public void setTrangThai(String trangThai) {
-        this.trangThai = trangThai;
-    }
-
     public LocalDateTime getThoiGianTao() {
         return thoiGianTao;
+    }
+
+    public void setMaDonHangSlot(Integer maDonHangSlot) {
+        this.maDonHangSlot = maDonHangSlot;
+    }
+
+    public void setMaNguoiDung(Integer maNguoiDung) {
+        this.maNguoiDung = maNguoiDung;
+    }
+
+    public void setMaGameSteam(Integer maGameSteam) {
+        this.maGameSteam = maGameSteam;
+    }
+
+    public void setMaTaiKhoanSteam(Integer maTaiKhoanSteam) {
+        this.maTaiKhoanSteam = maTaiKhoanSteam;
+    }
+
+    public void setGiaMua(BigDecimal giaMua) {
+        this.giaMua = giaMua;
+    }
+
+    public void setThoiGianMua(LocalDateTime thoiGianMua) {
+        this.thoiGianMua = thoiGianMua;
+    }
+
+    public void setTrangThai(String trangThai) {
+        this.trangThai = trangThai;
     }
 
     public void setThoiGianTao(LocalDateTime thoiGianTao) {

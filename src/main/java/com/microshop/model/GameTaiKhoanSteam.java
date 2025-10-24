@@ -17,12 +17,12 @@ public class GameTaiKhoanSteam {
         return maGameSteam;
     }
 
-    public void setMaGameSteam(Integer maGameSteam) {
-        this.maGameSteam = maGameSteam;
-    }
-
     public Integer getMaTaiKhoanSteam() {
         return maTaiKhoanSteam;
+    }
+
+    public void setMaGameSteam(Integer maGameSteam) {
+        this.maGameSteam = maGameSteam;
     }
 
     public void setMaTaiKhoanSteam(Integer maTaiKhoanSteam) {

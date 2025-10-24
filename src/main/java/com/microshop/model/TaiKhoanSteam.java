@@ -24,36 +24,36 @@ public class TaiKhoanSteam {
         return maTaiKhoanSteam;
     }
 
-    public void setMaTaiKhoanSteam(Integer maTaiKhoanSteam) {
-        this.maTaiKhoanSteam = maTaiKhoanSteam;
-    }
-
     public String getTenDangNhapSteam() {
         return tenDangNhapSteam;
-    }
-
-    public void setTenDangNhapSteam(String tenDangNhapSteam) {
-        this.tenDangNhapSteam = tenDangNhapSteam;
     }
 
     public String getMatKhauSteam() {
         return matKhauSteam;
     }
 
-    public void setMatKhauSteam(String matKhauSteam) {
-        this.matKhauSteam = matKhauSteam;
-    }
-
     public Integer getTongSoSlot() {
         return tongSoSlot;
     }
 
-    public void setTongSoSlot(Integer tongSoSlot) {
-        this.tongSoSlot = tongSoSlot;
-    }
-
     public Integer getSoSlotDaBan() {
         return soSlotDaBan;
+    }
+
+    public void setMaTaiKhoanSteam(Integer maTaiKhoanSteam) {
+        this.maTaiKhoanSteam = maTaiKhoanSteam;
+    }
+
+    public void setTenDangNhapSteam(String tenDangNhapSteam) {
+        this.tenDangNhapSteam = tenDangNhapSteam;
+    }
+
+    public void setMatKhauSteam(String matKhauSteam) {
+        this.matKhauSteam = matKhauSteam;
+    }
+
+    public void setTongSoSlot(Integer tongSoSlot) {
+        this.tongSoSlot = tongSoSlot;
     }
 
     public void setSoSlotDaBan(Integer soSlotDaBan) {
@@ -66,6 +66,7 @@ public class TaiKhoanSteam {
                 + "maTaiKhoanSteam=" + maTaiKhoanSteam
                 + ", tenDangNhapSteam='" + tenDangNhapSteam + '\''
                 + ", matKhauSteam='" + "[PROTECTED]" + '\''
+                // Không bao giờ in mật khẩu ra log
                 + ", tongSoSlot=" + tongSoSlot
                 + ", soSlotDaBan=" + soSlotDaBan
                 + '}';

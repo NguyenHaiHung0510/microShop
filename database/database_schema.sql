@@ -104,7 +104,7 @@ CREATE TABLE `GAME_STEAM` (
   `GiaBan` DECIMAL(15, 0) NOT NULL, 
   `LuotXem` INT DEFAULT 0,
   `ThoiGianDang` DATETIME DEFAULT CURRENT_TIMESTAMP,
-  `IDVideoTrailer` VARCHAR(255),
+  `IdVideoTrailer` VARCHAR(255),
   `DuongDanAnh` VARCHAR(255)
 );
 

@@ -2,6 +2,7 @@ package com.microshop.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class DonHang {
 
@@ -9,7 +10,7 @@ public class DonHang {
     private Integer maNguoiDung;
     private Integer maTaiKhoan;
     private BigDecimal giaMua;
-    private LocalDateTime ngayMua;
+    private LocalDateTime thoiGianMua;
     private String trangThai;
     private LocalDateTime thoiGianTao;
 
@@ -17,17 +18,18 @@ public class DonHang {
     }
 
     public DonHang(Integer maDonHang, Integer maNguoiDung, Integer maTaiKhoan,
-                   BigDecimal giaMua, LocalDateTime ngayMua,
-                   String trangThai, LocalDateTime thoiGianTao) {
+            BigDecimal giaMua, LocalDateTime thoiGianMua,
+            String trangThai, LocalDateTime thoiGianTao) {
         this.maDonHang = maDonHang;
         this.maNguoiDung = maNguoiDung;
         this.maTaiKhoan = maTaiKhoan;
         this.giaMua = giaMua;
-        this.ngayMua = ngayMua;
+        this.thoiGianMua = thoiGianMua;
         this.trangThai = trangThai;
         this.thoiGianTao = thoiGianTao;
     }
 
+    // Getters
     public Integer getMaDonHang() {
         return maDonHang;
     }
@@ -44,8 +46,8 @@ public class DonHang {
         return giaMua;
     }
 
-    public LocalDateTime getNgayMua() {
-        return ngayMua;
+    public LocalDateTime getThoiGianMua() {
+        return thoiGianMua;
     }
 
     public String getTrangThai() {
@@ -56,6 +58,7 @@ public class DonHang {
         return thoiGianTao;
     }
 
+    // Setters
     public void setMaDonHang(Integer maDonHang) {
         this.maDonHang = maDonHang;
     }
@@ -72,8 +75,8 @@ public class DonHang {
         this.giaMua = giaMua;
     }
 
-    public void setNgayMua(LocalDateTime ngayMua) {
-        this.ngayMua = ngayMua;
+    public void setThoiGianMua(LocalDateTime thoiGianMua) {
+        this.thoiGianMua = thoiGianMua;
     }
 
     public void setTrangThai(String trangThai) {
@@ -84,16 +87,18 @@ public class DonHang {
         this.thoiGianTao = thoiGianTao;
     }
 
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+
     @Override
     public String toString() {
-        return "DonHang{" +
-                "maDonHang=" + maDonHang +
-                ", maNguoiDung=" + maNguoiDung +
-                ", maTaiKhoan=" + maTaiKhoan +
-                ", giaMua=" + giaMua +
-                ", ngayMua=" + ngayMua +
-                ", trangThai='" + trangThai + '\'' +
-                ", thoiGianTao=" + thoiGianTao +
-                '}';
+        return "DonHang{"
+                + "maDonHang=" + maDonHang
+                + ", maNguoiDung=" + maNguoiDung
+                + ", maTaiKhoan=" + maTaiKhoan
+                + ", giaMua=" + (giaMua != null ? giaMua.toPlainString() : "null")
+                + ", thoiGianMua=" + (thoiGianMua != null ? thoiGianMua.format(FORMATTER) : "null")
+                + ", trangThai='" + trangThai + '\''
+                + ", thoiGianTao=" + (thoiGianTao != null ? thoiGianTao.format(FORMATTER) : "null")
+                + '}';
     }
 }

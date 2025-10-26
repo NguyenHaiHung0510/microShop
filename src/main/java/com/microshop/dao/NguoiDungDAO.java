@@ -2,22 +2,20 @@ package com.microshop.dao;
 
 import com.microshop.context.DBContext;
 import com.microshop.model.NguoiDung;
+
 import java.sql.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.math.BigDecimal;
 
-public class NguoiDungDAO implements DAO<NguoiDung> {
+public class NguoiDungDAO implements CrudDAO<NguoiDung, Integer> {
 
     private static final Logger LOGGER = Logger.getLogger(NguoiDungDAO.class.getName());
 
-    // ===================== HÀM ÁNH XẠ =====================
+    // --- Map ResultSet → NguoiDung ---
     private NguoiDung mapResultSetToNguoiDung(ResultSet rs) throws SQLException {
         NguoiDung nd = new NguoiDung();
-
         nd.setMaNguoiDung(rs.getInt("MaNguoiDung"));
         nd.setTenDangNhap(rs.getString("TenDangNhap"));
         nd.setMatKhau(rs.getString("MatKhau"));
@@ -26,103 +24,62 @@ public class NguoiDungDAO implements DAO<NguoiDung> {
         nd.setVaiTro(rs.getString("VaiTro"));
         nd.setTongTienDaChi(rs.getBigDecimal("TongTienDaChi"));
         nd.setMaHangThanhVien(rs.getInt("MaHangThanhVien"));
-
         Timestamp ts = rs.getTimestamp("ThoiGianTao");
         nd.setThoiGianTao(ts != null ? ts.toLocalDateTime() : null);
-
         return nd;
     }
 
-    // ===================== GET ALL =====================
-    @Override
+    private Connection getConnection() throws SQLException {
+        return DBContext.getConnection();
+    }
+
+    // --- GET ALL ---
     public List<NguoiDung> getAll() {
         List<NguoiDung> list = new ArrayList<>();
         String sql = "SELECT * FROM NguoiDung";
 
-        try (Connection conn = DBContext.getConnection();
+        try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
 
-            while (rs.next()) {
-                list.add(mapResultSetToNguoiDung(rs));
-            }
+            while (rs.next()) list.add(mapResultSetToNguoiDung(rs));
 
         } catch (SQLException e) {
             LOGGER.log(Level.SEVERE, "Lỗi SQL khi lấy tất cả Người Dùng.", e);
-        } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "Lỗi chung khi getAll().", e);
         }
         return list;
     }
 
-    // ===================== GET BY ID =====================
-    @Override
-    public NguoiDung getById(String id) {
+    // --- GET BY ID ---
+    public NguoiDung getById(Integer id) {
         NguoiDung result = null;
         String sql = "SELECT * FROM NguoiDung WHERE MaNguoiDung = ?";
 
-        try {
-            int maNguoiDung = Integer.parseInt(id);
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            try (Connection conn = DBContext.getConnection();
-                 PreparedStatement ps = conn.prepareStatement(sql)) {
-
-                ps.setInt(1, maNguoiDung);
-
-                try (ResultSet rs = ps.executeQuery()) {
-                    if (rs.next()) {
-                        result = mapResultSetToNguoiDung(rs);
-                    }
-                }
+            ps.setInt(1, id);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) result = mapResultSetToNguoiDung(rs);
             }
-        } catch (NumberFormatException e) {
-            LOGGER.log(Level.WARNING, "ID không hợp lệ: " + id, e);
-        } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, "Lỗi SQL khi getById: " + id, e);
-        } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "Lỗi không xác định khi getById.", e);
-        }
 
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Lỗi SQL khi lấy Người Dùng theo ID: " + id, e);
+        }
         return result;
     }
 
-    // ===================== GET BY PREFIX =====================
+    // --- INSERT ---
     @Override
-    public List<NguoiDung> getByPrefix(String prefix) {
-        List<NguoiDung> list = new ArrayList<>();
-        String sql = "SELECT * FROM NguoiDung WHERE TenDangNhap LIKE ?";
-
-        try (Connection conn = DBContext.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-
-            ps.setString(1, prefix + "%");
-
-            try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) {
-                    list.add(mapResultSetToNguoiDung(rs));
-                }
-            }
-
-        } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, "Lỗi SQL khi tìm theo prefix: " + prefix, e);
-        } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "Lỗi không xác định khi getByPrefix.", e);
-        }
-
-        return list;
-    }
-
-    // ===================== CREATE =====================
-    @Override
-    public boolean create(NguoiDung entity) {
+    public Integer insert(NguoiDung entity) {
         String sql = """
             INSERT INTO NguoiDung 
             (TenDangNhap, MatKhau, Email, SoDienThoai, VaiTro, TongTienDaChi, MaHangThanhVien, ThoiGianTao)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         """;
 
-        try (Connection conn = DBContext.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             ps.setString(1, entity.getTenDangNhap());
             ps.setString(2, entity.getMatKhau());
@@ -133,28 +90,30 @@ public class NguoiDungDAO implements DAO<NguoiDung> {
             ps.setInt(7, entity.getMaHangThanhVien());
             ps.setTimestamp(8, entity.getThoiGianTao() != null ? Timestamp.valueOf(entity.getThoiGianTao()) : null);
 
-            return ps.executeUpdate() > 0;
+            int affectedRows = ps.executeUpdate();
+            if (affectedRows == 0) return null;
+
+            try (ResultSet rs = ps.getGeneratedKeys()) {
+                if (rs.next()) return rs.getInt(1);
+            }
 
         } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, "Lỗi SQL khi tạo người dùng: " + entity.getTenDangNhap(), e);
-            return false;
-        } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "Lỗi chung khi tạo.", e);
-            return false;
+            LOGGER.log(Level.SEVERE, "Lỗi SQL khi tạo Người Dùng: " + entity.getTenDangNhap(), e);
         }
+        return null;
     }
 
-    // ===================== UPDATE =====================
+    // --- UPDATE ---
     @Override
     public boolean update(NguoiDung entity) {
         String sql = """
             UPDATE NguoiDung 
-            SET TenDangNhap = ?, MatKhau = ?, Email = ?, SoDienThoai = ?, VaiTro = ?, 
-                TongTienDaChi = ?, MaHangThanhVien = ?, ThoiGianTao = ?
-            WHERE MaNguoiDung = ?
+            SET TenDangNhap=?, MatKhau=?, Email=?, SoDienThoai=?, VaiTro=?, 
+                TongTienDaChi=?, MaHangThanhVien=?, ThoiGianTao=?
+            WHERE MaNguoiDung=?
         """;
 
-        try (Connection conn = DBContext.getConnection();
+        try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, entity.getTenDangNhap());
@@ -170,34 +129,44 @@ public class NguoiDungDAO implements DAO<NguoiDung> {
             return ps.executeUpdate() > 0;
 
         } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, "Lỗi SQL khi cập nhật ID: " + entity.getMaNguoiDung(), e);
-            return false;
-        } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "Lỗi chung khi cập nhật.", e);
+            LOGGER.log(Level.SEVERE, "Lỗi SQL khi cập nhật Người Dùng ID: " + entity.getMaNguoiDung(), e);
             return false;
         }
     }
 
-    // ===================== DELETE =====================
+    // --- DELETE ---
     @Override
-    public boolean delete(String id) {
-        String sql = "DELETE FROM NguoiDung WHERE MaNguoiDung = ?";
-
-        try (Connection conn = DBContext.getConnection();
+    public boolean delete(Integer id) {
+        String sql = "DELETE FROM NguoiDung WHERE MaNguoiDung=?";
+        try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setInt(1, Integer.parseInt(id));
+            ps.setInt(1, id);
             return ps.executeUpdate() > 0;
 
-        } catch (NumberFormatException e) {
-            LOGGER.log(Level.WARNING, "ID không hợp lệ khi xóa: " + id, e);
-            return false;
         } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, "Lỗi SQL khi xóa ID: " + id, e);
-            return false;
-        } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "Lỗi không xác định khi xóa.", e);
+            LOGGER.log(Level.SEVERE, "Lỗi SQL khi xóa Người Dùng ID: " + id, e);
             return false;
         }
+    }
+
+    // --- GET BY PREFIX (optional) ---
+    public List<NguoiDung> getByPrefix(String prefix) {
+        List<NguoiDung> list = new ArrayList<>();
+        String sql = "SELECT * FROM NguoiDung WHERE TenDangNhap LIKE ?";
+
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, prefix + "%");
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) list.add(mapResultSetToNguoiDung(rs));
+            }
+
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Lỗi SQL khi tìm Người Dùng theo prefix: " + prefix, e);
+        }
+
+        return list;
     }
 }

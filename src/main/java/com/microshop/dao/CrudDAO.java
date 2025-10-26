@@ -15,9 +15,10 @@ public interface CrudDAO<T, K> extends ReadOnlyDAO<T, K> {
      * Thêm một đối tượng mới vào CSDL ( chèn một bản ghi )
      *
      * @param entity Đối tượng T cần thêm.
+     * @return id ( kiểu dữ liệu K ) nếu thành công, null nếu thất bại
      * @throws SQLException Nếu có lỗi SQL.
      */
-    void insert(T entity) throws SQLException;
+    K insert(T entity) throws SQLException;
 
     /**
      * Cập nhật một đối tượng.

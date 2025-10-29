@@ -6,12 +6,8 @@ import com.microshop.model.NguoiDung;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class NguoiDungDAO implements CrudDAO<NguoiDung, Integer> {
-
-    private static final Logger LOGGER = Logger.getLogger(NguoiDungDAO.class.getName());
 
     // --- Map ResultSet → NguoiDung ---
     private NguoiDung mapResultSetToNguoiDung(ResultSet rs) throws SQLException {
@@ -45,7 +41,8 @@ public class NguoiDungDAO implements CrudDAO<NguoiDung, Integer> {
             while (rs.next()) list.add(mapResultSetToNguoiDung(rs));
 
         } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, "Lỗi SQL khi lấy tất cả Người Dùng.", e);
+            System.out.println("Lỗi SQL khi lấy tất cả Người Dùng: " + e.getMessage());
+            e.printStackTrace();
         }
         return list;
     }
@@ -64,7 +61,8 @@ public class NguoiDungDAO implements CrudDAO<NguoiDung, Integer> {
             }
 
         } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, "Lỗi SQL khi lấy Người Dùng theo ID: " + id, e);
+            System.out.println("Lỗi SQL khi lấy Người Dùng theo ID: " + id);
+            e.printStackTrace();
         }
         return result;
     }
@@ -98,7 +96,8 @@ public class NguoiDungDAO implements CrudDAO<NguoiDung, Integer> {
             }
 
         } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, "Lỗi SQL khi tạo Người Dùng: " + entity.getTenDangNhap(), e);
+            System.out.println("Lỗi SQL khi tạo Người Dùng: " + entity.getTenDangNhap());
+            e.printStackTrace();
         }
         return null;
     }
@@ -129,7 +128,8 @@ public class NguoiDungDAO implements CrudDAO<NguoiDung, Integer> {
             return ps.executeUpdate() > 0;
 
         } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, "Lỗi SQL khi cập nhật Người Dùng ID: " + entity.getMaNguoiDung(), e);
+            System.out.println("Lỗi SQL khi cập nhật Người Dùng ID: " + entity.getMaNguoiDung());
+            e.printStackTrace();
             return false;
         }
     }
@@ -145,7 +145,8 @@ public class NguoiDungDAO implements CrudDAO<NguoiDung, Integer> {
             return ps.executeUpdate() > 0;
 
         } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, "Lỗi SQL khi xóa Người Dùng ID: " + id, e);
+            System.out.println("Lỗi SQL khi xóa Người Dùng ID: " + id);
+            e.printStackTrace();
             return false;
         }
     }
@@ -164,7 +165,8 @@ public class NguoiDungDAO implements CrudDAO<NguoiDung, Integer> {
             }
 
         } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, "Lỗi SQL khi tìm Người Dùng theo prefix: " + prefix, e);
+            System.out.println("Lỗi SQL khi tìm Người Dùng theo prefix: " + prefix);
+            e.printStackTrace();
         }
 
         return list;

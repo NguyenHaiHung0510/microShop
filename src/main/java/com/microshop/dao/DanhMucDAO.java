@@ -6,16 +6,12 @@ import com.microshop.model.DanhMuc;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * DAO cho DanhMuc implement CrudDAO chuẩn
- * Bắt lỗi ngay trong DAO, không throws
+ * Phiên bản không dùng Logger — in lỗi ra console
  */
 public class DanhMucDAO implements CrudDAO<DanhMuc, Integer> {
-
-    private static final Logger LOGGER = Logger.getLogger(DanhMucDAO.class.getName());
 
     // --- Map ResultSet → DanhMuc ---
     private DanhMuc mapResultSetToDanhMuc(ResultSet rs) throws SQLException {
@@ -42,8 +38,10 @@ public class DanhMucDAO implements CrudDAO<DanhMuc, Integer> {
             while (rs.next()) {
                 list.add(mapResultSetToDanhMuc(rs));
             }
+
         } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, "Lỗi SQL khi lấy tất cả danh mục.", e);
+            System.out.println("❌ Lỗi SQL khi lấy tất cả danh mục: " + e.getMessage());
+            e.printStackTrace();
         }
         return list;
     }
@@ -65,7 +63,8 @@ public class DanhMucDAO implements CrudDAO<DanhMuc, Integer> {
             }
 
         } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, "Lỗi SQL khi lấy danh mục theo ID: " + id, e);
+            System.out.println("❌ Lỗi SQL khi lấy danh mục theo ID: " + id);
+            e.printStackTrace();
         }
         return result;
     }
@@ -88,7 +87,8 @@ public class DanhMucDAO implements CrudDAO<DanhMuc, Integer> {
             }
 
         } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, "Lỗi SQL khi thêm danh mục: " + entity.getTenDanhMuc(), e);
+            System.out.println("❌ Lỗi SQL khi thêm danh mục: " + entity.getTenDanhMuc());
+            e.printStackTrace();
         }
         return null;
     }
@@ -105,7 +105,8 @@ public class DanhMucDAO implements CrudDAO<DanhMuc, Integer> {
             return ps.executeUpdate() > 0;
 
         } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, "Lỗi SQL khi cập nhật danh mục ID: " + entity.getMaDanhMuc(), e);
+            System.out.println("❌ Lỗi SQL khi cập nhật danh mục ID: " + entity.getMaDanhMuc());
+            e.printStackTrace();
             return false;
         }
     }
@@ -121,7 +122,8 @@ public class DanhMucDAO implements CrudDAO<DanhMuc, Integer> {
             return ps.executeUpdate() > 0;
 
         } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, "Lỗi SQL khi xóa danh mục ID: " + id, e);
+            System.out.println("❌ Lỗi SQL khi xóa danh mục ID: " + id);
+            e.printStackTrace();
             return false;
         }
     }
@@ -140,8 +142,10 @@ public class DanhMucDAO implements CrudDAO<DanhMuc, Integer> {
                     list.add(mapResultSetToDanhMuc(rs));
                 }
             }
+
         } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, "Lỗi SQL khi tìm danh mục theo prefix: " + prefix, e);
+            System.out.println("❌ Lỗi SQL khi tìm danh mục theo prefix: " + prefix);
+            e.printStackTrace();
         }
         return list;
     }

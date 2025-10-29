@@ -6,15 +6,11 @@ import com.microshop.model.HangThanhVien;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
- * DAO cho HangThanhVien implement CrudDAO chuẩn
+ * DAO cho HangThanhVien implement CrudDAO chuẩn — phiên bản không dùng Logger
  */
 public class HangThanhVienDAO implements CrudDAO<HangThanhVien, Integer> {
-
-    private static final Logger LOGGER = Logger.getLogger(HangThanhVienDAO.class.getName());
 
     // --- Map ResultSet → HangThanhVien ---
     private HangThanhVien mapResultSetToHangThanhVien(ResultSet rs) throws SQLException {
@@ -45,7 +41,8 @@ public class HangThanhVienDAO implements CrudDAO<HangThanhVien, Integer> {
             }
 
         } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, "Lỗi SQL khi lấy tất cả Hạng Thành Viên.", e);
+            System.out.println("❌ Lỗi SQL khi lấy tất cả Hạng Thành Viên: " + e.getMessage());
+            e.printStackTrace();
         }
         return list;
     }
@@ -67,7 +64,8 @@ public class HangThanhVienDAO implements CrudDAO<HangThanhVien, Integer> {
             }
 
         } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, "Lỗi SQL khi lấy Hạng Thành Viên theo ID: " + id, e);
+            System.out.println("❌ Lỗi SQL khi lấy Hạng Thành Viên theo ID: " + id);
+            e.printStackTrace();
         }
         return result;
     }
@@ -75,7 +73,12 @@ public class HangThanhVienDAO implements CrudDAO<HangThanhVien, Integer> {
     // --- INSERT ---
     @Override
     public Integer insert(HangThanhVien entity) {
-        String sql = "INSERT INTO HANGTHANHVIEN (TenHang, MucChiTieuToiThieu, DuongDanIcon, ChietKhau) VALUES (?, ?, ?, ?)";
+        String sql = """
+            INSERT INTO HANGTHANHVIEN 
+            (TenHang, MucChiTieuToiThieu, DuongDanIcon, ChietKhau) 
+            VALUES (?, ?, ?, ?)
+        """;
+
         try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
@@ -89,19 +92,24 @@ public class HangThanhVienDAO implements CrudDAO<HangThanhVien, Integer> {
 
             try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
                 if (generatedKeys.next()) return generatedKeys.getInt(1);
-                else return null;
             }
 
         } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, "Lỗi SQL khi tạo Hạng Thành Viên: " + entity.getTenHang(), e);
-            return null;
+            System.out.println("❌ Lỗi SQL khi tạo Hạng Thành Viên: " + entity.getTenHang());
+            e.printStackTrace();
         }
+        return null;
     }
 
     // --- UPDATE ---
     @Override
     public boolean update(HangThanhVien entity) {
-        String sql = "UPDATE HANGTHANHVIEN SET TenHang=?, MucChiTieuToiThieu=?, DuongDanIcon=?, ChietKhau=? WHERE MaHang=?";
+        String sql = """
+            UPDATE HANGTHANHVIEN 
+            SET TenHang=?, MucChiTieuToiThieu=?, DuongDanIcon=?, ChietKhau=? 
+            WHERE MaHang=?
+        """;
+
         try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
@@ -114,7 +122,8 @@ public class HangThanhVienDAO implements CrudDAO<HangThanhVien, Integer> {
             return ps.executeUpdate() > 0;
 
         } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, "Lỗi SQL khi cập nhật Hạng Thành Viên ID: " + entity.getMaHang(), e);
+            System.out.println("❌ Lỗi SQL khi cập nhật Hạng Thành Viên ID: " + entity.getMaHang());
+            e.printStackTrace();
             return false;
         }
     }
@@ -130,12 +139,13 @@ public class HangThanhVienDAO implements CrudDAO<HangThanhVien, Integer> {
             return ps.executeUpdate() > 0;
 
         } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, "Lỗi SQL khi xóa Hạng Thành Viên ID: " + id, e);
+            System.out.println("❌ Lỗi SQL khi xóa Hạng Thành Viên ID: " + id);
+            e.printStackTrace();
             return false;
         }
     }
 
-    // --- GET BY PREFIX (optional) ---
+    // --- GET BY PREFIX ---
     public List<HangThanhVien> getByPrefix(String prefix) {
         List<HangThanhVien> list = new ArrayList<>();
         String sql = "SELECT * FROM HANGTHANHVIEN WHERE TenHang LIKE ?";
@@ -152,7 +162,8 @@ public class HangThanhVienDAO implements CrudDAO<HangThanhVien, Integer> {
             }
 
         } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, "Lỗi SQL khi tìm Hạng Thành Viên theo prefix: " + prefix, e);
+            System.out.println("❌ Lỗi SQL khi tìm Hạng Thành Viên theo prefix: " + prefix);
+            e.printStackTrace();
         }
 
         return list;

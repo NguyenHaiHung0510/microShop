@@ -21,7 +21,7 @@ public class TaiKhoanRiotDAO implements CrudDAO<TaiKhoanRiot, Integer> {
         String sql = """
             SELECT tk.*, r.*
             FROM TAIKHOAN tk
-            JOIN TAIKHOAN_RIOT r ON tk.maTaiKhoan = r.maTaiKhoan
+            JOIN TAIKHOAN_RIOT r ON tk.MaTaiKhoan = r.MaTaiKhoan
             """;
 
         try (Connection conn = DBContext.getConnection();
@@ -42,8 +42,8 @@ public class TaiKhoanRiotDAO implements CrudDAO<TaiKhoanRiot, Integer> {
         String sql = """
             SELECT tk.*, r.*
             FROM TAIKHOAN tk
-            JOIN TAIKHOAN_RIOT r ON tk.maTaiKhoan = r.maTaiKhoan
-            WHERE tk.maTaiKhoan = ?
+            JOIN TAIKHOAN_RIOT r ON tk.MaTaiKhoan = r.MaTaiKhoan
+            WHERE tk.MaTaiKhoan = ?
             """;
 
         try (Connection conn = DBContext.getConnection();
@@ -79,9 +79,9 @@ public class TaiKhoanRiotDAO implements CrudDAO<TaiKhoanRiot, Integer> {
         // Insert vào bảng con TAIKHOAN_RIOT
         String sql = """
             INSERT INTO TAIKHOAN_RIOT
-            (maTaiKhoan, tenDangNhap, matKhau, capDoRiot, soTuongLMHT, soTrangPhucLMHT, 
-             soDaSacLMHT, soBieuCamLMHT, soBieuTuongLMHT, hangRankLMHT, khungRankLMHT,
-             soThuCungTFT, soSanDauTFT, soChuongLucTFT)
+            (MaTaiKhoan, TenDangNhap, MatKhau, CapDoRiot, SoTuongLMHT, SoTrangPhucLMHT, 
+             SoDaSacLMHT, SoBieuCamLMHT, SoBieuTuongLMHT, HangRankLMHT, KhungRankLMHT,
+             SoThuCungTFT, SoSanDauTFT, SoChuongLucTFT)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """;
 
@@ -126,10 +126,10 @@ public class TaiKhoanRiotDAO implements CrudDAO<TaiKhoanRiot, Integer> {
         // Cập nhật bảng con
         String sql = """
             UPDATE TAIKHOAN_RIOT
-            SET tenDangNhap = ?, matKhau = ?, capDoRiot = ?, soTuongLMHT = ?, soTrangPhucLMHT = ?, 
-                soDaSacLMHT = ?, soBieuCamLMHT = ?, soBieuTuongLMHT = ?, hangRankLMHT = ?, 
-                khungRankLMHT = ?, soThuCungTFT = ?, soSanDauTFT = ?, soChuongLucTFT = ?
-            WHERE maTaiKhoan = ?
+            SET TenDangNhap = ?, MatKhau = ?, CapDoRiot = ?, SoTuongLMHT = ?, SoTrangPhucLMHT = ?, 
+                SoDaSacLMHT = ?, SoBieuCamLMHT = ?, SoBieuTuongLMHT = ?, HangRankLMHT = ?, 
+                KhungRankLMHT = ?, SoThuCungTFT = ?, SoSanDauTFT = ?, SoChuongLucTFT = ?
+            WHERE MaTaiKhoan = ?
             """;
 
         try (Connection conn = DBContext.getConnection();
@@ -158,7 +158,7 @@ public class TaiKhoanRiotDAO implements CrudDAO<TaiKhoanRiot, Integer> {
     @Override
     public boolean delete(Integer maTaiKhoan) throws SQLException {
         // Xóa bảng con trước
-        String sql = "DELETE FROM TAIKHOAN_RIOT WHERE maTaiKhoan = ?";
+        String sql = "DELETE FROM TAIKHOAN_RIOT WHERE MaTaiKhoan = ?";
 
         try (Connection conn = DBContext.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -177,8 +177,8 @@ public class TaiKhoanRiotDAO implements CrudDAO<TaiKhoanRiot, Integer> {
         String sql = """
             SELECT tk.*, r.*
             FROM TAIKHOAN tk
-            JOIN TAIKHOAN_RIOT r ON tk.maTaiKhoan = r.maTaiKhoan
-            WHERE tk.maDanhMuc = ?
+            JOIN TAIKHOAN_RIOT r ON tk.MaTaiKhoan = r.MaTaiKhoan
+            WHERE tk.MaDanhMuc = ?
             """;
 
         try (Connection conn = DBContext.getConnection();
@@ -201,8 +201,8 @@ public class TaiKhoanRiotDAO implements CrudDAO<TaiKhoanRiot, Integer> {
         String sql = """
             SELECT tk.*, r.*
             FROM TAIKHOAN tk
-            JOIN TAIKHOAN_RIOT r ON tk.maTaiKhoan = r.maTaiKhoan
-            WHERE tk.trangThai = ?
+            JOIN TAIKHOAN_RIOT r ON tk.MaTaiKhoan = r.MaTaiKhoan
+            WHERE tk.TrangThai = ?
             """;
 
         try (Connection conn = DBContext.getConnection();
@@ -229,30 +229,30 @@ public class TaiKhoanRiotDAO implements CrudDAO<TaiKhoanRiot, Integer> {
         TaiKhoanRiot acc = new TaiKhoanRiot();
 
         // ----- Thuộc tính từ bảng TAIKHOAN -----
-        acc.setMaTaiKhoan(rs.getInt("maTaiKhoan"));
-        acc.setMaDanhMuc(rs.getInt("maDanhMuc"));
-        acc.setGiaGoc(rs.getBigDecimal("giaGoc"));
-        acc.setGiaBan(rs.getBigDecimal("giaBan"));
-        acc.setTrangThai(rs.getString("trangThai"));
-        acc.setDiemNoiBat(rs.getString("diemNoiBat"));
-        acc.setLuotXem(rs.getInt("luotXem"));
-        Timestamp ts = rs.getTimestamp("thoiGianDang");
+        acc.setMaTaiKhoan(rs.getInt("MaTaiKhoan"));
+        acc.setMaDanhMuc(rs.getInt("MaDanhMuc"));
+        acc.setGiaGoc(rs.getBigDecimal("GiaGoc"));
+        acc.setGiaBan(rs.getBigDecimal("GiaBan"));
+        acc.setTrangThai(rs.getString("TrangThai"));
+        acc.setDiemNoiBat(rs.getString("DiemNoiBat"));
+        acc.setLuotXem(rs.getInt("LuotXem"));
+        Timestamp ts = rs.getTimestamp("ThoiGianDang");
         if (ts != null) acc.setThoiGianDang(ts.toLocalDateTime());
 
         // ----- Thuộc tính từ bảng TAIKHOAN_RIOT -----
-        acc.setTenDangNhap(rs.getString("tenDangNhap"));
-        acc.setMatKhau(rs.getString("matKhau"));
-        acc.setCapDoRiot(rs.getInt("capDoRiot"));
-        acc.setSoTuongLMHT(rs.getInt("soTuongLMHT"));
-        acc.setSoTrangPhucLMHT(rs.getInt("soTrangPhucLMHT"));
-        acc.setSoDaSacLMHT(rs.getInt("soDaSacLMHT"));
-        acc.setSoBieuCamLMHT(rs.getInt("soBieuCamLMHT"));
-        acc.setSoBieuTuongLMHT(rs.getInt("soBieuTuongLMHT"));
-        acc.setHangRankLMHT(rs.getString("hangRankLMHT"));
-        acc.setKhungRankLMHT(rs.getString("khungRankLMHT"));
-        acc.setSoThuCungTFT(rs.getInt("soThuCungTFT"));
-        acc.setSoSanDauTFT(rs.getInt("soSanDauTFT"));
-        acc.setSoChuongLucTFT(rs.getInt("soChuongLucTFT"));
+        acc.setTenDangNhap(rs.getString("TenDangNhap"));
+        acc.setMatKhau(rs.getString("MatKhau"));
+        acc.setCapDoRiot(rs.getInt("CapDoRiot"));
+        acc.setSoTuongLMHT(rs.getInt("SoTuongLMHT"));
+        acc.setSoTrangPhucLMHT(rs.getInt("SoTrangPhucLMHT"));
+        acc.setSoDaSacLMHT(rs.getInt("SoDaSacLMHT"));
+        acc.setSoBieuCamLMHT(rs.getInt("SoBieuCamLMHT"));
+        acc.setSoBieuTuongLMHT(rs.getInt("SoBieuTuongLMHT"));
+        acc.setHangRankLMHT(rs.getString("HangRankLMHT"));
+        acc.setKhungRankLMHT(rs.getString("KhungRankLMHT"));
+        acc.setSoThuCungTFT(rs.getInt("SoThuCungTFT"));
+        acc.setSoSanDauTFT(rs.getInt("SoSanDauTFT"));
+        acc.setSoChuongLucTFT(rs.getInt("SoChuongLucTFT"));
         return acc;
     }
 }

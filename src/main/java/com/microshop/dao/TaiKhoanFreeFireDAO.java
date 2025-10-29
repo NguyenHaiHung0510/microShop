@@ -21,7 +21,7 @@ public class TaiKhoanFreeFireDAO implements CrudDAO<TaiKhoanFreeFire, Integer> {
         String sql = """
             SELECT tk.*, ff.*
             FROM TAIKHOAN tk
-            JOIN TAIKHOAN_FREEFIRE ff ON tk.maTaiKhoan = ff.maTaiKhoan
+            JOIN TAIKHOAN_FREEFIRE ff ON tk.MaTaiKhoan = ff.MaTaiKhoan
             """;
 
         try (Connection conn = DBContext.getConnection();
@@ -42,8 +42,8 @@ public class TaiKhoanFreeFireDAO implements CrudDAO<TaiKhoanFreeFire, Integer> {
         String sql = """
             SELECT tk.*, ff.*
             FROM TAIKHOAN tk
-            JOIN TAIKHOAN_FREEFIRE ff ON tk.maTaiKhoan = ff.maTaiKhoan
-            WHERE tk.maTaiKhoan = ?
+            JOIN TAIKHOAN_FREEFIRE ff ON tk.MaTaiKhoan = ff.MaTaiKhoan
+            WHERE tk.MaTaiKhoan = ?
             """;
 
         try (Connection conn = DBContext.getConnection();
@@ -79,7 +79,7 @@ public class TaiKhoanFreeFireDAO implements CrudDAO<TaiKhoanFreeFire, Integer> {
         // Insert vào bảng con TAIKHOAN_FREEFIRE
         String sql = """
             INSERT INTO TAIKHOAN_FREEFIRE
-            (maTaiKhoan, tenDangNhap, matKhau, coTheVoCuc, soSkinSung, hangRank, loaiDangKy)
+            (MaTaiKhoan, TenDangNhap, MatKhau, CoTheVoCuc, SoSkinSung, HangRank, LoaiDangKy)
             VALUES (?, ?, ?, ?, ?, ?, ?)
             """;
 
@@ -117,8 +117,8 @@ public class TaiKhoanFreeFireDAO implements CrudDAO<TaiKhoanFreeFire, Integer> {
         // Cập nhật bảng con
         String sql = """
             UPDATE TAIKHOAN_FREEFIRE
-            SET tenDangNhap = ?, matKhau = ?, coTheVoCuc = ?, soSkinSung = ?, hangRank = ?, loaiDangKy = ?
-            WHERE maTaiKhoan = ?
+            SET TenDangNhap = ?, MatKhau = ?, CoTheVoCuc = ?, SoSkinSung = ?, HangRank = ?, LoaiDangKy = ?
+            WHERE MaTaiKhoan = ?
             """;
 
         try (Connection conn = DBContext.getConnection();
@@ -140,7 +140,7 @@ public class TaiKhoanFreeFireDAO implements CrudDAO<TaiKhoanFreeFire, Integer> {
     @Override
     public boolean delete(Integer maTaiKhoan) throws SQLException {
         // Xóa bảng con trước (tránh lỗi khóa ngoại)
-        String sql = "DELETE FROM TAIKHOAN_FREEFIRE WHERE maTaiKhoan = ?";
+        String sql = "DELETE FROM TAIKHOAN_FREEFIRE WHERE MaTaiKhoan = ?";
 
         try (Connection conn = DBContext.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -159,8 +159,8 @@ public class TaiKhoanFreeFireDAO implements CrudDAO<TaiKhoanFreeFire, Integer> {
         String sql = """
             SELECT tk.*, ff.*
             FROM TAIKHOAN tk
-            JOIN TAIKHOAN_FREEFIRE ff ON tk.maTaiKhoan = ff.maTaiKhoan
-            WHERE tk.maDanhMuc = ?
+            JOIN TAIKHOAN_FREEFIRE ff ON tk.MaTaiKhoan = ff.MaTaiKhoan
+            WHERE tk.MaDanhMuc = ?
             """;
 
         try (Connection conn = DBContext.getConnection();
@@ -183,8 +183,8 @@ public class TaiKhoanFreeFireDAO implements CrudDAO<TaiKhoanFreeFire, Integer> {
         String sql = """
             SELECT tk.*, ff.*
             FROM TAIKHOAN tk
-            JOIN TAIKHOAN_FREEFIRE ff ON tk.maTaiKhoan = ff.maTaiKhoan
-            WHERE tk.trangThai = ?
+            JOIN TAIKHOAN_FREEFIRE ff ON tk.MaTaiKhoan = ff.MaTaiKhoan
+            WHERE tk.TrangThai = ?
             """;
 
         try (Connection conn = DBContext.getConnection();
@@ -209,22 +209,22 @@ public class TaiKhoanFreeFireDAO implements CrudDAO<TaiKhoanFreeFire, Integer> {
     // ---------------------- MAPPING HELPER ----------------------
     private TaiKhoanFreeFire mapResultSetToTaiKhoanFreeFire(ResultSet rs) throws SQLException {
         TaiKhoanFreeFire acc = new TaiKhoanFreeFire();
-        acc.setMaTaiKhoan(rs.getInt("maTaiKhoan"));
-        acc.setMaDanhMuc(rs.getInt("maDanhMuc"));
-        acc.setGiaGoc(rs.getBigDecimal("giaGoc"));
-        acc.setGiaBan(rs.getBigDecimal("giaBan"));
-        acc.setTrangThai(rs.getString("trangThai"));
-        acc.setDiemNoiBat(rs.getString("diemNoiBat"));
-        acc.setLuotXem(rs.getInt("luotXem"));
-        Timestamp ts = rs.getTimestamp("thoiGianDang");
+        acc.setMaTaiKhoan(rs.getInt("MaTaiKhoan"));
+        acc.setMaDanhMuc(rs.getInt("MaDanhMuc"));
+        acc.setGiaGoc(rs.getBigDecimal("GiaGoc"));
+        acc.setGiaBan(rs.getBigDecimal("GiaBan"));
+        acc.setTrangThai(rs.getString("TrangThai"));
+        acc.setDiemNoiBat(rs.getString("DiemNoiBat"));
+        acc.setLuotXem(rs.getInt("LuotXem"));
+        Timestamp ts = rs.getTimestamp("ThoiGianDang");
         if (ts != null) acc.setThoiGianDang(ts.toLocalDateTime());
 
-        acc.setTenDangNhap(rs.getString("tenDangNhap"));
-        acc.setMatKhau(rs.getString("matKhau"));
-        acc.setCoTheVoCuc(rs.getBoolean("coTheVoCuc"));
-        acc.setSoSkinSung(rs.getInt("soSkinSung"));
-        acc.setHangRank(rs.getString("hangRank"));
-        acc.setLoaiDangKy(rs.getString("loaiDangKy"));
+        acc.setTenDangNhap(rs.getString("TenDangNhap"));
+        acc.setMatKhau(rs.getString("MatKhau"));
+        acc.setCoTheVoCuc(rs.getBoolean("CoTheVoCuc"));
+        acc.setSoSkinSung(rs.getInt("SoSkinSung"));
+        acc.setHangRank(rs.getString("HangRank"));
+        acc.setLoaiDangKy(rs.getString("LoaiDangKy"));
         return acc;
     }
 }

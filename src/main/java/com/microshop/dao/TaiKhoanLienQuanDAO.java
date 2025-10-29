@@ -39,7 +39,7 @@ public class TaiKhoanLienQuanDAO implements CrudDAO<TaiKhoanLienQuan, Integer> {
     // ---------------------- GET BY ID ----------------------
     @Override
     public TaiKhoanLienQuan getById(Integer maTaiKhoan) throws SQLException {
-        String sql = "SELECT * FROM TAIKHOAN_LIENQUAN WHERE maTaiKhoan = ?";
+        String sql = "SELECT * FROM TAIKHOAN_LIENQUAN WHERE MaTaiKhoan = ?";
         TaiKhoanLienQuan acc = null;
 
         try (Connection conn = DBContext.getConnection();
@@ -75,7 +75,7 @@ public class TaiKhoanLienQuanDAO implements CrudDAO<TaiKhoanLienQuan, Integer> {
         // 2️⃣ Insert vào bảng con
         String sql = """
             INSERT INTO TAIKHOAN_LIENQUAN
-            (maTaiKhoan, tenDangNhap, matKhau, hangRank, soTuong, soTrangPhuc, bacNgoc, loaiDangKy)
+            (MaTaiKhoan, TenDangNhap, MatKhau, HangRank, SoTuong, SoTrangPhuc, BacNgoc, LoaiDangKy)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?)
             """;
 
@@ -114,8 +114,8 @@ public class TaiKhoanLienQuanDAO implements CrudDAO<TaiKhoanLienQuan, Integer> {
         // 2️⃣ Update bảng con
         String sql = """
             UPDATE TAIKHOAN_LIENQUAN
-            SET tenDangNhap = ?, matKhau = ?, hangRank = ?, soTuong = ?, soTrangPhuc = ?, bacNgoc = ?, loaiDangKy = ?
-            WHERE maTaiKhoan = ?
+            SET TenDangNhap = ?, MatKhau = ?, HangRank = ?, SoTuong = ?, SoTrangPhuc = ?, BacNgoc = ?, LoaiDangKy = ?
+            WHERE MaTaiKhoan = ?
             """;
 
         try (Connection conn = DBContext.getConnection();
@@ -138,7 +138,7 @@ public class TaiKhoanLienQuanDAO implements CrudDAO<TaiKhoanLienQuan, Integer> {
     @Override
     public boolean delete(Integer maTaiKhoan) throws SQLException {
         // Xóa ở bảng con trước để tránh lỗi khóa ngoại
-        String sql = "DELETE FROM TAIKHOAN_LIENQUAN WHERE maTaiKhoan = ?";
+        String sql = "DELETE FROM TAIKHOAN_LIENQUAN WHERE MaTaiKhoan = ?";
 
         try (Connection conn = DBContext.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -154,8 +154,8 @@ public class TaiKhoanLienQuanDAO implements CrudDAO<TaiKhoanLienQuan, Integer> {
         List<TaiKhoanLienQuan> list = new ArrayList<>();
         String sql = """
             SELECT tklq.* FROM TAIKHOAN_LIENQUAN tklq
-            JOIN TAIKHOAN tk ON tklq.maTaiKhoan = tk.maTaiKhoan
-            WHERE tk.maDanhMuc = ?
+            JOIN TAIKHOAN tk ON tklq.MaTaiKhoan = tk.MaTaiKhoan
+            WHERE tk.MaDanhMuc = ?
             """;
 
         try (Connection conn = DBContext.getConnection();
@@ -177,8 +177,8 @@ public class TaiKhoanLienQuanDAO implements CrudDAO<TaiKhoanLienQuan, Integer> {
         List<TaiKhoanLienQuan> list = new ArrayList<>();
         String sql = """
             SELECT tklq.* FROM TAIKHOAN_LIENQUAN tklq
-            JOIN TAIKHOAN tk ON tklq.maTaiKhoan = tk.maTaiKhoan
-            WHERE tk.trangThai = ?
+            JOIN TAIKHOAN tk ON tklq.MaTaiKhoan = tk.MaTaiKhoan
+            WHERE tk.TrangThai = ?
             """;
 
         try (Connection conn = DBContext.getConnection();
@@ -203,14 +203,14 @@ public class TaiKhoanLienQuanDAO implements CrudDAO<TaiKhoanLienQuan, Integer> {
     // ---------------------- MAPPING HELPER ----------------------
     private TaiKhoanLienQuan mapResultSetToTaiKhoanLienQuan(ResultSet rs) throws SQLException {
         TaiKhoanLienQuan acc = new TaiKhoanLienQuan();
-        acc.setMaTaiKhoan(rs.getInt("maTaiKhoan"));
-        acc.setTenDangNhap(rs.getString("tenDangNhap"));
-        acc.setMatKhau(rs.getString("matKhau"));
-        acc.setHangRank(rs.getString("hangRank"));
-        acc.setSoTuong(rs.getInt("soTuong"));
-        acc.setSoTrangPhuc(rs.getInt("soTrangPhuc"));
-        acc.setBacNgoc(rs.getInt("bacNgoc"));
-        acc.setLoaiDangKy(rs.getString("loaiDangKy"));
+        acc.setMaTaiKhoan(rs.getInt("MaTaiKhoan"));
+        acc.setTenDangNhap(rs.getString("TenDangNhap"));
+        acc.setMatKhau(rs.getString("MatKhau"));
+        acc.setHangRank(rs.getString("HangRank"));
+        acc.setSoTuong(rs.getInt("SoTuong"));
+        acc.setSoTrangPhuc(rs.getInt("SoTrangPhuc"));
+        acc.setBacNgoc(rs.getInt("BacNgoc"));
+        acc.setLoaiDangKy(rs.getString("LoaiDangKy"));
         return acc;
     }
 }

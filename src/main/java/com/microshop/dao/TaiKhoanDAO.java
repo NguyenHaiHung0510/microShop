@@ -28,7 +28,7 @@ public class TaiKhoanDAO implements CrudDAO<TaiKhoan, Integer> {
 
     @Override
     public TaiKhoan getById(Integer id) throws SQLException {
-        String sql = "SELECT * FROM TAIKHOAN WHERE maTaiKhoan = ?";
+        String sql = "SELECT * FROM TAIKHOAN WHERE MaTaiKhoan = ?";
         try (Connection conn = DBContext.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, id);
@@ -42,7 +42,7 @@ public class TaiKhoanDAO implements CrudDAO<TaiKhoan, Integer> {
     @Override
     public Integer insert(TaiKhoan newAcc) throws SQLException {
         String sql = """
-                INSERT INTO TAIKHOAN (maDanhMuc, giaGoc, giaBan, trangThai, diemNoiBat, luotXem, thoiGianDang)
+                INSERT INTO TAIKHOAN (MaDanhMuc, GiaGoc, GiaBan, TrangThai, DiemNoiBat, LuotXem, ThoiGianDang)
                 VALUES (?, ?, ?, ?, ?, ?, ?)
                 """;
         try (Connection conn = DBContext.getConnection();
@@ -70,8 +70,8 @@ public class TaiKhoanDAO implements CrudDAO<TaiKhoan, Integer> {
     public boolean update(TaiKhoan entity) throws SQLException {
         String sql = """
                 UPDATE TAIKHOAN
-                SET maDanhMuc = ?, giaGoc = ?, giaBan = ?, trangThai = ?, diemNoiBat = ?, luotXem = ?, thoiGianDang = ?
-                WHERE maTaiKhoan = ?
+                SET MaDanhMuc = ?, GiaGoc = ?, GiaBan = ?, TrangThai = ?, DiemNoiBat = ?, LuotXem = ?, thoiGianDang = ?
+                WHERE MaTaiKhoan = ?
                 """;
         try (Connection conn = DBContext.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -90,7 +90,7 @@ public class TaiKhoanDAO implements CrudDAO<TaiKhoan, Integer> {
 
     @Override
     public boolean delete(Integer id) throws SQLException {
-        String sql = "DELETE FROM TAIKHOAN WHERE maTaiKhoan = ?";
+        String sql = "DELETE FROM TAIKHOAN WHERE MaTaiKhoan = ?";
         try (Connection conn = DBContext.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, id);
@@ -103,7 +103,7 @@ public class TaiKhoanDAO implements CrudDAO<TaiKhoan, Integer> {
     /** Lấy danh sách tài khoản theo mã danh mục */
     public List<TaiKhoan> getByMaDanhMuc(Integer maDanhMuc) throws SQLException {
         List<TaiKhoan> list = new ArrayList<>();
-        String sql = "SELECT * FROM TAIKHOAN WHERE maDanhMuc = ?";
+        String sql = "SELECT * FROM TAIKHOAN WHERE MaDanhMuc = ?";
         try (Connection conn = DBContext.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
@@ -118,7 +118,7 @@ public class TaiKhoanDAO implements CrudDAO<TaiKhoan, Integer> {
     /** Lấy danh sách tài khoản theo trạng thái */
     public List<TaiKhoan> getByTrangThai(String trangThai) throws SQLException {
         List<TaiKhoan> list = new ArrayList<>();
-        String sql = "SELECT * FROM TAIKHOAN WHERE trangThai = ?";
+        String sql = "SELECT * FROM TAIKHOAN WHERE TrangThai = ?";
         try (Connection conn = DBContext.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
@@ -132,7 +132,7 @@ public class TaiKhoanDAO implements CrudDAO<TaiKhoan, Integer> {
 
     /** Cập nhật trạng thái tài khoản */
     public void updateTrangThai(Integer maTaiKhoan, String trangThaiMoi) throws SQLException {
-        String sql = "UPDATE TAIKHOAN SET trangThai = ? WHERE maTaiKhoan = ?";
+        String sql = "UPDATE TAIKHOAN SET TrangThai = ? WHERE MaTaiKhoan = ?";
         try (Connection conn = DBContext.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, trangThaiMoi);
@@ -145,20 +145,20 @@ public class TaiKhoanDAO implements CrudDAO<TaiKhoan, Integer> {
 
     private TaiKhoan mapResultSetToTaiKhoan(ResultSet rs) throws SQLException {
         TaiKhoan tk = new TaiKhoan();
-        tk.setMaTaiKhoan(rs.getInt("maTaiKhoan"));
-        tk.setMaDanhMuc(rs.getInt("maDanhMuc"));
-        tk.setGiaGoc(rs.getBigDecimal("giaGoc"));
-        tk.setGiaBan(rs.getBigDecimal("giaBan"));
-        tk.setTrangThai(rs.getString("trangThai"));
-        tk.setDiemNoiBat(rs.getString("diemNoiBat"));
-        tk.setLuotXem(rs.getInt("luotXem"));
-        Timestamp ts = rs.getTimestamp("thoiGianDang");
+        tk.setMaTaiKhoan(rs.getInt("MaTaiKhoan"));
+        tk.setMaDanhMuc(rs.getInt("MaDanhMuc"));
+        tk.setGiaGoc(rs.getBigDecimal("GiaGoc"));
+        tk.setGiaBan(rs.getBigDecimal("GiaBan"));
+        tk.setTrangThai(rs.getString("TrangThai"));
+        tk.setDiemNoiBat(rs.getString("DiemNoiBat"));
+        tk.setLuotXem(rs.getInt("LuotXem"));
+        Timestamp ts = rs.getTimestamp("ThoiGianDang");
         if (ts != null) tk.setThoiGianDang(ts.toLocalDateTime());
         return tk;
     }
     public int insertAndReturnId(TaiKhoan acc) throws SQLException {
         String sql = """
-            INSERT INTO TAIKHOAN (maDanhMuc, giaGoc, giaBan, trangThai, diemNoiBat, luotXem, thoiGianDang)
+            INSERT INTO TAIKHOAN (MaDanhMuc, GiaGoc, GiaBan, TrangThai, DiemNoiBat, LuotXem, ThoiGianDang)
             VALUES (?, ?, ?, ?, ?, ?, ?)
             """;
         try (Connection conn = DBContext.getConnection();

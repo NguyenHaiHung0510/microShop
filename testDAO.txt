@@ -1,0 +1,100 @@
+package com.microshop.test;
+
+import com.microshop.context.DBContext;
+import com.microshop.dao.TaiKhoanDAO;
+import com.microshop.dao.TaiKhoanFreeFireDAO;
+import com.microshop.model.DanhMuc;
+import com.microshop.model.TaiKhoan;
+import com.microshop.model.TaiKhoanFreeFire;
+
+import java.math.BigDecimal;
+import java.sql.Connection;
+import java.time.LocalDateTime;
+import java.util.List;
+
+public class testDAO {
+    public static void main(String[] args) {
+        try (Connection conn = DBContext.getConnection()) {
+            System.out.println("✅ Kết nối thành công tới microShop!");
+            TaiKhoanFreeFireDAO dao = new TaiKhoanFreeFireDAO();
+            try {
+                System.out.println("===== TEST DAO TAIKHOAN_FREEFIRE =====");
+                //phai insert danhmuc trc do khoa phu cua taikhoan la danhmuc
+                //INSERT INTO DANHMUC (MaDanhMuc, TenDanhMuc)
+                //VALUES (1, 'Free Fire'),
+                //       (2, 'Liên Quân'),
+                //       (3, 'Riot');
+                // 1️⃣ INSERT
+                TaiKhoanFreeFire acc = new TaiKhoanFreeFire();
+                acc.setMaDanhMuc(1); // danh mục Free Fire
+                acc.setGiaGoc(new BigDecimal("100000"));
+                acc.setGiaBan(new BigDecimal("150000"));
+                acc.setTrangThai("DANG_BAN");
+                acc.setDiemNoiBat("Acc test Free Fire full skin súng");
+                acc.setLuotXem(10);
+                acc.setThoiGianDang(LocalDateTime.now());
+                acc.setTenDangNhap("test_freefire_acc");
+                acc.setMatKhau("123456");
+                acc.setCoTheVoCuc(true);
+                acc.setSoSkinSung(99);
+                acc.setHangRank("Huyền Thoại");
+                acc.setLoaiDangKy("Facebook");
+
+                int idMoi = dao.insert(acc);
+                System.out.println("✅ Đã thêm tài khoản Free Fire mới, ID = " + idMoi);
+
+                // 2️⃣ GET BY ID
+                TaiKhoanFreeFire found = dao.getById(idMoi);
+                if (found != null) {
+                    System.out.println("🔍 Lấy theo ID: " + found.getMaTaiKhoan()
+                            + " | Rank: " + found.getHangRank()
+                            + " | Đăng ký: " + found.getLoaiDangKy());
+                } else {
+                    System.out.println("❌ Không tìm thấy tài khoản vừa thêm!");
+                }
+
+                // 3️⃣ GET ALL
+                List<TaiKhoanFreeFire> all = dao.getAll();
+                System.out.println("📦 Tổng số tài khoản Free Fire trong DB: " + all.size());
+
+                // 4️⃣ UPDATE
+                if (found != null) {
+                    found.setGiaBan(new BigDecimal("180000"));
+                    found.setHangRank("Tinh Anh");
+                    found.setTrangThai("DANG_BAN");
+                    boolean updated = dao.update(found);
+                    System.out.println(updated ? "✅ Cập nhật thành công!" : "❌ Cập nhật thất bại!");
+
+                    TaiKhoanFreeFire after = dao.getById(idMoi);
+                    System.out.println("🔁 Sau update: Rank = " + after.getHangRank()
+                            + ", Giá bán mới = " + after.getGiaBan());
+                }
+
+                // 5️⃣ GET BY TRANG THAI
+                List<TaiKhoanFreeFire> soldList = dao.getByTrangThai("DA_BAN");
+                System.out.println("🟢 Có " + soldList.size() + " tài khoản có trạng thái SOLD.");
+
+                // 6️⃣ UPDATE TRANG THAI
+                dao.updateTrangThai(idMoi, "DA_BAN");
+                TaiKhoanFreeFire hidden = dao.getById(idMoi);
+                System.out.println("🟡 Trạng thái sau updateTrangThai(): " + hidden.getTrangThai());
+
+                // 7️⃣ DELETE
+                boolean deleted = dao.delete(idMoi);
+                System.out.println(deleted ? "🗑️ Xóa thành công!" : "❌ Xóa thất bại!");
+
+                // 8️⃣ CHECK AGAIN
+                TaiKhoanFreeFire check = dao.getById(idMoi);
+                System.out.println(check == null ? "✅ Đã xóa hoàn toàn khỏi DB!" : "⚠️ Vẫn còn tồn tại!");
+
+                System.out.println("===== KẾT THÚC TEST DAO TAIKHOAN_FREEFIRE =====");
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}

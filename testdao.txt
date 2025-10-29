@@ -1,0 +1,116 @@
+
+// dao.getAll()
+package com.microshop.dao;
+import com.microshop.model.*;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+
+
+public class Main {
+    public static void main(String[] args) {
+        NguoiDungDAO dao = new NguoiDungDAO();
+        for(NguoiDung x : dao.getAll()){
+            System.out.println(x);
+        }
+    }
+}
+
+
+
+// dao.insert()
+package com.microshop.dao;
+import com.microshop.model.*;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+
+
+class TestData {
+
+    public static List<NguoiDung> getNguoiDungTestList() {
+        List<NguoiDung> list = new ArrayList<>();
+
+        list.add(new NguoiDung(0, "user6", "pass123", "user6@example.com", "0901000008", "USER", new BigDecimal("0"), 1, LocalDateTime.now()));
+        list.add(new NguoiDung(0, "user7", "pass123", "user7@example.com", "0901000009", "USER", new BigDecimal("0"), 1, LocalDateTime.now()));
+        list.add(new NguoiDung(0, "user8", "pass123", "user8@example.com", "0901000010", "USER", new BigDecimal("0"), 1, LocalDateTime.now()));
+        return list;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        NguoiDungDAO dao = new NguoiDungDAO();
+        for(NguoiDung x : TestData.getNguoiDungTestList()){
+            dao.insert(x);
+        }
+    }
+}
+
+
+
+
+// dao.delete() -> xoá bang id
+package com.microshop.dao;
+import com.microshop.model.*;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+
+
+public class Main {
+    public static void main(String[] args) {
+        NguoiDungDAO dao = new NguoiDungDAO();
+        for(int i = 16 ; i <= 19 ; i++){
+            dao.delete(i);
+        }
+    }
+}
+
+// dao.update() -> Chi update voi nhung uid da co trong database
+package com.microshop.dao;
+import com.microshop.model.*;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+
+public class Main {
+    public static void main(String[] args) {
+        NguoiDungDAO dao = new NguoiDungDAO();
+        NguoiDung x = new NguoiDung(1, "nguyenvana", "123456", "abc@mail.com", "0123456788", "USER", new BigDecimal("0"),1, LocalDateTime.now());
+        dao.update(x);
+	// co the dung dao.getAll() de kiem tra xem da updata chua
+    }
+}
+
+
+// dao.getByPrefix() -> Tim kiem ten tai khoan theo prefix
+package com.microshop.dao;
+import com.microshop.model.*;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+
+public class Main {
+    public static void main(String[] args) {
+        NguoiDungDAO dao = new NguoiDungDAO();
+        for(NguoiDung x : dao.getByPrefix("user")){
+            System.out.println(x);
+        }
+    }
+}
+
+
+
+
+

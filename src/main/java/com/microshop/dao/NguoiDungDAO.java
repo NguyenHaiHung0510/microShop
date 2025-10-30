@@ -2,24 +2,27 @@ package com.microshop.dao;
 
 import com.microshop.context.DBContext;
 import com.microshop.model.NguoiDung;
-
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
 public class NguoiDungDAO implements CrudDAO<NguoiDung, Integer> {
 
-    // --- Map ResultSet → NguoiDung ---
     private NguoiDung mapResultSetToNguoiDung(ResultSet rs) throws SQLException {
         NguoiDung nd = new NguoiDung();
-        nd.setMaNguoiDung(rs.getInt("MaNguoiDung"));
+        nd.setMaNguoiDung(rs.getObject("MaNguoiDung", Integer.class)); 
         nd.setTenDangNhap(rs.getString("TenDangNhap"));
         nd.setMatKhau(rs.getString("MatKhau"));
         nd.setEmail(rs.getString("Email"));
         nd.setSoDienThoai(rs.getString("SoDienThoai"));
         nd.setVaiTro(rs.getString("VaiTro"));
         nd.setTongTienDaChi(rs.getBigDecimal("TongTienDaChi"));
-        nd.setMaHangThanhVien(rs.getInt("MaHangThanhVien"));
+        nd.setMaHangThanhVien(rs.getObject("MaHangThanhVien", Integer.class)); 
         Timestamp ts = rs.getTimestamp("ThoiGianTao");
         nd.setThoiGianTao(ts != null ? ts.toLocalDateTime() : null);
         return nd;
@@ -29,55 +32,49 @@ public class NguoiDungDAO implements CrudDAO<NguoiDung, Integer> {
         return DBContext.getConnection();
     }
 
-    // --- GET ALL ---
-    public List<NguoiDung> getAll() {
+    @Override
+    public List<NguoiDung> getAll() throws SQLException { 
         List<NguoiDung> list = new ArrayList<>();
         String sql = "SELECT * FROM NguoiDung";
 
-        try (Connection conn = getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
+        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
 
-            while (rs.next()) list.add(mapResultSetToNguoiDung(rs));
-
-        } catch (SQLException e) {
-            System.out.println("Lỗi SQL khi lấy tất cả Người Dùng: " + e.getMessage());
-            e.printStackTrace();
+            while (rs.next()) {
+                list.add(mapResultSetToNguoiDung(rs));
+            }
         }
+        
         return list;
     }
 
-    // --- GET BY ID ---
-    public NguoiDung getById(Integer id) {
+    @Override
+    public NguoiDung getById(Integer id) throws SQLException { 
         NguoiDung result = null;
         String sql = "SELECT * FROM NguoiDung WHERE MaNguoiDung = ?";
 
-        try (Connection conn = getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setInt(1, id);
+            ps.setObject(1, id); 
+
             try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) result = mapResultSetToNguoiDung(rs);
+                if (rs.next()) {
+                    result = mapResultSetToNguoiDung(rs);
+                }
             }
-
-        } catch (SQLException e) {
-            System.out.println("Lỗi SQL khi lấy Người Dùng theo ID: " + id);
-            e.printStackTrace();
         }
+        
         return result;
     }
 
-    // --- INSERT ---
     @Override
-    public Integer insert(NguoiDung entity) {
+    public Integer insert(NguoiDung entity) throws SQLException { 
         String sql = """
             INSERT INTO NguoiDung 
             (TenDangNhap, MatKhau, Email, SoDienThoai, VaiTro, TongTienDaChi, MaHangThanhVien, ThoiGianTao)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         """;
 
-        try (Connection conn = getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             ps.setString(1, entity.getTenDangNhap());
             ps.setString(2, entity.getMatKhau());
@@ -85,26 +82,26 @@ public class NguoiDungDAO implements CrudDAO<NguoiDung, Integer> {
             ps.setString(4, entity.getSoDienThoai());
             ps.setString(5, entity.getVaiTro());
             ps.setBigDecimal(6, entity.getTongTienDaChi());
-            ps.setInt(7, entity.getMaHangThanhVien());
+            ps.setObject(7, entity.getMaHangThanhVien()); 
             ps.setTimestamp(8, entity.getThoiGianTao() != null ? Timestamp.valueOf(entity.getThoiGianTao()) : null);
 
             int affectedRows = ps.executeUpdate();
-            if (affectedRows == 0) return null;
-
-            try (ResultSet rs = ps.getGeneratedKeys()) {
-                if (rs.next()) return rs.getInt(1);
+            if (affectedRows == 0) {
+                return null;
             }
 
-        } catch (SQLException e) {
-            System.out.println("Lỗi SQL khi tạo Người Dùng: " + entity.getTenDangNhap());
-            e.printStackTrace();
+            try (ResultSet rs = ps.getGeneratedKeys()) {
+                if (rs.next()) {
+                    return rs.getInt(1);
+                }
+            }
         }
+    
         return null;
     }
 
-    // --- UPDATE ---
     @Override
-    public boolean update(NguoiDung entity) {
+    public boolean update(NguoiDung entity) throws SQLException { 
         String sql = """
             UPDATE NguoiDung 
             SET TenDangNhap=?, MatKhau=?, Email=?, SoDienThoai=?, VaiTro=?, 
@@ -112,8 +109,7 @@ public class NguoiDungDAO implements CrudDAO<NguoiDung, Integer> {
             WHERE MaNguoiDung=?
         """;
 
-        try (Connection conn = getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, entity.getTenDangNhap());
             ps.setString(2, entity.getMatKhau());
@@ -121,54 +117,62 @@ public class NguoiDungDAO implements CrudDAO<NguoiDung, Integer> {
             ps.setString(4, entity.getSoDienThoai());
             ps.setString(5, entity.getVaiTro());
             ps.setBigDecimal(6, entity.getTongTienDaChi());
-            ps.setInt(7, entity.getMaHangThanhVien());
+            ps.setObject(7, entity.getMaHangThanhVien()); 
             ps.setTimestamp(8, entity.getThoiGianTao() != null ? Timestamp.valueOf(entity.getThoiGianTao()) : null);
-            ps.setInt(9, entity.getMaNguoiDung());
+            ps.setObject(9, entity.getMaNguoiDung()); 
 
             return ps.executeUpdate() > 0;
-
-        } catch (SQLException e) {
-            System.out.println("Lỗi SQL khi cập nhật Người Dùng ID: " + entity.getMaNguoiDung());
-            e.printStackTrace();
-            return false;
         }
+       
     }
 
-    // --- DELETE ---
     @Override
-    public boolean delete(Integer id) {
+    public boolean delete(Integer id) throws SQLException { 
         String sql = "DELETE FROM NguoiDung WHERE MaNguoiDung=?";
-        try (Connection conn = getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setInt(1, id);
+            ps.setObject(1, id); 
             return ps.executeUpdate() > 0;
-
-        } catch (SQLException e) {
-            System.out.println("Lỗi SQL khi xóa Người Dùng ID: " + id);
-            e.printStackTrace();
-            return false;
         }
     }
 
-    // --- GET BY PREFIX (optional) ---
-    public List<NguoiDung> getByPrefix(String prefix) {
-        List<NguoiDung> list = new ArrayList<>();
-        String sql = "SELECT * FROM NguoiDung WHERE TenDangNhap LIKE ?";
+    public NguoiDung getByTenDangNhap(String tenDangNhap) throws SQLException {
+        NguoiDung result = null;
+        String sql = "SELECT * FROM NguoiDung WHERE TenDangNhap = ?";
 
-        try (Connection conn = getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setString(1, prefix + "%");
+            ps.setString(1, tenDangNhap);
             try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) list.add(mapResultSetToNguoiDung(rs));
+                if (rs.next()) {
+                    result = mapResultSetToNguoiDung(rs);
+                }
             }
-
-        } catch (SQLException e) {
-            System.out.println("Lỗi SQL khi tìm Người Dùng theo prefix: " + prefix);
-            e.printStackTrace();
         }
-
-        return list;
+        return result;
     }
+
+    public NguoiDung getByEmail(String email) throws SQLException {
+        NguoiDung result = null;
+        String sql = "SELECT * FROM NguoiDung WHERE Email = ?";
+
+        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, email);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    result = mapResultSetToNguoiDung(rs);
+                }
+            }
+        }
+        return result;
+    }
+
+    // Đã chỉnh sửa by Hưng:
+    // Xóa hàm getByPrefix (không được yêu cầu)
+    // Implement lại theo yêu cầu
+    // Sửa hết try-catch thành throws để cho servlet xử lý
+    // dùng getObject/setObject thay cho getInt/setInt cũ để xử lý null
+    // Thêm 2 hàm được yêu cầu trong bản giao việc
+    // Xóa hàm getByPrefix ( not now )
 }

@@ -11,7 +11,7 @@ public class DBContext {
     private static final String DB_URL = "jdbc:mysql://localhost:3306/microshop_db";
     // Cái này là tài khoản root của MySQL server trên máy của <Hưng>
     private static final String DB_USER = "root";
-    private static final String DB_PASSWORD = "123456";
+    private static final String DB_PASSWORD = "hung";
 
     private static HikariDataSource dataSource;
 

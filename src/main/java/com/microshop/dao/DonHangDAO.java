@@ -15,12 +15,12 @@ import com.microshop.model.DonHang;
 
 public class DonHangDAO implements CrudDAO<DonHang, Integer> {
 
-    // --- Map ResultSet → DonHang ---
     private DonHang mapResultSetToDonHang(ResultSet rs) throws SQLException {
         DonHang dh = new DonHang();
-        dh.setMaDonHang(rs.getInt("MaDonHang"));
-        dh.setMaNguoiDung(rs.getInt("MaNguoiDung"));
-        dh.setMaTaiKhoan(rs.getInt("MaTaiKhoan"));
+        dh.setMaDonHang(rs.getObject("MaDonHang", Integer.class));
+        dh.setMaNguoiDung(rs.getObject("MaNguoiDung", Integer.class));
+        dh.setMaTaiKhoan(rs.getObject("MaTaiKhoan", Integer.class));
+
         dh.setGiaMua(rs.getBigDecimal("GiaMua"));
 
         Timestamp thoiGianMua = rs.getTimestamp("ThoiGianMua");
@@ -42,8 +42,6 @@ public class DonHangDAO implements CrudDAO<DonHang, Integer> {
         return DBContext.getConnection();
     }
 
-    // --- GET ALL ---
-    // SỬA: Thêm 'throws SQLException' và xóa try-catch
     @Override
     public List<DonHang> getAll() throws SQLException {
         List<DonHang> list = new ArrayList<>();
@@ -58,8 +56,6 @@ public class DonHangDAO implements CrudDAO<DonHang, Integer> {
         return list;
     }
 
-    // --- GET BY ID ---
-    // SỬA: Thêm 'throws SQLException' và xóa try-catch
     @Override
     public DonHang getById(Integer id) throws SQLException {
         DonHang result = null;
@@ -67,7 +63,7 @@ public class DonHangDAO implements CrudDAO<DonHang, Integer> {
 
         try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setInt(1, id);
+            ps.setObject(1, id);
 
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
@@ -78,8 +74,6 @@ public class DonHangDAO implements CrudDAO<DonHang, Integer> {
         return result;
     }
 
-    // --- INSERT ---
-    // SỬA: Thêm 'throws SQLException' và xóa try-catch
     @Override
     public Integer insert(DonHang entity) throws SQLException {
         String sql = """
@@ -90,8 +84,8 @@ public class DonHangDAO implements CrudDAO<DonHang, Integer> {
 
         try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
-            ps.setInt(1, entity.getMaNguoiDung());
-            ps.setInt(2, entity.getMaTaiKhoan());
+            ps.setObject(1, entity.getMaNguoiDung());
+            ps.setObject(2, entity.getMaTaiKhoan());
             ps.setBigDecimal(3, entity.getGiaMua());
             ps.setTimestamp(4, entity.getThoiGianMua() != null ? Timestamp.valueOf(entity.getThoiGianMua()) : null);
             ps.setString(5, entity.getTrangThai());
@@ -111,8 +105,6 @@ public class DonHangDAO implements CrudDAO<DonHang, Integer> {
         return null;
     }
 
-    // --- UPDATE ---
-    // SỬA: Thêm 'throws SQLException' và xóa try-catch
     @Override
     public boolean update(DonHang entity) throws SQLException {
         String sql = """
@@ -123,27 +115,25 @@ public class DonHangDAO implements CrudDAO<DonHang, Integer> {
 
         try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setInt(1, entity.getMaNguoiDung());
-            ps.setInt(2, entity.getMaTaiKhoan());
+            ps.setObject(1, entity.getMaNguoiDung());
+            ps.setObject(2, entity.getMaTaiKhoan());
             ps.setBigDecimal(3, entity.getGiaMua());
             ps.setTimestamp(4, entity.getThoiGianMua() != null ? Timestamp.valueOf(entity.getThoiGianMua()) : null);
             ps.setString(5, entity.getTrangThai());
             ps.setTimestamp(6, entity.getThoiGianTao() != null ? Timestamp.valueOf(entity.getThoiGianTao()) : Timestamp.valueOf(LocalDateTime.now()));
-            ps.setInt(7, entity.getMaDonHang());
+            ps.setObject(7, entity.getMaDonHang());
 
             return ps.executeUpdate() > 0;
         }
     }
 
-    // --- DELETE ---
-    // SỬA: Thêm 'throws SQLException' và xóa try-catch
     @Override
     public boolean delete(Integer id) throws SQLException {
         String sql = "DELETE FROM DONHANG WHERE MaDonHang=?";
 
         try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setInt(1, id);
+            ps.setObject(1, id);
             return ps.executeUpdate() > 0;
         }
     }
@@ -154,7 +144,7 @@ public class DonHangDAO implements CrudDAO<DonHang, Integer> {
 
         try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setInt(1, maNguoiDung);
+            ps.setObject(1, maNguoiDung);
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     list.add(mapResultSetToDonHang(rs));
@@ -168,7 +158,7 @@ public class DonHangDAO implements CrudDAO<DonHang, Integer> {
         String sql = "SELECT * FROM DonHang WHERE MaTaiKhoan = ?";
         try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setInt(1, maTaiKhoan);
+            ps.setObject(1, maTaiKhoan);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     return mapResultSetToDonHang(rs);
@@ -184,7 +174,7 @@ public class DonHangDAO implements CrudDAO<DonHang, Integer> {
 
             ps.setString(1, trangThaiMoi);
             ps.setTimestamp(2, Timestamp.valueOf(thoiGianMua));
-            ps.setInt(3, maDonHang);
+            ps.setObject(3, maDonHang);
 
             return ps.executeUpdate() > 0;
         }

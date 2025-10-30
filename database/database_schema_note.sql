@@ -1,18 +1,15 @@
+
 CREATE DATABASE IF NOT EXISTS `microshop_db` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE `microshop_db`;
 
--- Nhóm bảng chung & người dùng
 CREATE TABLE `HANGTHANHVIEN` (
-    `MaHang` INT PRIMARY KEY AUTO_INCREMENT,
+    `MaHang` INT PRIMARY KEY AUTO_INCREMENT,
     `TenHang` VARCHAR(50) NOT NULL UNIQUE,
     `MucChiTieuToiThieu` DECIMAL(15, 0) NOT NULL,
     `DuongDanIcon` VARCHAR(255),
     `ChietKhau` DECIMAL(4, 2) DEFAULT 0.00
-    -- thiết kế như vậy có nghĩa là chiết khấu max cho một hạng thành viên sẽ là 99.99%
 );
-/*
-Sử đụng DECIMAL để lưu các giá trị tiền vì 2 lý do cơ bản là độ chính xác tuyệt đối và nó là tiêu chuẩn để lưu các giá trị tiền tệ
-*/
+
 
 CREATE TABLE `NGUOIDUNG` (
     `MaNguoiDung` INT PRIMARY KEY AUTO_INCREMENT,

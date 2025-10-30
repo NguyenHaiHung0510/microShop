@@ -23,7 +23,7 @@ public class DonHangDAO implements CrudDAO<DonHang, Integer> {
         dh.setMaTaiKhoan(rs.getInt("MaTaiKhoan"));
         dh.setGiaMua(rs.getBigDecimal("GiaMua"));
 
-        Timestamp thoiGianMua = rs.getTimestamp("NgayMua"); // Nếu trong DB là ThoiGianMua thì đổi tên
+        Timestamp thoiGianMua = rs.getTimestamp("ThoiGianMua");
         if (thoiGianMua != null) {
             dh.setThoiGianMua(thoiGianMua.toLocalDateTime());
         }
@@ -43,34 +43,29 @@ public class DonHangDAO implements CrudDAO<DonHang, Integer> {
     }
 
     // --- GET ALL ---
+    // SỬA: Thêm 'throws SQLException' và xóa try-catch
     @Override
-    public List<DonHang> getAll() {
+    public List<DonHang> getAll() throws SQLException {
         List<DonHang> list = new ArrayList<>();
         String sql = "SELECT * FROM DONHANG";
 
-        try (Connection conn = getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
+        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
                 list.add(mapResultSetToDonHang(rs));
             }
-
-        } catch (SQLException e) {
-            System.out.println("❌ Lỗi SQL khi lấy tất cả đơn hàng: " + e.getMessage());
-            e.printStackTrace();
         }
         return list;
     }
 
     // --- GET BY ID ---
+    // SỬA: Thêm 'throws SQLException' và xóa try-catch
     @Override
-    public DonHang getById(Integer id) {
+    public DonHang getById(Integer id) throws SQLException {
         DonHang result = null;
         String sql = "SELECT * FROM DONHANG WHERE MaDonHang = ?";
 
-        try (Connection conn = getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setInt(1, id);
 
@@ -79,25 +74,21 @@ public class DonHangDAO implements CrudDAO<DonHang, Integer> {
                     result = mapResultSetToDonHang(rs);
                 }
             }
-
-        } catch (SQLException e) {
-            System.out.println("❌ Lỗi SQL khi lấy đơn hàng ID: " + id);
-            e.printStackTrace();
         }
         return result;
     }
 
     // --- INSERT ---
+    // SỬA: Thêm 'throws SQLException' và xóa try-catch
     @Override
-    public Integer insert(DonHang entity) {
+    public Integer insert(DonHang entity) throws SQLException {
         String sql = """
             INSERT INTO DONHANG 
-            (MaNguoiDung, MaTaiKhoan, GiaMua, NgayMua, TrangThai, ThoiGianTao)
+            (MaNguoiDung, MaTaiKhoan, GiaMua, ThoiGianMua, TrangThai, ThoiGianTao)
             VALUES (?, ?, ?, ?, ?, ?)
         """;
 
-        try (Connection conn = getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             ps.setInt(1, entity.getMaNguoiDung());
             ps.setInt(2, entity.getMaTaiKhoan());
@@ -107,30 +98,30 @@ public class DonHangDAO implements CrudDAO<DonHang, Integer> {
             ps.setTimestamp(6, entity.getThoiGianTao() != null ? Timestamp.valueOf(entity.getThoiGianTao()) : Timestamp.valueOf(LocalDateTime.now()));
 
             int affectedRows = ps.executeUpdate();
-            if (affectedRows == 0) return null;
-
-            try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
-                if (generatedKeys.next()) return generatedKeys.getInt(1);
+            if (affectedRows == 0) {
+                return null;
             }
 
-        } catch (SQLException e) {
-            System.out.println("❌ Lỗi SQL khi thêm đơn hàng: " + e.getMessage());
-            e.printStackTrace();
+            try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    return generatedKeys.getInt(1);
+                }
+            }
         }
         return null;
     }
 
     // --- UPDATE ---
+    // SỬA: Thêm 'throws SQLException' và xóa try-catch
     @Override
-    public boolean update(DonHang entity) {
+    public boolean update(DonHang entity) throws SQLException {
         String sql = """
             UPDATE DONHANG 
-            SET MaNguoiDung=?, MaTaiKhoan=?, GiaMua=?, NgayMua=?, TrangThai=?, ThoiGianTao=? 
+            SET MaNguoiDung=?, MaTaiKhoan=?, GiaMua=?, ThoiGianMua=?, TrangThai=?, ThoiGianTao=? 
             WHERE MaDonHang=?
         """;
 
-        try (Connection conn = getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setInt(1, entity.getMaNguoiDung());
             ps.setInt(2, entity.getMaTaiKhoan());
@@ -141,43 +132,33 @@ public class DonHangDAO implements CrudDAO<DonHang, Integer> {
             ps.setInt(7, entity.getMaDonHang());
 
             return ps.executeUpdate() > 0;
-
-        } catch (SQLException e) {
-            System.out.println("❌ Lỗi SQL khi cập nhật đơn hàng ID: " + entity.getMaDonHang());
-            e.printStackTrace();
-            return false;
         }
     }
 
     // --- DELETE ---
+    // SỬA: Thêm 'throws SQLException' và xóa try-catch
     @Override
-    public boolean delete(Integer id) {
+    public boolean delete(Integer id) throws SQLException {
         String sql = "DELETE FROM DONHANG WHERE MaDonHang=?";
 
-        try (Connection conn = getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setInt(1, id);
             return ps.executeUpdate() > 0;
-
-        } catch (SQLException e) {
-            System.out.println("❌ Lỗi SQL khi xóa đơn hàng ID: " + id);
-            e.printStackTrace();
-            return false;
         }
     }
 
-    // ==================== CUSTOM METHODS ====================
     public List<DonHang> getByMaNguoiDung(Integer maNguoiDung) throws SQLException {
         String sql = "SELECT * FROM DonHang WHERE MaNguoiDung = ?";
         List<DonHang> list = new ArrayList<>();
 
-        try (Connection conn = getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setInt(1, maNguoiDung);
             try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) list.add(mapResultSetToDonHang(rs));
+                while (rs.next()) {
+                    list.add(mapResultSetToDonHang(rs));
+                }
             }
         }
         return list;
@@ -185,12 +166,13 @@ public class DonHangDAO implements CrudDAO<DonHang, Integer> {
 
     public DonHang getByMaTaiKhoan(Integer maTaiKhoan) throws SQLException {
         String sql = "SELECT * FROM DonHang WHERE MaTaiKhoan = ?";
-        try (Connection conn = getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setInt(1, maTaiKhoan);
             try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) return mapResultSetToDonHang(rs);
+                if (rs.next()) {
+                    return mapResultSetToDonHang(rs);
+                }
             }
         }
         return null;
@@ -198,8 +180,7 @@ public class DonHangDAO implements CrudDAO<DonHang, Integer> {
 
     public boolean updateTrangThai(Integer maDonHang, String trangThaiMoi, LocalDateTime thoiGianMua) throws SQLException {
         String sql = "UPDATE DonHang SET TrangThai = ?, ThoiGianMua = ? WHERE MaDonHang = ?";
-        try (Connection conn = getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, trangThaiMoi);
             ps.setTimestamp(2, Timestamp.valueOf(thoiGianMua));

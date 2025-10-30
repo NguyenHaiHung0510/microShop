@@ -13,12 +13,8 @@ import java.util.List;
 import com.microshop.context.DBContext;
 import com.microshop.model.GameSteam;
 
-/**
- * DAO cho GameSteam — implement CrudDAO<GameSteam, Integer>
- */
 public class GameSteamDAO implements CrudDAO<GameSteam, Integer> {
 
-    // --- Map ResultSet → GameSteam (đầy đủ mọi thuộc tính) ---
     private GameSteam mapResultSetToGameSteam(ResultSet rs) throws SQLException {
         GameSteam g = new GameSteam();
         g.setMaGameSteam(rs.getInt("MaGameSteam"));
@@ -29,14 +25,15 @@ public class GameSteamDAO implements CrudDAO<GameSteam, Integer> {
         g.setLuotXem(rs.getInt("LuotXem"));
 
         Timestamp tg = rs.getTimestamp("ThoiGianDang");
-        if (tg != null) g.setThoiGianDang(tg.toLocalDateTime());
+        if (tg != null) {
+            g.setThoiGianDang(tg.toLocalDateTime());
+        }
 
         g.setIdVideoTrailer(rs.getString("IdVideoTrailer"));
         g.setDuongDanAnh(rs.getString("DuongDanAnh"));
         return g;
     }
 
-    // --- Map ResultSet → GameSteam (phiên bản rút gọn, không có mô tả) ---
     private GameSteam mapFast(ResultSet rs) throws SQLException {
         GameSteam g = new GameSteam();
         g.setMaGameSteam(rs.getInt("MaGameSteam"));
@@ -46,7 +43,9 @@ public class GameSteamDAO implements CrudDAO<GameSteam, Integer> {
         g.setLuotXem(rs.getInt("LuotXem"));
 
         Timestamp tg = rs.getTimestamp("ThoiGianDang");
-        if (tg != null) g.setThoiGianDang(tg.toLocalDateTime());
+        if (tg != null) {
+            g.setThoiGianDang(tg.toLocalDateTime());
+        }
 
         g.setIdVideoTrailer(rs.getString("IdVideoTrailer"));
         g.setDuongDanAnh(rs.getString("DuongDanAnh"));
@@ -57,35 +56,28 @@ public class GameSteamDAO implements CrudDAO<GameSteam, Integer> {
         return DBContext.getConnection();
     }
 
-    // --- GET ALL (đầy đủ mọi trường, bao gồm MoTaGame) ---
+    // SỬA: Thêm 'throws SQLException' và xóa try-catch
     @Override
-    public List<GameSteam> getAll() {
+    public List<GameSteam> getAll() throws SQLException {
         List<GameSteam> list = new ArrayList<>();
         String sql = "SELECT * FROM GAMESTEAM";
 
-        try (Connection conn = getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
+        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
                 list.add(mapResultSetToGameSteam(rs));
             }
-
-        } catch (SQLException e) {
-            System.out.println("❌ Lỗi SQL khi lấy tất cả GameSteam: " + e.getMessage());
-            e.printStackTrace();
         }
         return list;
     }
 
-    // --- GET BY ID ---
+    // SỬA: Thêm 'throws SQLException' và xóa try-catch
     @Override
-    public GameSteam getById(Integer id) {
+    public GameSteam getById(Integer id) throws SQLException {
         GameSteam result = null;
         String sql = "SELECT * FROM GAMESTEAM WHERE MaGameSteam = ?";
 
-        try (Connection conn = getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setInt(1, id);
             try (ResultSet rs = ps.executeQuery()) {
@@ -93,25 +85,20 @@ public class GameSteamDAO implements CrudDAO<GameSteam, Integer> {
                     result = mapResultSetToGameSteam(rs);
                 }
             }
-
-        } catch (SQLException e) {
-            System.out.println("❌ Lỗi SQL khi lấy GameSteam theo ID: " + id);
-            e.printStackTrace();
         }
         return result;
     }
 
-    // --- INSERT ---
+    // SỬA: Thêm 'throws SQLException' và xóa try-catch
     @Override
-    public Integer insert(GameSteam entity) {
+    public Integer insert(GameSteam entity) throws SQLException {
         String sql = """
             INSERT INTO GAMESTEAM 
             (TenGame, MoTaGame, GiaGoc, GiaBan, LuotXem, ThoiGianDang, IdVideoTrailer, DuongDanAnh)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         """;
 
-        try (Connection conn = getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             ps.setString(1, entity.getTenGame());
             ps.setString(2, entity.getMoTaGame());
@@ -119,31 +106,32 @@ public class GameSteamDAO implements CrudDAO<GameSteam, Integer> {
             ps.setBigDecimal(4, entity.getGiaBan());
             ps.setInt(5, entity.getLuotXem() != null ? entity.getLuotXem() : 0);
 
-            if (entity.getThoiGianDang() != null)
+            if (entity.getThoiGianDang() != null) {
                 ps.setTimestamp(6, Timestamp.valueOf(entity.getThoiGianDang()));
-            else
+            } else {
                 ps.setTimestamp(6, Timestamp.valueOf(LocalDateTime.now()));
+            }
 
             ps.setString(7, entity.getIdVideoTrailer());
             ps.setString(8, entity.getDuongDanAnh());
 
             int affectedRows = ps.executeUpdate();
-            if (affectedRows == 0) return null;
-
-            try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
-                if (generatedKeys.next()) return generatedKeys.getInt(1);
+            if (affectedRows == 0) {
+                return null;
             }
 
-        } catch (SQLException e) {
-            System.out.println("❌ Lỗi SQL khi thêm GameSteam: " + entity.getTenGame());
-            e.printStackTrace();
+            try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    return generatedKeys.getInt(1);
+                }
+            }
         }
         return null;
     }
 
-    // --- UPDATE ---
+    // SỬA: Thêm 'throws SQLException' và xóa try-catch
     @Override
-    public boolean update(GameSteam entity) {
+    public boolean update(GameSteam entity) throws SQLException {
         String sql = """
             UPDATE GAMESTEAM
             SET TenGame=?, MoTaGame=?, GiaGoc=?, GiaBan=?, LuotXem=?, 
@@ -151,8 +139,7 @@ public class GameSteamDAO implements CrudDAO<GameSteam, Integer> {
             WHERE MaGameSteam=?
         """;
 
-        try (Connection conn = getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, entity.getTenGame());
             ps.setString(2, entity.getMoTaGame());
@@ -165,36 +152,24 @@ public class GameSteamDAO implements CrudDAO<GameSteam, Integer> {
             ps.setInt(9, entity.getMaGameSteam());
 
             return ps.executeUpdate() > 0;
-
-        } catch (SQLException e) {
-            System.out.println("❌ Lỗi SQL khi cập nhật GameSteam ID: " + entity.getMaGameSteam());
-            e.printStackTrace();
-            return false;
         }
     }
 
-    // --- DELETE ---
+    // SỬA: Thêm 'throws SQLException' và xóa try-catch
     @Override
-    public boolean delete(Integer id) {
+    public boolean delete(Integer id) throws SQLException {
         String sql = "DELETE FROM GAMESTEAM WHERE MaGameSteam=?";
-        try (Connection conn = getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setInt(1, id);
             return ps.executeUpdate() > 0;
-
-        } catch (SQLException e) {
-            System.out.println("❌ Lỗi SQL khi xóa GameSteam ID: " + id);
-            e.printStackTrace();
-            return false;
         }
     }
 
-    // --- LẤY CHỈ MÔ TẢ GAME ---
-    public String getMoTaGame(Integer maGameSteam) {
+    // SỬA: Thêm 'throws SQLException' và xóa try-catch
+    public String getMoTaGame(Integer maGameSteam) throws SQLException {
         String sql = "SELECT MoTaGame FROM GAMESTEAM WHERE MaGameSteam = ?";
-        try (Connection conn = getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setInt(1, maGameSteam);
             try (ResultSet rs = ps.executeQuery()) {
@@ -202,33 +177,23 @@ public class GameSteamDAO implements CrudDAO<GameSteam, Integer> {
                     return rs.getString("MoTaGame");
                 }
             }
-
-        } catch (SQLException e) {
-            System.out.println("❌ Lỗi SQL khi lấy mô tả GameSteam ID: " + maGameSteam);
-            e.printStackTrace();
         }
         return null;
     }
 
-    // --- FAST GET ALL (không lấy MoTaGame, chỉ để hiển thị nhanh) ---
-    public List<GameSteam> fastGetAll() {
+    // SỬA: Thêm 'throws SQLException' và xóa try-catch
+    public List<GameSteam> fastGetAll() throws SQLException {
         List<GameSteam> list = new ArrayList<>();
         String sql = """
             SELECT MaGameSteam, TenGame, GiaGoc, GiaBan, LuotXem, ThoiGianDang, IdVideoTrailer, DuongDanAnh
             FROM GAMESTEAM
         """;
 
-        try (Connection conn = getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
+        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
                 list.add(mapFast(rs));
             }
-
-        } catch (SQLException e) {
-            System.out.println("❌ Lỗi SQL khi fastGetAll GameSteam: " + e.getMessage());
-            e.printStackTrace();
         }
         return list;
     }

@@ -11,7 +11,17 @@ import java.util.List;
 
 public class TaiKhoanFreeFireDAO implements CrudDAO<TaiKhoanFreeFire, Integer> {
 
-    private final TaiKhoanDAO taiKhoanDAO = new TaiKhoanDAO();
+    private TaiKhoanDAO taiKhoanDAO = new TaiKhoanDAO();
+
+    // Constructor 1: Dùng cho ứng dụng chạy thật
+    public TaiKhoanFreeFireDAO() {
+        this.taiKhoanDAO = new TaiKhoanDAO();
+    }
+
+    // Constructor 2: Dùng cho Unit Test (package-private)
+    TaiKhoanFreeFireDAO(TaiKhoanDAO taiKhoanDAO) {
+        this.taiKhoanDAO = taiKhoanDAO;
+    }
 
     @Override
     public List<TaiKhoanFreeFire> getAll() throws SQLException {

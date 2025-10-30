@@ -11,7 +11,16 @@ import java.util.List;
 
 public class TaiKhoanRiotDAO implements CrudDAO<TaiKhoanRiot, Integer> {
 
-    private final TaiKhoanDAO taiKhoanDAO = new TaiKhoanDAO();
+    private TaiKhoanDAO taiKhoanDAO = new TaiKhoanDAO();
+
+    public TaiKhoanRiotDAO() {
+        this.taiKhoanDAO = new TaiKhoanDAO();
+    }
+
+    // Constructor 2: Dùng cho Unit Test (package-private)
+    TaiKhoanRiotDAO(TaiKhoanDAO taiKhoanDAO) {
+        this.taiKhoanDAO = taiKhoanDAO;
+    }
 
     @Override
     public List<TaiKhoanRiot> getAll() throws SQLException {

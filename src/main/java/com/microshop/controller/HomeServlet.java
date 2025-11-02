@@ -74,13 +74,22 @@ public class HomeServlet extends HttpServlet {
                         "DANG_BAN", "Top 1 sever mõm",
                         500, LocalDateTime.now().minusDays(2), "assets/images/home_lmht.jpg", "test_acc_lq_3", "1", "Bố tướng", 100, 300, 90, "Garena"
                 );
-                System.out.println(tmpTklq1);
-                System.out.println(tmpTklq2);
-                System.out.println(tmpTklq3);
+                TaiKhoanLienQuan tmpTklq4 = new TaiKhoanLienQuan(
+                        null, 2, new BigDecimal("8000"), new BigDecimal("4500"),
+                        "DANG_BAN", "Rank cu thảo",
+                        500, LocalDateTime.now().minusDays(2), "assets/images/home_lienquan.png", "test_acc_lq_4", "1", "Bố tướng", 100, 300, 90, "Garena"
+                );
+                TaiKhoanLienQuan tmpTklq5 = new TaiKhoanLienQuan(
+                        null, 2, new BigDecimal("50000"), new BigDecimal("15500"),
+                        "DANG_BAN", "Có valhein hoàng tử quạ!",
+                        500, LocalDateTime.now().minusDays(2), "assets/images/home_netflix.png", "test_acc_lq_5", "1", "Bố tướng", 100, 300, 90, "Garena"
+                );
                     
                 tmpTklq1.setMaTaiKhoan((taiKhoanLienQuanDAO.insert(tmpTklq1)));
                 tmpTklq2.setMaTaiKhoan((taiKhoanLienQuanDAO.insert(tmpTklq2)));
                 tmpTklq3.setMaTaiKhoan((taiKhoanLienQuanDAO.insert(tmpTklq3)));
+                tmpTklq4.setMaTaiKhoan((taiKhoanLienQuanDAO.insert(tmpTklq4)));
+                tmpTklq5.setMaTaiKhoan((taiKhoanLienQuanDAO.insert(tmpTklq5)));
 
 //                AnhTaiKhoan anh1 = new AnhTaiKhoan(null, tmpTklq1.getMaTaiKhoan(), "images\\home_lienquan.png");
 //                AnhTaiKhoan anh2 = new AnhTaiKhoan(null, tmpTklq2.getMaTaiKhoan(), "images\\home_lienquan.png");

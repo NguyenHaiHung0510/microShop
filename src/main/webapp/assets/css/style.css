@@ -1,12 +1,10 @@
-/* === Reset & Thiết lập chung === */
 body {
-    /* SỬA: Dùng font 'Be Vietnam Pro' cho đẹp */
     font-family: 'Be Vietnam Pro', Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f4f7f6; /* SỬA: Màu nền xám nhạt (kiểu Tedi) */
+    background-color: #f4f7f6;  
     color: #333;
-    overflow-x: hidden; /* Chống cuộn ngang */
+    overflow-x: hidden;  
 }
 
 a {
@@ -20,32 +18,27 @@ main {
     margin: 20px auto;
 }
 
-/* === 1. Header & Menu (Hài hòa với logo) === */
 header {
-    background-color: #ffffff; /* SỬA: Nền header màu trắng */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* Bóng mờ nhẹ */
-    position: sticky; /* Dính menu khi cuộn */
+    background-color: #ffffff; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    position: sticky; 
     top: 0;
     z-index: 1000;
 }
 
-/* Top Bar: Logo, Search, User */
 .top-bar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 5%; /* SỬA: Giảm padding */
+    padding: 10px 5%;
     border-bottom: 1px solid #eee;
 }
 
-/* SỬA: Phóng to logo */
 .logo-link img {
-    height: 50px; /* SỬA: Tăng chiều cao logo */
+    height: 50px;
     width: auto;
     object-fit: contain;
 }
-
-/* SỬA: Xóa thanh tìm kiếm (đã xóa HTML) */
 
 .user-actions {
     display: flex;
@@ -65,21 +58,20 @@ header {
 .nav-button:hover {
     background-color: #e9ecef;
 }
-/* SỬA: Đổi màu nút "Đăng Ký" sang màu đỏ của logo */
+
 .nav-button.accent {
     background-color: #c92a2a;
     color: white;
     border-color: #c92a2a;
 }
 .nav-button.admin {
-    background-color: #ffc107; /* Màu vàng cho admin */
+    background-color: #ffc107; 
     color: #333;
     border-color: #ffc107;
 }
 
-/* Main Nav: Menu đỏ (Kiểu Daominhha) */
 .main-nav {
-    background-color: #c92a2a; /* SỬA: Màu đỏ làm màu nhấn chính */
+    background-color: #c92a2a;
     display: flex;
     justify-content: center;
     padding: 0 5%;
@@ -89,19 +81,16 @@ header {
 .main-nav a {
     color: white;
     padding: 14px 20px;
-    font-weight: 500; /* SỬA: Giảm độ đậm */
+    font-weight: 500; 
     text-transform: uppercase;
     font-size: 14px;
     transition: background-color 0.2s;
 }
 
 .main-nav a:hover {
-    background-color: #a62323; /* Màu đỏ sậm hơn khi hover */
+    background-color: #a62323; 
 }
 
-/* === 2. Layout Trang chủ (Kiểu Tedi Shop) === */
-
-/* Banner "Game & Dịch vụ" */
 .services-banner {
     background-color: #ffffff;
     padding: 25px;
@@ -116,57 +105,48 @@ header {
     font-weight: 700;
 }
 
-/* SỬA: Bọc carousel */
 .service-carousel-wrapper {
     width: 100%;
-    overflow: hidden; /* Ẩn các item thừa */
+    overflow: hidden; 
     padding: 10px 0;
 }
 
-/* SỬA: Lưới dịch vụ (cho 12 item) */
 .services-grid {
     display: flex;
     /* (100% / 6 item) * 12 item = 200% */
     width: 200%;
 
-    /* SỬA: Thêm animation xoay vòng */
     animation: slide 30s linear infinite;
-
-    /* SỬA: Thêm dòng này để tối ưu hóa, giảm "khựng" */
     will-change: transform;
 }
 
-/* SỬA: Tạm dừng khi hover */
 .service-carousel-wrapper:hover .services-grid {
     animation-play-state: paused;
 }
 
-/* SỬA: Định nghĩa animation */
 @keyframes slide {
     0% {
         transform: translateX(0);
     }
-    /* Di chuyển 50% (là 6 item) rồi lặp lại */
     100% {
         transform: translateX(-50%);
     }
 }
 
 .service-card {
-    /* SỬA: Thêm position relative */
-    position: relative;
-
+    position: relative; 
+    
     /* 100% / 12 items = 8.333% */
     width: 8.333%;
-    margin: 0 10px; /* Khoảng cách giữa các item */
-
-    /* SỬA: Điều chỉnh padding để H3 (nếu có) căn giữa đẹp hơn */
-    padding: 10px;
-    height: 90px; /* SỬA: Set chiều cao cố định */
-    display: flex; /* SỬA: Dùng flexbox */
-    align-items: center; /* SỬA: Căn giữa theo chiều dọc */
-    justify-content: center; /* SỬA: Căn giữa theo chiều ngang */
-
+    margin: 0 12px; 
+    
+    /* SỬA: Điều chỉnh padding */
+    padding: 12px; 
+    height: 110px; 
+    display: flex;
+    align-items: center; 
+    justify-content: center;
+    
     border-radius: 12px;
     text-align: center;
     color: white;
@@ -174,30 +154,27 @@ header {
     background-size: cover;
     background-position: center;
     transition: transform 0.2s;
-    flex-shrink: 0; /* Chống co lại */
+    flex-shrink: 0;
 }
 .service-card:hover {
-    transform: translateY(-5px); /* Hiệu ứng nhấc lên khi hover */
+    transform: translateY(-5px);
 }
 
-/* SỬA: Thay đổi style của span sang absolute */
 .service-card span {
     position: absolute;
-    top: 8px; /* Cách lề trên */
-    right: 8px; /* Cách lề phải */
-
+    top: 8px; 
+    right: 8px; 
     padding: 3px 6px;
-    font-size: 11px; /* SỬA: Cho nhỏ lại */
+    font-size: 11px; 
     font-weight: 500;
     color: #ffffff;
-    background-color: rgba(0, 0, 0, 0.7); /* SỬA: Nền đen mờ 70% */
+    background-color: rgba(0, 0, 0, 0.7); 
     border-radius: 4px;
     border: 1px solid rgba(255, 255, 255, 0.2);
-    z-index: 2; /* Đảm bảo nó nổi lên trên */
+    z-index: 2;
 }
 
 
-/* SỬA: Thay thế các URL placeholder bằng ảnh thật */
 .service-card.lienquan {
     background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('../images/home_lienquan.png');
 }
@@ -207,11 +184,11 @@ header {
 .service-card.riot {
     background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('../images/home_lmht.jpg');
 }
+
 .service-card.steam {
-    background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('../images/home_steam.jpg');
+    background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.2)), url('../images/home_steam.jpg');
 }
 
-/* SỬA: Bổ sung 2 dịch vụ mới (dùng ảnh thay vì "Coming Soon") */
 .service-card.youtube {
     background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('../images/home_youtube.jpg');
 }
@@ -219,7 +196,6 @@ header {
     background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('../images/home_netflix.png');
 }
 
-/* SỬA: Thêm style chung cho TẤT CẢ service-card có ảnh nền */
 .service-card.lienquan,
 .service-card.freefire,
 .service-card.riot,
@@ -230,20 +206,6 @@ header {
     background-position: center;
 }
 
-/* SỬA: Xóa (comment-out) rule .coming-soon cũ */
-/*
-.service-card.coming-soon {
-    background-color: #6c757d; 
-    opacity: 0.8;
-}
-.service-card.coming-soon span {
-    font-size: 12px;
-    font-weight: 400;
-}
-*/
-
-
-/* Khối sản phẩm (Sản phẩm mới, bán chạy, ...) */
 .product-section {
     background-color: #ffffff;
     padding: 25px;
@@ -260,19 +222,16 @@ header {
     color: #333;
 }
 
-/* Lưới sản phẩm (CSS Grid) */
 .product-grid {
     display: grid;
-    /* SỬA: Đổi sang 4 cột */
     grid-template-columns: repeat(4, 1fr);
     gap: 20px;
 }
 
-/* Thẻ sản phẩm */
 .product-card {
     background-color: #ffffff;
     border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); /* SỬA: Giảm bóng mờ */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -297,11 +256,11 @@ header {
 }
 
 .product-title {
-    font-size: 15px; /* SỬA: Giảm cỡ chữ */
-    font-weight: 500; /* SỬA: Chữ mảnh hơn */
+    font-size: 15px; 
+    font-weight: 500; 
     color: #333;
     margin: 0 0 10px 0;
-    height: 45px; /* SỬA: Giới hạn 2 dòng */
+    height: 45px;
     overflow: hidden;
 }
 
@@ -312,19 +271,19 @@ header {
 .old-price {
     text-decoration: line-through;
     color: #999;
-    font-size: 13px; /* SỬA: Giảm cỡ chữ */
+    font-size: 13px;
     margin-right: 10px;
 }
 
 .new-price {
-    color: #c92a2a; /* SỬA: Màu đỏ logo */
+    color: #c92a2a;
     font-size: 18px;
-    font-weight: 700; /* SỬA: Đậm hơn */
+    font-weight: 700; 
 }
 
 .buy-button {
     display: block;
-    width: calc(100% - 30px); /* Cách lề 15px mỗi bên */
+    width: calc(100% - 30px);
     margin: 0 15px 15px 15px;
     padding: 10px;
     background-color: #28a745;
@@ -339,7 +298,6 @@ header {
     background-color: #218838;
 }
 
-/* === 3. Footer === */
 footer {
     text-align: center;
     padding: 30px;

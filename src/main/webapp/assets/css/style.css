@@ -131,6 +131,9 @@ header {
 
     /* SỬA: Thêm animation xoay vòng */
     animation: slide 30s linear infinite;
+
+    /* SỬA: Thêm dòng này để tối ưu hóa, giảm "khựng" */
+    will-change: transform;
 }
 
 /* SỬA: Tạm dừng khi hover */
@@ -150,10 +153,20 @@ header {
 }
 
 .service-card {
+    /* SỬA: Thêm position relative */
+    position: relative;
+
     /* 100% / 12 items = 8.333% */
     width: 8.333%;
     margin: 0 10px; /* Khoảng cách giữa các item */
-    padding: 20px;
+
+    /* SỬA: Điều chỉnh padding để H3 (nếu có) căn giữa đẹp hơn */
+    padding: 10px;
+    height: 90px; /* SỬA: Set chiều cao cố định */
+    display: flex; /* SỬA: Dùng flexbox */
+    align-items: center; /* SỬA: Căn giữa theo chiều dọc */
+    justify-content: center; /* SỬA: Căn giữa theo chiều ngang */
+
     border-radius: 12px;
     text-align: center;
     color: white;
@@ -167,27 +180,67 @@ header {
     transform: translateY(-5px); /* Hiệu ứng nhấc lên khi hover */
 }
 
-/* Màu cho các dịch vụ */
+/* SỬA: Thay đổi style của span sang absolute */
+.service-card span {
+    position: absolute;
+    top: 8px; /* Cách lề trên */
+    right: 8px; /* Cách lề phải */
+
+    padding: 3px 6px;
+    font-size: 11px; /* SỬA: Cho nhỏ lại */
+    font-weight: 500;
+    color: #ffffff;
+    background-color: rgba(0, 0, 0, 0.7); /* SỬA: Nền đen mờ 70% */
+    border-radius: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    z-index: 2; /* Đảm bảo nó nổi lên trên */
+}
+
+
+/* SỬA: Thay thế các URL placeholder bằng ảnh thật */
 .service-card.lienquan {
-    background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://via.placeholder.com/200x100?text=Lien+Quan');
+    background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('../images/home_lienquan.png');
 }
 .service-card.freefire {
-    background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://via.placeholder.com/200x100?text=Free+Fire');
+    background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('../images/home_freefire.jpg');
 }
 .service-card.riot {
-    background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://via.placeholder.com/200x100?text=Riot');
+    background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('../images/home_lmht.jpg');
 }
 .service-card.steam {
-    background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://via.placeholder.com/200x100?text=Steam');
+    background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('../images/home_steam.jpg');
 }
+
+/* SỬA: Bổ sung 2 dịch vụ mới (dùng ảnh thay vì "Coming Soon") */
+.service-card.youtube {
+    background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('../images/home_youtube.jpg');
+}
+.service-card.netflix {
+    background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('../images/home_netflix.png');
+}
+
+/* SỬA: Thêm style chung cho TẤT CẢ service-card có ảnh nền */
+.service-card.lienquan,
+.service-card.freefire,
+.service-card.riot,
+.service-card.steam,
+.service-card.youtube,
+.service-card.netflix {
+    background-size: cover;
+    background-position: center;
+}
+
+/* SỬA: Xóa (comment-out) rule .coming-soon cũ */
+/*
 .service-card.coming-soon {
-    background-color: #6c757d; /* Màu xám */
+    background-color: #6c757d; 
     opacity: 0.8;
 }
 .service-card.coming-soon span {
     font-size: 12px;
     font-weight: 400;
 }
+*/
 
 
 /* Khối sản phẩm (Sản phẩm mới, bán chạy, ...) */

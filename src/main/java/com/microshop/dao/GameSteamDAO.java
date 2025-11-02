@@ -185,7 +185,7 @@ public class GameSteamDAO implements CrudDAO<GameSteam, Integer> {
         List<GameSteam> list = new ArrayList<>();
         String sql = """
             SELECT MaGameSteam, TenGame, GiaGoc, GiaBan, LuotXem, ThoiGianDang, IdVideoTrailer, DuongDanAnh
-            FROM GAMESTEAM
+            FROM GAME_STEAM
         """;
 
         try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {

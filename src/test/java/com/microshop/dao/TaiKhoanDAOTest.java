@@ -43,6 +43,7 @@ class TaiKhoanDAOTest {
 
     private TaiKhoan sampleTaiKhoan;
     private final LocalDateTime timeNow = LocalDateTime.now();
+    private final String sampleAnh = "path/to/image.jpg"; // THÊM MỚI
 
     @BeforeEach
     void setUp() {
@@ -54,6 +55,7 @@ class TaiKhoanDAOTest {
         sampleTaiKhoan.setTrangThai("DANG_BAN");
         sampleTaiKhoan.setLuotXem(10);
         sampleTaiKhoan.setThoiGianDang(timeNow);
+        sampleTaiKhoan.setDuongDanAnh(sampleAnh); // THÊM MỚI
     }
 
     private void mockDatabaseConnection() throws SQLException {
@@ -74,6 +76,7 @@ class TaiKhoanDAOTest {
         when(rs.getString("DiemNoiBat")).thenReturn(sampleTaiKhoan.getDiemNoiBat());
         when(rs.getObject("LuotXem", Integer.class)).thenReturn(sampleTaiKhoan.getLuotXem());
         when(rs.getTimestamp("ThoiGianDang")).thenReturn(Timestamp.valueOf(timeNow));
+        when(rs.getString("DuongDanAnh")).thenReturn(sampleTaiKhoan.getDuongDanAnh()); // THÊM MỚI
     }
 
     // ============ Test CRUD ============
@@ -91,12 +94,14 @@ class TaiKhoanDAOTest {
             assertNotNull(result);
             assertEquals(1, result.getMaTaiKhoan());
             assertEquals("DANG_BAN", result.getTrangThai());
+            assertEquals(sampleAnh, result.getDuongDanAnh()); // THÊM MỚI: Assert
             verify(ps).setObject(1, 1);
         }
     }
 
     @Test
     void getById_ReturnsNull_WhenNotFound() throws SQLException {
+        // ... (Không thay đổi)
         try (MockedStatic<DBContext> mockedDBContext = Mockito.mockStatic(DBContext.class)) {
             mockedDBContext.when(DBContext::getConnection).thenReturn(connection);
             mockDatabaseConnection();
@@ -123,6 +128,7 @@ class TaiKhoanDAOTest {
 
             assertNotNull(result);
             assertEquals(1, result.size());
+            assertEquals(sampleAnh, result.get(0).getDuongDanAnh()); // THÊM MỚI: Assert
         }
     }
 
@@ -142,6 +148,7 @@ class TaiKhoanDAOTest {
             assertEquals(99, newId);
             verify(ps).setObject(1, 1); // MaDanhMuc
             verify(ps).setObject(6, 10); // LuotXem
+            verify(ps).setString(8, sampleAnh); // CẬP NHẬT: Kiểm tra DuongDanAnh
         }
     }
 
@@ -157,12 +164,14 @@ class TaiKhoanDAOTest {
             assertTrue(success);
             verify(ps).setObject(1, 1); // MaDanhMuc
             verify(ps).setObject(6, 10); // LuotXem
-            verify(ps).setObject(8, 1); // MaTaiKhoan (WHERE)
+            verify(ps).setString(8, sampleAnh); // CẬP NHẬT: DuongDanAnh
+            verify(ps).setObject(9, 1); // CẬP NHẬT: MaTaiKhoan (WHERE)
         }
     }
 
     @Test
     void delete_ReturnsTrue() throws SQLException {
+        // ... (Không thay đổi)
         try (MockedStatic<DBContext> mockedDBContext = Mockito.mockStatic(DBContext.class)) {
             mockedDBContext.when(DBContext::getConnection).thenReturn(connection);
             mockDatabaseConnection();
@@ -189,6 +198,7 @@ class TaiKhoanDAOTest {
 
             assertNotNull(result);
             assertEquals(1, result.size());
+            assertEquals(sampleAnh, result.get(0).getDuongDanAnh()); // THÊM MỚI: Assert
             verify(ps).setObject(1, 1);
         }
     }
@@ -206,12 +216,14 @@ class TaiKhoanDAOTest {
 
             assertNotNull(result);
             assertEquals(1, result.size());
+            assertEquals(sampleAnh, result.get(0).getDuongDanAnh()); // THÊM MỚI: Assert
             verify(ps).setString(1, "DANG_BAN");
         }
     }
 
     @Test
     void updateTrangThai_ExecutesUpdate() throws SQLException {
+        // ... (Không thay đổi)
         try (MockedStatic<DBContext> mockedDBContext = Mockito.mockStatic(DBContext.class)) {
             mockedDBContext.when(DBContext::getConnection).thenReturn(connection);
             mockDatabaseConnection();

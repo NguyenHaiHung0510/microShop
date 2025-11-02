@@ -62,19 +62,22 @@ public class HomeServlet extends HttpServlet {
                 TaiKhoanLienQuan tmpTklq1 = new TaiKhoanLienQuan(
                         null, 2, new BigDecimal("1000"), new BigDecimal("999"),
                         "DANG_BAN", "Rank Cao Thủ, 100 Tướng, 300 Trang Phục HOT!",
-                        500, LocalDateTime.now().minusDays(1), "images\\home_lienquan.png", "test_acc_lq_1", "1", "Cao Thủ", 100, 300, 90, "Garena"
+                        500, LocalDateTime.now().minusDays(1), "assets/images/home_lienquan.png", "test_acc_lq_1", "1", "Cao Thủ", 100, 300, 90, "Garena"
                 );
                 TaiKhoanLienQuan tmpTklq2 = new TaiKhoanLienQuan(
                         null, 2, new BigDecimal("2000"), new BigDecimal("1500"),
                         "DANG_BAN", "Rank Bố tướng",
-                        500, LocalDateTime.now(), "images\\home_lienquan.png", "test_acc_lq_2", "1", "Bố tướng", 200, 500, 90, "tiktok?"
+                        500, LocalDateTime.now(), "assets/images/home_freefire.jpg", "test_acc_lq_2", "1", "Bố tướng", 200, 500, 90, "tiktok?"
                 );
                 TaiKhoanLienQuan tmpTklq3 = new TaiKhoanLienQuan(
                         null, 2, new BigDecimal("5000"), new BigDecimal("3500"),
                         "DANG_BAN", "Top 1 sever mõm",
-                        500, LocalDateTime.now().minusDays(1), "images\\home_lienquan.png", "test_acc_lq_3", "1", "Bố tướng", 100, 300, 90, "Garena"
+                        500, LocalDateTime.now().minusDays(2), "assets/images/home_lmht.jpg", "test_acc_lq_3", "1", "Bố tướng", 100, 300, 90, "Garena"
                 );
-
+                System.out.println(tmpTklq1);
+                System.out.println(tmpTklq2);
+                System.out.println(tmpTklq3);
+                    
                 tmpTklq1.setMaTaiKhoan((taiKhoanLienQuanDAO.insert(tmpTklq1)));
                 tmpTklq2.setMaTaiKhoan((taiKhoanLienQuanDAO.insert(tmpTklq2)));
                 tmpTklq3.setMaTaiKhoan((taiKhoanLienQuanDAO.insert(tmpTklq3)));

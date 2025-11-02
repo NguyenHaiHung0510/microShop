@@ -45,6 +45,7 @@ class TaiKhoanFreeFireDAOTest {
 
     private TaiKhoanFreeFire sampleTKFF;
     private final LocalDateTime timeNow = LocalDateTime.now();
+    private final String sampleAnh = "path/to/ff.jpg"; // THÊM MỚI
 
     @BeforeEach
     void setUp() {
@@ -55,6 +56,7 @@ class TaiKhoanFreeFireDAOTest {
         sampleTKFF.setGiaBan(new BigDecimal("150000"));
         sampleTKFF.setTrangThai("DANG_BAN");
         sampleTKFF.setThoiGianDang(timeNow);
+        sampleTKFF.setDuongDanAnh(sampleAnh); // THÊM MỚI
         // Thuộc tính con
         sampleTKFF.setTenDangNhap("tkff_user");
         sampleTKFF.setMatKhau("123");
@@ -76,6 +78,7 @@ class TaiKhoanFreeFireDAOTest {
         when(rs.getBigDecimal("GiaGoc")).thenReturn(sampleTKFF.getGiaGoc());
         when(rs.getString("DiemNoiBat")).thenReturn(sampleTKFF.getDiemNoiBat());
         when(rs.getObject("LuotXem", Integer.class)).thenReturn(sampleTKFF.getLuotXem());
+        when(rs.getString("DuongDanAnh")).thenReturn(sampleTKFF.getDuongDanAnh()); // THÊM MỚI
 
         // Mock phần con (TAIKHOAN_FREEFIRE)
         when(rs.getString("TenDangNhap")).thenReturn(sampleTKFF.getTenDangNhap());
@@ -102,6 +105,7 @@ class TaiKhoanFreeFireDAOTest {
             assertEquals(1, result.getMaTaiKhoan());
             assertEquals(true, result.getCoTheVoCuc());
             assertEquals(50, result.getSoSkinSung());
+            assertEquals(sampleAnh, result.getDuongDanAnh()); // THÊM MỚI: Assert
             verify(ps).setObject(1, 1);
         }
     }
@@ -120,11 +124,13 @@ class TaiKhoanFreeFireDAOTest {
             assertNotNull(result);
             assertEquals(1, result.size());
             assertEquals(50, result.get(0).getSoSkinSung());
+            assertEquals(sampleAnh, result.get(0).getDuongDanAnh()); // THÊM MỚI: Assert
         }
     }
 
     @Test
     void insert_ReturnsGeneratedId() throws SQLException {
+        // ... (Không thay đổi logic)
         try (MockedStatic<DBContext> mockedDBContext = Mockito.mockStatic(DBContext.class)) {
             when(taiKhoanDAO.insert(any(TaiKhoan.class))).thenReturn(99);
 
@@ -145,6 +151,7 @@ class TaiKhoanFreeFireDAOTest {
 
     @Test
     void update_ReturnsTrue() throws SQLException {
+        // ... (Không thay đổi logic)
         try (MockedStatic<DBContext> mockedDBContext = Mockito.mockStatic(DBContext.class)) {
             when(taiKhoanDAO.update(any(TaiKhoan.class))).thenReturn(true);
 
@@ -163,6 +170,7 @@ class TaiKhoanFreeFireDAOTest {
 
     @Test
     void delete_ReturnsTrue() throws SQLException {
+        // ... (Không thay đổi)
         when(taiKhoanDAO.delete(1)).thenReturn(true);
 
         boolean success = taiKhoanFreeFireDAO.delete(1);
@@ -185,12 +193,14 @@ class TaiKhoanFreeFireDAOTest {
 
             assertNotNull(result);
             assertEquals(1, result.size());
+            assertEquals(sampleAnh, result.get(0).getDuongDanAnh()); // THÊM MỚI: Assert
             verify(ps).setString(1, "DANG_BAN");
         }
     }
 
     @Test
     void updateTrangThai_CallsParentDAO() throws SQLException {
+        // ... (Không thay đổi)
         taiKhoanFreeFireDAO.updateTrangThai(1, "DA_BAN");
         verify(taiKhoanDAO, times(1)).updateTrangThai(1, "DA_BAN");
     }

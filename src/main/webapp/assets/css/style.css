@@ -4,8 +4,9 @@ body {
     font-family: 'Be Vietnam Pro', Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f0f2f5; 
+    background-color: #f4f7f6; /* SỬA: Màu nền xám nhạt (kiểu Tedi) */
     color: #333;
+    overflow-x: hidden; /* Chống cuộn ngang */
 }
 
 a {
@@ -19,10 +20,13 @@ main {
     margin: 20px auto;
 }
 
-/* === 1. Header & Menu (Kiểu Daominhha) === */
+/* === 1. Header & Menu (Hài hòa với logo) === */
 header {
-    background-color: #ffffff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff; /* SỬA: Nền header màu trắng */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* Bóng mờ nhẹ */
+    position: sticky; /* Dính menu khi cuộn */
+    top: 0;
+    z-index: 1000;
 }
 
 /* Top Bar: Logo, Search, User */
@@ -30,34 +34,18 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 5%;
+    padding: 10px 5%; /* SỬA: Giảm padding */
     border-bottom: 1px solid #eee;
 }
 
-.logo img {
-    height: 40px; /* Đặt chiều cao logo */
+/* SỬA: Phóng to logo */
+.logo-link img {
+    height: 50px; /* SỬA: Tăng chiều cao logo */
+    width: auto;
+    object-fit: contain;
 }
 
-.search-bar {
-    display: flex;
-    width: 40%;
-}
-
-.search-bar input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px 0 0 5px;
-}
-
-.search-bar button {
-    padding: 10px 15px;
-    border: none;
-    background-color: #007bff; /* Màu xanh dương */
-    color: white;
-    cursor: pointer;
-    border-radius: 0 5px 5px 0;
-}
+/* SỬA: Xóa thanh tìm kiếm (đã xóa HTML) */
 
 .user-actions {
     display: flex;
@@ -66,32 +54,42 @@ header {
 }
 
 .nav-button {
-    padding: 8px 12px;
+    padding: 8px 14px;
     border-radius: 5px;
-    background-color: #f0f2f5;
     font-size: 14px;
+    font-weight: 500;
+    border: 1px solid #ddd;
+    background-color: #f8f9fa;
+    transition: background-color 0.2s;
 }
+.nav-button:hover {
+    background-color: #e9ecef;
+}
+/* SỬA: Đổi màu nút "Đăng Ký" sang màu đỏ của logo */
 .nav-button.accent {
-    background-color: #007bff;
+    background-color: #c92a2a;
     color: white;
+    border-color: #c92a2a;
 }
 .nav-button.admin {
-    background-color: #dc3545; /* Màu đỏ cho admin */
-    color: white;
+    background-color: #ffc107; /* Màu vàng cho admin */
+    color: #333;
+    border-color: #ffc107;
 }
 
 /* Main Nav: Menu đỏ (Kiểu Daominhha) */
 .main-nav {
-    background-color: #c92a2a; /* Màu đỏ giống Daominhha */
+    background-color: #c92a2a; /* SỬA: Màu đỏ làm màu nhấn chính */
     display: flex;
     justify-content: center;
     padding: 0 5%;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .main-nav a {
     color: white;
     padding: 14px 20px;
-    font-weight: bold;
+    font-weight: 500; /* SỬA: Giảm độ đậm */
     text-transform: uppercase;
     font-size: 14px;
     transition: background-color 0.2s;
@@ -105,68 +103,115 @@ header {
 
 /* Banner "Game & Dịch vụ" */
 .services-banner {
-    background-color: #fff;
-    padding: 20px;
+    background-color: #ffffff;
+    padding: 25px;
     border-radius: 8px;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
 }
 
 .services-banner h2 {
     text-align: center;
     margin-top: 0;
+    font-weight: 700;
 }
 
+/* SỬA: Bọc carousel */
+.service-carousel-wrapper {
+    width: 100%;
+    overflow: hidden; /* Ẩn các item thừa */
+    padding: 10px 0;
+}
+
+/* SỬA: Lưới dịch vụ (cho 12 item) */
 .services-grid {
     display: flex;
-    gap: 20px;
-    justify-content: space-around;
+    /* (100% / 6 item) * 12 item = 200% */
+    width: 200%;
+
+    /* SỬA: Thêm animation xoay vòng */
+    animation: slide 30s linear infinite;
+}
+
+/* SỬA: Tạm dừng khi hover */
+.service-carousel-wrapper:hover .services-grid {
+    animation-play-state: paused;
+}
+
+/* SỬA: Định nghĩa animation */
+@keyframes slide {
+    0% {
+        transform: translateX(0);
+    }
+    /* Di chuyển 50% (là 6 item) rồi lặp lại */
+    100% {
+        transform: translateX(-50%);
+    }
 }
 
 .service-card {
-    flex: 1;
+    /* 100% / 12 items = 8.333% */
+    width: 8.333%;
+    margin: 0 10px; /* Khoảng cách giữa các item */
     padding: 20px;
-    border-radius: 8px;
+    border-radius: 12px;
     text-align: center;
     color: white;
-    font-weight: bold;
+    font-weight: 700;
     background-size: cover;
     background-position: center;
-    /* Bạn nên thêm ảnh nền riêng cho từng danh mục */
+    transition: transform 0.2s;
+    flex-shrink: 0; /* Chống co lại */
 }
+.service-card:hover {
+    transform: translateY(-5px); /* Hiệu ứng nhấc lên khi hover */
+}
+
+/* Màu cho các dịch vụ */
 .service-card.lienquan {
-    background-color: #005a8d;
+    background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://via.placeholder.com/200x100?text=Lien+Quan');
 }
 .service-card.freefire {
-    background-color: #ff8c00;
+    background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://via.placeholder.com/200x100?text=Free+Fire');
 }
 .service-card.riot {
-    background-color: #d32f2f;
+    background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://via.placeholder.com/200x100?text=Riot');
 }
 .service-card.steam {
-    background-color: #2a475e;
+    background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://via.placeholder.com/200x100?text=Steam');
+}
+.service-card.coming-soon {
+    background-color: #6c757d; /* Màu xám */
+    opacity: 0.8;
+}
+.service-card.coming-soon span {
+    font-size: 12px;
+    font-weight: 400;
 }
 
 
 /* Khối sản phẩm (Sản phẩm mới, bán chạy, ...) */
 .product-section {
-    background-color: #fff;
-    padding: 20px;
+    background-color: #ffffff;
+    padding: 25px;
     border-radius: 8px;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
 }
 
 .product-section h2 {
     text-align: center;
     margin-top: 0;
     text-transform: uppercase;
+    font-weight: 700;
     color: #333;
 }
 
 /* Lưới sản phẩm (CSS Grid) */
 .product-grid {
     display: grid;
-    /* Tự động lấp đầy, mỗi cột tối thiểu 200px, tối đa 1fr (1 phần) */
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    /* SỬA: Đổi sang 4 cột */
+    grid-template-columns: repeat(4, 1fr);
     gap: 20px;
 }
 
@@ -174,30 +219,36 @@ header {
 .product-card {
     background-color: #ffffff;
     border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    overflow: hidden; /* Để bo góc cho ảnh */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); /* SỬA: Giảm bóng mờ */
+    overflow: hidden;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .product-image img {
     width: 100%;
     height: 150px;
-    object-fit: cover; /* Đảm bảo ảnh lấp đầy khung */
+    object-fit: cover;
+    border-bottom: 1px solid #eee;
 }
 
 .product-info {
     padding: 15px;
+    flex-grow: 1;
 }
 
 .product-title {
-    font-size: 16px;
-    font-weight: bold;
+    font-size: 15px; /* SỬA: Giảm cỡ chữ */
+    font-weight: 500; /* SỬA: Chữ mảnh hơn */
     color: #333;
     margin: 0 0 10px 0;
-    /* Giới hạn 2 dòng */
-    height: 48px;
+    height: 45px; /* SỬA: Giới hạn 2 dòng */
     overflow: hidden;
 }
 
@@ -208,26 +259,26 @@ header {
 .old-price {
     text-decoration: line-through;
     color: #999;
-    font-size: 14px;
+    font-size: 13px; /* SỬA: Giảm cỡ chữ */
     margin-right: 10px;
 }
 
 .new-price {
-    color: #dc3545; /* Màu đỏ */
+    color: #c92a2a; /* SỬA: Màu đỏ logo */
     font-size: 18px;
-    font-weight: bold;
+    font-weight: 700; /* SỬA: Đậm hơn */
 }
 
 .buy-button {
     display: block;
-    width: 80%;
-    margin: 0 auto 15px auto;
+    width: calc(100% - 30px); /* Cách lề 15px mỗi bên */
+    margin: 0 15px 15px 15px;
     padding: 10px;
-    background-color: #28a745; /* Màu xanh lá cây */
+    background-color: #28a745;
     color: white;
     text-align: center;
     border-radius: 5px;
-    font-weight: bold;
+    font-weight: 700;
     transition: background-color 0.2s;
 }
 
@@ -239,7 +290,11 @@ header {
 footer {
     text-align: center;
     padding: 30px;
-    background-color: #343a40; /* Màu nền tối */
+    background-color: #343a40;
     color: #f8f9fa;
     margin-top: 30px;
+    font-size: 14px;
+}
+footer p {
+    margin: 5px 0;
 }

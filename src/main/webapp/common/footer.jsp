@@ -3,7 +3,7 @@
 </main> 
 
 <footer>
-    <p>&copy; 2025 MicroShop - Nhóm BTL Java 9 - PTIT</p>
+    <p>&copy; 2025 MicroShop - Nhóm BTL Java 9 - From PTIT with love ❤️</p>
 </footer>
 
 <%-- Import JS Chung (nếu có) --%>

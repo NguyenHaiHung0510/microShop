@@ -45,10 +45,38 @@ public class HomeServlet extends HttpServlet {
 
         try {
             // Làm tạm 1 vài acc để test giao diện
-            GameSteam tmpGame1 = new GameSteam(1, "Test Game Steam", "Black meet wukong", new BigDecimal("0.0"), new BigDecimal("100.0"), 100, LocalDateTime.now(), "fake", "assets/images/home_steam.jpg");
-            GameSteam tmpGame2 = new GameSteam(1, "Test Game Steam 2", "GTA 7", new BigDecimal("100.0"), new BigDecimal("99.0"), 10000, LocalDateTime.now(), "fake_too", "assets/images/home_steam.jpg");
-            gameSteamDAO.insert(tmpGame1);
-            gameSteamDAO.insert(tmpGame2);
+            if (gameSteamDAO.getAll().size() == 0) {
+                GameSteam tmpGame1 = new GameSteam(1, "Test Game Steam", "Black meet wukong",
+                        new BigDecimal("0.0"), new BigDecimal("100.0"), 100, LocalDateTime.now(),
+                        "fake", "assets/images/home_steam.jpg");
+                GameSteam tmpGame2 = new GameSteam(1, "Test Game Steam 2", "GTA 7", new BigDecimal("100.0"),
+                        new BigDecimal("99.0"), 10000, LocalDateTime.now(), "fake_too", "assets/images/home_steam.jpg");
+                gameSteamDAO.insert(tmpGame1);
+                gameSteamDAO.insert(tmpGame2);
+            }
+            
+            if (taiKhoanLienQuanDAO.getAll().size() == 0) {
+                TaiKhoanLienQuan tmpTklq1 = new TaiKhoanLienQuan(
+                        null, 2, new BigDecimal("1000"), new BigDecimal("999"),
+                        "DANG_BAN", "Rank Cao Thủ, 100 Tướng, 300 Trang Phục HOT!",
+                        500, LocalDateTime.now().minusDays(1), "test_acc_lq_1", "1", "Cao Thủ", 100, 300, 90, "Garena"
+                );
+                TaiKhoanLienQuan tmpTklq2 = new TaiKhoanLienQuan(
+                        null, 2, new BigDecimal("2000"), new BigDecimal("1500"),
+                        "DANG_BAN", "Rank Bố tướng",
+                        500, LocalDateTime.now(), "test_acc_lq_2", "1", "Bố tướng", 200, 500, 90, "tiktok?"
+                );
+                TaiKhoanLienQuan tmpTklq3 = new TaiKhoanLienQuan(
+                        null, 2, new BigDecimal("5000"), new BigDecimal("3500"),
+                        "DANG_BAN", "Top 1 sever mõm",
+                        500, LocalDateTime.now().minusDays(1), "test_acc_lq_3", "1", "Bố tướng", 100, 300, 90, "Garena"
+                );
+
+                tmpTklq1.setMaTaiKhoan((taiKhoanLienQuanDAO.insert(tmpTklq1)));
+                tmpTklq2.setMaTaiKhoan((taiKhoanLienQuanDAO.insert(tmpTklq2)));
+                tmpTklq3.setMaTaiKhoan((taiKhoanLienQuanDAO.insert(tmpTklq3)));
+            }
+            
             List<TaiKhoanLienQuan> listLienQuan = taiKhoanLienQuanDAO.getByTrangThai("DANG_BAN");
 
             List<TaiKhoanFreeFire> listFreeFire = taiKhoanFreeFireDAO.getByTrangThai("DANG_BAN");
@@ -67,7 +95,7 @@ public class HomeServlet extends HttpServlet {
 
             // Làm tạm 1 vài acc để test giao diện
             tmpSteam.add(new GameSteam(1, "Test Game Steam", "Black meet wukong", new BigDecimal("0.0"), new BigDecimal("100.0"), 100, LocalDateTime.now(), "fake", "assets/images/home_steam.jpg"));
-            
+
             // Đẩy 4 danh sách này ra JSP
             request.setAttribute("listLienQuan", tmpLienQuan);
             request.setAttribute("listFreeFire", tmpFreeFire);

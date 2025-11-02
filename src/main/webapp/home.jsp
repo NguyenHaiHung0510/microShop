@@ -141,7 +141,7 @@
         <c:forEach items="${listSteam}" var="gs">
             <div class="product-card">
                  <div class="product-image">
-                    <img src="https://via.placeholder.com/250x150?text=${gs.tenGame}" alt="${gs.tenGame}">
+                    <img src="${pageContext.request.contextPath}/${gs.duongDanAnh}" alt="${gs.tenGame}">
                 </div>
                 <div class="product-info">
                     <h4 class="product-title">${gs.tenGame}</h4>

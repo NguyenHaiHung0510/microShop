@@ -10,6 +10,9 @@ import com.microshop.model.TaiKhoanFreeFire;
 import com.microshop.model.TaiKhoanLienQuan;
 import com.microshop.model.TaiKhoanRiot;
 
+import java.time.LocalDateTime;
+import java.math.BigDecimal;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -57,6 +60,9 @@ public class HomeServlet extends HttpServlet {
             List<TaiKhoanRiot> tmpRiot = listRiot.stream().limit(8).collect(Collectors.toList());
             List<GameSteam> tmpSteam = listSteam.stream().limit(8).collect(Collectors.toList());
 
+            // Làm tạm 1 vài acc để test giao diện
+            tmpSteam.add(new GameSteam(1, "Test Game Steam", "Black meet wukong", new BigDecimal("0.0"), new BigDecimal("100.0"), 100, LocalDateTime.now(), "fake", "assets/images/home_steam.jpg"));
+            
             // Đẩy 4 danh sách này ra JSP
             request.setAttribute("listLienQuan", tmpLienQuan);
             request.setAttribute("listFreeFire", tmpFreeFire);

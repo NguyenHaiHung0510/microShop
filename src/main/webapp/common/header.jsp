@@ -1,30 +1,28 @@
+<%-- BƯỚC 1: Thêm dòng này để sửa lỗi font Tiếng Việt --%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%-- 
-    Lưu ý: Để dùng JSTL (các thẻ <c:if>, <c:forEach>), 
-    bạn cần thêm file .jar của JSTL vào thư mục WEB-INF/lib.
-    (Nếu bạn dùng Maven, bạn cần thêm dependency 'jakarta.servlet.jsp.jstl').
---%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="vi">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-        <%-- Import CSS Chung từ /assets/css/style.css --%>
         <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/style.css">
+
+        <%-- BƯỚC 2: Thêm Google Font (Be Vietnam Pro) để chữ đẹp hơn --%>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;700&display=swap" rel="stylesheet">
 
         <title>MicroShop - ${param.pageTitle}</title> 
     </head>
     <body>
         <header>
-            <%-- 1. Thanh Top Bar (Logo, Search, User) --%>
             <div class="top-bar">
                 <div class="logo">
-                    <%-- Sử dụng logo bạn đã cung cấp --%>
                     <a href="${pageContext.request.contextPath}/home">
-                        <img src="${pageContext.request.contextPath}/assets/images/logo.png" alt="MicroShop Logo">
+                        <%-- BƯỚC 3: Đảm bảo logo của bạn tên là 'logo.png' và nằm trong 'assets/images/' --%>
+                        <img src="${pageContext.request.contextPath}/assets/images/microshop_logo.png" alt="MicroShop Logo">
                     </a>
                 </div>
 
@@ -41,24 +39,23 @@
 
                     <c:if test="${not empty sessionScope.user}">
                         <span>Chào, ${sessionScope.user.tenDangNhap}!</span>
-
                         <c:if test="${sessionScope.user.vaiTro == 'ADMIN'}">
                             <a href="${pageContext.request.contextPath}/admin/dashboard" class="nav-button admin">Admin Panel</a>
                         </c:if>
-
                         <a href="${pageContext.request.contextPath}/profile" class="nav-button">Trang cá nhân</a>
                         <a href="${pageContext.request.contextPath}/logout" class="nav-button">Đăng Xuất</a>
                     </c:if>
                 </div>
             </div>
 
-            <%-- 2. Thanh Menu Chính (Kiểu Daominhha) --%>
             <nav class="main-nav">
-                <%-- Đây là 4 danh mục sản phẩm chính của bạn --%>
                 <a href="${pageContext.request.contextPath}/shop/game?category=lienquan">Tài khoản Liên Quân</a>
                 <a href="${pageContext.request.contextPath}/shop/game?category=freefire">Tài khoản Free Fire</a>
                 <a href="${pageContext.request.contextPath}/shop/game?category=riot">Tài khoản LMHT & TFT</a>
                 <a href="${pageContext.request.contextPath}/shop/steam">Dịch vụ Game Steam</a>
+
+                <%-- BƯỚC 4: Thêm menu "Liên hệ Admin" theo yêu cầu --%>
+                <a href="${pageContext.request.contextPath}/contact">Liên hệ Admin</a>
             </nav>
         </header>
 

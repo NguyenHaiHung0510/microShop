@@ -5,7 +5,7 @@ import com.microshop.dao.TaiKhoanFreeFireDAO;
 import com.microshop.dao.TaiKhoanLienQuanDAO;
 import com.microshop.dao.TaiKhoanRiotDAO;
 import com.microshop.model.GameSteam;
-import com.microshop.model.TaiKhoan; 
+//import com.microshop.model.TaiKhoan; 
 import com.microshop.model.TaiKhoanFreeFire;
 import com.microshop.model.TaiKhoanLienQuan;
 import com.microshop.model.TaiKhoanRiot;
@@ -41,29 +41,27 @@ public class HomeServlet extends HttpServlet {
             throws ServletException, IOException {
 
         try {
-            // 1. Lấy Tài khoản Liên Quân (chỉ lấy tài khoản đang bán)
             List<TaiKhoanLienQuan> listLienQuan = taiKhoanLienQuanDAO.getByTrangThai("DANG_BAN");
 
-            // 2. Lấy Tài khoản Free Fire
             List<TaiKhoanFreeFire> listFreeFire = taiKhoanFreeFireDAO.getByTrangThai("DANG_BAN");
 
-            // 3. Lấy Tài khoản Riot
             List<TaiKhoanRiot> listRiot = taiKhoanRiotDAO.getByTrangThai("DANG_BAN");
 
-            // 4. Lấy Game Steam (dùng fastGetAll để tải nhanh, không lấy mô tả)
+            // Lấy Game Steam dùng fastGetAll để tải nhanh, không lấy mô tả
             List<GameSteam> listSteam = gameSteamDAO.fastGetAll();
 
             // Giới hạn mỗi danh sách chỉ 8 sản phẩm để hiển thị (vì DAO chưa có LIMIT)
-            List<TaiKhoanLienQuan> limitedLienQuan = listLienQuan.stream().limit(8).collect(Collectors.toList());
-            List<TaiKhoanFreeFire> limitedFreeFire = listFreeFire.stream().limit(8).collect(Collectors.toList());
-            List<TaiKhoanRiot> limitedRiot = listRiot.stream().limit(8).collect(Collectors.toList());
-            List<GameSteam> limitedSteam = listSteam.stream().limit(8).collect(Collectors.toList());
+            // Đây là cách dùng Java Steam API tốt hơn, thay cho cách dùng substring cũ
+            List<TaiKhoanLienQuan> tmpLienQuan = listLienQuan.stream().limit(8).collect(Collectors.toList());
+            List<TaiKhoanFreeFire> tmpFreeFire = listFreeFire.stream().limit(8).collect(Collectors.toList());
+            List<TaiKhoanRiot> tmpRiot = listRiot.stream().limit(8).collect(Collectors.toList());
+            List<GameSteam> tmpSteam = listSteam.stream().limit(8).collect(Collectors.toList());
 
             // Đẩy 4 danh sách này ra JSP
-            request.setAttribute("listLienQuan", limitedLienQuan);
-            request.setAttribute("listFreeFire", limitedFreeFire);
-            request.setAttribute("listRiot", limitedRiot);
-            request.setAttribute("listSteam", limitedSteam);
+            request.setAttribute("listLienQuan", tmpLienQuan);
+            request.setAttribute("listFreeFire", tmpFreeFire);
+            request.setAttribute("listRiot", tmpRiot);
+            request.setAttribute("listSteam", tmpSteam);
 
             // Forward sang home.jsp
             request.getRequestDispatcher("home.jsp").forward(request, response);

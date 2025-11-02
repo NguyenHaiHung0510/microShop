@@ -2,3 +2,10 @@
     - Chưa có cơ chế timeout khi không lấy được dữ liệu hoặc lấy quá lâu
     - Chưa có cơ chế băm 1 chiều cho matKhau của NguoiDung
     - Chưa có cơ chế mã hóa cho matKhau của các tài khoản
+    
+    - Sửa cấu trúc của TaiKhoanLienQuan, TaiKhoanFreeFire, TaiKhoanRiot hoặc TaiKhoan để chứa một ảnh
+    - Cấu trúc cũ là trong bảng tài khoản sẽ không trực tiếp chứa ảnh
+    - Tất cả ảnh của một tài khoản sẽ được lấy trong mapping AnhTaiKhoan
+    - Với cấu trúc đó thì khi lên trang chủ sẽ chỉ có 1 cách là truy vấn và lấy đúng 1
+    - ảnh -> phí tuy vấn vì nó sẽ phải duyệt toàn bộ bảng cho mỗi tài khoản để lấy đúng 1 ảnh
+    - Một ảnh duy nhất cho mỗi tài khoản sẽ là để phục vụ mục đích trình bày sản phẩm nhanh

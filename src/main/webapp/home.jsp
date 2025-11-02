@@ -63,7 +63,7 @@
         <c:forEach items="${listLienQuan}" var="tk">
             <div class="product-card">
                 <div class="product-image">
-                    <img src="https://via.placeholder.com/250x150?text=Acc+Lien+Quan" alt="Ảnh ${tk.maTaiKhoan}">
+                    <img src="${pageContext.request.contextPath}/assets/images/home_lienquan.png" alt="Ảnh ${tk.maTaiKhoan}">
                  </div>
                 <div class="product-info">
                     <h4 class="product-title">${not empty tk.diemNoiBat ? tk.diemNoiBat : "Tài khoản Liên Quân"}</h4>

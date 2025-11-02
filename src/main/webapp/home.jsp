@@ -1,19 +1,15 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<%-- Import Header --%>
 <jsp:include page="common/header.jsp">
     <jsp:param name="pageTitle" value="Trang Chủ"/>
 </jsp:include>
 
-<%-- 1. Phần Banner "Game & Dịch vụ" (SỬA: Đã thành Carousel) --%>
 <section class="services-banner">
-    <h2>GAME & DỊCH VỤ</h2>
+    <h2>TÀI KHOẢN GAME & DỊCH VỤ</h2>
 
-    <%-- SỬA: Thêm "wrapper" để tạo hiệu ứng carousel --%>
     <div class="service-carousel-wrapper">
         <div class="services-grid">
-            <%-- 6 Dịch vụ GỐC --%>
             <a href="${pageContext.request.contextPath}/shop/game?category=lienquan" class="service-card lienquan">
                  <h3>Tài Khoản Liên Quân</h3>
             </a>
@@ -24,53 +20,42 @@
                  <h3>Tài Khoản LMHT & TFT</h3>
             </a>
             
-            <%-- SỬA: Xóa H3 cho Steam --%>
             <a href="${pageContext.request.contextPath}/shop/steam" class="service-card steam">
-                <%-- Đã xóa H3 --%>
             </a>
 
-            <%-- SỬA: Xóa H3, đổi text span --%>
             <a href="#" class="service-card youtube">
-                <%-- Đã xóa H3 --%>
                 <span>Dịch vụ sắp tới</span>
             </a>
             <a href="#" class="service-card netflix">
-                <%-- Đã xóa H3 --%>
                 <span>Dịch vụ sắp tới</span>
             </a>
 
-            <%-- SỬA: Thêm 6 dịch vụ SAO CHÉP (để tạo hiệu ứng lặp vô tận) --%>
             <a href="${pageContext.request.contextPath}/shop/game?category=lienquan" class="service-card lienquan">
-                <h3>TÀI KHOẢN LIÊN QUÂN</h3>
+                <h3>Tài Khoản Liên Quân</h3>
             </a>
             <a href="${pageContext.request.contextPath}/shop/game?category=freefire" class="service-card freefire">
-                 <h3>TÀI KHOẢN FREE FIRE</h3>
+                 <h3>Tài Khoản FreeFire</h3>
             </a>
             <a href="${pageContext.request.contextPath}/shop/game?category=riot" class="service-card riot">
-                <h3>TÀI KHOẢN RIOT</h3>
+                <h3>Tài Khoản LMHT & TFT</h3>
             </a>
 
-            <%-- SỬA: Xóa H3 cho Steam (bản sao chép) --%>
             <a href="${pageContext.request.contextPath}/shop/steam" class="service-card steam">
-                 <%-- Đã xóa H3 --%>
             </a>
 
-            <%-- SỬA: Xóa H3, đổi text span (bản sao chép) --%>
             <a href="#" class="service-card youtube">
                 <%-- Đã xóa H3 --%>
                 <span>Dịch vụ sắp tới</span>
             </a>
              <a href="#" class="service-card netflix">
-                <%-- Đã xóa H3 --%>
                 <span>Dịch vụ sắp tới</span>
             </a>
         </div>
     </div>
 </section>
 
-<%-- 2. Khối Tài khoản Liên Quân (Giữ nguyên) --%>
 <section class="product-section">
-    <h2>TÀI KHOẢN LIÊN QUÂN NỔI BẬT</h2>
+    <h2>Tài Khoản Liên Quân HOT</h2>
     <div class="product-grid">
          <c:if test="${empty listLienQuan}">
             <p>Chưa có sản phẩm nào trong danh mục này.</p>
@@ -95,11 +80,9 @@
     </div>
 </section>
 
-<%-- 3. Khối Tài khoản Free Fire (Giữ nguyên) --%>
 <section class="product-section">
-    <h2>TÀI KHOẢN FREE FIRE NỔI BẬT</h2>
+    <h2>Tài Khoản FreeFire HOT</h2>
     <div class="product-grid">
-        <%-- (Copy code <c:if> và <c:forEach> tương tự như trên) --%>
         <c:if test="${empty listFreeFire}">
             <p>Chưa có sản phẩm nào trong danh mục này.</p>
         </c:if>
@@ -123,13 +106,11 @@
     </div>
 </section>
 
-<%-- 4. Khối Tài khoản Riot (Giữ nguyên) --%>
 <section class="product-section">
-    <h2>TÀI KHOẢN RIOT (LMHT & TFT) NỔI BẬT</h2>
+    <h2>Tài Khoản LMHT & TFT HOT</h2>
     <div class="product-grid">
-        <%-- (Copy code <c:if> và <c:forEach> tương tự như trên) --%>
         <c:if test="${empty listRiot}">
-            <p>Chưa có sản phẩm nào trong danh portnày.</p>
+            <p>Chưa có sản phẩm nào trong danh mục này.</p>
         </c:if>
         <c:forEach items="${listRiot}" var="tk">
             <div class="product-card">
@@ -151,11 +132,9 @@
     </div>
 </section>
 
-<%-- 5. Khối Game Steam (Giữ nguyên) --%>
 <section class="product-section">
-    <h2>GAME STEAM HOT</h2>
+    <h2>Game Steam HOT</h2>
     <div class="product-grid">
-        <%-- (Copy code <c:if> và <c:forEach> tương tự như trên) --%>
         <c:if test="${empty listSteam}">
             <p>Chưa có sản phẩm nào trong danh mục này.</p>
         </c:if>
@@ -179,5 +158,4 @@
     </div>
 </section>
 
-<%-- Import Footer --%>
 <jsp:include page="common/footer.jsp" />

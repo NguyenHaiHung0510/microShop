@@ -41,6 +41,7 @@ CREATE TABLE `TAIKHOAN` (
     `DiemNoiBat` TEXT,
     `LuotXem` INT DEFAULT 0,
     `ThoiGianDang` DATETIME DEFAULT CURRENT_TIMESTAMP,
+    `DuongDanAnh` VARCHAR(255),
 
     FOREIGN KEY (`MaDanhMuc`) REFERENCES `DANHMUC`(`MaDanhMuc`),
     CONSTRAINT CHECK_TAIKHOAN_TrangThai CHECK (`TrangThai` IN ('DANG_BAN', 'DA_BAN'))

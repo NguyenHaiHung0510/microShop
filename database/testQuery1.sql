@@ -31,6 +31,11 @@ LEFT JOIN
 WHERE 
     tk.MaTaiKhoan;
     
-SELECT * FROM GAME_STEAM;
 
+
+USE `microshop_db`;
+SELECT * FROM GAME_STEAM;
 DELETE FROM GAME_STEAM as gs WHERE gs.MaGameSteam >= 0;
+
+SELECT * FROM TAIKHOAN;
+DELETE FROM TAIKHOAN as tk WHERE tk.MaTaiKhoan >=0;

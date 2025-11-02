@@ -17,10 +17,10 @@ public class TaiKhoanFreeFire extends TaiKhoan {
     }
 
     public TaiKhoanFreeFire(Integer maTaiKhoan, Integer maDanhMuc, BigDecimal giaGoc, BigDecimal giaBan,
-            String trangThai, String diemNoiBat, Integer luotXem, LocalDateTime thoiGianDang, // Tham số cha
+            String trangThai, String diemNoiBat, Integer luotXem, LocalDateTime thoiGianDang, String duongDanAnh, // Tham số cha
             String tenDangNhap, String matKhau, Boolean coTheVoCuc, Integer soSkinSung, // Tham số con
             String hangRank, String loaiDangKy) {
-        super(maTaiKhoan, maDanhMuc, giaGoc, giaBan, trangThai, diemNoiBat, luotXem, thoiGianDang);
+        super(maTaiKhoan, maDanhMuc, giaGoc, giaBan, trangThai, diemNoiBat, luotXem, thoiGianDang, duongDanAnh);
         this.tenDangNhap = tenDangNhap;
         this.matKhau = matKhau;
         this.coTheVoCuc = coTheVoCuc;

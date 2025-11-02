@@ -9,6 +9,9 @@ import com.microshop.model.GameSteam;
 import com.microshop.model.TaiKhoanFreeFire;
 import com.microshop.model.TaiKhoanLienQuan;
 import com.microshop.model.TaiKhoanRiot;
+// Tạm để insert ảnh cho tài khoản test
+import com.microshop.model.AnhTaiKhoan;
+import com.microshop.dao.AnhTaiKhoanDAO;
 
 import java.time.LocalDateTime;
 import java.math.BigDecimal;
@@ -45,38 +48,50 @@ public class HomeServlet extends HttpServlet {
 
         try {
             // Làm tạm 1 vài acc để test giao diện
-            if (gameSteamDAO.getAll().size() == 0) {
-                GameSteam tmpGame1 = new GameSteam(1, "Test Game Steam", "Black meet wukong",
-                        new BigDecimal("0.0"), new BigDecimal("100.0"), 100, LocalDateTime.now(),
-                        "fake", "assets/images/home_steam.jpg");
-                GameSteam tmpGame2 = new GameSteam(1, "Test Game Steam 2", "GTA 7", new BigDecimal("100.0"),
-                        new BigDecimal("99.0"), 10000, LocalDateTime.now(), "fake_too", "assets/images/home_steam.jpg");
+            if (gameSteamDAO.fastGetAll().size() == 0) {
+                GameSteam tmpGame1 = new GameSteam(null, "Test Game Steam", "Black meet wukong", new BigDecimal("0.0"),
+                        new BigDecimal("100.0"), 100, LocalDateTime.now(), "fake", "assets/images/home_steam.jpg");
+                GameSteam tmpGame2 = new GameSteam(null, "Test Game Steam 2", "GTA 7",
+                        new BigDecimal("100.0"), new BigDecimal("99.0"), 10000,
+                        LocalDateTime.now(), "fake_too", "assets/images/home_steam.jpg");
                 gameSteamDAO.insert(tmpGame1);
                 gameSteamDAO.insert(tmpGame2);
             }
-            
+
             if (taiKhoanLienQuanDAO.getAll().size() == 0) {
                 TaiKhoanLienQuan tmpTklq1 = new TaiKhoanLienQuan(
                         null, 2, new BigDecimal("1000"), new BigDecimal("999"),
                         "DANG_BAN", "Rank Cao Thủ, 100 Tướng, 300 Trang Phục HOT!",
-                        500, LocalDateTime.now().minusDays(1), "test_acc_lq_1", "1", "Cao Thủ", 100, 300, 90, "Garena"
+                        500, LocalDateTime.now().minusDays(1), "assets/images/home_lienquan.png", "test_acc_lq_1", "1", "Cao Thủ", 100, 300, 90, "Garena"
                 );
                 TaiKhoanLienQuan tmpTklq2 = new TaiKhoanLienQuan(
                         null, 2, new BigDecimal("2000"), new BigDecimal("1500"),
                         "DANG_BAN", "Rank Bố tướng",
-                        500, LocalDateTime.now(), "test_acc_lq_2", "1", "Bố tướng", 200, 500, 90, "tiktok?"
+                        500, LocalDateTime.now(), "assets/images/home_freefire.jpg", "test_acc_lq_2", "1", "Bố tướng", 200, 500, 90, "tiktok?"
                 );
                 TaiKhoanLienQuan tmpTklq3 = new TaiKhoanLienQuan(
                         null, 2, new BigDecimal("5000"), new BigDecimal("3500"),
                         "DANG_BAN", "Top 1 sever mõm",
-                        500, LocalDateTime.now().minusDays(1), "test_acc_lq_3", "1", "Bố tướng", 100, 300, 90, "Garena"
+                        500, LocalDateTime.now().minusDays(2), "assets/images/home_lmht.jpg", "test_acc_lq_3", "1", "Bố tướng", 100, 300, 90, "Garena"
                 );
-
+                System.out.println(tmpTklq1);
+                System.out.println(tmpTklq2);
+                System.out.println(tmpTklq3);
+                    
                 tmpTklq1.setMaTaiKhoan((taiKhoanLienQuanDAO.insert(tmpTklq1)));
                 tmpTklq2.setMaTaiKhoan((taiKhoanLienQuanDAO.insert(tmpTklq2)));
                 tmpTklq3.setMaTaiKhoan((taiKhoanLienQuanDAO.insert(tmpTklq3)));
+
+//                AnhTaiKhoan anh1 = new AnhTaiKhoan(null, tmpTklq1.getMaTaiKhoan(), "images\\home_lienquan.png");
+//                AnhTaiKhoan anh2 = new AnhTaiKhoan(null, tmpTklq2.getMaTaiKhoan(), "images\\home_lienquan.png");
+//                AnhTaiKhoan anh3 = new AnhTaiKhoan(null, tmpTklq3.getMaTaiKhoan(), "images\\home_lienquan.png");
+//
+//                AnhTaiKhoanDAO tmpAnh = new AnhTaiKhoanDAO();
+//                tmpAnh.insert(anh1);
+//                tmpAnh.insert(anh2);
+//                tmpAnh.insert(anh3);
             }
-            
+
             List<TaiKhoanLienQuan> listLienQuan = taiKhoanLienQuanDAO.getByTrangThai("DANG_BAN");
 
             List<TaiKhoanFreeFire> listFreeFire = taiKhoanFreeFireDAO.getByTrangThai("DANG_BAN");
@@ -92,9 +107,6 @@ public class HomeServlet extends HttpServlet {
             List<TaiKhoanFreeFire> tmpFreeFire = listFreeFire.stream().limit(8).collect(Collectors.toList());
             List<TaiKhoanRiot> tmpRiot = listRiot.stream().limit(8).collect(Collectors.toList());
             List<GameSteam> tmpSteam = listSteam.stream().limit(8).collect(Collectors.toList());
-
-            // Làm tạm 1 vài acc để test giao diện
-            tmpSteam.add(new GameSteam(1, "Test Game Steam", "Black meet wukong", new BigDecimal("0.0"), new BigDecimal("100.0"), 100, LocalDateTime.now(), "fake", "assets/images/home_steam.jpg"));
 
             // Đẩy 4 danh sách này ra JSP
             request.setAttribute("listLienQuan", tmpLienQuan);

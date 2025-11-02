@@ -46,6 +46,7 @@ class TaiKhoanLienQuanDAOTest {
 
     private TaiKhoanLienQuan sampleTKLQ;
     private final LocalDateTime timeNow = LocalDateTime.now();
+    private final String sampleAnh = "path/to/lq.jpg"; // THÊM MỚI
 
     @BeforeEach
     void setUp() {
@@ -57,6 +58,7 @@ class TaiKhoanLienQuanDAOTest {
         sampleTKLQ.setTrangThai("DANG_BAN");
         sampleTKLQ.setLuotXem(50);
         sampleTKLQ.setThoiGianDang(timeNow);
+        sampleTKLQ.setDuongDanAnh(sampleAnh); // THÊM MỚI
         // Thuộc tính con
         sampleTKLQ.setTenDangNhap("tklq_user");
         sampleTKLQ.setMatKhau("123456");
@@ -80,6 +82,7 @@ class TaiKhoanLienQuanDAOTest {
         when(rs.getTimestamp("ThoiGianDang")).thenReturn(Timestamp.valueOf(timeNow));
         when(rs.getBigDecimal("GiaGoc")).thenReturn(sampleTKLQ.getGiaGoc());
         when(rs.getString("DiemNoiBat")).thenReturn(sampleTKLQ.getDiemNoiBat());
+        when(rs.getString("DuongDanAnh")).thenReturn(sampleTKLQ.getDuongDanAnh()); // THÊM MỚI
 
         // Mock phần con (TAIKHOAN_LIENQUAN)
         when(rs.getString("TenDangNhap")).thenReturn(sampleTKLQ.getTenDangNhap());
@@ -107,6 +110,7 @@ class TaiKhoanLienQuanDAOTest {
             assertEquals(1, result.getMaTaiKhoan());
             assertEquals("Cao Thủ", result.getHangRank());
             assertEquals(110, result.getSoTuong());
+            assertEquals(sampleAnh, result.getDuongDanAnh()); // THÊM MỚI: Assert
             verify(ps).setObject(1, 1);
         }
     }
@@ -125,11 +129,13 @@ class TaiKhoanLienQuanDAOTest {
             assertNotNull(result);
             assertEquals(1, result.size());
             assertEquals("Cao Thủ", result.get(0).getHangRank());
+            assertEquals(sampleAnh, result.get(0).getDuongDanAnh()); // THÊM MỚI: Assert
         }
     }
 
     @Test
     void insert_ReturnsGeneratedId() throws SQLException {
+        // ... (Không thay đổi logic, vì taiKhoanDAO đã được mock)
         try (MockedStatic<DBContext> mockedDBContext = Mockito.mockStatic(DBContext.class)) {
             // 1. Mock DAO cha
             when(taiKhoanDAO.insert(any(TaiKhoan.class))).thenReturn(99); // Trả về ID mới
@@ -158,6 +164,7 @@ class TaiKhoanLienQuanDAOTest {
 
     @Test
     void update_ReturnsTrue() throws SQLException {
+        // ... (Không thay đổi logic, vì taiKhoanDAO đã được mock)
         try (MockedStatic<DBContext> mockedDBContext = Mockito.mockStatic(DBContext.class)) {
             // 1. Mock DAO cha
             when(taiKhoanDAO.update(any(TaiKhoan.class))).thenReturn(true);
@@ -184,6 +191,7 @@ class TaiKhoanLienQuanDAOTest {
 
     @Test
     void delete_ReturnsTrue() throws SQLException {
+        // ... (Không thay đổi)
         // 1. Mock DAO cha
         when(taiKhoanDAO.delete(1)).thenReturn(true);
 
@@ -211,12 +219,14 @@ class TaiKhoanLienQuanDAOTest {
 
             assertNotNull(result);
             assertEquals(1, result.size());
+            assertEquals(sampleAnh, result.get(0).getDuongDanAnh()); // THÊM MỚI: Assert
             verify(ps).setString(1, "DANG_BAN");
         }
     }
 
     @Test
     void updateTrangThai_CallsParentDAO() throws SQLException {
+        // ... (Không thay đổi)
         // Không cần mock DBContext vì hàm này chỉ gọi DAO cha
 
         // Act

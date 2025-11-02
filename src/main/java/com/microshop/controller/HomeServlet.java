@@ -44,6 +44,11 @@ public class HomeServlet extends HttpServlet {
             throws ServletException, IOException {
 
         try {
+            // Làm tạm 1 vài acc để test giao diện
+            GameSteam tmpGame1 = new GameSteam(1, "Test Game Steam", "Black meet wukong", new BigDecimal("0.0"), new BigDecimal("100.0"), 100, LocalDateTime.now(), "fake", "assets/images/home_steam.jpg");
+            GameSteam tmpGame2 = new GameSteam(1, "Test Game Steam 2", "GTA 7", new BigDecimal("100.0"), new BigDecimal("99.0"), 10000, LocalDateTime.now(), "fake_too", "assets/images/home_steam.jpg");
+            gameSteamDAO.insert(tmpGame1);
+            gameSteamDAO.insert(tmpGame2);
             List<TaiKhoanLienQuan> listLienQuan = taiKhoanLienQuanDAO.getByTrangThai("DANG_BAN");
 
             List<TaiKhoanFreeFire> listFreeFire = taiKhoanFreeFireDAO.getByTrangThai("DANG_BAN");

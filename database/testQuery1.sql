@@ -30,3 +30,7 @@ LEFT JOIN
 
 WHERE 
     tk.MaTaiKhoan;
+    
+SELECT * FROM GAME_STEAM;
+
+DELETE FROM GAME_STEAM as gs WHERE gs.MaGameSteam >= 0;

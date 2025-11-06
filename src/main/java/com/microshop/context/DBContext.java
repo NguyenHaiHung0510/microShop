@@ -16,6 +16,7 @@ public class DBContext {
     private static HikariDataSource dataSource;
 
     static {
+        // Nâng cấp DB context
         try {
             HikariConfig config = new HikariConfig();
 

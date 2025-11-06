@@ -116,7 +116,9 @@ public class HomeServlet extends HttpServlet {
             List<TaiKhoanFreeFire> tmpFreeFire = listFreeFire.stream().limit(8).collect(Collectors.toList());
             List<TaiKhoanRiot> tmpRiot = listRiot.stream().limit(8).collect(Collectors.toList());
             List<GameSteam> tmpSteam = listSteam.stream().limit(8).collect(Collectors.toList());
-
+            for(TaiKhoanLienQuan x : tmpLienQuan){
+                System.out.println(x);
+            }
             // Đẩy 4 danh sách này ra JSP
             request.setAttribute("listLienQuan", tmpLienQuan);
             request.setAttribute("listFreeFire", tmpFreeFire);

@@ -50,7 +50,6 @@ public class OrderCleanupTask extends TimerTask {
     private int cleanupAbandonedOrders(int minutesThreshold) throws SQLException {
         Connection conn = null;
         int totalProcessed = 0;
-        System.out.println("Hello worlds");
         try {
             // 1. LẤY KẾT NỐI VÀ BẮT ĐẦU GIAO DỊCH
             conn = DBContext.getConnection();
@@ -59,14 +58,14 @@ public class OrderCleanupTask extends TimerTask {
             
             // 2. TÌM VÀ LẤY ID TAIKHOAN LIÊN QUAN
             String sqlSelect = "SELECT MaDonHang, MaTaiKhoan " +
-                               "FROM DONHANG " +
-                               "WHERE TrangThai = 'CHO_THANH_TOAN'";
+                           "FROM DONHANG " +
+                           "WHERE TrangThai = 'CHO_THANH_TOAN' AND ThoiGianTao < DATE_SUB(NOW(), INTERVAL ? MINUTE)";
             
             List<Integer> maTaiKhoanToRelease = new ArrayList<>();
             List<Integer> maDonHangToUpdate = new ArrayList<>();
-            System.out.println(maDonHangToUpdate.size());
+//            System.out.println(maDonHangToUpdate.size());
             try (PreparedStatement psSelect = conn.prepareStatement(sqlSelect)) {
-//                psSelect.setInt(1, minutesThreshold);
+                psSelect.setInt(1, minutesThreshold);
                 try (ResultSet rs = psSelect.executeQuery()) {
                     while (rs.next()) {
                         maTaiKhoanToRelease.add(rs.getInt("MaTaiKhoan"));
@@ -79,10 +78,10 @@ public class OrderCleanupTask extends TimerTask {
                 conn.setAutoCommit(true);
                 return 0; // Không có gì để dọn dẹp
             }
-            System.out.println("?????");
-            for(int x : maDonHangToUpdate){
-                System.out.println(x);
-            }
+//            System.out.println("?????");
+//            for(int x : maDonHangToUpdate){
+//                System.out.println(x);
+//            }
             // 3. GIẢI PHÓNG TAIKHOAN (Chuyển về DANG_BAN)
             String sqlRelease = "UPDATE TAIKHOAN SET TrangThai = 'DANG_BAN' WHERE MaTaiKhoan = ?";
             try (PreparedStatement psRelease = conn.prepareStatement(sqlRelease)) {

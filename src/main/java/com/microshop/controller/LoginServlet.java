@@ -50,7 +50,7 @@ public class LoginServlet extends HttpServlet {
             // 3.1. Tạo và thiết lập Session cho người dùng
             HttpSession session = request.getSession();
             session.setAttribute("user", user); // Lưu đối tượng NguoiDung vào Session
-            session.setMaxInactiveInterval(60);
+            session.setMaxInactiveInterval(60 * 5);
             
             // 3.2. Chuyển hướng đến trang chủ hoặc trang sau đăng nhập
             // Sử dụng sendRedirect để thay đổi URL trong trình duyệt

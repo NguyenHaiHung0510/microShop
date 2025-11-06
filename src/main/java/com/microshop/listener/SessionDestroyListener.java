@@ -71,7 +71,5 @@ public class SessionDestroyListener implements HttpSessionListener {
      */
     @Override
     public void sessionCreated(HttpSessionEvent se) {
-        // Thiết lập thời gian timeout 30 GIÂY cho mục đích kiểm thử
-        se.getSession().setMaxInactiveInterval(30); 
     }
 }

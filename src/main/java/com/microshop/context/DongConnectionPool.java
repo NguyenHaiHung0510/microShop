@@ -28,7 +28,7 @@ public class DongConnectionPool implements ServletContextListener {
         cleanupTimer = new Timer(true); // Khởi tạo Timer
         
         // Cấu hình dọn dẹp (ví dụ: Đơn hàng quá 1 phút sẽ bị hủy)
-        int cleanupThresholdMinutes = 30; // 30 giây
+        int cleanupThresholdMinutes = 1; 
         long initialDelay = 10 * 1000;  // Chạy lần đầu sau 10 giây
         long repeatPeriod = 15 * 1000;   // Lặp lại mỗi 15 giây
         
@@ -45,7 +45,13 @@ public class DongConnectionPool implements ServletContextListener {
 
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
-//        // 1. Dừng Timer khi ứng dụng tắt
+        // 2. Thu hồi Connection Pool
+        System.out.println("Web da ngung hoat dong, thuc hien thu hoi Connection Pool");
+        // Giả định: DBContext.shutdown() tồn tại
+        DBContext.shutdown(); 
+        System.out.println("Connection Pool da duoc thu hoi thanh cong");
+        
+        // 1. Dừng Timer khi ứng dụng tắt
         if (cleanupTimer != null) {
             cleanupTimer.cancel();
             System.out.println("Tác vụ dọn dẹp đơn hàng đã được hủy.");
@@ -61,10 +67,6 @@ public class DongConnectionPool implements ServletContextListener {
             }
         }
         
-        // 2. Thu hồi Connection Pool
-        System.out.println("Web da ngung hoat dong, thuc hien thu hoi Connection Pool");
-        // Giả định: DBContext.shutdown() tồn tại
-        DBContext.shutdown(); 
-        System.out.println("Connection Pool da duoc thu hoi thanh cong");
+
     }
 }

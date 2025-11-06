@@ -17,7 +17,6 @@ public class DBContext {
 
     static {
         // Nâng cấp DB context
-        // Sửa xóa
         try {
             HikariConfig config = new HikariConfig();
 

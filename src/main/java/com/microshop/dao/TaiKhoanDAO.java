@@ -2,7 +2,6 @@ package com.microshop.dao;
 
 import com.microshop.context.DBContext;
 import com.microshop.model.TaiKhoan;
-
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -24,7 +23,7 @@ public class TaiKhoanDAO implements CrudDAO<TaiKhoan, Integer> {
         }
         return list;
     }
-
+    
     @Override
     public TaiKhoan getById(Integer id) throws SQLException {
         String sql = "SELECT * FROM TAIKHOAN WHERE MaTaiKhoan = ?";
@@ -135,6 +134,22 @@ public class TaiKhoanDAO implements CrudDAO<TaiKhoan, Integer> {
                 }
             }
         }
+        return list;
+    }
+    
+    public List<TaiKhoan> getAllByList(List<Integer> maTaiKhoan) throws SQLException {
+        List<TaiKhoan> list = new ArrayList<>();
+        TaiKhoanLienQuanDAO lqdao = new TaiKhoanLienQuanDAO();
+        TaiKhoanLienQuanDAO ffdao = new TaiKhoanLienQuanDAO();
+        TaiKhoanLienQuanDAO rtdao = new TaiKhoanLienQuanDAO();
+        
+        for(int id : maTaiKhoan){
+            TaiKhoan x = lqdao.getById(id), y = ffdao.getById(id), z = rtdao.getById(id);
+            if(x != null) list.add(x);
+            else if(y != null) list.add(y);
+            else list.add(z);
+        }
+        
         return list;
     }
 

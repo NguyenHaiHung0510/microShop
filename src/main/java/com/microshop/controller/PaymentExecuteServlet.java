@@ -13,6 +13,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.sql.SQLException;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -55,6 +57,10 @@ public class PaymentExecuteServlet extends HttpServlet {
         try {
             int maSanPham = Integer.parseInt(idParam);
             TaiKhoan sanPham = null; // Đối tượng chung cho sản phẩm
+            long thoiGianConLaiGiay = 0; // Biến lưu thời gian còn lại
+
+            // Ngưỡng hủy (ví dụ: 1 phút = 60 giây)
+            final int NGUONG_HUY_PHUT = 1;
             // 3. KIỂM TRA TỒN KHO & LẤY GIÁ BÁN CUỐI CÙNG
             switch (type.toLowerCase()) {
                 case "lienquan":
@@ -74,41 +80,70 @@ public class PaymentExecuteServlet extends HttpServlet {
                 return;
             }
             
-            if (!sanPham.getTrangThai().equals("DANG_BAN")) {
-                // Chuyển hướng về trang chi tiết với thông báo đã hết hàng
+            // Nếu có đơn đang chờ thanh toán hoặc sản phẩm đã bán thì không cho vào trang thanh toán
+            if (sanPham.getTrangThai().equals("DA_BAN")) {
                 response.sendRedirect(request.getContextPath() + "/shop/game/detail?id=" + maSanPham + "&category=" + type + "&status=sold");
                 return;
+            }    
+            if(donhangDAO.getByMaTaiKhoanChoThanhToan(maSanPham) != null){
+                response.sendRedirect(request.getContextPath() + "/shop/game/detail?id=" + maSanPham + "&category=" + type + "&status=in_transaction");
+                return;
             }
-            // Tạo 1 đơn hàng với trạng thái CHO_THANH_TOAN
-            // (MaNguoiDung, MaTaiKhoan, GiaMua, ThoiGianMua, TrangThai, ThoiGianTao)
-            DonHang donhang = new DonHang(null,
-                user.getMaNguoiDung(), sanPham.getMaTaiKhoan(), 
-                sanPham.getGiaBan(),
-                null,
-                "CHO_THANH_TOAN",
-                null
-            );
             
-            // Lấy ra mã đơn hàng sau khi insert
-            int maDonHang = donhangDAO.insert(donhang);
-            
-            // Lấy ra list mã đơn hàng trong session
-            
+            List<DonHang> list = donhangDAO.getByMaNguoiDung(user.getMaNguoiDung());
+            DonHang donhang = null;
+            for(DonHang x : list){
+                if(x.getMaTaiKhoan().equals(maSanPham) && x.getTrangThai().equals("CHO_THANH_TOAN")){
+                    donhang = x; 
+                    break;
+                }
+            }
             List<Integer> listMaDonHang = (List<Integer>) session.getAttribute("maDonHangDangXuLy");
             if (listMaDonHang == null) {
                 listMaDonHang = new ArrayList<>();
             }
-            listMaDonHang.add(maDonHang);
-            System.out.println("HELLOW");
-            for(int x : listMaDonHang){
-                System.out.println(x);
+
+            if(donhang == null){
+                // Tạo 1 đơn hàng với trạng thái CHO_THANH_TOAN
+                // (MaNguoiDung, MaTaiKhoan, GiaMua, ThoiGianMua, TrangThai, ThoiGianTao)
+                donhang = new DonHang(null,
+                    user.getMaNguoiDung(), sanPham.getMaTaiKhoan(), 
+                    sanPham.getGiaBan(),
+                    null,
+                    "CHO_THANH_TOAN",
+                    null
+                );
+                // Lấy ra mã đơn hàng sau khi insert
+                int maDonHang = donhangDAO.insert(donhang);
+
+                listMaDonHang.add(maDonHang);
+                thoiGianConLaiGiay = NGUONG_HUY_PHUT * 60;
             }
+            else{
+                int maDonHang = donhang.getMaDonHang();
+    
+                // Tính thời gian còn lại
+                LocalDateTime thoiGianTao = donhang.getThoiGianTao(); // Chuyển Timestamp sang LocalDateTime
+                LocalDateTime thoiGianHetHan = thoiGianTao.plusMinutes(NGUONG_HUY_PHUT);
+
+                Duration remaining = Duration.between(LocalDateTime.now(), thoiGianHetHan);
+                thoiGianConLaiGiay = remaining.getSeconds();
+
+                // Đảm bảo không bị âm nếu đã quá hạn (mặc dù Task Cleanup sẽ xử lý)
+                if (thoiGianConLaiGiay < 0) {
+                    thoiGianConLaiGiay = 0;
+                }
+            }
+
+
             // 5. CHUYỂN TIẾP ĐẾN TRANG THANH TOÁN (CHECKOUT)
 
             // Lưu dữ liệu sản phẩm và người dùng vào Session hoặc Request để trang Checkout sử dụng
             request.setAttribute("sanPhamThanhToan", sanPham);
             // LƯU MÃ ĐƠN HÀNG VÀO SESSION
             request.getSession().setAttribute("maDonHangDangXuLy", listMaDonHang);
+            // Lưu thời gian còn lại
+            request.setAttribute("thoiGianConLai", thoiGianConLaiGiay);
             // Chuyển tiếp đến trang hiển thị form xác nhận và chọn cổng thanh toán
             request.getRequestDispatcher("/checkout.jsp").forward(request, response);
 

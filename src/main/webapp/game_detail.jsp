@@ -19,7 +19,7 @@
     </c:choose>
 
     <title>Chi Tiết ${categoryName}</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css"> 
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/style.css"> 
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
         * {
@@ -211,8 +211,30 @@
             <span class="old-price-detail"><fmt:formatNumber value="${tk.giaGoc}" type="currency" currencyCode="VND" maxFractionDigits="0" /> VNĐ</span>
             <span class="new-price-detail"><fmt:formatNumber value="${tk.giaBan}" type="currency" currencyCode="VND" maxFractionDigits="0" /> VNĐ</span>
         </div>
-
         <c:choose>
+
+            <%-- 
+                ƯU TIÊN 1: Kiểm tra xem người dùng vừa bị redirect 
+                từ Servlet (do sản phẩm đang được giao dịch) hay không.
+            --%>
+            <c:when test="${param.status eq 'in_transaction'}">
+                <span class="buy-now-btn" 
+                      style="text-align: center; display: block; text-decoration: none; 
+                             background-color: #f39c12; /* Màu vàng */
+                             cursor: not-allowed;
+                             pointer-events: none;">
+                    ĐANG CÓ NGƯỜI THANH TOÁN
+                </span>
+                <%-- Thêm thông báo lỗi rõ ràng bên dưới nút --%>
+                <div style="color: red; text-align: center; margin-top: 10px; font-weight: bold;">
+                    Tài khoản này đang được giữ, vui lòng thử lại.
+                </div>
+            </c:when>
+
+            <%-- 
+                ƯU TIÊN 2: Nếu không có lỗi 'in_transaction', 
+                kiểm tra trạng thái thực tế của tài khoản trong DB.
+            --%>
             <c:when test="${tk.trangThai eq 'DANG_BAN'}">
                 <%-- TRẠNG THÁI: CÒN HÀNG (Cho phép mua) --%>
                 <a href="${pageContext.request.contextPath}/payment/execute?type=${category}&id=${tk.maTaiKhoan}" 
@@ -221,13 +243,17 @@
                     MUA NGAY
                 </a>
             </c:when>
+
+            <%-- 
+                ƯU TIÊN 3: (ELSE) Các trạng thái còn lại (DA_BAN, DA_HUY, CHO_THANH_TOAN)
+                Sẽ hiển thị là Đã Bán/Hết Hàng.
+            --%>
             <c:otherwise>
-                <%-- TRẠNG THÁI: ĐÃ BÁN / DA_HUY (Vô hiệu hóa) --%>
                 <span class="buy-now-btn" 
                       style="text-align: center; display: block; text-decoration: none; 
                              background-color: #dc3545; /* Màu đỏ mờ */
                              cursor: not-allowed;
-                             pointer-events: none; /* Vô hiệu hóa click */">
+                             pointer-events: none;">
                     ĐÃ BÁN (HẾT HÀNG)
                 </span>
             </c:otherwise>
@@ -261,5 +287,33 @@
     </div>
 </div>
 
+<script>
+    // Chạy script này sau khi trang đã tải xong
+    document.addEventListener('DOMContentLoaded', function() {
+        
+        // 1. Lấy các tham số URL hiện tại
+        const urlParams = new URLSearchParams(window.location.search);
+
+        // 2. Kiểm tra xem tham số 'status' có tồn tại không
+        if (urlParams.has('status')) {
+            
+            // 3. Xóa tham số 'status'
+            urlParams.delete('status');
+            
+            // 4. Lấy đường dẫn URL mới (đã xóa tham số 'status')
+            let newRelativePathQuery = window.location.pathname;
+            
+            // Nối lại các tham số còn lại (nếu có)
+            if (urlParams.toString()) {
+                newRelativePathQuery += '?' + urlParams.toString();
+            }
+
+            // 5. CẬP NHẬT LỊCH SỬ TRÌNH DUYỆT
+            // Thay thế URL hiện tại bằng URL mới (đã được làm sạch)
+            // Lần refresh (F5) tiếp theo sẽ sử dụng URL mới này.
+            history.replaceState(null, '', newRelativePathQuery);
+        }
+    });
+</script>    
 </body>
 </html>

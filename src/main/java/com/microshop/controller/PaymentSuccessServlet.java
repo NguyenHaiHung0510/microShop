@@ -57,7 +57,7 @@ public class PaymentSuccessServlet extends HttpServlet {
             // 3. XỬ LÝ LOGIC QUAN TRỌNG (Giao dịch thật)
             
             // TODO: Triển khai logic giao dịch thật (Ghi vào DONHANG, cập nhật trạng thái TAIKHOAN)
-            DonHang donhang = donHangDAO.getByMaTaiKhoan(maTaiKhoan);
+            DonHang donhang = donHangDAO.getByMaTaiKhoanChoThanhToan(maTaiKhoan);
             donHangDAO.updateTrangThai(donhang.getMaDonHang(), "DA_HOAN_THANH", LocalDateTime.now());
             taiKhoanDAO.updateTrangThai(maTaiKhoan, "DA_BAN");
             // Giả định: Xử lý thành công và lưu thông tin cần thiết vào Request Scope

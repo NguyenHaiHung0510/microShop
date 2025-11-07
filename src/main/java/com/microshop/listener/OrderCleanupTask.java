@@ -53,7 +53,7 @@ public class OrderCleanupTask extends TimerTask {
         try {
             // 1. LẤY KẾT NỐI VÀ BẮT ĐẦU GIAO DỊCH
             conn = DBContext.getConnection();
-            System.out.println("Kết nối DB thành công."); // <--- KIỂM TRA ĐỂ XEM KẾT NỐI CÓ THÀNH CÔNG KHÔNG
+//            System.out.println("Kết nối DB thành công."); 
             conn.setAutoCommit(false); 
             
             // 2. TÌM VÀ LẤY ID TAIKHOAN LIÊN QUAN

@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Chỉnh Sửa Hồ Sơ</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css"> 
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/style.css"> 
     <style>
         /* CSS Nội bộ cho Form Cập nhật */
         .profile-container {

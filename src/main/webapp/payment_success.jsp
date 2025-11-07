@@ -7,7 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Thanh Toán Thành Công!</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/style.css">
     <style>
         /* CSS Cục bộ cho trang Success */
         .success-container {

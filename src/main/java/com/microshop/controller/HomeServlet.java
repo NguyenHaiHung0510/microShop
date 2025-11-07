@@ -101,7 +101,7 @@ public class HomeServlet extends HttpServlet {
 //                tmpAnh.insert(anh3);
             }
 
-            List<TaiKhoanLienQuan> listLienQuan = taiKhoanLienQuanDAO.getByTrangThai("DANG_BAN");
+            List<TaiKhoanLienQuan> listLienQuan = taiKhoanLienQuanDAO.getAll();
 
             List<TaiKhoanFreeFire> listFreeFire = taiKhoanFreeFireDAO.getByTrangThai("DANG_BAN");
 

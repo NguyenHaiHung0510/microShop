@@ -51,7 +51,7 @@
         function updateDisplay() {
           const minutes = String(Math.floor(time / 60)).padStart(2, "0");
           const seconds = String(time % 60).padStart(2, "0");
-          displayElement.textContent = `${minutes}:${seconds}`;
+        displayElement.textContent = minutes + ":" + seconds;
         }
 
         updateDisplay(); // hiển thị ban đầu (00:10)

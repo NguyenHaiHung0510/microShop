@@ -140,8 +140,8 @@ public class TaiKhoanDAO implements CrudDAO<TaiKhoan, Integer> {
     public List<TaiKhoan> getAllByList(List<Integer> maTaiKhoan) throws SQLException {
         List<TaiKhoan> list = new ArrayList<>();
         TaiKhoanLienQuanDAO lqdao = new TaiKhoanLienQuanDAO();
-        TaiKhoanLienQuanDAO ffdao = new TaiKhoanLienQuanDAO();
-        TaiKhoanLienQuanDAO rtdao = new TaiKhoanLienQuanDAO();
+        TaiKhoanFreeFireDAO ffdao = new TaiKhoanFreeFireDAO();
+        TaiKhoanRiotDAO rtdao = new TaiKhoanRiotDAO();
         
         for(int id : maTaiKhoan){
             TaiKhoan x = lqdao.getById(id), y = ffdao.getById(id), z = rtdao.getById(id);

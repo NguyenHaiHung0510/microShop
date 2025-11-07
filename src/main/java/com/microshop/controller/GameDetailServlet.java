@@ -19,7 +19,7 @@ public class GameDetailServlet extends HttpServlet {
     
     // Khởi tạo các DAO cần thiết
     private final TaiKhoanLienQuanDAO lienQuanDAO = new TaiKhoanLienQuanDAO();
-    // private final TaiKhoanFreeFireDAO freeFireDAO = new TaiKhoanFreeFireDAO(); 
+     private final TaiKhoanFreeFireDAO freeFireDAO = new TaiKhoanFreeFireDAO(); 
     // ... Khởi tạo các DAO khác nếu cần
 
     @Override
@@ -47,7 +47,7 @@ public class GameDetailServlet extends HttpServlet {
                     taiKhoanChiTiet = lienQuanDAO.getById(maTaiKhoan); 
                     break;
                 case "freefire":
-                    // taiKhoanChiTiet = freeFireDAO.getById(maTaiKhoan);
+                     taiKhoanChiTiet = freeFireDAO.getById(maTaiKhoan);
                     break;
                 // ... Xử lý cho các category khác (riot, steam) ...
                 default:

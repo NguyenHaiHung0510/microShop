@@ -1,5 +1,6 @@
 <%@page import="com.microshop.model.TaiKhoan"%>
 <%@page import="com.microshop.model.TaiKhoanLienQuan"%>
+<%@page import="com.microshop.model.TaiKhoanFreeFire"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -213,10 +214,6 @@
         </div>
         <c:choose>
 
-            <%-- 
-                ƯU TIÊN 1: Kiểm tra xem người dùng vừa bị redirect 
-                từ Servlet (do sản phẩm đang được giao dịch) hay không.
-            --%>
             <c:when test="${param.status eq 'in_transaction'}">
                 <span class="buy-now-btn" 
                       style="text-align: center; display: block; text-decoration: none; 
@@ -231,10 +228,6 @@
                 </div>
             </c:when>
 
-            <%-- 
-                ƯU TIÊN 2: Nếu không có lỗi 'in_transaction', 
-                kiểm tra trạng thái thực tế của tài khoản trong DB.
-            --%>
             <c:when test="${tk.trangThai eq 'DANG_BAN'}">
                 <%-- TRẠNG THÁI: CÒN HÀNG (Cho phép mua) --%>
                 <a href="${pageContext.request.contextPath}/payment/execute?type=${category}&id=${tk.maTaiKhoan}" 
@@ -244,10 +237,6 @@
                 </a>
             </c:when>
 
-            <%-- 
-                ƯU TIÊN 3: (ELSE) Các trạng thái còn lại (DA_BAN, DA_HUY, CHO_THANH_TOAN)
-                Sẽ hiển thị là Đã Bán/Hết Hàng.
-            --%>
             <c:otherwise>
                 <span class="buy-now-btn" 
                       style="text-align: center; display: block; text-decoration: none; 
@@ -277,6 +266,11 @@
                     <tr><th>Số Tướng</th><td>${tk.soTuong}</td></tr>
                     <tr><th>Số Trang Phục</th><td>${tk.soTrangPhuc}</td></tr>
                 </c:when>
+                <c:when test="${category eq 'freefire'}">
+                    <tr><th>Số Skin Súng</th><td>${tk.soSkinSung}</td></tr>
+                    <tr><th>Rank</th><td>${tk.hangRank}</td></tr>
+                </c:when>
+                    
                 <c:otherwise>
                     <tr><td colspan="2">Thông số chi tiết cho danh mục này chưa được định nghĩa.</td></tr>
                 </c:otherwise>

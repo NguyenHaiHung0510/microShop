@@ -1,6 +1,7 @@
 package com.microshop.controller;
 
 import com.microshop.dao.DonHangDAO;
+import com.microshop.dao.TaiKhoanFreeFireDAO;
 import com.microshop.dao.TaiKhoanLienQuanDAO; // Ví dụ: Cần DAO để kiểm tra tồn kho
 import com.microshop.model.NguoiDung;
 import com.microshop.model.TaiKhoan; // Giả định đây là lớp cha cho các loại tài khoản
@@ -26,7 +27,7 @@ public class PaymentExecuteServlet extends HttpServlet {
     // Khởi tạo các DAO cần thiết để kiểm tra sản phẩm
     private final TaiKhoanLienQuanDAO lienQuanDAO = new TaiKhoanLienQuanDAO();
     private final DonHangDAO donhangDAO = new DonHangDAO();
-    // private final TaiKhoanFreeFireDAO freeFireDAO = new TaiKhoanFreeFireDAO(); 
+     private final TaiKhoanFreeFireDAO freeFireDAO = new TaiKhoanFreeFireDAO(); 
     // private final TaiKhoanSteamDAO steamDAO = new TaiKhoanSteamDAO(); 
     
     // Phương thức này xử lý yêu cầu khởi tạo thanh toán
@@ -66,7 +67,9 @@ public class PaymentExecuteServlet extends HttpServlet {
                 case "lienquan":
                     sanPham = lienQuanDAO.getById(maSanPham);
                     break;
-                // case "freefire": sanPham = freeFireDAO.getById(maSanPham); break;
+                 case "freefire": 
+                     sanPham = freeFireDAO.getById(maSanPham); 
+                     break;
                 // case "steam": sanPham = steamDAO.getById(maSanPham); break;
                 
                 default:

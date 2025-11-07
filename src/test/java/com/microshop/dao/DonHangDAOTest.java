@@ -243,7 +243,7 @@ class DonHangDAOTest {
             when(rs.next()).thenReturn(true);
 
             // Act
-            DonHang result = donHangDAO.getByMaTaiKhoan(10);
+            DonHang result = donHangDAO.getByMaTaiKhoanChoThanhToan(10);
 
             // Assert
             assertNotNull(result);

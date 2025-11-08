@@ -72,6 +72,7 @@ public class TaiKhoanRiotDAO implements CrudDAO<TaiKhoanRiot, Integer> {
         tk.setDiemNoiBat(acc.getDiemNoiBat());
         tk.setLuotXem(acc.getLuotXem());
         tk.setThoiGianDang(acc.getThoiGianDang() != null ? acc.getThoiGianDang() : LocalDateTime.now());
+        tk.setDuongDanAnh(acc.getDuongDanAnh());
 
         Integer maTaiKhoan = taiKhoanDAO.insert(tk);
         if (maTaiKhoan == null) {
@@ -120,6 +121,7 @@ public class TaiKhoanRiotDAO implements CrudDAO<TaiKhoanRiot, Integer> {
         tk.setDiemNoiBat(acc.getDiemNoiBat());
         tk.setLuotXem(acc.getLuotXem());
         tk.setThoiGianDang(acc.getThoiGianDang());
+        tk.setDuongDanAnh(acc.getDuongDanAnh());
         boolean parentUpdated = taiKhoanDAO.update(tk);
 
         String sql = """
@@ -196,6 +198,7 @@ public class TaiKhoanRiotDAO implements CrudDAO<TaiKhoanRiot, Integer> {
         if (ts != null) {
             acc.setThoiGianDang(ts.toLocalDateTime());
         }
+        acc.setDuongDanAnh(rs.getString("DuongDanAnh"));
 
         acc.setTenDangNhap(rs.getString("TenDangNhap"));
         acc.setMatKhau(rs.getString("MatKhau"));

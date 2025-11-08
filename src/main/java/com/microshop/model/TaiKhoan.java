@@ -13,12 +13,13 @@ public class TaiKhoan {
     private String diemNoiBat;          // TEXT
     private Integer luotXem;            // INT
     private LocalDateTime thoiGianDang; // DATETIME
+    private String duongDanAnh;         // Cập nhật 02/11/2025 ( đọc trong prj_note.txt để biết thêm chi tiết )
 
     public TaiKhoan() {
     }
 
     public TaiKhoan(Integer maTaiKhoan, Integer maDanhMuc, BigDecimal giaGoc, BigDecimal giaBan,
-            String trangThai, String diemNoiBat, Integer luotXem, LocalDateTime thoiGianDang) {
+            String trangThai, String diemNoiBat, Integer luotXem, LocalDateTime thoiGianDang, String duongDanAnh) {
         this.maTaiKhoan = maTaiKhoan;
         this.maDanhMuc = maDanhMuc;
         this.giaGoc = giaGoc;
@@ -27,6 +28,7 @@ public class TaiKhoan {
         this.diemNoiBat = diemNoiBat;
         this.luotXem = luotXem;
         this.thoiGianDang = thoiGianDang;
+        this.duongDanAnh = duongDanAnh;
     }
 
     // Getters
@@ -62,6 +64,10 @@ public class TaiKhoan {
         return thoiGianDang;
     }
 
+    public String getDuongDanAnh() {
+        return duongDanAnh;
+    }
+    
     // Setters
     public void setMaTaiKhoan(Integer maTaiKhoan) {
         this.maTaiKhoan = maTaiKhoan;
@@ -95,6 +101,11 @@ public class TaiKhoan {
         this.thoiGianDang = thoiGianDang;
     }
 
+    public void setDuongDanAnh(String duongDanAnh) {
+        this.duongDanAnh = duongDanAnh;
+    }
+    
+
     @Override
     public String toString() {
         return "TaiKhoan{"
@@ -106,6 +117,7 @@ public class TaiKhoan {
                 + ", diemNoiBat='" + diemNoiBat + '\''
                 + ", luotXem=" + luotXem
                 + ", thoiGianDang=" + thoiGianDang
+                + ", duongDanAnh=" + duongDanAnh
                 + '}';
     }
 }

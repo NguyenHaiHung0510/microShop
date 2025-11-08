@@ -1,4 +1,9 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
+<jsp:include page="common/header.jsp">
+    <jsp:param name="pageTitle" value="Trang Chủ"/>
+</jsp:include>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -108,3 +113,5 @@
         </div>
     </body>
 </html>
+
+<jsp:include page="common/footer.jsp" />

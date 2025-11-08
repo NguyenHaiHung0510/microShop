@@ -1,0 +1,88 @@
+package com.microshop.controller;
+
+import com.microshop.dao.GameSteamDAO;
+import com.microshop.dao.BaiVietGioiThieuDAO;
+import com.microshop.model.GameSteam;
+import com.microshop.model.BaiVietGioiThieu;
+
+import jakarta.servlet.*;
+import jakarta.servlet.http.*;
+import jakarta.servlet.annotation.*;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.List;
+
+@WebServlet(urlPatterns = {"/shop/steam", "/shop/steam/detail"})
+public class SteamGameServlet extends HttpServlet {
+
+    private GameSteamDAO gameSteamDAO;
+    private BaiVietGioiThieuDAO baiVietDAO;
+
+    @Override
+    public void init() throws ServletException {
+        gameSteamDAO = new GameSteamDAO();
+        baiVietDAO = new BaiVietGioiThieuDAO();
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        String path = request.getServletPath();
+
+        try {
+            if (path.equals("/shop/steam/detail")) {
+                handleDetail(request, response);
+            } else {
+                handleList(request, response);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Lỗi truy vấn cơ sở dữ liệu");
+        }
+    }
+
+    // ------------------- Hiển thị danh sách -------------------
+    private void handleList(HttpServletRequest request, HttpServletResponse response)
+            throws SQLException, ServletException, IOException {
+
+        List<GameSteam> listSteam = gameSteamDAO.fastGetAll();
+
+        request.setAttribute("listSteam", listSteam);
+        RequestDispatcher rd = request.getRequestDispatcher("/steam_games.jsp");
+        rd.forward(request, response);
+    }
+
+    // ------------------- Hiển thị chi tiết -------------------
+    private void handleDetail(HttpServletRequest request, HttpServletResponse response)
+            throws SQLException, ServletException, IOException {
+
+        String idParam = request.getParameter("id");
+        if (idParam == null) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Thiếu tham số id");
+            return;
+        }
+
+        int id;
+        try {
+            id = Integer.parseInt(idParam);
+        } catch (NumberFormatException e) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "ID không hợp lệ");
+            return;
+        }
+
+        GameSteam gameSteam = gameSteamDAO.getById(id);
+        if (gameSteam == null) {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, "Game không tồn tại");
+            return;
+        }
+
+        BaiVietGioiThieu baiViet = baiVietDAO.getByMaGameSteam(id);
+
+        request.setAttribute("gameSteam", gameSteam);
+        request.setAttribute("baiViet", baiViet);
+
+        RequestDispatcher rd = request.getRequestDispatcher("/steam_game_detail.jsp");
+        rd.forward(request, response);
+    }
+}

@@ -56,6 +56,13 @@
             .btn-submit:hover {
                 background-color: #0056b3;
             }
+            .login-wrapper p a {
+                color: #007bff;
+                text-decoration: none;
+            }
+            .login-wrapper p a:hover {
+                text-decoration: underline;
+            }
         </style>
     </head>
     <body>

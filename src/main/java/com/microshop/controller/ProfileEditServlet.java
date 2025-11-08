@@ -67,7 +67,7 @@ public class ProfileEditServlet extends HttpServlet {
                 
             // 3.2. KIỂM TRA MẬT KHẨU CŨ CÓ KHỚP VỚI MẬT KHẨU TRONG DB/SESSION KHÔNG
             // CẢNH BÁO: Trong thực tế, bạn phải dùng hàm xác minh HASH (bcrypt/Argon2)
-            } else if (!currentUser.getMatKhau().equals(oldPassword)) {
+            } else if (!PasswordUtils.verifyPassword(oldPassword, currentUser.getMatKhau())) { // Khi kiểm tra mật khẩu cũ, dùng verifyPassword
                 errorMessage = "Mật khẩu hiện tại không chính xác.";
                 
             // 3.3. KIỂM TRA MẬT KHẨU MỚI VÀ XÁC NHẬN CÓ KHỚP KHÔNG
@@ -80,8 +80,8 @@ public class ProfileEditServlet extends HttpServlet {
             }
             else {
                 // Cập nhật mật khẩu mới vào Model
-                // TODO: PHẢI HASH MẬT KHẨU Ở ĐÂY TRƯỚC KHI GÁN!
-                currentUser.setMatKhau(newPassword); 
+                // Gán mật khẩu mới theo BCrypt
+                currentUser.setMatKhau(PasswordUtils.hashPassword(newPassword));
             }
         }
         

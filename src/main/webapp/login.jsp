@@ -51,6 +51,13 @@
             .btn-submit:hover {
                 background-color: #0056b3;
             }
+            .login-wrapper p a {
+                color: #007bff;
+                text-decoration: none;
+            }
+            .login-wrapper p a:hover {
+                text-decoration: underline;
+            }
         </style>
     </head>
     <body>
@@ -78,9 +85,13 @@
                     <input type="password" id="password" name="password" required
                            placeholder="Nhập mật khẩu...">
                 </div>
-                
+
                 <button type="submit" class="btn-submit">Đăng Nhập</button>
             </form>
+
+            <p style="text-align:center; margin-top: 15px;">
+                Chưa có tài khoản? <a href="${pageContext.request.contextPath}/register">Đăng ký</a>
+            </p>
         </div>
     </body>
 </html>

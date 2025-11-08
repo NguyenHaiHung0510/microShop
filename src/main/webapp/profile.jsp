@@ -80,6 +80,13 @@
             .profile-links a:hover {
                 background-color: #e9ecef;
             }
+            .login-wrapper p a {
+                color: #007bff;
+                text-decoration: none;
+            }
+            .login-wrapper p a:hover {
+                text-decoration: underline;
+            }
         </style>
     </head>
     <body>

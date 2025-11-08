@@ -1,17 +1,19 @@
 package com.microshop.controller;
 
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import com.microshop.dao.NguoiDungDAO;
 import com.microshop.model.NguoiDung;
-import java.io.IOException;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 @WebServlet(name = "LoginServlet", urlPatterns = {"/login"})
 public class LoginServlet extends HttpServlet {
@@ -45,7 +47,7 @@ public class LoginServlet extends HttpServlet {
             Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        if (user != null && user.getMatKhau().equals(matKhau)) {
+        if (user != null && PasswordUtils.verifyPassword(matKhau, user.getMatKhau())) {
             // Xác thực thành công
             // 3.1. Tạo và thiết lập Session cho người dùng
             HttpSession session = request.getSession();

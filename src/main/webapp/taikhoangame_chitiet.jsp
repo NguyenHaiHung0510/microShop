@@ -245,7 +245,7 @@
 
             <!-- Nút hành động -->
             <div class="actions">
-                <a href="${pageContext.request.contextPath}/payment/execute?type=game&id=${taiKhoan.maTaiKhoan}"
+                <a href="${pageContext.request.contextPath}/payment/execute?type=${category}&id=${taiKhoan.maTaiKhoan}"
                    class="buy-button">Mua ngay</a>
 
                 <a href="${pageContext.request.contextPath}/shop/game?category=${category}"

@@ -48,9 +48,9 @@ public class HomeServlet extends HttpServlet {
 
         try {
 
-            List<TaiKhoanLienQuan> listLienQuan = taiKhoanLienQuanDAO.getAll();
+            List<TaiKhoanLienQuan> listLienQuan = taiKhoanLienQuanDAO.getByTrangThai("DANG_BAN");
 
-            List<TaiKhoanFreeFire> listFreeFire = taiKhoanFreeFireDAO.getAll();
+            List<TaiKhoanFreeFire> listFreeFire = taiKhoanFreeFireDAO.getByTrangThai("DANG_BAN");
 
             List<TaiKhoanRiot> listRiot = taiKhoanRiotDAO.getByTrangThai("DANG_BAN");
 

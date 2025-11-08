@@ -104,6 +104,18 @@
             color: #c0392b;
             font-weight: bold;
         }
+        .back-to-home {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            color: #007bff;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .back-to-home:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
@@ -112,6 +124,7 @@
 <c:set var="thoiGianConLaiGiay" value="${requestScope.thoiGianConLai}" />
 <div class="checkout-container">
     <h2>Xác Nhận Thanh Toán</h2>
+
     <c:if test="${sanPham == null}">
         <div class="error-message">
             Lỗi: Không tìm thấy thông tin sản phẩm để thanh toán hoặc sản phẩm đã hết hàng.
@@ -175,10 +188,12 @@
                 <button type="submit" id="confirmBtn" class="confirm-btn fake-confirm-btn" onclick="return setFinalMethod()">XÁC NHẬN ĐÃ THANH TOÁN</button>
                 <button type="button" id="goBackBtn" class="secondary-btn">← Chọn lại phương thức</button>
             </div>
-        </form>
-                    
-                    
+        </form>             
     </c:if>
+        
+    <a href="${pageContext.request.contextPath}/home" class="back-to-home">
+        ← Quay về Trang chủ
+    </a>    
 </div>
 
 <script>
@@ -189,10 +204,14 @@
     const finalMethod = document.getElementById('finalMethod');
     const timerSpan = document.getElementById('timer');
     const confirmBtn = document.getElementById('confirmBtn');
-    const INITIAL_TIME = ${requestScope.thoiGianConLai}; 
-    let time = ${requestScope.thoiGianConLai}; 
     
+    // Lấy giá trị từ requestScope (chỉ dùng để hiển thị ban đầu)
+    let initialTime = ${requestScope.thoiGianConLai}; 
     let countdownInterval;
+
+    // Lấy giá trị ẩn của form để gửi qua AJAX
+    const maSanPhamInput = document.querySelector('input[name="maTaiKhoan"]');
+    const giaBanInput = document.querySelector('input[name="gia"]');
 
     initiateBtn.addEventListener('click', () => {
         const selected = document.querySelector('input[name="tempMethod"]:checked');
@@ -200,28 +219,79 @@
             alert('Vui lòng chọn phương thức thanh toán.');
             return;
         }
-        finalMethod.value = selected.value;
-        selectionBlock.style.display = 'none';
-        qrBlock.style.display = 'block';
+        
+        const paymentMethod = selected.value;
+        finalMethod.value = paymentMethod; // Cập nhật form chính
 
+        // Vô hiệu hóa nút để tránh click đúp
+        initiateBtn.disabled = true;
+        initiateBtn.innerText = "Đang xử lý...";
+
+        // GỌI AJAX ĐỂ TẠO ĐƠN HÀNG
+        fetch('${pageContext.request.contextPath}/payment/initiate', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            // Gửi dữ liệu sản phẩm và phương thức thanh toán
+            body: new URLSearchParams({
+                'maSanPham': maSanPhamInput.value,
+                'giaBan': giaBanInput.value,
+                'paymentMethod': paymentMethod
+            })
+        })
+        .then(response => {
+            if (!response.ok) {
+                // Nếu lỗi (4xx, 5xx), ném lỗi để .catch xử lý
+                return response.json().then(err => { throw new Error(err.error || 'Lỗi không xác định'); });
+            }
+            return response.json(); // Chuyển đổi phản hồi thành JSON
+        })
+        .then(data => {
+            // THÀNH CÔNG: Hiển thị QR và bắt đầu đếm ngược
+            if (data.success) {
+                selectionBlock.style.display = 'none';
+                qrBlock.style.display = 'block';
+                
+                // Bắt đầu đếm ngược với thời gian trả về từ server
+                startCountdown(data.thoiGianConLai); 
+            } else {
+                throw new Error(data.error || 'Lỗi khi khởi tạo thanh toán.');
+            }
+        })
+        .catch(error => {
+            // XỬ LÝ LỖI (Ví dụ: Sản phẩm đã bán, hết phiên đăng nhập)
+            alert('Lỗi: ' + error.message);
+            // Kích hoạt lại nút
+            initiateBtn.disabled = false;
+            initiateBtn.innerText = "TIẾN HÀNH THANH TOÁN";
+        });
     });
 
     goBackBtn.addEventListener('click', () => {
-//        clearInterval(countdownInterval);
+        // Lưu ý: Không nên dừng đếm ngược khi quay lại
+        // Nếu muốn hủy đơn hàng khi quay lại, bạn cần gọi AJAX khác
         selectionBlock.style.display = 'block';
         qrBlock.style.display = 'none';
-        confirmBtn.disabled = false;
-//        timerSpan.textContent = "02:00";
+        initiateBtn.disabled = false;
+        initiateBtn.innerText = "TIẾN HÀNH THANH TOÁN";
     });
 
-    function startCountdown() {
-//        let time = duration;
+    function startCountdown(duration) {
+        let time = duration;
+        
+        // Xóa bộ đếm cũ (nếu có)
+        if (countdownInterval) {
+            clearInterval(countdownInterval);
+        }
+
         countdownInterval = setInterval(() => {
             const minutes = String(Math.floor(time / 60)).padStart(2, '0');
             const seconds = String(time % 60).padStart(2, '0');
             timerSpan.textContent = minutes + ":" + seconds;
-            console.log(minutes + ":" + seconds);
+            
             time--;
+            
             if (time < 0) {
                 clearInterval(countdownInterval);
                 timerSpan.textContent = "00:00";
@@ -229,13 +299,21 @@
                 confirmBtn.disabled = true;
                 confirmBtn.style.backgroundColor = "#ccc";
                 confirmBtn.innerText = "Hết thời gian thanh toán";
+                // Ở đây, bạn nên gọi AJAX để hủy đơn hàng CHO_THANH_TOAN
             }
-
         }, 1000);
     }
-    startCountdown(time); 
+    
+    // Khởi tạo hiển thị thời gian ban đầu (nhưng không chạy)
+//    (function initDisplay() {
+//        const minutes = String(Math.floor(initialTime / 60)).padStart(2, '0');
+//        const seconds = String(initialTime % 60).padStart(2, '0');
+//        timerSpan.textContent = minutes + ":" + seconds;
+//    })();
+
     function setFinalMethod() {
-        return true;
+        // Hàm này vẫn giữ nguyên để submit form chính
+        return true; 
     }
 </script>
 </body>

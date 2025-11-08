@@ -27,10 +27,10 @@ public class DongConnectionPool implements ServletContextListener {
         
         cleanupTimer = new Timer(true); // Khởi tạo Timer
         
-        // Cấu hình dọn dẹp (ví dụ: Đơn hàng quá 1 phút sẽ bị hủy)
-        int cleanupThresholdMinutes = 1; 
+        // Cấu hình dọn dẹp (ví dụ: Đơn hàng quá 3 phút sẽ bị hủy)
+        int cleanupThresholdMinutes = 3; 
         long initialDelay = 10 * 1000;  // Chạy lần đầu sau 10 giây
-        long repeatPeriod = 15 * 1000;   // Lặp lại mỗi 15 giây
+        long repeatPeriod = 5 * 1000;   // Lặp lại mỗi 5 giây
         
         System.out.printf("Tác vụ dọn dẹp đơn hàng đã được khởi động. Kiểm tra mỗi %.1f giây cho đơn hàng quá %d phút.\n", 
                 repeatPeriod / 1000.0, cleanupThresholdMinutes);

@@ -88,7 +88,11 @@
         // Lấy đối tượng NguoiDung từ Session
         NguoiDung user = (NguoiDung) session.getAttribute("user");
     %>
-
+    <%
+        // Lấy tên hạng thành viên
+        String tenHTV = (String) request.getAttribute("HangNguoiDung");
+    %>
+    
     <div class="profile-container">
         <h2>Thông Tin Cá Nhân</h2>
 
@@ -102,7 +106,7 @@
             <p><strong>Email:</strong> <%= user.getEmail() %></p>
             <p><strong>SĐT:</strong> <%= user.getSoDienThoai() %></p>
             <p><strong>Tổng tiền đã chi:</strong> <%= user.getTongTienDaChi() %></p>
-            <p><strong>Hạng Thành Viên:</strong> <%= user.getMaHangThanhVien() %></p>
+            <p><strong>Hạng Thành Viên:</strong> <%= tenHTV%></p>
         </div>
 
         <hr>

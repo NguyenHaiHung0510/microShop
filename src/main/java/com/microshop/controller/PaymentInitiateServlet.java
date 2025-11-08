@@ -1,8 +1,10 @@
 package com.microshop.controller;
 
 import com.microshop.dao.DonHangDAO;
+import com.microshop.dao.TaiKhoanDAO;
 import com.microshop.model.DonHang;
 import com.microshop.model.NguoiDung;
+import com.microshop.model.TaiKhoan;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -25,6 +27,7 @@ import java.util.logging.Logger;
 public class PaymentInitiateServlet extends HttpServlet {
 
     private final DonHangDAO donhangDAO = new DonHangDAO();
+    private final TaiKhoanDAO taikhoanDAO = new TaiKhoanDAO();
     private final int NGUONG_HUY_PHUT = 3; // Cài đặt thời gian chờ (ví dụ: 3 phút)
 
     @Override
@@ -50,6 +53,14 @@ public class PaymentInitiateServlet extends HttpServlet {
             int giaBan = Integer.parseInt(request.getParameter("giaBan"));
             // String paymentMethod = request.getParameter("paymentMethod"); // Bạn có thể lưu nếu cần
             DonHang dh = donhangDAO.getByMaTaiKhoanChoThanhToan(maSanPham);
+            TaiKhoan tk = taikhoanDAO.getById(maSanPham);
+            // Nếu tài khoản đã bán
+            if (tk != null && tk.getTrangThai().equals("DA_BAN")) {
+                response.setStatus(HttpServletResponse.SC_CONFLICT); // 409
+                out.print("{\"error\": \"Sản phẩm này đã được bán. Vui lòng tải lại trang.\"}");
+                return;
+            }
+            
             // KIỂM TRA LẠI (QUAN TRỌNG): Đảm bảo sản phẩm vẫn còn
             if(dh != null){
                 if(!dh.getMaNguoiDung().equals(user.getMaNguoiDung())){

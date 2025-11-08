@@ -1,5 +1,8 @@
 package com.microshop.controller;
 
+import com.microshop.model.NguoiDung;
+import com.microshop.dao.HangThanhVienDAO;
+import com.microshop.model.HangThanhVien;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -7,6 +10,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.sql.SQLException;
 
 // Đổi đường dẫn ánh xạ (urlPatterns) sang /profile để dễ đọc và dễ gọi hơn
 @WebServlet(name = "ProfileServlet", urlPatterns = {"/profile"})
@@ -18,17 +22,26 @@ public class ProfileServlet extends HttpServlet {
      * Handles the HTTP <code>GET</code> method.
      * Xử lý yêu cầu hiển thị trang hồ sơ.
      */
+    private final HangThanhVienDAO dao = new HangThanhVienDAO();
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
         
         // 1. Lấy Session hiện tại
         HttpSession session = request.getSession(false); // Không tạo Session mới nếu chưa có
         
         // 2. Kiểm tra xác thực (Authentication Check)
         // Kiểm tra xem đối tượng "user" đã được lưu trong Session hay chưa
-        if (session != null && session.getAttribute("user") != null) {
-            
+        NguoiDung user = (NguoiDung) session.getAttribute("user");
+        if (user != null) {
+            try {
+                HangThanhVien htv = dao.getById(user.getMaHangThanhVien());
+                request.setAttribute("HangNguoiDung", htv.getTenHang());
+            } catch (SQLException e) {
+                e.printStackTrace();
+                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Lỗi truy vấn CSDL");
+            }
             // Người dùng đã đăng nhập: Chuyển tiếp đến trang profile JSP
             // (Đảm bảo file profile.jsp tồn tại trong thư mục webapp)
             request.getRequestDispatcher("/profile.jsp").forward(request, response);

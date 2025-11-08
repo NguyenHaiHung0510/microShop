@@ -74,7 +74,11 @@ public class ProfileEditServlet extends HttpServlet {
             } else if (!newPassword.equals(confirmPassword)) {
                 errorMessage = "Mật khẩu mới và xác nhận mật khẩu không khớp.";
                 
-            } else {
+            }
+            else if(oldPassword.equals(newPassword)){
+                errorMessage = "Mật khẩu mới và mật khẩu cũ không được giống nhau.";
+            }
+            else {
                 // Cập nhật mật khẩu mới vào Model
                 // TODO: PHẢI HASH MẬT KHẨU Ở ĐÂY TRƯỚC KHI GÁN!
                 currentUser.setMatKhau(newPassword); 

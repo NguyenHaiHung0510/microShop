@@ -89,7 +89,7 @@
         <c:forEach items="${listFreeFire}" var="tk">
             <div class="product-card">
                 <div class="product-image">
-                    <img src="https://via.placeholder.com/250x150?text=Acc+Free+Fire" alt="Ảnh ${tk.maTaiKhoan}">
+                    <img src="${pageContext.request.contextPath}/${tk.duongDanAnh}" alt="${tk.maTaiKhoan}">
                 </div>
                 <div class="product-info">
                     <h4 class="product-title">${not empty tk.diemNoiBat ? tk.diemNoiBat : "Tài khoản Free Fire"}</h4>
@@ -115,7 +115,7 @@
         <c:forEach items="${listRiot}" var="tk">
             <div class="product-card">
                 <div class="product-image">
-                    <img src="https://via.placeholder.com/250x150?text=Acc+Riot" alt="Ảnh ${tk.maTaiKhoan}">
+                    <img src="${pageContext.request.contextPath}/${tk.duongDanAnh}" alt="${tk.maTaiKhoan}">
                 </div>
                 <div class="product-info">
                     <h4 class="product-title">${not empty tk.diemNoiBat ? tk.diemNoiBat : "Tài khoản Riot"}</h4>

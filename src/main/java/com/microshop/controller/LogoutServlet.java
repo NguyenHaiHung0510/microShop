@@ -32,8 +32,8 @@ public class LogoutServlet extends HttpServlet {
 
         // 3. Chuyển hướng người dùng về trang đăng nhập hoặc trang chủ công cộng.
         // Sử dụng sendRedirect để thay đổi hoàn toàn URL trong trình duyệt.
-        // Chuyển hướng về trang login sau khi đăng xuất
-        response.sendRedirect(request.getContextPath() + "/login");
+        // Chuyển hướng về trang chủ sau khi đăng xuất
+        response.sendRedirect(request.getContextPath() + "/");
     }
 
     // Không cần triển khai doPost() cho hành động logout, vì nó thường được gọi bằng GET

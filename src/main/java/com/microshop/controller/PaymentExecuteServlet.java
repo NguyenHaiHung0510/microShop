@@ -86,8 +86,8 @@ public class PaymentExecuteServlet extends HttpServlet {
             
             // Đặt thời gian mặc định (sẽ được cập nhật bởi AJAX)
             // Bạn có thể đặt thời gian này trong file cấu hình
-            final int NGUONG_HUY_PHUT = 3; 
-            request.setAttribute("thoiGianConLai", NGUONG_HUY_PHUT * 60); 
+//            final int NGUONG_HUY_PHUT = 3; 
+//            request.setAttribute("thoiGianConLai", NGUONG_HUY_PHUT * 60); 
 
             request.getRequestDispatcher("/checkout.jsp").forward(request, response);
 

@@ -123,6 +123,8 @@
         display: flex;
         justify-content: center;
         gap: 20px;
+        /* Thêm hỗ trợ xuống dòng cho thông báo lỗi */
+        flex-wrap: wrap;
     }
 
     .buy-button {
@@ -135,6 +137,7 @@
         color: white;
         background: #007bff;
         transition: 0.3s;
+        text-align: center; /* Đảm bảo text căn giữa */
     }
 
     .buy-button:hover {
@@ -165,7 +168,6 @@
     <div class="product-grid">
         <div class="product-card">
 
-            <!-- Thư viện ảnh -->
             <div class="product-image">
                 <c:choose>
                     <c:when test="${not empty dsAnh}">
@@ -183,7 +185,6 @@
                 </c:choose>
             </div>
 
-            <!-- Thông tin -->
             <div class="product-info">
                 <h3 class="product-title">
                     ${not empty taiKhoan.diemNoiBat ? taiKhoan.diemNoiBat : "Tài khoản game"}
@@ -200,7 +201,6 @@
 
                     <hr style="margin:12px 0; border:none; border-top:1px solid #ddd;">
 
-                    <!-- Chi tiết theo từng loại -->
                     <c:choose>
                         <c:when test="${category == 'lienquan'}">
                             <p><b>Rank:</b> ${taiKhoan.hangRank}</p>
@@ -243,16 +243,71 @@
                 </div>
             </div>
 
-            <!-- Nút hành động -->
             <div class="actions">
-                <a href="${pageContext.request.contextPath}/payment/execute?type=${category}&id=${taiKhoan.maTaiKhoan}"
-                   class="buy-button">Mua ngay</a>
+                <c:choose>
+                    <%-- TRẠNG THÁI: ĐANG GIAO DỊCH (Redirect từ PaymentExecuteServlet) --%>
+                    <c:when test="${param.status eq 'in_transaction'}">
+                        <span class="buy-button" 
+                              style="background-color: #f39c12; cursor: not-allowed; pointer-events: none;">
+                            ĐANG CÓ NGƯỜI THANH TOÁN
+                        </span>
+                        <%-- Thêm thông báo lỗi rõ ràng bên dưới nút --%>
+                        <div style="color: red; text-align: center; margin-top: 10px; font-weight: bold; width: 100%;">
+                            Tài khoản này đang được giữ, vui lòng thử lại.
+                        </div>
+                    </c:when>
 
+                    <%-- TRẠNG THÁI: CÒN HÀNG (Cho phép mua) --%>
+                    <c:when test="${taiKhoan.trangThai eq 'DANG_BAN'}">
+                        <a href="${pageContext.request.contextPath}/payment/execute?type=${category}&id=${taiKhoan.maTaiKhoan}"
+                           class="buy-button">Mua ngay</a>
+                    </c:when>
+
+                    <%-- TRẠNG THÁI: ĐÃ BÁN (Redirect 'sold' hoặc 'DA_BAN' từ DB) --%>
+                    <c:otherwise>
+                        <span class="buy-button" 
+                              style="background-color: #dc3545; cursor: not-allowed; pointer-events: none;">
+                            ĐÃ BÁN (HẾT HÀNG)
+                        </span>
+                    </c:otherwise>
+                </c:choose>
+
+                <%-- Nút quay lại (Giữ nguyên) --%>
                 <a href="${pageContext.request.contextPath}/shop/game?category=${category}"
                    class="buy-button secondary">Quay lại</a>
             </div>
+
         </div>
     </div>
 </section>
+
+<script>
+    // Chạy script này sau khi trang đã tải xong
+    document.addEventListener('DOMContentLoaded', function () {
+
+        // 1. Lấy các tham số URL hiện tại
+        const urlParams = new URLSearchParams(window.location.search);
+
+        // 2. Kiểm tra xem tham số 'status' có tồn tại không
+        if (urlParams.has('status')) {
+
+            // 3. Xóa tham số 'status'
+            urlParams.delete('status');
+
+            // 4. Lấy đường dẫn URL mới (đã xóa tham số 'status')
+            let newRelativePathQuery = window.location.pathname;
+
+            // Nối lại các tham số còn lại (nếu có)
+            if (urlParams.toString()) {
+                newRelativePathQuery += '?' + urlParams.toString();
+            }
+
+            // 5. CẬP NHẬT LỊCH SỬ TRÌNH DUYỆT
+            // Thay thế URL hiện tại bằng URL mới (đã được làm sạch)
+            // Lần refresh (F5) tiếp theo sẽ sử dụng URL mới này.
+            history.replaceState(null, '', newRelativePathQuery);
+        }
+    });
+</script>
 
 <jsp:include page="common/footer.jsp" />

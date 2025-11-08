@@ -68,7 +68,7 @@ public class RegisterServlet extends HttpServlet {
         newUser.setTenDangNhap(username);
         newUser.setEmail(email);
         newUser.setSoDienThoai(sdt);
-        newUser.setMatKhau(password); // TODO: Hash mật khẩu trong thực tế
+        newUser.setMatKhau(PasswordUtils.hashPassword(password)); // TODO: Hash mật khẩu trong thực tế
         newUser.setVaiTro("USER"); // mặc định user
         newUser.setTongTienDaChi(BigDecimal.ZERO);
         newUser.setMaHangThanhVien(null);

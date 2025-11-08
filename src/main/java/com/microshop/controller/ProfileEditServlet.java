@@ -1,17 +1,19 @@
 package com.microshop.controller;
 
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import com.microshop.dao.NguoiDungDAO;
 import com.microshop.model.NguoiDung;
-import java.io.IOException;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 @WebServlet(name = "ProfileEditServlet", urlPatterns = {"/profile/edit"})
 public class ProfileEditServlet extends HttpServlet {
@@ -71,7 +73,7 @@ public class ProfileEditServlet extends HttpServlet {
                 errorMessage = "Mật khẩu hiện tại không chính xác.";
                 
             // 3.3. KIỂM TRA MẬT KHẨU MỚI VÀ XÁC NHẬN CÓ KHỚP KHÔNG
-            } else if (!newPassword.equals(confirmPassword)) {
+            } else if (!PasswordUtils.verifyPassword(oldPassword, currentUser.getMatKhau())) {
                 errorMessage = "Mật khẩu mới và xác nhận mật khẩu không khớp.";
                 
             }
@@ -81,7 +83,7 @@ public class ProfileEditServlet extends HttpServlet {
             else {
                 // Cập nhật mật khẩu mới vào Model
                 // TODO: PHẢI HASH MẬT KHẨU Ở ĐÂY TRƯỚC KHI GÁN!
-                currentUser.setMatKhau(newPassword); 
+                currentUser.setMatKhau(PasswordUtils.hashPassword(newPassword));
             }
         }
         

@@ -86,6 +86,9 @@
                 
                 <button type="submit" class="btn-submit">Đăng Nhập</button>
             </form>
+            <p style="text-align:center; margin-top: 15px;">
+                Chưa có tài khoản? <a href="${pageContext.request.contextPath}/register">Đăng ký</a>
+            </p>
         </div>
     </body>
 </html>

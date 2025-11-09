@@ -85,8 +85,8 @@
                 </div>
                 
                 <div class="form-group">
-                    <label for="email">Email:</label>
-                    <input type="email" id="email" name="email" required placeholder="Nhập email...">
+                    <label for="email">Email <span style="color:gray;">(tùy chọn)</span>:</label>
+                    <input type="email" id="email" name="email" placeholder="Nhập email...">
                 </div>
                 
                 <div class="form-group">

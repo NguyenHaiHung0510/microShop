@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 import com.microshop.dao.NguoiDungDAO;
 import com.microshop.model.NguoiDung;
 
-import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletException; // nếu bạn tách riêng file băm mật khẩu
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -63,10 +63,10 @@ public class RegisterServlet extends HttpServlet {
             return;
         }
 
-        // 4. Nếu hợp lệ -> tạo đối tượng NguoiDung và lưu vào DB
+        // 4. Nếu hợp lệ -> tạo đối tượng NguoiDung và lưu vào DB (email có thể null)
         NguoiDung newUser = new NguoiDung();
         newUser.setTenDangNhap(username);
-        newUser.setEmail(email);
+        newUser.setEmail((email == null || email.isEmpty()) ? null : email); // Để trống
         newUser.setSoDienThoai(sdt);
         newUser.setMatKhau(PasswordUtils.hashPassword(password)); // TODO: Hash mật khẩu trong thực tế
         newUser.setVaiTro("USER"); // mặc định user

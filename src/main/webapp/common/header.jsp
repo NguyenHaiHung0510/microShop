@@ -15,9 +15,27 @@
         <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;700&display=swap" rel="stylesheet">
 
         <title>MicroShop - ${param.pageTitle}</title> 
+
+        <style>
+            /* --- Sticky Header Style --- */
+            header {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                z-index: 1000;
+                background-color: #ffffff;
+                transition: top 0.3s ease;
+            }
+
+            body {
+                padding-top: 120px; /* Chừa chỗ cho header khi cố định */
+            }
+        </style>
     </head>
+
     <body>
-        <header>
+        <header id="mainHeader">
             <%-- 1. Thanh Top Bar --%>
             <div class="top-bar">
                 <div class="logo">
@@ -57,3 +75,20 @@
 
         <main>
             <%-- Phần thân trang (home.jsp) sẽ được chèn vào đây --%>
+
+        <script>
+            // --- Hiệu ứng header ẩn khi cuộn xuống, hiện khi cuộn lên ---
+            let lastScrollY = window.scrollY;
+            const header = document.getElementById("mainHeader");
+
+            window.addEventListener("scroll", () => {
+                if (window.scrollY > lastScrollY && window.scrollY > 100) {
+                    // Cuộn xuống -> ẩn header
+                    header.style.top = "-120px";
+                } else {
+                    // Cuộn lên -> hiện lại header
+                    header.style.top = "0";
+                }
+                lastScrollY = window.scrollY;
+            });
+        </script>

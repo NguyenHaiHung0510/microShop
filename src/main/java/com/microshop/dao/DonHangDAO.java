@@ -12,6 +12,7 @@ import java.util.List;
 
 import com.microshop.context.DBContext;
 import com.microshop.model.DonHang;
+import java.math.BigDecimal;
 
 public class DonHangDAO implements CrudDAO<DonHang, Integer> {
 
@@ -199,7 +200,16 @@ public class DonHangDAO implements CrudDAO<DonHang, Integer> {
         return null;
     }
     
-    
+    public boolean updateGiaMua(Integer maDonHang, BigDecimal giaMoi) throws SQLException {
+        String sql = "UPDATE DonHang SET GiaMua = ? WHERE MaDonHang = ?";
+        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setBigDecimal(1, giaMoi);
+            ps.setObject(2, maDonHang);
+
+            return ps.executeUpdate() > 0;
+        }
+    }
     public boolean updateTrangThai(Integer maDonHang, String trangThaiMoi, LocalDateTime thoiGianMua) throws SQLException {
         String sql = "UPDATE DonHang SET TrangThai = ?, ThoiGianMua = ? WHERE MaDonHang = ?";
         try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {

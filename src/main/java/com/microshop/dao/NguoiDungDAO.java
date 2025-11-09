@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -79,7 +80,12 @@ public class NguoiDungDAO implements CrudDAO<NguoiDung, Integer> {
 
             ps.setString(1, entity.getTenDangNhap());
             ps.setString(2, entity.getMatKhau());
-            ps.setString(3, entity.getEmail());
+            // Xử lý email rỗng hoặc null (trường hợp nhiều tài khoản không đặt email)
+            if (entity.getEmail() == null || entity.getEmail().trim().isEmpty()) {
+                ps.setNull(3, Types.VARCHAR);
+            } else {
+                ps.setString(3, entity.getEmail().trim());
+            }
             ps.setString(4, entity.getSoDienThoai());
             ps.setString(5, entity.getVaiTro());
             ps.setBigDecimal(6, entity.getTongTienDaChi());
@@ -114,7 +120,12 @@ public class NguoiDungDAO implements CrudDAO<NguoiDung, Integer> {
 
             ps.setString(1, entity.getTenDangNhap());
             ps.setString(2, entity.getMatKhau());
-            ps.setString(3, entity.getEmail());
+            // Xử lý email rỗng hoặc null (trường hợp nhiều tài khoản không đặt email)
+            if (entity.getEmail() == null || entity.getEmail().trim().isEmpty()) {
+                ps.setNull(3, Types.VARCHAR);
+            } else {
+                ps.setString(3, entity.getEmail().trim());
+            }
             ps.setString(4, entity.getSoDienThoai());
             ps.setString(5, entity.getVaiTro());
             ps.setBigDecimal(6, entity.getTongTienDaChi());
@@ -155,6 +166,7 @@ public class NguoiDungDAO implements CrudDAO<NguoiDung, Integer> {
 
     public NguoiDung getByEmail(String email) throws SQLException {
         NguoiDung result = null;
+        if (email == null || email.trim().isEmpty()) return null; //Bỏ qua email rỗng
         String sql = "SELECT * FROM NguoiDung WHERE Email = ?";
 
         try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {

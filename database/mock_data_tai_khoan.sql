@@ -167,7 +167,6 @@ INSERT INTO TAIKHOAN (MaTaiKhoan, MaDanhMuc, GiaGoc, GiaBan, TrangThai, DiemNoiB
 INSERT INTO TAIKHOAN_RIOT (MaTaiKhoan, TenDangNhap, MatKhau, CapDoRiot, SoTuongLMHT, SoTrangPhucLMHT, SoDaSacLMHT, SoBieuCamLMHT, SoBieuTuongLMHT, HangRankLMHT, KhungRankLMHT, SoThuCungTFT, SoSanDauTFT, SoChuongLucTFT) VALUES
 (25, 'riot_tft_only', 'matkhau123', 100, 50, 20, 5, 5, 5, 'Chưa Rank', 'Không có', 50, 20, 15);
 
-
 -- -----------------------------------------------------
 -- PHẦN 5: INSERT ẢNH CHO CÁC TÀI KHOẢN
 -- (Sử dụng lặp lại 7 ảnh bạn có)
@@ -257,3 +256,155 @@ INSERT INTO ANH_TAIKHOAN (MaTaiKhoan, DuongDanAnh) VALUES
 (23, 'assets/images/home_lmht.jpg'), (23, 'assets/images/home_freefire.jpg'), (23, 'assets/images/home_netflix.png'),
 (24, 'assets/images/home_lmht.jpg'), (24, 'assets/images/sample_qr.png'), (24, 'assets/images/home_steam.jpg'),
 (25, 'assets/images/home_lmht.jpg'), (25, 'assets/images/home_youtube.jpg'), (25, 'assets/images/home_lienquan.png');
+
+-- ------------------------------------------------------
+-- MẢNG STEAM
+-- -----------------------------------------------------
+-- PHẦN 6: GAME STEAM (8 GAME)
+-- -----------------------------------------------------
+
+--  Game 1
+INSERT INTO GAME_STEAM (TenGame, MoTaGame, GiaGoc, GiaBan, LuotXem, IdVideoTrailer, DuongDanAnh)
+VALUES (
+  'Cyberpunk 2077',
+  'Trải nghiệm thế giới tương lai đầy công nghệ, nơi con người hòa quyện với máy móc trong thành phố Night City.',
+  1200000, 790000,
+  320,
+  '8X2kIfS6fb8',
+  'assets/images/steam_cyberpunk_detail.jpg' );
+INSERT INTO BAIVIET_GIOITHIEU (MaGameSteam, TieuDeBaiViet, NoiDung)
+VALUES (1, 'Thế giới Cyberpunk 2077: Nơi con người và máy hòa làm một',
+        'Cyberpunk 2077 đưa bạn đến Night City – nơi mọi quyết định đều ảnh hưởng đến tương lai của bạn.');
+
+-- Game 2
+INSERT INTO GAME_STEAM (TenGame, MoTaGame, GiaGoc, GiaBan, LuotXem, IdVideoTrailer, DuongDanAnh)
+VALUES (
+  'Elden Ring',
+  'Một thế giới mở huyền bí, nơi người chơi du hành qua The Lands Between để khôi phục chiếc nhẫn Elden huyền thoại.',
+  1200000, 890000,
+  500,
+  'E3Huy2cdih0',
+  'assets/images/steam_elden_ring_detail.jpg');
+INSERT INTO BAIVIET_GIOITHIEU (MaGameSteam, TieuDeBaiViet, NoiDung)
+VALUES (2, 'Elden Ring – kiệt tác thế giới mở của FromSoftware',
+        'Khám phá vùng đất The Lands Between đầy bí ẩn, chinh phục những kẻ thù khổng lồ.');
+
+-- Game 3
+INSERT INTO GAME_STEAM (TenGame, MoTaGame, GiaGoc, GiaBan, LuotXem, IdVideoTrailer, DuongDanAnh)
+VALUES (
+  'Red Dead Redemption 2',
+  'Theo chân Arthur Morgan trong hành trình sinh tồn giữa miền Tây hoang dã của nước Mỹ.',
+  1100000, 750000,
+  700,
+  'eaW0tYpxyp0',
+  'assets/images/steam_red_dead_redemption_detail.jpg' );
+INSERT INTO BAIVIET_GIOITHIEU (MaGameSteam, TieuDeBaiViet, NoiDung)
+VALUES (3, 'Red Dead Redemption 2 – đỉnh cao của thế giới miền Tây',
+        'Một câu chuyện sâu sắc về danh dự, tội lỗi và sự chuộc lỗi trong thế giới cao bồi.');
+
+-- Game 4
+INSERT INTO GAME_STEAM (TenGame, MoTaGame, GiaGoc, GiaBan, LuotXem, IdVideoTrailer, DuongDanAnh)
+VALUES (
+  'Resident Evil 4 Remake',
+  'Phiên bản làm lại của tựa game sinh tồn kinh dị huyền thoại với đồ họa và lối chơi được nâng cấp toàn diện.',
+  900000, 690000,
+  450,
+  't-UVfZD6a3w',
+  'assets/images/steam_resident_evil_4_remake_detail.jpg' );
+INSERT INTO BAIVIET_GIOITHIEU (MaGameSteam, TieuDeBaiViet, NoiDung)
+VALUES (4, 'Resident Evil 4 Remake – nỗi kinh hoàng trở lại',
+        'Cùng Leon chiến đấu chống lại dịch bệnh ký sinh Las Plagas trong phiên bản remake đình đám.');
+
+-- Game 5
+INSERT INTO GAME_STEAM (TenGame, MoTaGame, GiaGoc, GiaBan, LuotXem, IdVideoTrailer, DuongDanAnh)
+VALUES (
+  'Hollow Knight',
+  'Phiêu lưu trong vương quốc sâu thẳm Hallownest đầy sinh vật bí ẩn và thử thách.',
+  300000, 190000,
+  250,
+  'UAO2urG23S4',
+  'assets/images/steam_hollow-knight-detail.jpg' );
+INSERT INTO BAIVIET_GIOITHIEU (MaGameSteam, TieuDeBaiViet, NoiDung)
+VALUES (5, 'Hollow Knight – thế giới sâu thẳm của côn trùng',
+        'Một kiệt tác indie với lối chơi tinh tế và đồ họa 2D tuyệt đẹp.');
+
+-- Game 6
+INSERT INTO GAME_STEAM (TenGame, MoTaGame, GiaGoc, GiaBan, LuotXem, IdVideoTrailer, DuongDanAnh)
+VALUES (
+  'Baldur’s Gate 3',
+  'Trải nghiệm RPG theo phong cách Dungeons & Dragons với hàng trăm lựa chọn ảnh hưởng đến cốt truyện.',
+  1300000, 950000,
+  640,
+  '1T22wNvoNiU',
+  'assets/images/steam_baldur_gate_3_detail.jpg' );
+INSERT INTO BAIVIET_GIOITHIEU (MaGameSteam, TieuDeBaiViet, NoiDung)
+VALUES (6, 'Baldur’s Gate 3 – tự do tuyệt đối trong thế giới D&D',
+        'Tạo nhân vật, phiêu lưu, và tự do chọn cách giải quyết mọi tình huống theo ý bạn.');
+
+
+-- Game 7
+INSERT INTO GAME_STEAM (TenGame, MoTaGame, GiaGoc, GiaBan, LuotXem, IdVideoTrailer, DuongDanAnh)
+VALUES (
+  'Stardew Valley',
+  'Bắt đầu cuộc sống mới tại nông trại nhỏ, trồng trọt, chăn nuôi và xây dựng mối quan hệ trong thị trấn.',
+  250000, 150000,
+  900,
+  'ot7uXNQskhs',
+  'assets/images/steam_stardew_valley_detail.jpg' );
+
+INSERT INTO BAIVIET_GIOITHIEU (MaGameSteam, TieuDeBaiViet, NoiDung)
+VALUES (7, 'Stardew Valley – cuộc sống mộng mơ nơi nông trại',
+        'Từ bỏ thành phố, bắt đầu cuộc sống mới tại thị trấn Pelican đầy yêu thương.');
+
+-- Game 8
+INSERT INTO GAME_STEAM (TenGame, MoTaGame, GiaGoc, GiaBan, LuotXem, IdVideoTrailer, DuongDanAnh)
+VALUES (
+  'Grand Theft Auto V',
+  'Thế giới mở tội phạm khổng lồ với ba nhân vật chính và cốt truyện kịch tính.',
+  800000, 520000,
+  1500,
+  'QkkoHAzjnUs',
+  'assets/images/steam_gta_5_detail.jpg' );
+INSERT INTO BAIVIET_GIOITHIEU (MaGameSteam, TieuDeBaiViet, NoiDung)
+VALUES (8, 'Grand Theft Auto V – thế giới tội phạm không giới hạn',
+        'Tham gia vào những phi vụ điên rồ, lái xe, và thống trị Los Santos.');
+
+-- -----------------------------------------------------
+-- PHẦN 7: TÀI KHOẢN STEAM (4 TÀI KHOẢN)
+-- -----------------------------------------------------
+
+-- Tài khoản 1
+INSERT INTO TAIKHOAN_STEAM (TenDangNhapSteam, MatKhauSteam, TongSoSlot, SoSlotDaBan)
+VALUES ('steam_master_1', 'steam_pass_1', 5, 2);
+
+-- Tài khoản 2
+INSERT INTO TAIKHOAN_STEAM (TenDangNhapSteam, MatKhauSteam, TongSoSlot, SoSlotDaBan)
+VALUES ('steam_master_2', 'steam_pass_2', 4, 1);
+
+-- Tài khoản 3
+INSERT INTO TAIKHOAN_STEAM (TenDangNhapSteam, MatKhauSteam, TongSoSlot, SoSlotDaBan)
+VALUES ('steam_master_3', 'steam_pass_3', 6, 3);
+
+-- Tài khoản 4
+INSERT INTO TAIKHOAN_STEAM (TenDangNhapSteam, MatKhauSteam, TongSoSlot, SoSlotDaBan)
+VALUES ('steam_master_4', 'steam_pass_4', 3, 0);
+
+-- -----------------------------------------------------
+-- PHẦN 8: LIÊN KẾT TÀI KHOẢN
+-- -----------------------------------------------------
+
+-- Tài khoản 1 sở hữu 2 game
+INSERT INTO GAME_TAIKHOAN_STEAM (MaGameSteam, MaTaiKhoanSteam) VALUES (1, 1);
+INSERT INTO GAME_TAIKHOAN_STEAM (MaGameSteam, MaTaiKhoanSteam) VALUES (2, 1);
+
+-- Tài khoản 2 sở hữu 2 game
+INSERT INTO GAME_TAIKHOAN_STEAM (MaGameSteam, MaTaiKhoanSteam) VALUES (3, 2);
+INSERT INTO GAME_TAIKHOAN_STEAM (MaGameSteam, MaTaiKhoanSteam) VALUES (4, 2);
+
+-- Tài khoản 3 sở hữu 3 game
+INSERT INTO GAME_TAIKHOAN_STEAM (MaGameSteam, MaTaiKhoanSteam) VALUES (5, 3);
+INSERT INTO GAME_TAIKHOAN_STEAM (MaGameSteam, MaTaiKhoanSteam) VALUES (6, 3);
+INSERT INTO GAME_TAIKHOAN_STEAM (MaGameSteam, MaTaiKhoanSteam) VALUES (7, 3);
+
+-- Tài khoản 4 sở hữu 1 game
+INSERT INTO GAME_TAIKHOAN_STEAM (MaGameSteam, MaTaiKhoanSteam) VALUES (8, 4);

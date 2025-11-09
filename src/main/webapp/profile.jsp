@@ -80,13 +80,6 @@
             .profile-links a:hover {
                 background-color: #e9ecef;
             }
-            .login-wrapper p a {
-                color: #007bff;
-                text-decoration: none;
-            }
-            .login-wrapper p a:hover {
-                text-decoration: underline;
-            }
         </style>
     </head>
     <body>
@@ -133,10 +126,7 @@
             <a href="${pageContext.request.contextPath}/home">Quay lại Trang Chủ</a> | 
             <a href="${pageContext.request.contextPath}/logout">Đăng Xuất</a>
         </p>
-        <p style="text-align:center; margin-top: 15px;">
-            Đã có tài khoản? <a href="${pageContext.request.contextPath}/login">Đăng nhập</a>
-        </p>
     </div>
 
     </body>
-    </html>
+</html>

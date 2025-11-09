@@ -1,6 +1,5 @@
 package com.microshop.controller;
 
-import com.microshop.util.PasswordUtils;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -8,6 +7,7 @@ import java.util.logging.Logger;
 
 import com.microshop.dao.NguoiDungDAO;
 import com.microshop.model.NguoiDung;
+import com.microshop.util.PasswordUtils;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -70,15 +70,16 @@ public class ProfileEditServlet extends HttpServlet {
                 
             // 3.2. KIỂM TRA MẬT KHẨU CŨ CÓ KHỚP VỚI MẬT KHẨU TRONG DB/SESSION KHÔNG
             // CẢNH BÁO: Trong thực tế, bạn phải dùng hàm xác minh HASH (bcrypt/Argon2)
-            } else if (!currentUser.getMatKhau().equals(oldPassword)) {
+            // So sánh mật khẩu cũ bằng cơ chế BCrypt
+            } else if (!PasswordUtils.verifyPassword(oldPassword, currentUser.getMatKhau())) {
                 errorMessage = "Mật khẩu hiện tại không chính xác.";
                 
             // 3.3. KIỂM TRA MẬT KHẨU MỚI VÀ XÁC NHẬN CÓ KHỚP KHÔNG
-            } else if (!PasswordUtils.verifyPassword(oldPassword, currentUser.getMatKhau())) {
+            } else if (confirmPassword == null || !newPassword.equals(confirmPassword)) {
                 errorMessage = "Mật khẩu mới và xác nhận mật khẩu không khớp.";
                 
             }
-            else if(oldPassword.equals(newPassword)){
+            else if (PasswordUtils.verifyPassword(newPassword, currentUser.getMatKhau())){
                 errorMessage = "Mật khẩu mới và mật khẩu cũ không được giống nhau.";
             }
             else {

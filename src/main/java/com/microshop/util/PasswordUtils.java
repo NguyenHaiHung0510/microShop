@@ -1,4 +1,4 @@
-package com.microshop.controller;
+package com.microshop.util;
 
 import org.mindrot.jbcrypt.BCrypt;
 

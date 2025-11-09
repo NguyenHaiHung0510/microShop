@@ -47,48 +47,26 @@ public class LoginServlet extends HttpServlet {
             Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        if (user != null) {
-            String matKhauDB = user.getMatKhau();
-            boolean isBCrypt = PasswordUtils.isHashed(matKhauDB);
-            boolean verified = false;
-
-            if (isBCrypt) {
-                // Đã là BCrypt → kiểm tra bằng BCrypt
-                verified = PasswordUtils.verifyPassword(matKhau, matKhauDB);
-            } else {
-                // Chưa băm → kiểm tra bằng so sánh chuỗi
-                if (matKhau.equals(matKhauDB)) {
-                    verified = true;
-                    String hashed = PasswordUtils.hashPassword(matKhau);
-                    user.setMatKhau(hashed);
-                    try {
-                        nguoiDungDAO.update(user);
-                    } catch (SQLException ex) {
-                        Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-            }
-            if (verified) {
-                // Xác thực thành công
-                // 3.1. Tạo và thiết lập Session cho người dùng
-                HttpSession session = request.getSession();
-                session.setAttribute("user", user); // Lưu đối tượng NguoiDung vào Session
-                session.setMaxInactiveInterval(60 * 5);
-                
-                // 3.2. Chuyển hướng đến trang chủ hoặc trang sau đăng nhập
-                // Sử dụng sendRedirect để thay đổi URL trong trình duyệt
-                response.sendRedirect(request.getContextPath() + "/home"); // Giả định có Controller /home
-                return;
-            }
+        if (user != null && PasswordUtils.verifyPassword(matKhau, user.getMatKhau())) {
+            // Xác thực thành công
+            // 3.1. Tạo và thiết lập Session cho người dùng
+            HttpSession session = request.getSession();
+            session.setAttribute("user", user); // Lưu đối tượng NguoiDung vào Session
+            session.setMaxInactiveInterval(60 * 5);
+            
+            // 3.2. Chuyển hướng đến trang chủ hoặc trang sau đăng nhập
+            // Sử dụng sendRedirect để thay đổi URL trong trình duyệt
+            response.sendRedirect(request.getContextPath() + "/home"); // Giả định có Controller /home
         
-        }
+        } else {
+            // Xác thực thất bại
 
-    // Xác thực thất bại
-    // 3.3. Thêm thông báo lỗi vào request scope
-    request.setAttribute("loginError", "Tên đăng nhập hoặc mật khẩu không chính xác.");
-    
-    // 3.4. Chuyển tiếp lại về trang login.jsp (để hiển thị form và thông báo lỗi)
-    // Sử dụng forward để giữ lại thông báo lỗi trong request scope
-    request.getRequestDispatcher("/login.jsp").forward(request, response);
+            // 3.3. Thêm thông báo lỗi vào request scope
+            request.setAttribute("loginError", "Tên đăng nhập hoặc mật khẩu không chính xác.");
+            
+            // 3.4. Chuyển tiếp lại về trang login.jsp (để hiển thị form và thông báo lỗi)
+            // Sử dụng forward để giữ lại thông báo lỗi trong request scope
+            request.getRequestDispatcher("/login.jsp").forward(request, response);
+        }
     }
 }

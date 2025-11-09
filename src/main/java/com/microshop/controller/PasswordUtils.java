@@ -6,16 +6,12 @@ public class PasswordUtils {
 
     // Băm mật khẩu
     public static String hashPassword(String plainPassword) {
-        return BCrypt.hashpw(plainPassword, BCrypt.gensalt(12));
+        return BCrypt.hashpw(plainPassword, BCrypt.gensalt(12)); // 12 rounds
     }
 
-    // Kiểm tra mật khẩu với hash
+    // Kiểm tra mật khẩu
     public static boolean verifyPassword(String plainPassword, String hashedPassword) {
+        if (hashedPassword == null || hashedPassword.isEmpty()) return false;
         return BCrypt.checkpw(plainPassword, hashedPassword);
-    }
-
-    // Kiểm tra xem chuỗi có phải hash BCrypt hay không
-    public static boolean isHashed(String password) {
-        return password != null && (password.startsWith("$2a$") || password.startsWith("$2b$") || password.startsWith("$2y$"));
     }
 }

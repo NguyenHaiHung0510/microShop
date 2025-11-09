@@ -1,5 +1,7 @@
 package com.microshop.dao;
 
+import com.microshop.context.DBContext;
+import com.microshop.model.NguoiDung;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,9 +10,6 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.microshop.context.DBContext;
-import com.microshop.model.NguoiDung;
 
 public class NguoiDungDAO implements CrudDAO<NguoiDung, Integer> {
 
@@ -168,7 +167,6 @@ public class NguoiDungDAO implements CrudDAO<NguoiDung, Integer> {
         }
         return result;
     }
-}
 
     // Đã chỉnh sửa by Hưng:
     // Xóa hàm getByPrefix (không được yêu cầu)
@@ -177,3 +175,4 @@ public class NguoiDungDAO implements CrudDAO<NguoiDung, Integer> {
     // dùng getObject/setObject thay cho getInt/setInt cũ để xử lý null
     // Thêm 2 hàm được yêu cầu trong bản giao việc
     // Xóa hàm getByPrefix ( not now )
+}

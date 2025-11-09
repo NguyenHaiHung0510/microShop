@@ -63,8 +63,41 @@
             .login-wrapper p a:hover {
                 text-decoration: underline;
             }
+            /* Hiển thị hộp thông báo nhỏ ở dưới */
+            .toast {
+                position: fixed;
+                bottom: 30px;
+                right: 30px;
+                background-color: #28a745;
+                color: white;
+                padding: 15px 25px;
+                border-radius: 6px;
+                font-weight: 500;
+                font-size: 15px;
+                box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+                opacity: 0;
+                transform: translateY(30px);
+                transition: opacity 0.5s, transform 0.5s;
+                z-index: 9999;
+            }
+            .toast.show {
+                opacity: 1;
+                transform: translateY(0);
+            }
         </style>
     </head>
+
+    <script>
+        // Hiển thị toast khi trang được tải
+        window.addEventListener("load", () => {
+            const toast = document.getElementById("toast");
+            if (toast) {
+                toast.classList.add("show");
+                setTimeout(() => toast.classList.remove("show"), 4000); // Tự ẩn sau 4 giây
+            }
+        });
+    </script>
+
     <body>
         <div class="login-wrapper">
             <h2>Đăng Nhập Hệ Thống</h2>
@@ -98,6 +131,13 @@
             </p>
         </div>
     </body>
+    <%
+    String registerSuccess = request.getParameter("register");
+    boolean showSuccessToast = "success".equals(registerSuccess);
+    %>
+    <% if (showSuccessToast) { %>
+        <div id="toast" class="toast">🎉 Đăng ký tài khoản thành công! Hãy đăng nhập để tiếp tục.</div>
+    <% } %>
 </html>
 
 <jsp:include page="common/footer.jsp" />

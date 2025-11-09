@@ -309,3 +309,11 @@ footer {
 footer p {
     margin: 5px 0;
 }
+.product-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+.product-card-link .buy-button {
+    cursor: pointer;
+}

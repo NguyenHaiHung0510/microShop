@@ -61,21 +61,21 @@
             <p>Chưa có sản phẩm nào trong danh mục này.</p>
         </c:if>
         <c:forEach items="${listLienQuan}" var="tk">
-            <div class="product-card">
-                <div class="product-image">
-                    <img src="${pageContext.request.contextPath}/${tk.duongDanAnh}" alt="${tk.maTaiKhoan}">
-                </div>
-                <div class="product-info">
-                    <h4 class="product-title">${not empty tk.diemNoiBat ? tk.diemNoiBat : "Tài khoản Liên Quân"}</h4>
-                    <div class="product-price">
-                        <span class="old-price">${tk.giaGoc} VNĐ</span>
-                        <span class="new-price">${tk.giaBan} VNĐ</span>
+            <a href="${pageContext.request.contextPath}/shop/game/detail?id=${tk.maTaiKhoan}&category=lienquan" class="product-card-link">
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="${pageContext.request.contextPath}/${tk.duongDanAnh}" alt="${tk.maTaiKhoan}">
                     </div>
+                    <div class="product-info">
+                        <h4 class="product-title">${not empty tk.diemNoiBat ? tk.diemNoiBat : "Tài khoản Liên Quân"}</h4>
+                        <div class="product-price">
+                            <span class="old-price">${tk.giaGoc} VNĐ</span>
+                            <span class="new-price">${tk.giaBan} VNĐ</span>
+                        </div>
+                    </div>
+                    <div class="buy-button">Xem Chi Tiết</div>
                 </div>
-                <a href="${pageContext.request.contextPath}/shop/game/detail?id=${tk.maTaiKhoan}&category=lienquan" class="buy-button">
-                    Xem Chi Tiết
-                </a>
-            </div>
+            </a>
         </c:forEach>
     </div>
 </section>
@@ -87,21 +87,21 @@
             <p>Chưa có sản phẩm nào trong danh mục này.</p>
         </c:if>
         <c:forEach items="${listFreeFire}" var="tk">
-            <div class="product-card">
-                <div class="product-image">
-                    <img src="${pageContext.request.contextPath}/${tk.duongDanAnh}" alt="${tk.maTaiKhoan}">
-                </div>
-                <div class="product-info">
-                    <h4 class="product-title">${not empty tk.diemNoiBat ? tk.diemNoiBat : "Tài khoản Free Fire"}</h4>
-                    <div class="product-price">
-                        <span class="old-price">${tk.giaGoc} VNĐ</span>
-                        <span class="new-price">${tk.giaBan} VNĐ</span>
+            <a href="${pageContext.request.contextPath}/shop/game/detail?id=${tk.maTaiKhoan}&category=freefire" class="product-card-link">
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="${pageContext.request.contextPath}/${tk.duongDanAnh}" alt="${tk.maTaiKhoan}">
                     </div>
+                    <div class="product-info">
+                        <h4 class="product-title">${not empty tk.diemNoiBat ? tk.diemNoiBat : "Tài khoản Free Fire"}</h4>
+                        <div class="product-price">
+                            <span class="old-price">${tk.giaGoc} VNĐ</span>
+                            <span class="new-price">${tk.giaBan} VNĐ</span>
+                        </div>
+                    </div>
+                    <div class="buy-button">Xem Chi Tiết</div>
                 </div>
-                <a href="${pageContext.request.contextPath}/shop/game/detail?id=${tk.maTaiKhoan}&category=freefire" class="buy-button">
-                    Xem Chi Tiết
-                </a>
-            </div>
+            </a>
         </c:forEach>
     </div>
 </section>
@@ -113,21 +113,21 @@
             <p>Chưa có sản phẩm nào trong danh mục này.</p>
         </c:if>
         <c:forEach items="${listRiot}" var="tk">
-            <div class="product-card">
-                <div class="product-image">
-                    <img src="${pageContext.request.contextPath}/${tk.duongDanAnh}" alt="${tk.maTaiKhoan}">
-                </div>
-                <div class="product-info">
-                    <h4 class="product-title">${not empty tk.diemNoiBat ? tk.diemNoiBat : "Tài khoản Riot"}</h4>
-                    <div class="product-price">
-                        <span class="old-price">${tk.giaGoc} VNĐ</span>
-                        <span class="new-price">${tk.giaBan} VNĐ</span>
+            <a href="${pageContext.request.contextPath}/shop/game/detail?id=${tk.maTaiKhoan}&category=riot" class="product-card-link">
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="${pageContext.request.contextPath}/${tk.duongDanAnh}" alt="${tk.maTaiKhoan}">
                     </div>
+                    <div class="product-info">
+                        <h4 class="product-title">${not empty tk.diemNoiBat ? tk.diemNoiBat : "Tài khoản Riot"}</h4>
+                        <div class="product-price">
+                            <span class="old-price">${tk.giaGoc} VNĐ</span>
+                            <span class="new-price">${tk.giaBan} VNĐ</span>
+                        </div>
+                    </div>
+                    <div class="buy-button">Xem Chi Tiết</div>
                 </div>
-                <a href="${pageContext.request.contextPath}/shop/game/detail?id=${tk.maTaiKhoan}&category=riot" class="buy-button">
-                    Xem Chi Tiết
-                </a>
-            </div>
+            </a>
         </c:forEach>
     </div>
 </section>
@@ -139,21 +139,21 @@
             <p>Chưa có sản phẩm nào trong danh mục này.</p>
         </c:if>
         <c:forEach items="${listSteam}" var="gs">
-            <div class="product-card">
-                <div class="product-image">
-                    <img src="${pageContext.request.contextPath}/${gs.duongDanAnh}" alt="${gs.tenGame}">
-                </div>
-                <div class="product-info">
-                    <h4 class="product-title">${gs.tenGame}</h4>
-                    <div class="product-price">
-                        <span class="old-price">${gs.giaGoc} VNĐ</span>
-                        <span class="new-price">${gs.giaBan} VNĐ</span>
+            <a href="${pageContext.request.contextPath}/shop/steam/detail?id=${gs.maGameSteam}" class="product-card-link">
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="${pageContext.request.contextPath}/${gs.duongDanAnh}" alt="${gs.tenGame}">
                     </div>
+                    <div class="product-info">
+                        <h4 class="product-title">${gs.tenGame}</h4>
+                        <div class="product-price">
+                            <span class="old-price">${gs.giaGoc} VNĐ</span>
+                            <span class="new-price">${gs.giaBan} VNĐ</span>
+                        </div>
+                    </div>
+                    <div class="buy-button">Xem Chi Tiết</div>
                 </div>
-                <a href="${pageContext.request.contextPath}/shop/steam/detail?id=${gs.maGameSteam}" class="buy-button">
-                    Xem Chi Tiết
-                </a>
-            </div>
+            </a>
         </c:forEach>
     </div>
 </section>

@@ -27,27 +27,38 @@
         </c:if>
 
         <c:forEach var="acc" items="${dsTaiKhoan}">
-            <div class="product-card">
-                <div class="product-image">
-                    <img src="${pageContext.request.contextPath}/${acc.duongDanAnh != null ? acc.duongDanAnh : 'images/noimage.png'}"
-                         alt="Ảnh tài khoản ${acc.maTaiKhoan}">
-                </div>
-                <div class="product-info">
-                    <h4 class="product-title">
-                        ${not empty acc.diemNoiBat ? acc.diemNoiBat : "Tài khoản "}
-                    </h4>
-                    <div class="product-price">
-                        <span class="old-price">${acc.giaGoc} VNĐ</span>
-                        <span class="new-price">${acc.giaBan} VNĐ</span>
+            <a href="${pageContext.request.contextPath}/shop/game/detail?id=${acc.maTaiKhoan}&category=${category}" class="product-card-link">
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="${pageContext.request.contextPath}/${acc.duongDanAnh != null ? acc.duongDanAnh : 'images/noimage.png'}"
+                             alt="Ảnh tài khoản ${acc.maTaiKhoan}">
                     </div>
+                    <div class="product-info">
+                        <h4 class="product-title">
+                            ${not empty acc.diemNoiBat ? acc.diemNoiBat : "Tài khoản"}
+                        </h4>
+                        <div class="product-price">
+                            <span class="old-price">${acc.giaGoc} VNĐ</span>
+                            <span class="new-price">${acc.giaBan} VNĐ</span>
+                        </div>
+                    </div>
+                    <div class="buy-button">Xem Chi Tiết</div>
                 </div>
-                <a href="${pageContext.request.contextPath}/shop/game/detail?id=${acc.maTaiKhoan}&category=${category}"
-                   class="buy-button">
-                    Xem Chi Tiết
-                </a>
-            </div>
+            </a>
         </c:forEach>
     </div>
 </section>
 
 <jsp:include page="/common/footer.jsp"/>
+
+<!-- ===== CSS bổ sung ===== -->
+<style>
+.product-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+.product-card-link .buy-button {
+    cursor: pointer;
+}
+</style>

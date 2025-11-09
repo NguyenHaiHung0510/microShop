@@ -141,9 +141,17 @@
                     <fmt:formatNumber value="${sanPham.giaBan}" type="currency" currencyCode="VND" maxFractionDigits="0"/> VNĐ
                 </span>
             </div>
+            <div class="product-item" style="color: #28a745;">
+                <span>
+                    <strong>Chiết khấu (Hạng ${requestScope.tenHang}):</strong>
+                </span>
+                <span style="font-weight:600;">
+                    - <fmt:formatNumber value="${requestScope.tienChietKhau}" type="currency" currencyCode="VND" maxFractionDigits="0"/> VNĐ
+                </span>
+            </div>
             <div class="total-amount">
                 Tổng cộng: 
-                <fmt:formatNumber value="${sanPham.giaBan}" type="currency" currencyCode="VND" maxFractionDigits="0"/> VNĐ
+                <fmt:formatNumber value="${requestScope.giaCuoiCung}" type="currency" currencyCode="VND" maxFractionDigits="0"/> VNĐ
             </div>
         </div>
 
@@ -156,7 +164,7 @@
 
         <form id="checkoutForm" action="${pageContext.request.contextPath}/payment/success" method="POST">
             <input type="hidden" name="maTaiKhoan" value="${sanPham.maTaiKhoan}">
-            <input type="hidden" name="gia" value="${sanPham.giaBan}">
+            <input type="hidden" name="gia" value="${requestScope.giaCuoiCung}">
             <input type="hidden" id="finalMethod" name="paymentMethod" value="">
 
             <div id="selectionBlock">
@@ -180,7 +188,7 @@
                 <img src="${pageContext.request.contextPath}/assets/images/sample_qr.png" alt="Mã QR Thanh Toán Giả Lập"> 
                 <p>Tổng tiền cần thanh toán: 
                     <span style="color:#c92a2a;">
-                        <fmt:formatNumber value="${sanPham.giaBan}" type="currency" currencyCode="VND" maxFractionDigits="0"/> VNĐ
+                        <fmt:formatNumber value="${requestScope.giaCuoiCung}" type="currency" currencyCode="VND" maxFractionDigits="0"/> VNĐ
                     </span>
                 </p>
                 <p style="color:red;font-size:0.9em;margin-top:10px;">(Đây là bước giả lập. Vui lòng nhấn Xác nhận)</p>

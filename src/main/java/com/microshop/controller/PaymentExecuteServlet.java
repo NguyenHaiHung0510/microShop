@@ -1,6 +1,7 @@
 package com.microshop.controller;
 
 import com.microshop.dao.DonHangDAO;
+import com.microshop.dao.HangThanhVienDAO;
 import com.microshop.dao.TaiKhoanFreeFireDAO;
 import com.microshop.dao.TaiKhoanLienQuanDAO; // Ví dụ: Cần DAO để kiểm tra tồn kho
 import com.microshop.dao.TaiKhoanRiotDAO;
@@ -8,6 +9,7 @@ import com.microshop.dao.TaiKhoanRiotDAO;
 import com.microshop.model.NguoiDung;
 import com.microshop.model.TaiKhoan; // Giả định đây là lớp cha cho các loại tài khoản
 import com.microshop.model.DonHang;
+import com.microshop.model.HangThanhVien;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -15,6 +17,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -95,6 +98,22 @@ public class PaymentExecuteServlet extends HttpServlet {
             final int NGUONG_HUY_PHUT = 3;
             request.setAttribute("thoiGianConLai", NGUONG_HUY_PHUT * 60);
 
+            HangThanhVienDAO hangDao = new HangThanhVienDAO(); // Khởi tạo DAO
+    
+            // Lấy hạng thành viên của người dùng
+            HangThanhVien htv = hangDao.getById(user.getMaHangThanhVien());
+            // TRUYỀN DỮ LIỆU CHIẾT KHẤU SANG JSP
+            
+            BigDecimal giaBan = sanPham.getGiaBan(); // Giá gốc
+            BigDecimal chietKhauPhanTram = htv.getChietKhau(); // Ví dụ: 0.02 (2%)
+            BigDecimal tienChietKhau = giaBan.multiply(chietKhauPhanTram);
+            // Tính giá cuối cùng
+            BigDecimal giaCuoiCung = giaBan.subtract(tienChietKhau);
+            
+            request.setAttribute("tenHang", htv.getTenHang());
+            request.setAttribute("tienChietKhau", tienChietKhau);
+            request.setAttribute("giaCuoiCung", giaCuoiCung);
+            
             request.getRequestDispatcher("/checkout.jsp").forward(request, response);
 
         } catch (NumberFormatException e) {

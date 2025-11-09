@@ -50,7 +50,8 @@ public class PaymentInitiateServlet extends HttpServlet {
         try {
             // Lấy thông tin từ AJAX POST
             int maSanPham = Integer.parseInt(request.getParameter("maSanPham"));
-            int giaBan = Integer.parseInt(request.getParameter("giaBan"));
+//            int giaBan = Integer.parseInt(request.getParameter("giaBan"));
+            String giaBan = request.getParameter("giaBan");
             // String paymentMethod = request.getParameter("paymentMethod"); // Bạn có thể lưu nếu cần
             DonHang dh = donhangDAO.getByMaTaiKhoanChoThanhToan(maSanPham);
             TaiKhoan tk = taikhoanDAO.getById(maSanPham);

@@ -102,7 +102,7 @@
     </c:if>
 
     <div class="profile-info">
-        <p><strong>ID Người Dùng:</strong> <%= user.getMaNguoiDung() %></p>
+        <%-- <p><strong>ID Người Dùng:</strong> <%= user.getMaNguoiDung() %></p> --%>
         <p><strong>Tên Đăng Nhập:</strong> <%= user.getTenDangNhap() %></p>
         <p><strong>Email:</strong> <%= user.getEmail() %></p>
         <p><strong>SĐT:</strong> <%= user.getSoDienThoai() %></p>

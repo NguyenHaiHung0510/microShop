@@ -229,7 +229,7 @@
     <!-- RIGHT -->
     <div class="right-panel">
         <h3>Các game khác</h3>
-        <c:forEach var="gs" items="${listSteam}">
+        <c:forEach var="gs" items="${listSteamDetail}">
             <div class="game-item">
                 <img src="${pageContext.request.contextPath}/${gs.duongDanAnh}" alt="${gs.tenGame}">
                 <div class="game-info">

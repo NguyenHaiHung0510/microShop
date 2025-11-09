@@ -78,9 +78,11 @@ public class SteamGameServlet extends HttpServlet {
         }
 
         BaiVietGioiThieu baiViet = baiVietDAO.getByMaGameSteam(id);
-
+        List<GameSteam> listSteamDetail = gameSteamDAO.fastGetAll();
+        
         request.setAttribute("gameSteam", gameSteam);
         request.setAttribute("baiViet", baiViet);
+        request.setAttribute("listSteamDetail", listSteamDetail);
 
         RequestDispatcher rd = request.getRequestDispatcher("/steam_game_detail.jsp");
         rd.forward(request, response);

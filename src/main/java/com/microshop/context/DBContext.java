@@ -1,9 +1,10 @@
 package com.microshop.context;
 
-import com.zaxxer.hikari.HikariConfig;
-import com.zaxxer.hikari.HikariDataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
+
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 
 public class DBContext {
     
@@ -11,7 +12,7 @@ public class DBContext {
     private static final String DB_URL = "jdbc:mysql://localhost:3306/microshop_db";
     // Cái này là tài khoản root của MySQL server trên máy của <Hưng>
     private static final String DB_USER = "root";
-    private static final String DB_PASSWORD = "080825";
+    private static final String DB_PASSWORD = "hung";
 
     private static HikariDataSource dataSource;
 

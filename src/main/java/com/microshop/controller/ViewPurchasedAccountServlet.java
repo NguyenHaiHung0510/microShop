@@ -1,6 +1,7 @@
 package com.microshop.controller;
 
 import com.microshop.dao.DonHangDAO;
+import com.microshop.dao.HangThanhVienDAO;
 import com.microshop.dao.TaiKhoanDAO; // Giả định bạn có DAO này
 import com.microshop.model.DonHang;
 import com.microshop.model.NguoiDung;
@@ -27,7 +28,7 @@ public class ViewPurchasedAccountServlet extends HttpServlet {
     // Giả định bạn có một TaiKhoanDAO (hoặc DAO cụ thể)
     private final TaiKhoanDAO taikhoanDAO = new TaiKhoanDAO(); 
     private final DonHangDAO donhangDAO = new DonHangDAO();
-    
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -50,7 +51,11 @@ public class ViewPurchasedAccountServlet extends HttpServlet {
                 maTaiKhoan.add(x.getMaTaiKhoan());
             }
             List<TaiKhoan> purchasedAccounts = taikhoanDAO.getAllByList(maTaiKhoan);
-            
+            int cnt = 0;
+            for (TaiKhoan tk : purchasedAccounts) {
+                tk.setGiaBan(purchasedOrders.get(cnt).getGiaMua());
+                cnt++;
+            }
             // 3. Đặt dữ liệu vào Request Scope
             request.setAttribute("purchasedAccounts", purchasedAccounts);
 

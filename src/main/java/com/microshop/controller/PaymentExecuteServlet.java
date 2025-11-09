@@ -109,7 +109,7 @@ public class PaymentExecuteServlet extends HttpServlet {
             BigDecimal tienChietKhau = giaBan.multiply(chietKhauPhanTram);
             // Tính giá cuối cùng
             BigDecimal giaCuoiCung = giaBan.subtract(tienChietKhau);
-            
+            if(dh != null) donhangDAO.updateGiaMua(dh.getMaDonHang(), giaCuoiCung);
             request.setAttribute("tenHang", htv.getTenHang());
             request.setAttribute("tienChietKhau", tienChietKhau);
             request.setAttribute("giaCuoiCung", giaCuoiCung);

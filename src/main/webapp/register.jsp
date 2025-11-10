@@ -90,7 +90,7 @@
                 </div>
                 
                 <div class="form-group">
-                    <label for="sdt">Số điện thoại:</label>
+                    <label for="sdt">Số điện thoại: <span style="color:gray;">(tùy chọn)</span>:</label>
                     <input type="text" id="sdt" name="sdt" placeholder="Nhập số điện thoại...">
                 </div>
                 

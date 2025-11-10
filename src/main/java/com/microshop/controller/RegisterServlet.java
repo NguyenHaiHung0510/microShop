@@ -1,6 +1,5 @@
 package com.microshop.controller;
 
-import com.microshop.util.PasswordUtils;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.SQLException;
@@ -8,6 +7,7 @@ import java.time.LocalDateTime;
 
 import com.microshop.dao.NguoiDungDAO;
 import com.microshop.model.NguoiDung;
+import com.microshop.util.PasswordUtils;
 
 import jakarta.servlet.ServletException; // nếu bạn tách riêng file băm mật khẩu
 import jakarta.servlet.annotation.WebServlet;
@@ -68,7 +68,7 @@ public class RegisterServlet extends HttpServlet {
         NguoiDung newUser = new NguoiDung();
         newUser.setTenDangNhap(username);
         newUser.setEmail((email == null || email.isEmpty()) ? null : email); // Để trống
-        newUser.setSoDienThoai(sdt);
+        newUser.setSoDienThoai((sdt == null || sdt.isEmpty()) ? null : sdt); // Để trống
         newUser.setMatKhau(PasswordUtils.hashPassword(password)); // TODO: Hash mật khẩu trong thực tế
         newUser.setVaiTro("USER"); // mặc định user
         newUser.setTongTienDaChi(BigDecimal.ZERO);

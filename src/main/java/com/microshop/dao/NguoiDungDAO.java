@@ -120,13 +120,17 @@ public class NguoiDungDAO implements CrudDAO<NguoiDung, Integer> {
 
             ps.setString(1, entity.getTenDangNhap());
             ps.setString(2, entity.getMatKhau());
-            // Xử lý email rỗng hoặc null (trường hợp nhiều tài khoản không đặt email)
+            // Xử lý email và số điện thoại rỗng hoặc null (trường hợp nhiều tài khoản không đặt email hoặc số điện thoại)
             if (entity.getEmail() == null || entity.getEmail().trim().isEmpty()) {
                 ps.setNull(3, Types.VARCHAR);
             } else {
                 ps.setString(3, entity.getEmail().trim());
             }
-            ps.setString(4, entity.getSoDienThoai());
+            if (entity.getSoDienThoai() == null || entity.getSoDienThoai().trim().isEmpty()) {
+                ps.setNull(4, Types.VARCHAR);
+            } else {
+                ps.setString(4, entity.getSoDienThoai().trim());
+            }
             ps.setString(5, entity.getVaiTro());
             ps.setBigDecimal(6, entity.getTongTienDaChi());
             ps.setObject(7, entity.getMaHangThanhVien()); 

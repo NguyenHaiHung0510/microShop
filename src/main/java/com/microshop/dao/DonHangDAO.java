@@ -153,9 +153,40 @@ public class DonHangDAO implements CrudDAO<DonHang, Integer> {
         }
         return list;
     }
+    
+    public List<DonHang> getByMaNguoiDungDaHoanThanh(Integer maNguoiDung) throws SQLException {
+        String sql = "SELECT * FROM DonHang WHERE MaNguoiDung = ? AND TrangThai = 'DA_HOAN_THANH'";
+        List<DonHang> list = new ArrayList<>();
 
-    public DonHang getByMaTaiKhoan(Integer maTaiKhoan) throws SQLException {
+        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setObject(1, maNguoiDung);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    list.add(mapResultSetToDonHang(rs));
+                }
+            }
+        }
+        return list;
+    }
+        
+    public List<DonHang> getByMaTaiKhoan(Integer maTaiKhoan) throws SQLException {
+        List<DonHang> list = new ArrayList<>();
         String sql = "SELECT * FROM DonHang WHERE MaTaiKhoan = ?";
+        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setObject(1, maTaiKhoan);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    list.add(mapResultSetToDonHang(rs));
+                }
+            }
+        }
+        return list;
+    }
+    
+    public DonHang getByMaTaiKhoanChoThanhToan(Integer maTaiKhoan) throws SQLException {
+        String sql = "SELECT * FROM DonHang WHERE MaTaiKhoan = ? AND TrangThai = 'CHO_THANH_TOAN'";
         try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setObject(1, maTaiKhoan);
@@ -167,7 +198,8 @@ public class DonHangDAO implements CrudDAO<DonHang, Integer> {
         }
         return null;
     }
-
+    
+    
     public boolean updateTrangThai(Integer maDonHang, String trangThaiMoi, LocalDateTime thoiGianMua) throws SQLException {
         String sql = "UPDATE DonHang SET TrangThai = ?, ThoiGianMua = ? WHERE MaDonHang = ?";
         try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {

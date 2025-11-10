@@ -2,7 +2,6 @@ package com.microshop.dao;
 
 import com.microshop.context.DBContext;
 import com.microshop.model.TaiKhoan;
-
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -24,7 +23,7 @@ public class TaiKhoanDAO implements CrudDAO<TaiKhoan, Integer> {
         }
         return list;
     }
-
+    
     @Override
     public TaiKhoan getById(Integer id) throws SQLException {
         String sql = "SELECT * FROM TAIKHOAN WHERE MaTaiKhoan = ?";
@@ -44,8 +43,8 @@ public class TaiKhoanDAO implements CrudDAO<TaiKhoan, Integer> {
     @Override
     public Integer insert(TaiKhoan newAcc) throws SQLException {
         String sql = """
-                INSERT INTO TAIKHOAN (MaDanhMuc, GiaGoc, GiaBan, TrangThai, DiemNoiBat, LuotXem, ThoiGianDang)
-                VALUES (?, ?, ?, ?, ?, ?, ?)
+                INSERT INTO TAIKHOAN (MaDanhMuc, GiaGoc, GiaBan, TrangThai, DiemNoiBat, LuotXem, ThoiGianDang, DuongDanAnh)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
                 """;
         try (Connection conn = DBContext.getConnection(); PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
@@ -58,6 +57,7 @@ public class TaiKhoanDAO implements CrudDAO<TaiKhoan, Integer> {
             ps.setTimestamp(7, Timestamp.valueOf(
                     newAcc.getThoiGianDang() != null ? newAcc.getThoiGianDang() : LocalDateTime.now())
             );
+            ps.setString(8, newAcc.getDuongDanAnh());
 
             int affectedRows = ps.executeUpdate();
             if (affectedRows == 0) {
@@ -76,7 +76,7 @@ public class TaiKhoanDAO implements CrudDAO<TaiKhoan, Integer> {
     public boolean update(TaiKhoan entity) throws SQLException {
         String sql = """
                 UPDATE TAIKHOAN
-                SET MaDanhMuc = ?, GiaGoc = ?, GiaBan = ?, TrangThai = ?, DiemNoiBat = ?, LuotXem = ?, thoiGianDang = ?
+                SET MaDanhMuc = ?, GiaGoc = ?, GiaBan = ?, TrangThai = ?, DiemNoiBat = ?, LuotXem = ?, ThoiGianDang = ?, DuongDanAnh = ?
                 WHERE MaTaiKhoan = ?
                 """;
         try (Connection conn = DBContext.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -88,7 +88,8 @@ public class TaiKhoanDAO implements CrudDAO<TaiKhoan, Integer> {
             ps.setString(5, entity.getDiemNoiBat());
             ps.setObject(6, entity.getLuotXem());
             ps.setTimestamp(7, entity.getThoiGianDang() != null ? Timestamp.valueOf(entity.getThoiGianDang()) : null);
-            ps.setObject(8, entity.getMaTaiKhoan());
+            ps.setString(8, entity.getDuongDanAnh());
+            ps.setObject(9, entity.getMaTaiKhoan());
 
             return ps.executeUpdate() > 0;
         }
@@ -135,6 +136,22 @@ public class TaiKhoanDAO implements CrudDAO<TaiKhoan, Integer> {
         }
         return list;
     }
+    
+    public List<TaiKhoan> getAllByList(List<Integer> maTaiKhoan) throws SQLException {
+        List<TaiKhoan> list = new ArrayList<>();
+        TaiKhoanLienQuanDAO lqdao = new TaiKhoanLienQuanDAO();
+        TaiKhoanFreeFireDAO ffdao = new TaiKhoanFreeFireDAO();
+        TaiKhoanRiotDAO rtdao = new TaiKhoanRiotDAO();
+        
+        for(int id : maTaiKhoan){
+            TaiKhoan x = lqdao.getById(id), y = ffdao.getById(id), z = rtdao.getById(id);
+            if(x != null) list.add(x);
+            else if(y != null) list.add(y);
+            else list.add(z);
+        }
+        
+        return list;
+    }
 
     public void updateTrangThai(Integer maTaiKhoan, String trangThaiMoi) throws SQLException {
         String sql = "UPDATE TAIKHOAN SET TrangThai = ? WHERE MaTaiKhoan = ?";
@@ -156,16 +173,20 @@ public class TaiKhoanDAO implements CrudDAO<TaiKhoan, Integer> {
         tk.setGiaBan(rs.getBigDecimal("GiaBan"));
         tk.setTrangThai(rs.getString("TrangThai"));
         tk.setDiemNoiBat(rs.getString("DiemNoiBat"));
-        tk.setLuotXem(rs.getObject("LuotXem", Integer.class)); 
+        tk.setLuotXem(rs.getObject("LuotXem", Integer.class));
 
         Timestamp ts = rs.getTimestamp("ThoiGianDang");
         if (ts != null) {
             tk.setThoiGianDang(ts.toLocalDateTime());
         }
+
+        tk.setDuongDanAnh(rs.getString("DuongDanAnh"));
         return tk;
     }
 
     // Đã fix các lỗi by Hưng:
     // Xóa hàm insertAndReturnId, chỉ dùng insert trả về id đã tạo hoặc null
     // Sửa hết setInt/getInt sang setObject/getObject để xử lý cả null
+    
+    // Cập nhật 02/11/2025: Thêm thuộc tính DuongDanAnh cho TaiKhoan
 }

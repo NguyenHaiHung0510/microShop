@@ -12,12 +12,12 @@ import java.util.List;
 public class TaiKhoanLienQuanDAO implements CrudDAO<TaiKhoanLienQuan, Integer> {
 
     private TaiKhoanDAO taiKhoanDAO = new TaiKhoanDAO();
-    
+
     // Constructor 1: Dùng cho ứng dụng chạy thật
     public TaiKhoanLienQuanDAO() {
         this.taiKhoanDAO = new TaiKhoanDAO();
     }
-    
+
     // Constructor 2: Dùng cho Unit Test (package-private)
     TaiKhoanLienQuanDAO(TaiKhoanDAO taiKhoanDAO) {
         this.taiKhoanDAO = taiKhoanDAO;
@@ -73,6 +73,7 @@ public class TaiKhoanLienQuanDAO implements CrudDAO<TaiKhoanLienQuan, Integer> {
         tk.setDiemNoiBat(acc.getDiemNoiBat());
         tk.setLuotXem(acc.getLuotXem());
         tk.setThoiGianDang(acc.getThoiGianDang() != null ? acc.getThoiGianDang() : LocalDateTime.now());
+        tk.setDuongDanAnh(acc.getDuongDanAnh());
 
         Integer maTaiKhoan = taiKhoanDAO.insert(tk);
 
@@ -114,6 +115,7 @@ public class TaiKhoanLienQuanDAO implements CrudDAO<TaiKhoanLienQuan, Integer> {
         tk.setDiemNoiBat(acc.getDiemNoiBat());
         tk.setLuotXem(acc.getLuotXem());
         tk.setThoiGianDang(acc.getThoiGianDang());
+        tk.setDuongDanAnh(acc.getDuongDanAnh());
         boolean parentUpdated = taiKhoanDAO.update(tk);
 
         String sql = """
@@ -181,6 +183,7 @@ public class TaiKhoanLienQuanDAO implements CrudDAO<TaiKhoanLienQuan, Integer> {
         if (ts != null) {
             acc.setThoiGianDang(ts.toLocalDateTime());
         }
+        acc.setDuongDanAnh(rs.getString("DuongDanAnh"));
 
         acc.setTenDangNhap(rs.getString("TenDangNhap"));
         acc.setMatKhau(rs.getString("MatKhau"));

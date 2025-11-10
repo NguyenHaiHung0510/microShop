@@ -59,7 +59,7 @@ public class GameSteamDAO implements CrudDAO<GameSteam, Integer> {
     @Override
     public List<GameSteam> getAll() throws SQLException {
         List<GameSteam> list = new ArrayList<>();
-        String sql = "SELECT * FROM GAMESTEAM";
+        String sql = "SELECT * FROM GAME_STEAM";
 
         try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
 
@@ -73,7 +73,7 @@ public class GameSteamDAO implements CrudDAO<GameSteam, Integer> {
     @Override
     public GameSteam getById(Integer id) throws SQLException {
         GameSteam result = null;
-        String sql = "SELECT * FROM GAMESTEAM WHERE MaGameSteam = ?";
+        String sql = "SELECT * FROM GAME_STEAM WHERE MaGameSteam = ?";
 
         try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
 
@@ -91,7 +91,7 @@ public class GameSteamDAO implements CrudDAO<GameSteam, Integer> {
     @Override
     public Integer insert(GameSteam entity) throws SQLException {
         String sql = """
-            INSERT INTO GAMESTEAM 
+            INSERT INTO GAME_STEAM 
             (TenGame, MoTaGame, GiaGoc, GiaBan, LuotXem, ThoiGianDang, IdVideoTrailer, DuongDanAnh)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         """;
@@ -131,7 +131,7 @@ public class GameSteamDAO implements CrudDAO<GameSteam, Integer> {
     @Override
     public boolean update(GameSteam entity) throws SQLException {
         String sql = """
-            UPDATE GAMESTEAM
+            UPDATE GAME_STEAM
             SET TenGame=?, MoTaGame=?, GiaGoc=?, GiaBan=?, LuotXem=?, 
                 ThoiGianDang=?, IdVideoTrailer=?, DuongDanAnh=?
             WHERE MaGameSteam=?
@@ -158,7 +158,7 @@ public class GameSteamDAO implements CrudDAO<GameSteam, Integer> {
 
     @Override
     public boolean delete(Integer id) throws SQLException {
-        String sql = "DELETE FROM GAMESTEAM WHERE MaGameSteam=?";
+        String sql = "DELETE FROM GAME_STEAM WHERE MaGameSteam=?";
         try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setObject(1, id);
@@ -167,7 +167,7 @@ public class GameSteamDAO implements CrudDAO<GameSteam, Integer> {
     }
 
     public String getMoTaGame(Integer maGameSteam) throws SQLException {
-        String sql = "SELECT MoTaGame FROM GAMESTEAM WHERE MaGameSteam = ?";
+        String sql = "SELECT MoTaGame FROM GAME_STEAM WHERE MaGameSteam = ?";
         try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setObject(1, maGameSteam);
@@ -185,7 +185,7 @@ public class GameSteamDAO implements CrudDAO<GameSteam, Integer> {
         List<GameSteam> list = new ArrayList<>();
         String sql = """
             SELECT MaGameSteam, TenGame, GiaGoc, GiaBan, LuotXem, ThoiGianDang, IdVideoTrailer, DuongDanAnh
-            FROM GAMESTEAM
+            FROM GAME_STEAM
         """;
 
         try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {

@@ -3,6 +3,11 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
+
+<jsp:include page="common/header.jsp">
+    <jsp:param name="pageTitle" value="Trang Chủ"/>
+</jsp:include>
+
 <html>
 <head>
     <meta charset="UTF-8">
@@ -124,3 +129,5 @@
 
 </body>
 </html>
+
+<jsp:include page="common/footer.jsp" />

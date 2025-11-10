@@ -131,6 +131,7 @@
             </p>
         </div>
     </body>
+
     <%
     String registerSuccess = request.getParameter("register");
     boolean showSuccessToast = "success".equals(registerSuccess);
@@ -139,11 +140,15 @@
         <div id="toast" class="toast">🎉 Đăng ký tài khoản thành công! Hãy đăng nhập để tiếp tục.</div>
     <% } %>
 
-    <c:if test="${param.msg eq 'login_required'}">
-    <div id="toast" class="toast show">
-        ⚠️ Vui lòng đăng nhập để tiếp tục thanh toán.
-    </div>
-    </c:if>
+    
+    <%
+        String fromPage = request.getParameter("from");
+        if ("payment".equals(fromPage)) {
+    %>
+        <div id="toast" class="toast">⚠️ Vui lòng đăng nhập để tiếp tục thanh toán.</div>
+    <%
+        }
+    %>
 
 </html>
 

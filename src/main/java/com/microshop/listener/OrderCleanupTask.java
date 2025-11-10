@@ -2,6 +2,7 @@ package com.microshop.listener;
 
 import com.microshop.context.DBContext;
 import com.microshop.dao.DonHangDAO; 
+import com.microshop.dao.DonHangSlotSteamDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,11 +19,13 @@ import java.util.logging.Logger;
 public class OrderCleanupTask extends TimerTask {
     
     private final DonHangDAO donHangDAO; 
+    private final DonHangSlotSteamDAO donHangSlotSteamDAO; 
     private final int minutesThreshold;
     private static final Logger LOGGER = Logger.getLogger(OrderCleanupTask.class.getName());
     
-    public OrderCleanupTask(DonHangDAO dao, int minutes) {
+    public OrderCleanupTask(DonHangDAO dao,  DonHangSlotSteamDAO dao1, int minutes) {
         this.donHangDAO = dao; 
+        this.donHangSlotSteamDAO = dao1;
         this.minutesThreshold = minutes;
     }
 
@@ -31,12 +34,15 @@ public class OrderCleanupTask extends TimerTask {
     public void run() {
         try {
             int rowsProcessed = cleanupAbandonedOrders(minutesThreshold); 
-            
+            int rowsProcessed1 = cleanupAbandonedSteamOrders(minutesThreshold); 
             if (rowsProcessed > 0) {
                 LOGGER.log(Level.INFO, "Đã dọn dẹp thành công {0} đơn hàng bị bỏ dở (quá {1} phút).", 
                         new Object[]{rowsProcessed, minutesThreshold});
             }
-            
+            if (rowsProcessed1 > 0) {
+                LOGGER.log(Level.INFO, "Đã dọn dẹp thành công {0} đơn hàng slot steam bị bỏ dở (quá {1} phút).", 
+                        new Object[]{rowsProcessed1, minutesThreshold});
+            }
         } catch (SQLException ex) {
             LOGGER.log(Level.SEVERE, "Lỗi cơ sở dữ liệu khi dọn dẹp đơn hàng bỏ dở.", ex);
         }
@@ -94,6 +100,92 @@ public class OrderCleanupTask extends TimerTask {
 
             // 4. HỦY ĐƠN HÀNG (Cập nhật TrangThai thành DA_HUY)
             String sqlUpdate = "UPDATE DONHANG SET TrangThai = 'DA_HUY' WHERE MaDonHang = ?";
+            try (PreparedStatement psUpdate = conn.prepareStatement(sqlUpdate)) {
+                for (Integer maDonHang : maDonHangToUpdate) {
+                    psUpdate.setInt(1, maDonHang);
+                    psUpdate.addBatch();
+                }
+                int[] results = psUpdate.executeBatch();
+                for (int result : results) {
+                    if (result > 0) totalProcessed++;
+                }
+            }
+
+            conn.commit(); // HOÀN TẤT GIAO DỊCH
+            return totalProcessed;
+
+        } catch (SQLException e) {
+            // XỬ LÝ LỖI: ROLLBACK
+            if (conn != null) {
+                try {
+                    conn.rollback(); 
+                    LOGGER.log(Level.SEVERE, "Rollback giao dịch thành công. Lỗi: " + e.getMessage());
+                } catch (SQLException rollbackEx) {
+                    LOGGER.log(Level.SEVERE, "Lỗi trong khi thực hiện rollback.", rollbackEx);
+                }
+            }
+            throw e; 
+            
+        } finally {
+            // 5. ĐÓNG KẾT NỐI
+            if (conn != null) {
+                try {
+                    conn.setAutoCommit(true); 
+                    conn.close(); 
+                } catch (SQLException e) {
+                    LOGGER.log(Level.SEVERE, "Lỗi đóng Connection.", e);
+                }
+            }
+        }
+    }
+    
+    private int cleanupAbandonedSteamOrders(int minutesThreshold) throws SQLException {
+        Connection conn = null;
+        int totalProcessed = 0;
+        try {
+            // 1. LẤY KẾT NỐI VÀ BẮT ĐẦU GIAO DỊCH
+            conn = DBContext.getConnection();
+//            System.out.println("Kết nối DB thành công."); 
+            conn.setAutoCommit(false); 
+            
+            // 2. TÌM VÀ LẤY ID TAIKHOAN LIÊN QUAN
+            String sqlSelect = "SELECT MaDonHangSlot, MaTaiKhoanSteam " +
+                           "FROM DONHANG_SLOT_STEAM " +
+                           "WHERE TrangThai = 'CHO_THANH_TOAN' AND ThoiGianTao < DATE_SUB(NOW(), INTERVAL ? MINUTE)";
+            
+            List<Integer> maTaiKhoanToRelease = new ArrayList<>();
+            List<Integer> maDonHangToUpdate = new ArrayList<>();
+//            System.out.println(maDonHangToUpdate.size());
+            try (PreparedStatement psSelect = conn.prepareStatement(sqlSelect)) {
+                psSelect.setInt(1, minutesThreshold);
+                try (ResultSet rs = psSelect.executeQuery()) {
+                    while (rs.next()) {
+                        maTaiKhoanToRelease.add(rs.getInt("MaTaiKhoanSteam"));
+                        maDonHangToUpdate.add(rs.getInt("MaDonHangSlot"));
+                    }
+                }
+            }
+            
+            if (maDonHangToUpdate.isEmpty()) {
+                conn.setAutoCommit(true);
+                return 0; // Không có gì để dọn dẹp
+            }
+//            System.out.println("?????");
+//            for(int x : maDonHangToUpdate){
+//                System.out.println(x);
+//            }
+            // 3. GIẢI PHÓNG TAIKHOAN_STEAM
+            String sqlRelease = "UPDATE TAIKHOAN_STEAM SET SoSlotDaBan = SoSlotDaBan - 1 WHERE MaTaiKhoanSteam = ?";
+            try (PreparedStatement psRelease = conn.prepareStatement(sqlRelease)) {
+                for (Integer maTaiKhoan : maTaiKhoanToRelease) {
+                    psRelease.setInt(1, maTaiKhoan);
+                    psRelease.addBatch();
+                }
+                psRelease.executeBatch();
+            }
+
+            // 4. HỦY ĐƠN HÀNG (Cập nhật TrangThai thành DA_HUY)
+            String sqlUpdate = "UPDATE DONHANG_SLOT_STEAM SET TrangThai = 'DA_HUY' WHERE MaDonHangSlot = ?";
             try (PreparedStatement psUpdate = conn.prepareStatement(sqlUpdate)) {
                 for (Integer maDonHang : maDonHangToUpdate) {
                     psUpdate.setInt(1, maDonHang);

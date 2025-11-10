@@ -44,13 +44,15 @@ public class RegisterServlet extends HttpServlet {
             errorMessage = "Mật khẩu và xác nhận mật khẩu không khớp.";
         }
 
-        // 2. Kiểm tra username hoặc email đã tồn tại chưa
+        // 2. Kiểm tra username, email và số điện thoại hoặc đã tồn tại chưa
         if (errorMessage == null) {
             try {
                 if (nguoiDungDAO.getByTenDangNhap(username) != null) {
                     errorMessage = "Tên đăng nhập đã tồn tại.";
                 } else if (nguoiDungDAO.getByEmail(email) != null) {
                     errorMessage = "Email đã được sử dụng.";
+                } else if (nguoiDungDAO.getBySoDienThoai(sdt) != null) {
+                    errorMessage = "Số điện thoại đã được sử dụng.";
                 }
             } catch (SQLException e) {
                 errorMessage = "Lỗi hệ thống: " + e.getMessage();

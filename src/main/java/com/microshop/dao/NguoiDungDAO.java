@@ -184,6 +184,23 @@ public class NguoiDungDAO implements CrudDAO<NguoiDung, Integer> {
         }
         return result;
     }
+    
+    public NguoiDung getBySoDienThoai(String soDienThoai) throws SQLException {
+        NguoiDung result = null;
+        if (soDienThoai == null || soDienThoai.trim().isEmpty()) return null; // Bỏ qua số rỗng
+        String sql = "SELECT * FROM NguoiDung WHERE SoDienThoai = ?";
+
+        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, soDienThoai);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    result = mapResultSetToNguoiDung(rs);
+                }
+            }
+        }
+        return result;
+    }
 }
 
     // Đã chỉnh sửa by Hưng:

@@ -153,6 +153,48 @@
     .buy-button.secondary:hover {
         background: #bbb;
     }
+    .image-modal {
+        display: none; /* Ẩn ban đầu */
+        position: fixed;
+        z-index: 9999;
+        padding-top: 60px;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0,0,0,0.85);
+    }
+
+    .image-modal-content {
+        margin: auto;
+        display: block;
+        max-width: 80%;
+        max-height: 80%;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(255,255,255,0.2);
+        animation: zoomIn 0.3s ease;
+    }
+
+    @keyframes zoomIn {
+        from {transform: scale(0.8); opacity: 0;}
+        to {transform: scale(1); opacity: 1;}
+    }
+
+    .image-modal-close {
+        position: absolute;
+        top: 25px;
+        right: 45px;
+        color: #fff;
+        font-size: 40px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+
+    .image-modal-close:hover {
+        color: #bbb;
+    }
 </style>
 
 <section class="product-section">
@@ -196,9 +238,7 @@
                 </div>
 
                 <div class="highlight">
-                    <p><b>Mã tài khoản:</b> ${taiKhoan.maTaiKhoan}</p>
-                    <p><b>Trạng thái:</b> ${taiKhoan.trangThai}</p>
-
+                    <p><b>Mã tài khoản:</b> ${taiKhoan.maNghiepVu}</p>
                     <hr style="margin:12px 0; border:none; border-top:1px solid #ddd;">
 
                     <c:choose>
@@ -247,7 +287,7 @@
                 <c:choose>
                     <%-- TRẠNG THÁI: ĐANG GIAO DỊCH (Redirect từ PaymentExecuteServlet) --%>
                     <c:when test="${param.status eq 'in_transaction'}">
-                        <span class="buy-button" 
+                        <span class="buy-button"
                               style="background-color: #f39c12; cursor: not-allowed; pointer-events: none;">
                             ĐANG CÓ NGƯỜI THANH TOÁN
                         </span>
@@ -265,7 +305,7 @@
 
                     <%-- TRẠNG THÁI: ĐÃ BÁN (Redirect 'sold' hoặc 'DA_BAN' từ DB) --%>
                     <c:otherwise>
-                        <span class="buy-button" 
+                        <span class="buy-button"
                               style="background-color: #dc3545; cursor: not-allowed; pointer-events: none;">
                             ĐÃ BÁN (HẾT HÀNG)
                         </span>
@@ -280,7 +320,11 @@
         </div>
     </div>
 </section>
-
+<!-- Modal phóng to ảnh -->
+<div id="imageModal" class="image-modal">
+    <span class="image-modal-close">&times;</span>
+    <img class="image-modal-content" id="modalImg">
+</div>
 <script>
     // Chạy script này sau khi trang đã tải xong
     document.addEventListener('DOMContentLoaded', function () {
@@ -307,7 +351,24 @@
             // Lần refresh (F5) tiếp theo sẽ sử dụng URL mới này.
             history.replaceState(null, '', newRelativePathQuery);
         }
+        // Hiệu ứng phóng to ảnh
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImg');
+            const closeModal = document.querySelector('.image-modal-close');
+
+            // Khi click vào ảnh
+            document.querySelectorAll('.product-image img').forEach(img => {
+                img.addEventListener('click', () => {
+                    modal.style.display = "block";
+                    modalImg.src = img.src;
+                });
+            });
+
+            // Khi bấm dấu X hoặc vùng ngoài ảnh thì đóng
+            closeModal.onclick = () => modal.style.display = "none";
+            modal.onclick = (e) => {
+                if (e.target === modal) modal.style.display = "none";
+            };
     });
 </script>
-
 <jsp:include page="common/footer.jsp" />

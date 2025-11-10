@@ -80,8 +80,18 @@ public class RegisterServlet extends HttpServlet {
         try {
             Integer id = nguoiDungDAO.insert(newUser);
             if (id != null) {
-                // Đăng ký thành công -> redirect về trang login
-                response.sendRedirect(request.getContextPath() + "/login?register=success");
+                // Lấy session để kiểm tra xem có URL gốc (redirect sau đăng nhập) không
+                var session = request.getSession();
+                String redirectUrl = (String) session.getAttribute("redirectAfterLogin");
+                session.removeAttribute("redirectAfterLogin"); // Xóa sau khi dùng
+
+                if (redirectUrl != null && !redirectUrl.contains("/home")) {
+                    // Nếu có trang gốc, quay lại đó và gửi kèm thông báo đăng ký thành công
+                    response.sendRedirect(redirectUrl + (redirectUrl.contains("?") ? "&" : "?") + "registered=success");
+                } else {
+                    // Nếu không có redirect, quay về login như bình thường
+                    response.sendRedirect(request.getContextPath() + "/login?registered=success");
+                }
             } else {
                 request.setAttribute("registerError", "Không thể tạo tài khoản. Vui lòng thử lại.");
                 request.getRequestDispatcher("/register.jsp").forward(request, response);

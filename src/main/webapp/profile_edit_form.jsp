@@ -28,7 +28,7 @@
             margin-bottom: 25px;
         }
         .form-group {
-            margin-bottom: 15px;
+            margin-bottom:  15px;
         }
         .form-group label {
             display: block;

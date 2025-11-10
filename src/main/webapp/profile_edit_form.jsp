@@ -1,6 +1,11 @@
 <%@page import="com.microshop.model.NguoiDung"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<jsp:include page="common/header.jsp">
+    <jsp:param name="pageTitle" value="Trang Chủ"/>
+</jsp:include>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -67,6 +72,7 @@
             margin-bottom: 10px;
             display: block;
         }
+
     </style>
 </head>
 <body>
@@ -96,7 +102,7 @@
         <div class="form-group">
             <label for="email">Email:</label>
             <input type="email" id="email" name="email" class="form-control" 
-                   value="<%= user.getEmail() %>">
+                value="<%= (user.getEmail() != null) ? user.getEmail() : "" %>">
         </div>
         
         <hr>
@@ -104,7 +110,7 @@
         <div class="form-group">
             <label for="sdt">Số Điện Thoại:</label>
             <input type="tel" id="sdt" name="sdt" class="form-control" 
-                   value="<%= user.getSoDienThoai() != null ? user.getSoDienThoai() : "" %>">
+                   value="<%= (user.getSoDienThoai() != null) ? user.getSoDienThoai() : "" %>">
         </div>
         
         <hr>
@@ -136,3 +142,5 @@
 
 </body>
 </html>
+
+<jsp:include page="common/footer.jsp" />

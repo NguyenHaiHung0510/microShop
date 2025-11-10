@@ -74,7 +74,25 @@ public class GameTaiKhoanSteamDAO {
         }
         return list;
     }
+    public List<TaiKhoanSteam> getAllTaiKhoanByMaGameSteamSorted(Integer maGameSteam) throws SQLException {
+        List<TaiKhoanSteam> list = new ArrayList<>();
+        String sql = """
+            SELECT ts.* FROM TAIKHOAN_STEAM ts 
+            JOIN GAME_TAIKHOAN_STEAM gts ON ts.MaTaiKhoanSteam = gts.MaTaiKhoanSteam 
+            WHERE gts.MaGameSteam = ? 
+            ORDER BY ts.TongSoSlot DESC
+            """;
+        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
 
+            ps.setObject(1, maGameSteam);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    list.add(mapResultSetToTaiKhoanSteam(rs));
+                }
+            }
+        }
+        return list;
+    }
     private TaiKhoanSteam mapResultSetToTaiKhoanSteam(ResultSet rs) throws SQLException {
         TaiKhoanSteam tk = new TaiKhoanSteam();
         tk.setMaTaiKhoanSteam(rs.getObject("MaTaiKhoanSteam", Integer.class));

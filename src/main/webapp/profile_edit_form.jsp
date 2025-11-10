@@ -102,7 +102,7 @@
         <div class="form-group">
             <label for="email">Email:</label>
             <input type="email" id="email" name="email" class="form-control" 
-                   value="<%= user.getEmail() %>">
+                value="<%= (user.getEmail() != null) ? user.getEmail() : "" %>">
         </div>
         
         <hr>
@@ -110,7 +110,7 @@
         <div class="form-group">
             <label for="sdt">Số Điện Thoại:</label>
             <input type="tel" id="sdt" name="sdt" class="form-control" 
-                   value="<%= user.getSoDienThoai() != null ? user.getSoDienThoai() : "" %>">
+                   value="<%= (user.getSoDienThoai() != null) ? user.getSoDienThoai() : "" %>">
         </div>
         
         <hr>

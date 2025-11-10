@@ -104,8 +104,8 @@
     <div class="profile-info">
         <%-- <p><strong>ID Người Dùng:</strong> <%= user.getMaNguoiDung() %></p> --%>
         <p><strong>Tên Đăng Nhập:</strong> <%= user.getTenDangNhap() %></p>
-        <p><strong>Email:</strong> <%= user.getEmail() %></p>
-        <p><strong>SĐT:</strong> <%= user.getSoDienThoai() %></p>
+        <p><strong>Email:</strong> <%= (user.getEmail() != null && !user.getEmail().isEmpty()) ? user.getEmail() : "(Chưa cập nhật)" %></p>
+        <p><strong>SĐT:</strong> <%= (user.getSoDienThoai() != null && !user.getSoDienThoai().isEmpty()) ? user.getSoDienThoai() : "(Chưa cập nhật)" %></p>
         <p><strong>Tổng tiền đã chi:</strong> <%= user.getTongTienDaChi() %></p>
         <p><strong>Hạng Thành Viên:</strong> <%= user.getMaHangThanhVien() %></p>
     </div>

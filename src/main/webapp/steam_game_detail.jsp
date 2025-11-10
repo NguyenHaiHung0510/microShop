@@ -7,20 +7,22 @@
 </jsp:include>
 
 <style>
+    
     body {
-        font-family: "Segoe UI", sans-serif;
-        background-color: #f0f0f0;
-        color: #f1f1f1;
+        font-family: 'Be Vietnam Pro', Arial, sans-serif;
         margin: 0;
         padding: 0;
+        background-color: #F7F7F7;  
+        color: #333;
+        overflow-x: hidden;  
     }
-
+    
     .container {
         display: flex;
         flex-direction: row;
         gap: 25px;
         max-width: 1200px;
-        margin: 100px auto 40px auto; /* <-- thêm 100px trên cùng */
+        margin: 120px auto 40px auto; /* <-- thêm 100px trên cùng */
     }
 
     /* LEFT SIDE */
@@ -48,7 +50,7 @@
 
     .game-title {
         font-size: 26px;
-        color: #00bfff;
+        color: #000000;
         margin-bottom: 10px;
         font-weight: 700;
     }
@@ -65,7 +67,7 @@
     }
 
     .new-price {
-        color: #00ff88;
+        color: #E54646;
         font-weight: 600;
     }
 
@@ -78,12 +80,12 @@
     .article {
         margin-top: 30px;
         padding: 20px;
-        background: #121212;
+        background: #99CCFF;
         border-radius: 10px;
     }
 
     .article h3 {
-        color: #ffcc00;
+        color: #000000;
         margin-bottom: 10px;
     }
 
@@ -96,7 +98,7 @@
         display: inline-block;
         background: #00bfff;
         color: white;
-        padding: 12px 24px;
+        padding: 12px 12px;
         border-radius: 10px;
         text-decoration: none;
         font-weight: 600;
@@ -110,7 +112,6 @@
 
     .back-button {
         background: #444;
-        margin-left: 10px;
     }
 
     .back-button:hover {
@@ -135,7 +136,7 @@
     }
 
     .game-item {
-        background: #121212;
+        background: #EEEEEE;
         border-radius: 10px;
         padding: 10px;
         margin-bottom: 15px;
@@ -146,7 +147,7 @@
     }
 
     .game-item:hover {
-        background: #222;
+        background: #FCDAD5;
     }
 
     .game-item img {
@@ -161,7 +162,7 @@
     }
 
     .game-info a {
-        color: #fff;
+        color: #000000;
         text-decoration: none;
         font-weight: 500;
     }
@@ -171,12 +172,12 @@
     }
 
     .game-price {
-        color: #00ff88;
+        color: #E54646;
         font-size: 0.9rem;
         font-weight: 600;
     }
 
-    .small-buy {
+    .small-back {
         display: inline-block;
         background: #00bfff;
         color: white;
@@ -187,11 +188,11 @@
         transition: 0.3s;
     }
 
-    .small-buy:hover {
+    .small-back:hover {
         background: #009fd6;
     }
 </style>
-
+<body class="steam-body">
 <div class="container">
     <!-- LEFT -->
     <div class="left-panel">
@@ -236,10 +237,10 @@
                     <a href="${pageContext.request.contextPath}/shop/steam/detail?id=${gs.maGameSteam}">${gs.tenGame}</a>
                     <div class="game-price">${gs.giaBan} VNĐ</div>
                 </div>
-                <a href="${pageContext.request.contextPath}/payment/execute?type=steam&id=${gs.maGameSteam}" class="small-buy">Mua</a>
+                <a href="${pageContext.request.contextPath}/shop/steam" class="small-back">Quay lại</a>
             </div>
         </c:forEach>
     </div>
 </div>
-
+</body>
 <jsp:include page="common/footer.jsp"/>

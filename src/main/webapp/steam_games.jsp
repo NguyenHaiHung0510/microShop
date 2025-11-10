@@ -16,10 +16,18 @@
         <c:forEach var="gs" items="${listSteam}">
             <div class="product-card">
                 <div class="product-image">
-                    <img src="${pageContext.request.contextPath}/${gs.duongDanAnh}" alt="${gs.tenGame}">
+                    <!-- Khi click vào ảnh sẽ dẫn tới trang chi tiết -->
+                    <a href="${pageContext.request.contextPath}/shop/steam/detail?id=${gs.maGameSteam}">
+                        <img src="${pageContext.request.contextPath}/${gs.duongDanAnh}" alt="${gs.tenGame}">
+                    </a>
                 </div>
                 <div class="product-info">
-                    <h4 class="product-title">${gs.tenGame}</h4>
+                    <!-- Khi click vào tên cũng dẫn tới trang chi tiết -->
+                    <h4 class="product-title">
+                        <a href="${pageContext.request.contextPath}/shop/steam/detail?id=${gs.maGameSteam}">
+                            ${gs.tenGame}
+                        </a>
+                    </h4>
                     <div class="product-price">
                         <span class="old-price">${gs.giaGoc} VNĐ</span>
                         <span class="new-price">${gs.giaBan} VNĐ</span>

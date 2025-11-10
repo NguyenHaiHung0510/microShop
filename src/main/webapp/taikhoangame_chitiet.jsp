@@ -239,8 +239,6 @@
 
                 <div class="highlight">
                     <p><b>Mã tài khoản:</b> ${taiKhoan.maTaiKhoan}</p>
-                    <p><b>Trạng thái:</b> ${taiKhoan.trangThai}</p>
-
                     <hr style="margin:12px 0; border:none; border-top:1px solid #ddd;">
 
                     <c:choose>

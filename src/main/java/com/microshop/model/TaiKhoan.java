@@ -30,7 +30,17 @@ public class TaiKhoan {
         this.thoiGianDang = thoiGianDang;
         this.duongDanAnh = duongDanAnh;
     }
-
+    // 👉 Sinh mã nghiệp vụ cho khách
+    public String getMaNghiepVu() {
+        String prefix;
+        switch (maDanhMuc) {
+            case 1: prefix = "FF"; break;   // Free Fire
+            case 2: prefix = "LQ"; break;   // Liên quân
+            case 3: prefix = "LM"; break;   // Riot (Liên Minh)
+            default: prefix = "AC"; break;  // Mặc định (Account khác)
+        }
+        return prefix + maTaiKhoan;
+    }
     // Getters
     public Integer getMaTaiKhoan() {
         return maTaiKhoan;

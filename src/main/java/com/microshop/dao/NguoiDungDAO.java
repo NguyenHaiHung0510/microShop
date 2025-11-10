@@ -1,15 +1,17 @@
 package com.microshop.dao;
 
-import com.microshop.context.DBContext;
-import com.microshop.model.NguoiDung;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.microshop.context.DBContext;
+import com.microshop.model.NguoiDung;
 
 public class NguoiDungDAO implements CrudDAO<NguoiDung, Integer> {
 
@@ -78,7 +80,12 @@ public class NguoiDungDAO implements CrudDAO<NguoiDung, Integer> {
 
             ps.setString(1, entity.getTenDangNhap());
             ps.setString(2, entity.getMatKhau());
-            ps.setString(3, entity.getEmail());
+            // Xử lý email rỗng hoặc null (trường hợp nhiều tài khoản không đặt email)
+            if (entity.getEmail() == null || entity.getEmail().trim().isEmpty()) {
+                ps.setNull(3, Types.VARCHAR);
+            } else {
+                ps.setString(3, entity.getEmail().trim());
+            }
             ps.setString(4, entity.getSoDienThoai());
             ps.setString(5, entity.getVaiTro());
             ps.setBigDecimal(6, entity.getTongTienDaChi());
@@ -113,8 +120,17 @@ public class NguoiDungDAO implements CrudDAO<NguoiDung, Integer> {
 
             ps.setString(1, entity.getTenDangNhap());
             ps.setString(2, entity.getMatKhau());
-            ps.setString(3, entity.getEmail());
-            ps.setString(4, entity.getSoDienThoai());
+            // Xử lý email và số điện thoại rỗng hoặc null (trường hợp nhiều tài khoản không đặt email hoặc số điện thoại)
+            if (entity.getEmail() == null || entity.getEmail().trim().isEmpty()) {
+                ps.setNull(3, Types.VARCHAR);
+            } else {
+                ps.setString(3, entity.getEmail().trim());
+            }
+            if (entity.getSoDienThoai() == null || entity.getSoDienThoai().trim().isEmpty()) {
+                ps.setNull(4, Types.VARCHAR);
+            } else {
+                ps.setString(4, entity.getSoDienThoai().trim());
+            }
             ps.setString(5, entity.getVaiTro());
             ps.setBigDecimal(6, entity.getTongTienDaChi());
             ps.setObject(7, entity.getMaHangThanhVien()); 
@@ -154,6 +170,7 @@ public class NguoiDungDAO implements CrudDAO<NguoiDung, Integer> {
 
     public NguoiDung getByEmail(String email) throws SQLException {
         NguoiDung result = null;
+        if (email == null || email.trim().isEmpty()) return null; //Bỏ qua email rỗng
         String sql = "SELECT * FROM NguoiDung WHERE Email = ?";
 
         try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -167,6 +184,24 @@ public class NguoiDungDAO implements CrudDAO<NguoiDung, Integer> {
         }
         return result;
     }
+    
+    public NguoiDung getBySoDienThoai(String soDienThoai) throws SQLException {
+        NguoiDung result = null;
+        if (soDienThoai == null || soDienThoai.trim().isEmpty()) return null; // Bỏ qua số rỗng
+        String sql = "SELECT * FROM NguoiDung WHERE SoDienThoai = ?";
+
+        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, soDienThoai);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    result = mapResultSetToNguoiDung(rs);
+                }
+            }
+        }
+        return result;
+    }
+}
 
     // Đã chỉnh sửa by Hưng:
     // Xóa hàm getByPrefix (không được yêu cầu)
@@ -175,4 +210,3 @@ public class NguoiDungDAO implements CrudDAO<NguoiDung, Integer> {
     // dùng getObject/setObject thay cho getInt/setInt cũ để xử lý null
     // Thêm 2 hàm được yêu cầu trong bản giao việc
     // Xóa hàm getByPrefix ( not now )
-}

@@ -34,8 +34,8 @@ public class TaiKhoan {
     public String getMaNghiepVu() {
         String prefix;
         switch (maDanhMuc) {
-            case 1: prefix = "LQ"; break;   // Liên Quân
-            case 2: prefix = "FF"; break;   // Free Fire
+            case 1: prefix = "FF"; break;   // Free Fire
+            case 2: prefix = "LQ"; break;   // Liên quân
             case 3: prefix = "LM"; break;   // Riot (Liên Minh)
             default: prefix = "AC"; break;  // Mặc định (Account khác)
         }

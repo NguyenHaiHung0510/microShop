@@ -80,7 +80,7 @@
     .article {
         margin-top: 30px;
         padding: 20px;
-        background: #99CCFF;
+        background: #ffffff;
         border-radius: 10px;
     }
 
@@ -216,7 +216,9 @@
         <c:if test="${not empty baiViet}">
             <div class="article">
                 <h3>${baiViet.tieuDeBaiViet}</h3>
-                <div>${baiViet.noiDung}</div>
+                <div class="article-content">
+                    <c:out value="${baiViet.noiDung}" escapeXml="false"/>
+                </div>
             </div>
         </c:if>
 

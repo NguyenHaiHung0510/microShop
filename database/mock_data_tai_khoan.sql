@@ -367,7 +367,22 @@ VALUES (
   'assets/images/steam_gta_5_detail.jpg' );
 INSERT INTO BAIVIET_GIOITHIEU (MaGameSteam, TieuDeBaiViet, NoiDung)
 VALUES (8, 'Grand Theft Auto V – thế giới tội phạm không giới hạn',
-        'Tham gia vào những phi vụ điên rồ, lái xe, và thống trị Los Santos.');
+        '<p><strong style="color:#FF4500;">Grand Theft Auto V (GTA V)</strong> là một trong những trò chơi hành động thế giới mở nổi tiếng nhất của Rockstar Games. Trò chơi mang đến một trải nghiệm sống động tại thành phố <em style="color:#1E90FF;">Los Santos</em>, nơi người chơi có thể khám phá, thực hiện nhiệm vụ, hoặc tự do gây rối theo cách riêng của mình.</p>
+
+<p><span style="color:#32CD32;">Cốt truyện</span> xoay quanh ba nhân vật chính: <strong>Michael De Santa</strong>, <strong>Franklin Clinton</strong> và <strong>Trevor Philips</strong>. Mỗi nhân vật có câu chuyện, mục tiêu và kỹ năng riêng, tạo nên trải nghiệm đa chiều và liên kết giữa các nhiệm vụ.</p>
+
+<p><span style="color:#FFD700;">Điểm nổi bật của GTA V:</span></p>
+<ul>
+    <li><span style="color:#FF6347;">Thế giới mở rộng lớn:</span> Los Santos và vùng Blaine County với chi tiết sống động và môi trường đa dạng.</li>
+    <li><span style="color:#1E90FF;">Nhiệm vụ phong phú:</span> Hàng loạt nhiệm vụ chính, nhiệm vụ phụ, phi vụ cướp ngân hàng đầy kịch tính.</li>
+    <li><span style="color:#32CD32;">Điều khiển linh hoạt:</span> Chuyển đổi giữa ba nhân vật bất kỳ, sử dụng kỹ năng đặc trưng của từng người.</li>
+    <li><span style="color:#FF69B4;">Đồ họa chân thực:</span> Chi tiết môi trường, ánh sáng, bóng đổ sống động, đặc biệt trên PC và console thế hệ mới.</li>
+    <li><span style="color:#FFA500;">Chế độ trực tuyến:</span> GTA Online cho phép người chơi hợp tác hoặc cạnh tranh với bạn bè và cộng đồng toàn cầu.</li>
+</ul>
+
+<p><strong style="color:#00CED1;">GTA V</strong> không chỉ là một trò chơi, mà còn là một trải nghiệm văn hóa, khám phá, và hành động cực kỳ hấp dẫn. Bạn có thể lái xe, bay máy bay, chơi golf, tham gia đua xe, hoặc chỉ đơn giản là lang thang khám phá thành phố rộng lớn.</p>
+
+<p><em style="color:#FF8C00;">Nếu bạn yêu thích thể loại hành động, phiêu lưu, và tự do khám phá, GTA V chắc chắn sẽ mang đến cho bạn hàng giờ trải nghiệm thú vị và đầy kịch tính.</em></p>');
 
 -- -----------------------------------------------------
 -- PHẦN 7: TÀI KHOẢN STEAM (4 TÀI KHOẢN)

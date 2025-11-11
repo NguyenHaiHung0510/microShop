@@ -238,4 +238,19 @@ public class DonHangSlotSteamDAO implements CrudDAO<DonHangSlotSteam, Integer> {
         }
         return list;
     }
+    
+    public List<DonHangSlotSteam> getMaNguoiDungDaHoanThanh(Integer maNguoiDung) throws SQLException {
+        String sql = "SELECT * FROM DonHang_SLOT_STEAM WHERE MaNguoiDung = ? AND TrangThai = 'DA_HOAN_THANH'";
+        List<DonHangSlotSteam> list = new ArrayList<>();
+        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setObject(1, maNguoiDung);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    list.add(mapResultSetToDonHangSlotSteam(rs));
+                }
+            }
+        }
+        return list;
+    }
 }

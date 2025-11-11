@@ -77,11 +77,29 @@ public class SteamGameServlet extends HttpServlet {
             return;
         }
 
-        BaiVietGioiThieu baiViet = baiVietDAO.getByMaGameSteam(id);
+        List<BaiVietGioiThieu> listBaiViet = baiVietDAO.getByMaGameSteam(id);
+        if (listBaiViet == null){
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, "Bài viết không tồn tại");
+            return;
+        }
+        BaiVietGioiThieu baiVietCauHinh = null;
+        BaiVietGioiThieu baiVietGame = null;
+        for (BaiVietGioiThieu baiViet : listBaiViet)
+        {
+            if(baiViet.getTieuDeBaiViet() != null && 
+                    baiViet.getTieuDeBaiViet().trim().equalsIgnoreCase("Cấu hình game:")) {
+                baiVietCauHinh = baiViet;
+            }
+            else if (baiViet.getTieuDeBaiViet() != null && baiVietGame == null) {
+                baiVietGame = baiViet;
+            }
+        }
+        
         List<GameSteam> listSteamDetail = gameSteamDAO.fastGetAll();
         
         request.setAttribute("gameSteam", gameSteam);
-        request.setAttribute("baiViet", baiViet);
+        request.setAttribute("baiVietCauHinh", baiVietCauHinh);
+        request.setAttribute("baiVietGame", baiVietGame);
         request.setAttribute("listSteamDetail", listSteamDetail);
 
         RequestDispatcher rd = request.getRequestDispatcher("/steam_game_detail.jsp");

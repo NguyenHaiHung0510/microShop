@@ -157,21 +157,41 @@ class BaiVietGioiThieuDAOTest {
 
     // ============ Test Custom ============
     @Test
-    void getByMaGameSteam_ReturnsBaiViet_WhenFound() throws SQLException {
+    void getByMaGameSteam_ReturnsList_WhenFound() throws SQLException {
         try (MockedStatic<DBContext> mockedDBContext = Mockito.mockStatic(DBContext.class)) {
             mockedDBContext.when(DBContext::getConnection).thenReturn(connection);
             mockDatabaseConnection();
             when(ps.executeQuery()).thenReturn(rs);
-            when(rs.next()).thenReturn(true);
+            when(rs.next()).thenReturn(true).thenReturn(false); // 1 dòng dữ liệu
             mockFullBaiVietResultSet();
 
-            BaiVietGioiThieu result = baiVietGioiThieuDAO.getByMaGameSteam(1);
+            List<BaiVietGioiThieu> result = baiVietGioiThieuDAO.getByMaGameSteam(1);
 
             assertNotNull(result);
-            assertEquals(1, result.getMaBaiViet());
+            assertEquals(1, result.size());
+            assertEquals(1, result.get(0).getMaBaiViet());
+            assertEquals("Bài viết về Game Mới", result.get(0).getTieuDeBaiViet());
             verify(ps).setObject(1, 1);
         }
     }
+    
+    // Test trường hợp không có bài viết nào
+    @Test
+    void getByMaGameSteam_ReturnsEmptyList_WhenNoData() throws SQLException {
+        try (MockedStatic<DBContext> mockedDBContext = Mockito.mockStatic(DBContext.class)) {
+            mockedDBContext.when(DBContext::getConnection).thenReturn(connection);
+            mockDatabaseConnection();
+            when(ps.executeQuery()).thenReturn(rs);
+            when(rs.next()).thenReturn(false); // không có dữ liệu
+
+            List<BaiVietGioiThieu> result = baiVietGioiThieuDAO.getByMaGameSteam(99);
+
+            assertNotNull(result);
+            assertTrue(result.isEmpty());
+            verify(ps).setObject(1, 99);
+        }
+    }
+
 
     @Test
     void deleteByMaGameSteam_ReturnsTrue() throws SQLException {

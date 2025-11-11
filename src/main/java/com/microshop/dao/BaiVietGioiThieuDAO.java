@@ -124,18 +124,19 @@ public class BaiVietGioiThieuDAO implements CrudDAO<BaiVietGioiThieu, Integer> {
         }
     }
 
-    public BaiVietGioiThieu getByMaGameSteam(Integer maGameSteam) throws SQLException {
+    public List<BaiVietGioiThieu> getByMaGameSteam(Integer maGameSteam) throws SQLException {
+        List<BaiVietGioiThieu> list = new ArrayList<>();
         String sql = "SELECT * FROM BAIVIET_GIOITHIEU WHERE MaGameSteam = ?";
         try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
-
+            
             ps.setObject(1, maGameSteam);
             try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    return mapResultSetToBaiViet(rs);
+                while (rs.next()) {
+                    list.add(mapResultSetToBaiViet(rs));
                 }
             }
         }
-        return null;
+        return list;
     }
 
     public boolean deleteByMaGameSteam(Integer maGameSteam) throws SQLException {

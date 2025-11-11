@@ -383,6 +383,32 @@ VALUES (8, 'Grand Theft Auto V – thế giới tội phạm không giới hạn
 <p><strong style="color:#00CED1;">GTA V</strong> không chỉ là một trò chơi, mà còn là một trải nghiệm văn hóa, khám phá, và hành động cực kỳ hấp dẫn. Bạn có thể lái xe, bay máy bay, chơi golf, tham gia đua xe, hoặc chỉ đơn giản là lang thang khám phá thành phố rộng lớn.</p>
 
 <p><em style="color:#FF8C00;">Nếu bạn yêu thích thể loại hành động, phiêu lưu, và tự do khám phá, GTA V chắc chắn sẽ mang đến cho bạn hàng giờ trải nghiệm thú vị và đầy kịch tính.</em></p>');
+INSERT INTO BAIVIET_GIOITHIEU (MaGameSteam, TieuDeBaiViet, NoiDung)
+VALUES (8, 'Cấu hình game: ',
+'<div style="display:flex; gap:20px; flex-wrap: wrap;">
+    <div style="flex:1; min-width:200px; background:#f0f8ff; padding:10px; border-radius:8px;">
+        <strong>🖥️ Cấu hình tối thiểu:</strong>
+        <ul>
+            <li>Hệ điều hành: Windows 10 64-bit</li>
+            <li>Bộ xử lý: Intel Core 2 Quad CPU Q6600 / AMD Phenom 9850 Quad-Core</li>
+            <li>RAM: 4 GB</li>
+            <li>Card đồ họa: NVIDIA 9800 GT 1GB / AMD HD 4870 1GB (DX 10, 10.1, 11)</li>
+            <li>Dung lượng trống: 90 GB</li>
+        </ul>
+    </div>
+    <div style="flex:1; min-width:200px; background:#f0f8ff; padding:10px; border-radius:8px;">
+        <strong>⚙️ Cấu hình đề nghị:</strong>
+        <ul>
+            <li>Hệ điều hành: Windows 10/11 64-bit</li>
+            <li>Bộ xử lý: Intel Core i5 3470 / AMD X8 FX-8350</li>
+            <li>RAM: 8 GB</li>
+            <li>Card đồ họa: NVIDIA GTX 660 2GB / AMD HD 7870 2GB</li>
+            <li>Dung lượng trống: 90 GB</li>
+        </ul>
+    </div>
+</div>
+<p>🎮 Ghi chú: Nên cài game trên SSD để giảm thời gian load và tăng trải nghiệm mượt mà.</p>');
+		
 
 -- -----------------------------------------------------
 -- PHẦN 7: TÀI KHOẢN STEAM (4 TÀI KHOẢN)

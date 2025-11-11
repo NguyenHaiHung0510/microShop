@@ -81,7 +81,7 @@
     <h2>Lịch Sử Đơn Hàng</h2>
 
     <%-- Kiểm tra nếu danh sách trống --%>
-    <c:if test="${empty requestScope.orderList}">
+    <c:if test="${empty requestScope.orderList and empty requestScope.steamOrderList}">
         <p style="text-align: center;">Bạn chưa thực hiện đơn hàng nào.</p>
     </c:if>
 
@@ -136,6 +136,45 @@
                                     <c:when test="${order.trangThai eq 'CHO_THANH_TOAN'}">Đang chờ thanh toán</c:when>
                                     <c:when test="${order.trangThai eq 'DA_HUY'}">Đã Hủy</c:when>
                                     <c:otherwise>${order.trangThai}</c:otherwise>
+                                </c:choose>
+                            </span>
+                        </td>
+                        <td>
+                            <%-- ... (Phần Link Chi tiết không đổi) ... --%>
+                        </td>
+                    </tr>
+                </c:forEach>
+                    
+                <c:forEach var="steamOrder" items="${requestScope.steamOrderList}">
+                    <tr>
+                        <td>Steam#${steamOrder.maDonHangSlot}</td>
+                        
+                        <%-- SỬA LỖI HIỂN THỊ THỜI GIAN --%>
+                        <td>
+                            <%
+                                // 1. Lấy đối tượng DonHang từ biến "order" của vòng lặp
+                                com.microshop.model.DonHangSlotSteam donHangSlotSteam = (com.microshop.model.DonHangSlotSteam) pageContext.getAttribute("steamOrder");
+                                
+                                // 2. Kiểm tra null và gọi .format()
+                                if (donHangSlotSteam != null && donHangSlotSteam.getThoiGianTao() != null) {
+                                    out.print(donHangSlotSteam.getThoiGianTao().format(dtf));
+                                } else {
+                                    out.print("N/A"); // Hoặc để trống
+                                }
+                            %>
+                        </td>
+                        
+                        <td>
+                            <fmt:formatNumber value="${steamOrder.giaMua}" type="currency" currencyCode="VND" maxFractionDigits="0"/> VNĐ
+                        </td>
+                        <td>
+                            <%-- ... (Phần Trạng thái không đổi) ... --%>
+                            <span class="status-${steamOrder.trangThai}">
+                                <c:choose>
+                                    <c:when test="${steamOrder.trangThai eq 'DA_HOAN_THANH'}">Đã Hoàn Thành</c:when>
+                                    <%--<c:when test="${order.trangThai eq 'CHO_THANH_TOAN'}">Đang chờ thanh toán</c:when>--%>
+                                    <c:when test="${steamOrder.trangThai eq 'DA_HUY'}">Đã Hủy</c:when>
+                                    <c:otherwise>${steamOrder.trangThai}</c:otherwise>
                                 </c:choose>
                             </span>
                         </td>

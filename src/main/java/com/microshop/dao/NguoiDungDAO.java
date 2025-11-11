@@ -1,5 +1,8 @@
 package com.microshop.dao;
 
+import com.microshop.context.DBContext;
+import com.microshop.model.NguoiDung;
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -201,8 +204,44 @@ public class NguoiDungDAO implements CrudDAO<NguoiDung, Integer> {
         }
         return result;
     }
-}
+    public boolean updateTongTienDaChi(Integer maNguoiDung, BigDecimal tien) throws SQLException {
+        
+        String sql = "UPDATE NGUOIDUNG SET TongTienDaChi = TongTienDaChi + ? WHERE MaNguoiDung = ?";
+        
+        try (Connection conn = getConnection(); 
+        PreparedStatement ps = conn.prepareStatement(sql)) {
 
+            ps.setBigDecimal(1, tien);
+            ps.setInt(2, maNguoiDung);
+            
+            int rowsAffected = ps.executeUpdate();
+            
+            return rowsAffected > 0;
+        }
+    }
+    
+    public boolean updateHangThanhVien(Integer maNguoiDung) throws SQLException{
+        String sql = "UPDATE NGUOIDUNG u " +
+        "SET u.MaHangThanhVien = ( " +
+        "    SELECT h.MaHang " +
+        "    FROM HANGTHANHVIEN h " +
+        "    WHERE h.MucChiTieuToiThieu <= u.TongTienDaChi " +
+        "    ORDER BY h.MucChiTieuToiThieu DESC " +
+        "    LIMIT 1 " +
+        ") " +
+        "WHERE u.MaNguoiDung = ?";
+        
+        try (Connection conn = getConnection();
+        PreparedStatement ps = conn.prepareStatement(sql)) {
+            
+            ps.setInt(1, maNguoiDung);
+            
+            int rowsAffected = ps.executeUpdate();
+            
+            return rowsAffected > 0;
+        }
+    }
+    
     // Đã chỉnh sửa by Hưng:
     // Xóa hàm getByPrefix (không được yêu cầu)
     // Implement lại theo yêu cầu
@@ -210,3 +249,5 @@ public class NguoiDungDAO implements CrudDAO<NguoiDung, Integer> {
     // dùng getObject/setObject thay cho getInt/setInt cũ để xử lý null
     // Thêm 2 hàm được yêu cầu trong bản giao việc
     // Xóa hàm getByPrefix ( not now )
+    
+}

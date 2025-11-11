@@ -2,9 +2,14 @@ body {
     font-family: 'Be Vietnam Pro', Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f4f7f6;  
+    background-color: #f4f7f6;
     color: #333;
-    overflow-x: hidden;  
+    overflow-x: hidden;
+
+    /* === FIX STICKY FOOTER === */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Body cao ít nhất 100% màn hình */
 }
 
 a {
@@ -16,12 +21,15 @@ main {
     width: 90%;
     max-width: 1200px;
     margin: 20px auto;
+
+    /* === FIX STICKY FOOTER === */
+    flex-grow: 1; /* Main tự lớn lên để đẩy footer xuống */
 }
 
 header {
-    background-color: #ffffff; 
+    background-color: #ffffff;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    position: sticky; 
+    position: sticky;
     top: 0;
     z-index: 1000;
 }
@@ -65,7 +73,7 @@ header {
     border-color: #c92a2a;
 }
 .nav-button.admin {
-    background-color: #ffc107; 
+    background-color: #ffc107;
     color: #333;
     border-color: #ffc107;
 }
@@ -81,14 +89,14 @@ header {
 .main-nav a {
     color: white;
     padding: 14px 20px;
-    font-weight: 500; 
+    font-weight: 500;
     text-transform: uppercase;
     font-size: 14px;
     transition: background-color 0.2s;
 }
 
 .main-nav a:hover {
-    background-color: #a62323; 
+    background-color: #a62323;
 }
 
 .services-banner {
@@ -107,7 +115,7 @@ header {
 
 .service-carousel-wrapper {
     width: 100%;
-    overflow: hidden; 
+    overflow: hidden;
     padding: 10px 0;
 }
 
@@ -134,19 +142,19 @@ header {
 }
 
 .service-card {
-    position: relative; 
-    
+    position: relative;
+
     /* 100% / 12 items = 8.333% */
     width: 8.333%;
-    margin: 0 12px; 
-    
+    margin: 0 12px;
+
     /* SỬA: Điều chỉnh padding */
-    padding: 12px; 
-    height: 110px; 
+    padding: 12px;
+    height: 110px;
     display: flex;
-    align-items: center; 
+    align-items: center;
     justify-content: center;
-    
+
     border-radius: 12px;
     text-align: center;
     color: white;
@@ -162,13 +170,13 @@ header {
 
 .service-card span {
     position: absolute;
-    top: 8px; 
-    right: 8px; 
+    top: 8px;
+    right: 8px;
     padding: 3px 6px;
-    font-size: 11px; 
+    font-size: 11px;
     font-weight: 500;
     color: #ffffff;
-    background-color: rgba(0, 0, 0, 0.7); 
+    background-color: rgba(0, 0, 0, 0.7);
     border-radius: 4px;
     border: 1px solid rgba(255, 255, 255, 0.2);
     z-index: 2;
@@ -256,8 +264,8 @@ header {
 }
 
 .product-title {
-    font-size: 15px; 
-    font-weight: 500; 
+    font-size: 15px;
+    font-weight: 500;
     color: #333;
     margin: 0 0 10px 0;
     height: 45px;
@@ -278,7 +286,7 @@ header {
 .new-price {
     color: #c92a2a;
     font-size: 18px;
-    font-weight: 700; 
+    font-weight: 700;
 }
 
 .buy-button {
@@ -316,4 +324,99 @@ footer p {
 }
 .product-card-link .buy-button {
     cursor: pointer;
+}
+
+/*
+    CSS của orders.jsp 
+*/
+.container {
+    max-width: 960px;
+    margin: 30px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+.container h2 {
+    text-align: center;
+    color: #c92a2a;
+    margin-bottom: 25px;
+}
+.order-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+.order-table th, .order-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+.order-table th {
+    background-color: #f4f4f4;
+    font-weight: 600;
+}
+.order-table tr:hover {
+    background-color: #f9f9f9;
+}
+.status-CHO_THANH_TOAN, .status-DA_HUY {
+    color: #f39c12; /* Vàng */
+    font-weight: 500;
+}
+.status-DA_HOAN_THANH {
+    color: #28a745; /* Xanh lá */
+    font-weight: 500;
+}
+.status-DA_HUY {
+    color: #dc3545; /* Đỏ */
+    text-decoration: line-through;
+}
+.action-link {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: 500;
+}
+.action-link:hover {
+    text-decoration: underline;
+}
+.back-link {
+    display: inline-block;
+    margin-top: 20px;
+    font-weight: 500;
+    color: #007bff; 
+}
+.back-link:hover {
+    text-decoration: underline;
+}
+
+/*
+    CSS của view_account_detail.jsp
+*/
+.account-table {
+    width: 100%;
+    background-color: #fff;
+    border-collapse: collapse;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+.account-table th, .account-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+.account-table th {
+    background-color: #c92a2a;
+    color: white;
+    font-weight: 600;
+}
+.account-table tr:hover {
+    background-color: #f9f9f9;
+}
+.sensitive-data {
+    background-color: #ffe6e6;
+    color: #c0392b;
+    font-weight: bold;
+    padding: 5px;
+    border-radius: 3px;
 }

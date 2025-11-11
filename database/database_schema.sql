@@ -114,7 +114,7 @@ CREATE TABLE `GAME_STEAM` (
 
 CREATE TABLE `BAIVIET_GIOITHIEU` (
   `MaBaiViet` INT PRIMARY KEY AUTO_INCREMENT,
-  `MaGameSteam` INT NOT NULL UNIQUE,
+  `MaGameSteam` INT NOT NULL,
   `TieuDeBaiViet` VARCHAR(255),
   `NoiDung` LONGTEXT,
   `ThoiGianTao` DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -138,7 +138,7 @@ CREATE TABLE `GAME_TAIKHOAN_STEAM` (
 
   FOREIGN KEY (`MaGameSteam`) REFERENCES `GAME_STEAM`(`MaGameSteam`) ON DELETE CASCADE,
   FOREIGN KEY (`MaTaiKhoanSteam`) REFERENCES `TAIKHOAN_STEAM`(`MaTaiKhoanSteam`) ON DELETE CASCADE
-);
+);                                                                              
 
 -- Nhóm Bảng Đơn hàng
 CREATE TABLE `DONHANG` (

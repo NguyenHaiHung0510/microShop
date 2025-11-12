@@ -46,9 +46,29 @@ public class SteamGameServlet extends HttpServlet {
     private void handleList(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, ServletException, IOException {
 
-        List<GameSteam> listSteam = gameSteamDAO.fastGetAll();
+        List<GameSteam> listSteam = gameSteamDAO.fastGetAll(); 
 
-        request.setAttribute("listSteam", listSteam);
+        int pageSize = 4; 
+        int currentPage = 1;
+
+        String pageParam = request.getParameter("page");
+        if (pageParam != null) {
+            try {
+                currentPage = Integer.parseInt(pageParam);
+            } catch (NumberFormatException ignored) {}
+        }
+
+        int totalItems = listSteam.size();
+        int totalPages = (int) Math.ceil((double) totalItems / pageSize);
+
+        int start = (currentPage - 1) * pageSize;
+        int end = Math.min(start + pageSize, totalItems);
+        List<GameSteam> pageList = listSteam.subList(start, end);
+
+        request.setAttribute("listSteam", pageList);
+        request.setAttribute("currentPage", currentPage);
+        request.setAttribute("totalPages", totalPages);
+
         RequestDispatcher rd = request.getRequestDispatcher("/steam_games.jsp");
         rd.forward(request, response);
     }

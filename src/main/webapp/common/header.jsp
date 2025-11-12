@@ -68,7 +68,7 @@
                 <a href="${pageContext.request.contextPath}/shop/game?category=lienquan">Tài khoản Liên Quân</a>
                 <a href="${pageContext.request.contextPath}/shop/game?category=freefire">Tài khoản Free Fire</a>
                 <a href="${pageContext.request.contextPath}/shop/game?category=riot">Tài khoản LMHT & TFT</a>
-                <a href="${pageContext.request.contextPath}/shop/steam">Dịch vụ Game Steam</a>
+                <a href="${pageContext.request.contextPath}/shop/steam?page=1">Dịch vụ Game Steam</a>
                 <a href="${pageContext.request.contextPath}/contact">Liên hệ Admin</a>
             </nav>
         </header>

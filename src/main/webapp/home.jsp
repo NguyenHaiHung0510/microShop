@@ -42,7 +42,7 @@
                 <h3>Tài Khoản LMHT & TFT</h3>
             </a>
 
-            <a href="${pageContext.request.contextPath}/shop/steam" class="service-card steam">
+            <a href="${pageContext.request.contextPath}/shop/steam?page=1" class="service-card steam">
             </a>
 
             <a href="#" class="service-card youtube">

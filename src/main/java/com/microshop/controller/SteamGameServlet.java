@@ -52,10 +52,16 @@ public class SteamGameServlet extends HttpServlet {
         int currentPage = 1;
 
         String pageParam = request.getParameter("page");
-        if (pageParam != null) {
-            try {
-                currentPage = Integer.parseInt(pageParam);
-            } catch (NumberFormatException ignored) {}
+        if (pageParam == null) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Thiếu tham số page id");
+            return;
+        }
+        
+        try {
+            currentPage = Integer.parseInt(pageParam);
+        } catch (NumberFormatException e) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "ID không hợp lệ");
+            return;
         }
 
         int totalItems = listSteam.size();

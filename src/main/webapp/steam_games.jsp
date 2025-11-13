@@ -101,11 +101,11 @@
                     <c:when test="${i == currentPage}">
                         <span class="page-btn active">${i}</span>
                     </c:when>
-                    <c:when test="${i == 1 || i == totalPages || (i >= currentPage - 2 && i <= currentPage + 2)}">
+                    <c:when test="${i == 1 || i == totalPages || (i >= currentPage - 1 && i <= currentPage + 1)}">
                         <a href="${pageContext.request.contextPath}/shop/steam?page=${i}" class="page-btn">${i}</a>
                     </c:when>
                     <c:otherwise>
-                        <c:if test="${i == currentPage - 3 || i == currentPage + 3}">
+                        <c:if test="${i == currentPage - 2 || i == currentPage + 2}">
                             <span class="page-dots">...</span>
                         </c:if>
                     </c:otherwise>

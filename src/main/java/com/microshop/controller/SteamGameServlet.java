@@ -53,8 +53,7 @@ public class SteamGameServlet extends HttpServlet {
 
         String pageParam = request.getParameter("page");
         if (pageParam == null) {
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Thiếu tham số page id");
-            return;
+            pageParam = "1";  //mặc định là mở ở 1//
         }
         
         try {

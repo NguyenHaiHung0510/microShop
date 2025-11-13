@@ -410,7 +410,7 @@ VALUES (
   'Phiên bản làm lại của tựa game sinh tồn kinh dị huyền thoại với đồ họa và lối chơi được nâng cấp toàn diện.',
   900000, 690000,
   450,
-  't-UVfZD6a3w',
+  'Id2EaldBaWw',
   'assets/images/steam_resident_evil_4_remake_detail.jpg' );
 INSERT INTO BAIVIET_GIOITHIEU (MaGameSteam, TieuDeBaiViet, NoiDung)
 VALUES (4, 'Resident Evil 4 Remake – Sống sót trong kinh dị',

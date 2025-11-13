@@ -52,9 +52,9 @@ public class TaiKhoanGameServlet extends HttpServlet {
         int currentPage = 1;
         int pageSize = 4; // tạm thời là 1 trang 4 tk
         String pageParam = request.getParameter("page");
-        if (pageParam == null)
+        if (pageParam == null || pageParam.trim().isEmpty())
         {
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Không ID hợp lệ");
+            pageParam = "1";
         }
         try{
             currentPage = Integer.parseInt(pageParam);

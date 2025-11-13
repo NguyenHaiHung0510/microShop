@@ -52,7 +52,7 @@ public class SteamGameServlet extends HttpServlet {
         int currentPage = 1;
 
         String pageParam = request.getParameter("page");
-        if (pageParam == null) {
+        if (pageParam == null || pageParam.trim().isEmpty()) {
             pageParam = "1";  //mặc định là mở ở 1//
         }
         

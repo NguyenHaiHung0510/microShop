@@ -129,9 +129,7 @@
             </tbody>
         </table>
         
-        <div style="background-color: #fff3cd; padding: 15px; margin-top: 20px; border: 1px solid #ffeeba; border-radius: 4px;">
-            <strong>Cảnh báo:</strong> Vì lý do bảo mật, vui lòng đổi mật khẩu ngay sau khi nhận tài khoản!
-        </div>
+
         
     </c:if>
     <a href="${pageContext.request.contextPath}/profile" class="back-link">← Quay lại Hồ Sơ</a>

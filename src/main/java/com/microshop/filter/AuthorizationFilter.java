@@ -29,9 +29,16 @@ public class AuthorizationFilter implements Filter {
             user = (NguoiDung) session.getAttribute("user");
         }
 
-        if (user == null || !"ADMIN".equals(user.getVaiTro())) {
+        boolean isAdmin = false;
+        if (user != null && user.getVaiTro() != null) {
+            isAdmin = "ADMIN".equalsIgnoreCase(user.getVaiTro().trim());
+        }
+
+        if (!isAdmin) {
+            // Nếu không phải admin, chuyển hướng về home
             res.sendRedirect(req.getContextPath() + "/home");
         } else {
+            // Là admin, cho phép truy cập
             chain.doFilter(request, response);
         }
     }

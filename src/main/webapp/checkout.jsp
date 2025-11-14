@@ -190,8 +190,6 @@
         <div class="order-summary">
             <h3>Thông tin người mua:</h3>
             <p><strong>Người dùng:</strong> ${user.tenDangNhap}</p>
-            <p><strong>Email nhận hàng:</strong> ${user.email}</p>
-            <p style="font-size:0.9em;color:#555;">Tài khoản game sẽ được gửi đến email này sau khi thanh toán thành công.</p>
         </div>
 
         <form id="checkoutForm" action="${pageContext.request.contextPath}/payment/success" method="POST">
@@ -276,7 +274,9 @@
         // Vô hiệu hóa nút để tránh click đúp
         initiateBtn.disabled = true;
         initiateBtn.innerText = "Đang xử lý...";
-
+        confirmBtn.innerText = "XÁC NHẬN ĐÃ THANH TOÁN";
+        confirmBtn.style.backgroundColor = "";
+        confirmBtn.disabled = false;
         // GỌI AJAX ĐỂ TẠO ĐƠN HÀNG
         fetch('${pageContext.request.contextPath}/payment/initiate', {
             method: 'POST',

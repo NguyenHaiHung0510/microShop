@@ -23,7 +23,7 @@ public class TaiKhoanDAO implements CrudDAO<TaiKhoan, Integer> {
         }
         return list;
     }
-    
+
     @Override
     public TaiKhoan getById(Integer id) throws SQLException {
         String sql = "SELECT * FROM TAIKHOAN WHERE MaTaiKhoan = ?";
@@ -136,20 +136,24 @@ public class TaiKhoanDAO implements CrudDAO<TaiKhoan, Integer> {
         }
         return list;
     }
-    
+
     public List<TaiKhoan> getAllByList(List<Integer> maTaiKhoan) throws SQLException {
         List<TaiKhoan> list = new ArrayList<>();
         TaiKhoanLienQuanDAO lqdao = new TaiKhoanLienQuanDAO();
         TaiKhoanFreeFireDAO ffdao = new TaiKhoanFreeFireDAO();
         TaiKhoanRiotDAO rtdao = new TaiKhoanRiotDAO();
-        
-        for(int id : maTaiKhoan){
+
+        for (int id : maTaiKhoan) {
             TaiKhoan x = lqdao.getById(id), y = ffdao.getById(id), z = rtdao.getById(id);
-            if(x != null) list.add(x);
-            else if(y != null) list.add(y);
-            else list.add(z);
+            if (x != null) {
+                list.add(x);
+            } else if (y != null) {
+                list.add(y);
+            } else {
+                list.add(z);
+            }
         }
-        
+
         return list;
     }
 
@@ -165,6 +169,7 @@ public class TaiKhoanDAO implements CrudDAO<TaiKhoan, Integer> {
 
     // ---------------------- Hàm tiện ích ----------------------
     private TaiKhoan mapResultSetToTaiKhoan(ResultSet rs) throws SQLException {
+        // ... (Giữ nguyên) ...
         TaiKhoan tk = new TaiKhoan();
 
         tk.setMaTaiKhoan(rs.getObject("MaTaiKhoan", Integer.class));
@@ -184,9 +189,14 @@ public class TaiKhoanDAO implements CrudDAO<TaiKhoan, Integer> {
         return tk;
     }
 
-    // Đã fix các lỗi by Hưng:
-    // Xóa hàm insertAndReturnId, chỉ dùng insert trả về id đã tạo hoặc null
-    // Sửa hết setInt/getInt sang setObject/getObject để xử lý cả null
-    
-    // Cập nhật 02/11/2025: Thêm thuộc tính DuongDanAnh cho TaiKhoan
+    // Lấy tổng số tài khoản game
+    public int getTotalCount() throws SQLException {
+        String sql = "SELECT COUNT(*) FROM TAIKHOAN";
+        try (Connection conn = DBContext.getConnection(); PreparedStatement ps = conn.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        }
+        return 0;
+    }
 }

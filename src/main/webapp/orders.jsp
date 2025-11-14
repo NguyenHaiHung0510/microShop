@@ -103,7 +103,7 @@
                             <span class="status-${steamOrder.trangThai}">
                                 <c:choose>
                                     <c:when test="${steamOrder.trangThai eq 'DA_HOAN_THANH'}">Đã Hoàn Thành</c:when>
-                                    <%--<c:when test="${order.trangThai eq 'CHO_THANH_TOAN'}">Đang chờ thanh toán</c:when>--%>
+                                    <c:when test="${steamOrder.trangThai eq 'CHO_THANH_TOAN'}">Đang chờ thanh toán</c:when>
                                     <c:when test="${steamOrder.trangThai eq 'DA_HUY'}">Đã Hủy</c:when>
                                     <c:otherwise>${steamOrder.trangThai}</c:otherwise>
                                 </c:choose>

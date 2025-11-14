@@ -41,3 +41,8 @@ SELECT * FROM TAIKHOAN;
 DELETE FROM TAIKHOAN as tk WHERE tk.MaTaiKhoan >=0;
 
 select * from nguoidung;
+
+select * from donhang_slot_steam;
+
+select * from taikhoan_steam;
+update taikhoan_steam set soslotdaban = 0 where mataikhoansteam > 0;

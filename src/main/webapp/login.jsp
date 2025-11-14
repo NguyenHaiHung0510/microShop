@@ -131,6 +131,7 @@
             </p>
         </div>
     </body>
+
     <%
     String registerSuccess = request.getParameter("register");
     boolean showSuccessToast = "success".equals(registerSuccess);
@@ -138,6 +139,17 @@
     <% if (showSuccessToast) { %>
         <div id="toast" class="toast">🎉 Đăng ký tài khoản thành công! Hãy đăng nhập để tiếp tục.</div>
     <% } %>
+
+    
+    <%
+        String fromPage = request.getParameter("from");
+        if ("payment".equals(fromPage)) {
+    %>
+        <div id="toast" class="toast">⚠️ Vui lòng đăng nhập để tiếp tục thanh toán.</div>
+    <%
+        }
+    %>
+
 </html>
 
 <jsp:include page="common/footer.jsp" />

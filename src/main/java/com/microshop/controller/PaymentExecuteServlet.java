@@ -132,11 +132,8 @@ public class PaymentExecuteServlet extends HttpServlet {
                 // Kiểm tra xem tài khoản nhiểu slot nhất còn slot không
                 TaiKhoanSteam tk_nhieu_slot_nhat = tk_chua_game.get(0);
                 Integer tong_so_slot = tk_nhieu_slot_nhat.getTongSoSlot();
-                Integer so_slot_da_ban = tk_nhieu_slot_nhat.getSoSlotDaBan();
-                if(tong_so_slot - so_slot_da_ban <= 0){
-                    response.sendRedirect(request.getContextPath() + "/shop/game/detail?id=" + maSanPham + "&category=" + type + "&status=sold");
-                    return;
-                }
+                Integer so_slot_da_ban = tk_nhieu_slot_nhat.getSoSlotDaBan();                
+
                 List<DonHangSlotSteam> list_dh_game = donhangsteamDAO.getByMaGameSteamChoThanhToan(maSanPham);
                 boolean dh_dang_duoc_user_thanh_toan = false;
                 for(DonHangSlotSteam dh : list_dh_game){
@@ -145,7 +142,10 @@ public class PaymentExecuteServlet extends HttpServlet {
                         break;
                     }
                 } 
-                
+                if(tong_so_slot - so_slot_da_ban <= 0 && !dh_dang_duoc_user_thanh_toan){
+                    response.sendRedirect(request.getContextPath() + "/shop/steam/detail?id=" + maSanPham + "&category=" + type + "&status=sold");
+                    return;
+                }
                 // Tìm xem tài khoản nào có còn slot
                 for(TaiKhoanSteam tk : tk_chua_game){
                     // Xem tài khoản này có đang được giao dịch hay không?

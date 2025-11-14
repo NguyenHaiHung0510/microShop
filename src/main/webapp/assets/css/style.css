@@ -184,24 +184,24 @@ header {
 
 
 .service-card.lienquan {
-    background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('../images/home_lienquan.png');
+    background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('../images/root_image/home_lienquan.png');
 }
 .service-card.freefire {
-    background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('../images/home_freefire.jpg');
+    background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('../images/root_image/home_freefire.jpg');
 }
 .service-card.riot {
-    background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('../images/home_lmht.jpg');
+    background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('../images/root_image/home_lmht.jpg');
 }
 
 .service-card.steam {
-    background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.2)), url('../images/home_steam.jpg');
+    background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.2)), url('../images/root_image/home_steam.jpg');
 }
 
 .service-card.youtube {
-    background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('../images/home_youtube.jpg');
+    background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('../images/root_image/home_youtube.jpg');
 }
 .service-card.netflix {
-    background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('../images/home_netflix.png');
+    background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('../images/root_image/home_netflix.png');
 }
 
 .service-card.lienquan,
@@ -383,7 +383,7 @@ footer p {
     display: inline-block;
     margin-top: 20px;
     font-weight: 500;
-    color: #007bff; 
+    color: #007bff;
 }
 .back-link:hover {
     text-decoration: underline;

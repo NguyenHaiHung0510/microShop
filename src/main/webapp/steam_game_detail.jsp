@@ -233,10 +233,28 @@
         </c:if>
 
         <!-- Nút mua -->
-        <div class="actions">
-            <a href="${pageContext.request.contextPath}/payment/execute?type=steam&id=${gameSteam.maGameSteam}" class="buy-button">Mua ngay</a>
-            <a href="${pageContext.request.contextPath}/shop/steam" class="buy-button back-button">Quay lại</a>
-        </div>
+    <c:choose>
+        <c:when test="${param.status == 'sold'}">
+            <div style="color: #ff4d4f; font-weight:600; margin-top:20px;">
+                Game đã hết hàng — vui lòng chọn game khác.
+            </div>
+            <div class="actions" style="margin-top: 15px;">
+                <a href="${pageContext.request.contextPath}/shop/steam"
+                   class="buy-button back-button">Quay lại</a>
+            </div>
+        </c:when>
+
+        <c:otherwise>
+            <div class="actions">
+                <a href="${pageContext.request.contextPath}/payment/execute?type=steam&id=${gameSteam.maGameSteam}"
+                   class="buy-button">Mua ngay</a>
+                <a href="${pageContext.request.contextPath}/shop/steam"
+                   class="buy-button back-button">Quay lại</a>
+            </div>
+        </c:otherwise>
+    </c:choose>
+
+
     </div>
 
     <!-- RIGHT -->

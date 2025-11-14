@@ -130,9 +130,9 @@ public class PaymentExecuteServlet extends HttpServlet {
                 // Lấy list tài khoản chứa steam game theo số slot giảm dần
                 List<TaiKhoanSteam> tk_chua_game = gametksteamDAO.getAllTaiKhoanByMaGameSteamSorted(maSanPham);
                 // Kiểm tra xem tài khoản nhiểu slot nhất còn slot không
-                TaiKhoanSteam tk_nhieu_slot_nhat = tk_chua_game.get(0);
-                Integer tong_so_slot = tk_nhieu_slot_nhat.getTongSoSlot();
-                Integer so_slot_da_ban = tk_nhieu_slot_nhat.getSoSlotDaBan();                
+//                TaiKhoanSteam tk_nhieu_slot_nhat = tk_chua_game.get(0);
+//                Integer tong_so_slot = tk_nhieu_slot_nhat.getTongSoSlot();
+//                Integer so_slot_da_ban = tk_nhieu_slot_nhat.getSoSlotDaBan();                
 
                 List<DonHangSlotSteam> list_dh_game = donhangsteamDAO.getByMaGameSteamChoThanhToan(maSanPham);
                 boolean dh_dang_duoc_user_thanh_toan = false;
@@ -142,7 +142,13 @@ public class PaymentExecuteServlet extends HttpServlet {
                         break;
                     }
                 } 
-                if(tong_so_slot - so_slot_da_ban <= 0 && !dh_dang_duoc_user_thanh_toan){
+                boolean het_tk = true;
+                for(TaiKhoanSteam tk : tk_chua_game){
+                    if(tk.getTongSoSlot() - tk.getSoSlotDaBan() > 0){
+                        het_tk = false; break;
+                    }
+                }
+                if(het_tk && !dh_dang_duoc_user_thanh_toan){
                     response.sendRedirect(request.getContextPath() + "/shop/steam/detail?id=" + maSanPham + "&category=" + type + "&status=sold");
                     return;
                 }

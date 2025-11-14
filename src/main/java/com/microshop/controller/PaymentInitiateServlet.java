@@ -54,7 +54,7 @@ public class PaymentInitiateServlet extends HttpServlet {
         }
 
         try {
-            System.out.println("HELOWOROD");
+//            System.out.println("HELOWOROD");
             // Lấy thông tin từ AJAX POST
             int maSanPham = Integer.parseInt(request.getParameter("maSanPham"));
             int maGame = Integer.parseInt(request.getParameter("maGame"));

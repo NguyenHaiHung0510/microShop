@@ -21,7 +21,6 @@
             </a>
 
             <a href="${pageContext.request.contextPath}/shop/steam?page=1" class="service-card steam">
-                <h3>Game Steam</h3>
             </a>
     
 

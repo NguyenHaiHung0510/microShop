@@ -19,4 +19,6 @@ buildNumber.properties
 .classpath
 database/testQuery1.sql
 src/main/java/com/microshop/context/DBContext.java
-src/main/webapp/assets/images
+
+src/main/webapp/assets/images/*
+!src/main/webapp/assets/images/root_image/

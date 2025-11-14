@@ -80,7 +80,7 @@ public class GameTaiKhoanSteamDAO {
             SELECT ts.* FROM TAIKHOAN_STEAM ts 
             JOIN GAME_TAIKHOAN_STEAM gts ON ts.MaTaiKhoanSteam = gts.MaTaiKhoanSteam 
             WHERE gts.MaGameSteam = ? 
-            ORDER BY ts.TongSoSlot DESC
+            ORDER BY ts.TongSoSlot - ts.SoSlotDaBan DESC
             """;
         try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
 

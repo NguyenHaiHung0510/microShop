@@ -65,6 +65,53 @@ public class TaiKhoanLienQuanDAO implements CrudDAO<TaiKhoanLienQuan, Integer> {
 
     @Override
     public Integer insert(TaiKhoanLienQuan acc) throws SQLException {
+        Connection conn = null;
+        try {
+            conn = DBContext.getConnection();
+            conn.setAutoCommit(false);
+
+            Integer newId = insert(acc, conn);
+
+            conn.commit();
+            return newId;
+        } catch (SQLException e) {
+            if (conn != null) {
+                conn.rollback();
+            }
+            throw e;
+        } finally {
+            if (conn != null) {
+                conn.setAutoCommit(true);
+                conn.close();
+            }
+        }
+    }
+
+    @Override
+    public boolean update(TaiKhoanLienQuan acc) throws SQLException {
+        Connection conn = null;
+        try {
+            conn = DBContext.getConnection();
+            conn.setAutoCommit(false);
+
+            boolean updated = update(acc, conn);
+
+            conn.commit();
+            return updated;
+        } catch (SQLException e) {
+            if (conn != null) {
+                conn.rollback();
+            }
+            throw e;
+        } finally {
+            if (conn != null) {
+                conn.setAutoCommit(true);
+                conn.close();
+            }
+        }
+    }
+
+    public Integer insert(TaiKhoanLienQuan acc, Connection conn) throws SQLException {
         TaiKhoan tk = new TaiKhoan();
         tk.setMaDanhMuc(acc.getMaDanhMuc());
         tk.setGiaGoc(acc.getGiaGoc());
@@ -75,7 +122,7 @@ public class TaiKhoanLienQuanDAO implements CrudDAO<TaiKhoanLienQuan, Integer> {
         tk.setThoiGianDang(acc.getThoiGianDang() != null ? acc.getThoiGianDang() : LocalDateTime.now());
         tk.setDuongDanAnh(acc.getDuongDanAnh());
 
-        Integer maTaiKhoan = taiKhoanDAO.insert(tk);
+        Integer maTaiKhoan = taiKhoanDAO.insert(tk, conn);
 
         if (maTaiKhoan == null) {
             throw new SQLException("Insert TAIKHOAN (cha) thất bại, không thể tạo TAIKHOAN_LIENQUAN (con).");
@@ -88,8 +135,7 @@ public class TaiKhoanLienQuanDAO implements CrudDAO<TaiKhoanLienQuan, Integer> {
             VALUES (?, ?, ?, ?, ?, ?, ?, ?)
             """;
 
-        try (Connection conn = DBContext.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
-
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setObject(1, acc.getMaTaiKhoan());
             ps.setString(2, acc.getTenDangNhap());
             ps.setString(3, acc.getMatKhau());
@@ -104,8 +150,7 @@ public class TaiKhoanLienQuanDAO implements CrudDAO<TaiKhoanLienQuan, Integer> {
         return maTaiKhoan;
     }
 
-    @Override
-    public boolean update(TaiKhoanLienQuan acc) throws SQLException {
+    public boolean update(TaiKhoanLienQuan acc, Connection conn) throws SQLException {
         TaiKhoan tk = new TaiKhoan();
         tk.setMaTaiKhoan(acc.getMaTaiKhoan());
         tk.setMaDanhMuc(acc.getMaDanhMuc());
@@ -116,7 +161,8 @@ public class TaiKhoanLienQuanDAO implements CrudDAO<TaiKhoanLienQuan, Integer> {
         tk.setLuotXem(acc.getLuotXem());
         tk.setThoiGianDang(acc.getThoiGianDang());
         tk.setDuongDanAnh(acc.getDuongDanAnh());
-        boolean parentUpdated = taiKhoanDAO.update(tk);
+
+        boolean parentUpdated = taiKhoanDAO.update(tk, conn);
 
         String sql = """
             UPDATE TAIKHOAN_LIENQUAN
@@ -124,8 +170,7 @@ public class TaiKhoanLienQuanDAO implements CrudDAO<TaiKhoanLienQuan, Integer> {
             WHERE MaTaiKhoan = ?
             """;
 
-        try (Connection conn = DBContext.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
-
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, acc.getTenDangNhap());
             ps.setString(2, acc.getMatKhau());
             ps.setString(3, acc.getHangRank());
@@ -136,7 +181,7 @@ public class TaiKhoanLienQuanDAO implements CrudDAO<TaiKhoanLienQuan, Integer> {
             ps.setObject(8, acc.getMaTaiKhoan());
 
             boolean childUpdated = ps.executeUpdate() > 0;
-            return parentUpdated || childUpdated;
+            return parentUpdated || childUpdated; // Trả về true nếu 1 trong 2 được cập nhật
         }
     }
 
@@ -172,6 +217,7 @@ public class TaiKhoanLienQuanDAO implements CrudDAO<TaiKhoanLienQuan, Integer> {
     private TaiKhoanLienQuan mapResultSetToTaiKhoanLienQuan(ResultSet rs) throws SQLException {
         TaiKhoanLienQuan acc = new TaiKhoanLienQuan();
 
+        // Thuộc tính của TAIKHOAN
         acc.setMaTaiKhoan(rs.getObject("MaTaiKhoan", Integer.class));
         acc.setMaDanhMuc(rs.getObject("MaDanhMuc", Integer.class));
         acc.setGiaGoc(rs.getBigDecimal("GiaGoc"));
@@ -185,6 +231,7 @@ public class TaiKhoanLienQuanDAO implements CrudDAO<TaiKhoanLienQuan, Integer> {
         }
         acc.setDuongDanAnh(rs.getString("DuongDanAnh"));
 
+        // Thuộc tính của TAIKHOAN_LIENQUAN
         acc.setTenDangNhap(rs.getString("TenDangNhap"));
         acc.setMatKhau(rs.getString("MatKhau"));
         acc.setHangRank(rs.getString("HangRank"));
@@ -194,12 +241,4 @@ public class TaiKhoanLienQuanDAO implements CrudDAO<TaiKhoanLienQuan, Integer> {
         acc.setLoaiDangKy(rs.getString("LoaiDangKy"));
         return acc;
     }
-
-    // Đã fix các lỗi by Hưng:
-    // Sửa logic delete để chỉ cần gọi delete của lớp DAO cha thôi,
-    // "ON DELETE CASCADE" trong schema sẽ đảm bảo tài khoản tương ứng bị xóa
-    // Xóa insertAndReturnId và chỉ dùng insert đúng như yêu cầu là phải trả về đối tượng hoặc null
-    // Sửa getAll/getById của TaiKhoanLienQuanDAO để JOIN 2 bảng ( code cũ thiếu JOIN với bảng gốc )
-    // Sửa hết setInt/getInt sang setObject/getObject để xử lý null an toàn
-    // Xóa getByMaDanhMuc, theo thiết kế của CSDL thì hàm này là vô nghĩa, TaiKhoanDAO.getByMaDanhMuc(lien quan) mới là cách dùng đúng
 }

@@ -13,12 +13,10 @@ public class TaiKhoanFreeFireDAO implements CrudDAO<TaiKhoanFreeFire, Integer> {
 
     private TaiKhoanDAO taiKhoanDAO = new TaiKhoanDAO();
 
-    // Constructor 1: Dùng cho ứng dụng chạy thật
     public TaiKhoanFreeFireDAO() {
         this.taiKhoanDAO = new TaiKhoanDAO();
     }
 
-    // Constructor 2: Dùng cho Unit Test (package-private)
     TaiKhoanFreeFireDAO(TaiKhoanDAO taiKhoanDAO) {
         this.taiKhoanDAO = taiKhoanDAO;
     }
@@ -64,6 +62,53 @@ public class TaiKhoanFreeFireDAO implements CrudDAO<TaiKhoanFreeFire, Integer> {
 
     @Override
     public Integer insert(TaiKhoanFreeFire acc) throws SQLException {
+        Connection conn = null;
+        try {
+            conn = DBContext.getConnection();
+            conn.setAutoCommit(false);
+
+            Integer newId = insert(acc, conn);
+
+            conn.commit(); // Commit
+            return newId;
+        } catch (SQLException e) {
+            if (conn != null) {
+                conn.rollback(); // Rollback nếu lỗi
+            }
+            throw e; // Ném lỗi ra ngoài
+        } finally {
+            if (conn != null) {
+                conn.setAutoCommit(true);
+                conn.close();
+            }
+        }
+    }
+
+    @Override
+    public boolean update(TaiKhoanFreeFire acc) throws SQLException {
+        Connection conn = null;
+        try {
+            conn = DBContext.getConnection();
+            conn.setAutoCommit(false); // Bắt đầu transaction
+
+            boolean updated = update(acc, conn); // Gọi hàm transaction-aware
+
+            conn.commit(); // Commit
+            return updated;
+        } catch (SQLException e) {
+            if (conn != null) {
+                conn.rollback(); // Rollback nếu lỗi
+            }
+            throw e; // Ném lỗi ra ngoài
+        } finally {
+            if (conn != null) {
+                conn.setAutoCommit(true);
+                conn.close();
+            }
+        }
+    }
+
+    public Integer insert(TaiKhoanFreeFire acc, Connection conn) throws SQLException {
         TaiKhoan tk = new TaiKhoan();
         tk.setMaDanhMuc(acc.getMaDanhMuc());
         tk.setGiaGoc(acc.getGiaGoc());
@@ -74,7 +119,7 @@ public class TaiKhoanFreeFireDAO implements CrudDAO<TaiKhoanFreeFire, Integer> {
         tk.setThoiGianDang(acc.getThoiGianDang() != null ? acc.getThoiGianDang() : LocalDateTime.now());
         tk.setDuongDanAnh(acc.getDuongDanAnh());
 
-        Integer maTaiKhoan = taiKhoanDAO.insert(tk);
+        Integer maTaiKhoan = taiKhoanDAO.insert(tk, conn); // Dùng hàm transaction-aware
         if (maTaiKhoan == null) {
             throw new SQLException("Insert TAIKHOAN (cha) thất bại, không thể tạo TAIKHOAN_FREEFIRE (con).");
         }
@@ -86,8 +131,7 @@ public class TaiKhoanFreeFireDAO implements CrudDAO<TaiKhoanFreeFire, Integer> {
             VALUES (?, ?, ?, ?, ?, ?, ?)
             """;
 
-        try (Connection conn = DBContext.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
-
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setObject(1, maTaiKhoan);
             ps.setString(2, acc.getTenDangNhap());
             ps.setString(3, acc.getMatKhau());
@@ -100,8 +144,7 @@ public class TaiKhoanFreeFireDAO implements CrudDAO<TaiKhoanFreeFire, Integer> {
         return maTaiKhoan;
     }
 
-    @Override
-    public boolean update(TaiKhoanFreeFire acc) throws SQLException {
+    public boolean update(TaiKhoanFreeFire acc, Connection conn) throws SQLException {
         TaiKhoan tk = new TaiKhoan();
         tk.setMaTaiKhoan(acc.getMaTaiKhoan());
         tk.setMaDanhMuc(acc.getMaDanhMuc());
@@ -112,7 +155,7 @@ public class TaiKhoanFreeFireDAO implements CrudDAO<TaiKhoanFreeFire, Integer> {
         tk.setLuotXem(acc.getLuotXem());
         tk.setThoiGianDang(acc.getThoiGianDang());
         tk.setDuongDanAnh(acc.getDuongDanAnh());
-        boolean parentUpdated = taiKhoanDAO.update(tk);
+        boolean parentUpdated = taiKhoanDAO.update(tk, conn);
 
         String sql = """
             UPDATE TAIKHOAN_FREEFIRE
@@ -120,8 +163,7 @@ public class TaiKhoanFreeFireDAO implements CrudDAO<TaiKhoanFreeFire, Integer> {
             WHERE MaTaiKhoan = ?
             """;
 
-        try (Connection conn = DBContext.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
-
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, acc.getTenDangNhap());
             ps.setString(2, acc.getMatKhau());
             ps.setBoolean(3, acc.getCoTheVoCuc() != null ? acc.getCoTheVoCuc() : false);
@@ -189,11 +231,4 @@ public class TaiKhoanFreeFireDAO implements CrudDAO<TaiKhoanFreeFire, Integer> {
         acc.setLoaiDangKy(rs.getString("LoaiDangKy"));
         return acc;
     }
-
-    // Đã fix các lỗi by Hưng:
-    // Sửa logic delete để chỉ cần gọi delete của lớp DAO cha thôi,
-    // "ON DELETE CASCADE" trong schema sẽ đảm bảo tài khoản tương ứng bị xóa
-    // Xóa insertAndReturnId và chỉ dùng insert đúng như yêu cầu là phải trả về đối tượng hoặc null
-    // Sửa hết setInt/getInt sang setObject/getObject để xử lý null an toàn
-    // Xóa getByMaDanhMuc, theo thiết kế của CSDL thì hàm này là vô nghĩa, TaiKhoanDAO.getByMaDanhMuc(ff) mới là cách dùng đúng
 }

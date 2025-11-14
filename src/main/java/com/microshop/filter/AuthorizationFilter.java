@@ -12,7 +12,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 
-//Lọc tất cả URL có dạng admin và chỉ cho user có VaiTro = "ADMIN" vào
 @WebFilter("/admin/*")
 public class AuthorizationFilter implements Filter {
 
@@ -22,7 +21,7 @@ public class AuthorizationFilter implements Filter {
 
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
-        HttpSession session = req.getSession(false); // Lấy session, không tạo mới
+        HttpSession session = req.getSession(false);
 
         NguoiDung user = null;
         if (session != null) {
@@ -31,11 +30,11 @@ public class AuthorizationFilter implements Filter {
 
         boolean isAdmin = false;
         if (user != null && user.getVaiTro() != null) {
-            isAdmin = "ADMIN".equalsIgnoreCase(user.getVaiTro().trim());
+            isAdmin = "ADMIN".equals(user.getVaiTro());
         }
 
         if (!isAdmin) {
-            // Nếu không phải admin, chuyển hướng về home
+            // Nếu không phải admin (do user=null, vaiTro=null, hoặc vaiTro="USER")
             res.sendRedirect(req.getContextPath() + "/home");
         } else {
             // Là admin, cho phép truy cập

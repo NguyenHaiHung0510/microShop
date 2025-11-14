@@ -110,7 +110,7 @@
             <div id="qrPaymentBlock" class="qr-section">
                 <h3>Vui lòng quét mã QR để thanh toán</h3>
                 <div class="countdown">Thời gian còn lại: <span id="timer"></span></div>
-                <img src="${pageContext.request.contextPath}/assets/images/sample_qr.png" alt="Mã QR Thanh Toán Giả Lập">
+                <img src="${pageContext.request.contextPath}/assets/images/root_images/sample_qr.png" alt="Mã QR Thanh Toán Giả Lập">
                 <p>Tổng tiền cần thanh toán:
                     <span style="color:#c92a2a;">
                         <fmt:formatNumber value="${requestScope.giaCuoiCung}" type="currency" currencyCode="VND" maxFractionDigits="0"/> VNĐ

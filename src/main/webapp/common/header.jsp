@@ -40,7 +40,7 @@
             <div class="top-bar">
                 <div class="logo">
                     <a href="${pageContext.request.contextPath}/home" class="logo-link">
-                        <img src="${pageContext.request.contextPath}/assets/images/microshop_logo.png" alt="MicroShop Logo">
+                        <img src="${pageContext.request.contextPath}/assets/images/root_images/microshop_logo.png" alt="MicroShop Logo">
                     </a>
                 </div>
 

@@ -74,7 +74,7 @@ public class RegisterServlet extends HttpServlet {
         newUser.setMatKhau(PasswordUtils.hashPassword(password)); // TODO: Hash mật khẩu trong thực tế
         newUser.setVaiTro("USER"); // mặc định user
         newUser.setTongTienDaChi(BigDecimal.ZERO);
-        newUser.setMaHangThanhVien(null);
+        newUser.setMaHangThanhVien(1);
         newUser.setThoiGianTao(LocalDateTime.now());
 
         try {

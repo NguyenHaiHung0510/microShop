@@ -9,7 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
+// import java.sql.Statement; // Không cần thiết
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -45,7 +45,7 @@ class TaiKhoanRiotDAOTest {
 
     private TaiKhoanRiot sampleTKRiot;
     private final LocalDateTime timeNow = LocalDateTime.now();
-    private final String sampleAnh = "path/to/riot.jpg"; // THÊM MỚI
+    private final String sampleAnh = "path/to/riot.jpg";
 
     @BeforeEach
     void setUp() {
@@ -56,7 +56,7 @@ class TaiKhoanRiotDAOTest {
         sampleTKRiot.setGiaBan(new BigDecimal("300000"));
         sampleTKRiot.setTrangThai("DANG_BAN");
         sampleTKRiot.setThoiGianDang(timeNow);
-        sampleTKRiot.setDuongDanAnh(sampleAnh); // THÊM MỚI
+        sampleTKRiot.setDuongDanAnh(sampleAnh);
         // Thuộc tính con
         sampleTKRiot.setTenDangNhap("tkriot_user");
         sampleTKRiot.setMatKhau("456");
@@ -79,7 +79,7 @@ class TaiKhoanRiotDAOTest {
         when(rs.getBigDecimal("GiaGoc")).thenReturn(sampleTKRiot.getGiaGoc());
         when(rs.getString("DiemNoiBat")).thenReturn(sampleTKRiot.getDiemNoiBat());
         when(rs.getObject("LuotXem", Integer.class)).thenReturn(sampleTKRiot.getLuotXem());
-        when(rs.getString("DuongDanAnh")).thenReturn(sampleTKRiot.getDuongDanAnh()); // THÊM MỚI
+        when(rs.getString("DuongDanAnh")).thenReturn(sampleTKRiot.getDuongDanAnh());
 
         // Mock phần con (TAIKHOAN_RIOT)
         when(rs.getString("TenDangNhap")).thenReturn(sampleTKRiot.getTenDangNhap());
@@ -114,7 +114,7 @@ class TaiKhoanRiotDAOTest {
             assertEquals(1, result.getMaTaiKhoan());
             assertEquals(500, result.getCapDoRiot());
             assertEquals(160, result.getSoTuongLMHT());
-            assertEquals(sampleAnh, result.getDuongDanAnh()); // THÊM MỚI: Assert
+            assertEquals(sampleAnh, result.getDuongDanAnh());
             verify(ps).setObject(1, 1);
         }
     }
@@ -133,25 +133,26 @@ class TaiKhoanRiotDAOTest {
             assertNotNull(result);
             assertEquals(1, result.size());
             assertEquals(500, result.get(0).getCapDoRiot());
-            assertEquals(sampleAnh, result.get(0).getDuongDanAnh()); // THÊM MỚI: Assert
+            assertEquals(sampleAnh, result.get(0).getDuongDanAnh());
         }
     }
 
     @Test
     void insert_ReturnsGeneratedId() throws SQLException {
-        // ... (Không thay đổi logic)
         try (MockedStatic<DBContext> mockedDBContext = Mockito.mockStatic(DBContext.class)) {
-            when(taiKhoanDAO.insert(any(TaiKhoan.class))).thenReturn(99);
+
+            // --- SỬA LỖI TEST ---
+            when(taiKhoanDAO.insert(any(TaiKhoan.class), any(Connection.class))).thenReturn(99);
 
             mockedDBContext.when(DBContext::getConnection).thenReturn(connection);
-            mockDatabaseConnection();
+            when(connection.prepareStatement(anyString())).thenReturn(ps); // Mock cho DAO con
             when(ps.executeUpdate()).thenReturn(1);
 
             Integer newId = taiKhoanRiotDAO.insert(sampleTKRiot);
 
             assertNotNull(newId);
             assertEquals(99, newId);
-            verify(taiKhoanDAO).insert(any(TaiKhoan.class));
+            verify(taiKhoanDAO).insert(any(TaiKhoan.class), any(Connection.class));
             verify(ps).setObject(1, 99); // MaTaiKhoan
             verify(ps).setObject(4, 500); // CapDoRiot
             verify(ps).setObject(5, 160); // SoTuongLMHT
@@ -160,9 +161,10 @@ class TaiKhoanRiotDAOTest {
 
     @Test
     void update_ReturnsTrue() throws SQLException {
-        // ... (Không thay đổi logic)
         try (MockedStatic<DBContext> mockedDBContext = Mockito.mockStatic(DBContext.class)) {
-            when(taiKhoanDAO.update(any(TaiKhoan.class))).thenReturn(true);
+
+            // --- SỬA LỖI TEST ---
+            when(taiKhoanDAO.update(any(TaiKhoan.class), any(Connection.class))).thenReturn(true);
 
             mockedDBContext.when(DBContext::getConnection).thenReturn(connection);
             mockDatabaseConnection();
@@ -171,7 +173,7 @@ class TaiKhoanRiotDAOTest {
             boolean success = taiKhoanRiotDAO.update(sampleTKRiot);
 
             assertTrue(success);
-            verify(taiKhoanDAO).update(any(TaiKhoan.class));
+            verify(taiKhoanDAO).update(any(TaiKhoan.class), any(Connection.class));
             verify(ps).setObject(14, 1); // MaTaiKhoan (WHERE)
             verify(ps).setObject(3, 500); // CapDoRiot
         }
@@ -179,11 +181,8 @@ class TaiKhoanRiotDAOTest {
 
     @Test
     void delete_ReturnsTrue() throws SQLException {
-        // ... (Không thay đổi)
         when(taiKhoanDAO.delete(1)).thenReturn(true);
-
         boolean success = taiKhoanRiotDAO.delete(1);
-
         assertTrue(success);
         verify(taiKhoanDAO, times(1)).delete(1);
     }
@@ -202,14 +201,13 @@ class TaiKhoanRiotDAOTest {
 
             assertNotNull(result);
             assertEquals(1, result.size());
-            assertEquals(sampleAnh, result.get(0).getDuongDanAnh()); // THÊM MỚI: Assert
+            assertEquals(sampleAnh, result.get(0).getDuongDanAnh());
             verify(ps).setString(1, "DANG_BAN");
         }
     }
 
     @Test
     void updateTrangThai_CallsParentDAO() throws SQLException {
-        // ... (Không thay đổi)
         taiKhoanRiotDAO.updateTrangThai(1, "DA_BAN");
         verify(taiKhoanDAO, times(1)).updateTrangThai(1, "DA_BAN");
     }

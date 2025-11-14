@@ -6,143 +6,58 @@
     <jsp:param name="pageTitle" value="Hồ Sơ Của Tôi"/>
 </jsp:include>
 
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>Hồ Sơ Người Dùng</title>
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/style.css"> 
-        <style>
-            /* CSS nội bộ cho form profile */
-            .profile-container {
-                max-width: 600px;
-                margin: 50px auto;
-                padding: 30px;
-                background-color: #fff;
-                border-radius: 8px;
-                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            }
-            .profile-container h2 {
-                text-align: center;
-                color: #c92a2a;
-                margin-bottom: 25px;
-            }
-            .profile-info p {
-                font-size: 16px;
-                margin: 10px 0;
-            }
-            .profile-info strong {
-                display: inline-block;
-                width: 150px;
-                font-weight: 600;
-            }
-            .form-group {
-                margin-bottom: 15px;
-            }
-            .form-group label {
-                display: block;
-                margin-bottom: 5px;
-                font-weight: 500;
-            }
-            .form-control {
-                width: 100%;
-                padding: 10px;
-                border: 1px solid #ccc;
-                border-radius: 4px;
-                box-sizing: border-box;
-            }
-            .btn-update {
-                background-color: #28a745;
-                color: white;
-                padding: 10px 15px;
-                border: none;
-                border-radius: 4px;
-                cursor: pointer;
-                font-weight: 700;
-                transition: background-color 0.2s;
-            }
-            .btn-update:hover {
-                background-color: #218838;
-            }
-            .alert-success {
-                padding: 10px;
-                background-color: #d4edda;
-                color: #155724;
-                border: 1px solid #c3e6cb;
-                border-radius: 4px;
-                margin-bottom: 20px;
-            }
-            .profile-links a {
-                display: block;
-                margin-bottom: 8px;
-                padding: 8px;
-                background-color: #f8f9fa;
-                border: 1px solid #eee;
-                border-radius: 4px;
-                text-align: center;
-                transition: background-color 0.2s;
-            }
-            .profile-links a:hover {
-                background-color: #e9ecef;
-            }
-        </style>
-    </head>
-    <body>
+<%
+    // Lấy đối tượng NguoiDung từ Session
+    NguoiDung user = (NguoiDung) session.getAttribute("user");
+%>
+<%
+    // Lấy tên hạng thành viên mà ProfileServlet đã chuẩn bị
+    String tenHTV = (String) request.getAttribute("HangNguoiDung");
+%>
 
-        <%
-            // Lấy đối tượng NguoiDung từ Session
-            NguoiDung user = (NguoiDung) session.getAttribute("user");
-        %>
-        <%
-            // Lấy tên hạng thành viên mà ProfileServlet đã chuẩn bị
-            String tenHTV = (String) request.getAttribute("HangNguoiDung");
-        %>
+<%-- Sử dụng class .form-wrapper (đã được định nghĩa trong style.css) --%>
+<div class="form-wrapper profile-container">
+    <h2>Thông Tin Cá Nhân</h2>
 
-        <div class="profile-container">
-            <h2>Thông Tin Cá Nhân</h2>
+    <c:if test="${param.update eq 'success'}">
+        <div class="alert-success">Cập nhật hồ sơ thành công!</div>
+    </c:if>
 
-            <c:if test="${param.update eq 'success'}">
-                <div class="alert-success">Cập nhật hồ sơ thành công!</div>
-            </c:if>
+    <div class="profile-info">
+        <%-- Kiểm tra user null để tránh lỗi nếu truy cập trực tiếp trang profile mà chưa đăng nhập --%>
+        <% if (user != null) {%>
+        <p><strong>ID Người Dùng:</strong> <%= user.getMaNguoiDung()%></p>
+        <p><strong>Tên Đăng Nhập:</strong> <%= user.getTenDangNhap()%></p>
+        <p><strong>Email:</strong> <%= (user.getEmail() != null && !user.getEmail().isEmpty()) ? user.getEmail() : "(Chưa cập nhật)"%></p>
+        <p><strong>SĐT:</strong> <%= (user.getSoDienThoai() != null && !user.getSoDienThoai().isEmpty()) ? user.getSoDienThoai() : "(Chưa cập nhật)"%></p>
+        <p><strong>Tổng tiền đã chi:</strong> <%= user.getTongTienDaChi()%></p>
+        <p><strong>Hạng Thành Viên:</strong> <%= (tenHTV != null) ? tenHTV : "(Chưa có hạng)"%></p>
+        <% } else { %>
+        <p>Lỗi: Không tìm thấy thông tin người dùng. Vui lòng đăng nhập lại.</p>
+        <% }%>
+    </div>
 
-            <div class="profile-info">
-                <%-- Kiểm tra user null để tránh lỗi nếu truy cập trực tiếp trang profile mà chưa đăng nhập --%>
-                <% if (user != null) {%>
-                <p><strong>ID Người Dùng:</strong> <%= user.getMaNguoiDung()%></p>
-                <p><strong>Tên Đăng Nhập:</strong> <%= user.getTenDangNhap()%></p>
-                <p><strong>Email:</strong> <%= (user.getEmail() != null && !user.getEmail().isEmpty()) ? user.getEmail() : "(Chưa cập nhật)"%></p>
-                <p><strong>SĐT:</strong> <%= (user.getSoDienThoai() != null && !user.getSoDienThoai().isEmpty()) ? user.getSoDienThoai() : "(Chưa cập nhật)"%></p>
-                <p><strong>Tổng tiền đã chi:</strong> <%= user.getTongTienDaChi()%></p>
-                <p><strong>Hạng Thành Viên:</strong> <%= (tenHTV != null) ? tenHTV : "(Chưa có hạng)"%></p>
-                <% } else { %>
-                <p>Lỗi: Không tìm thấy thông tin người dùng. Vui lòng đăng nhập lại.</p>
-                <% }%>
-            </div>
+    <hr>
 
-            <hr>
+    <h3>Các Tùy Chọn Khác</h3>
+    <div class="profile-links">
+        <a href="${pageContext.request.contextPath}/profile/orders">Lịch Sử Đơn Hàng</a>
+        <a href="${pageContext.request.contextPath}/profile/view-account">Xem Tài Khoản Đã Mua</a>
+    </div>
 
-            <h3>Các Tùy Chọn Khác</h3>
-            <div class="profile-links">
-                <a href="${pageContext.request.contextPath}/profile/orders">Lịch Sử Đơn Hàng</a>
-                <a href="${pageContext.request.contextPath}/profile/view-account">Xem Tài Khoản Đã Mua</a>
-            </div>
+    <hr>
 
-            <hr>
+    <h3>Cập Nhật Thông Tin</h3>
+    <div style="text-align: center;">
+        <a href="${pageContext.request.contextPath}/profile/edit" class="btn-submit register" style="display: inline-block; text-decoration: none; width: auto; padding: 10px 15px;">
+            Chỉnh Sửa Hồ Sơ
+        </a>
+    </div>
 
-            <h3>Cập Nhật Thông Tin</h3>
-            <div style="text-align: center;">
-                <a href="${pageContext.request.contextPath}/profile/edit" class="btn-update" style="display: inline-block;">
-                    Chỉnh Sửa Hồ Sơ
-                </a>
-            </div>
-
-            <p style="text-align: center; margin-top: 20px;">
-                <a href="${pageContext.request.contextPath}/home">Quay lại Trang Chủ</a> | 
-                <a href="${pageContext.request.contextPath}/logout">Đăng Xuất</a>
-            </p>
-        </div>
-
-    </body>
-</html>
+    <p style="text-align: center; margin-top: 20px;">
+        <a href="${pageContext.request.contextPath}/home">Quay lại Trang Chủ</a> |
+        <a href="${pageContext.request.contextPath}/logout">Đăng Xuất</a>
+    </p>
+</div>
 
 <jsp:include page="common/footer.jsp" />

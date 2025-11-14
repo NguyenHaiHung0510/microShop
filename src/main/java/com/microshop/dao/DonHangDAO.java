@@ -46,7 +46,7 @@ public class DonHangDAO implements CrudDAO<DonHang, Integer> {
     @Override
     public List<DonHang> getAll() throws SQLException {
         List<DonHang> list = new ArrayList<>();
-        String sql = "SELECT * FROM DONHANG";
+        String sql = "SELECT * FROM DONHANG ORDER BY ThoiGianTao DESC";
 
         try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
 
@@ -154,7 +154,7 @@ public class DonHangDAO implements CrudDAO<DonHang, Integer> {
         }
         return list;
     }
-    
+
     public List<DonHang> getByMaNguoiDungDaHoanThanh(Integer maNguoiDung) throws SQLException {
         String sql = "SELECT * FROM DonHang WHERE MaNguoiDung = ? AND TrangThai = 'DA_HOAN_THANH'";
         List<DonHang> list = new ArrayList<>();
@@ -170,7 +170,7 @@ public class DonHangDAO implements CrudDAO<DonHang, Integer> {
         }
         return list;
     }
-        
+
     public List<DonHang> getByMaTaiKhoan(Integer maTaiKhoan) throws SQLException {
         List<DonHang> list = new ArrayList<>();
         String sql = "SELECT * FROM DonHang WHERE MaTaiKhoan = ?";
@@ -185,7 +185,7 @@ public class DonHangDAO implements CrudDAO<DonHang, Integer> {
         }
         return list;
     }
-    
+
     public DonHang getByMaTaiKhoanChoThanhToan(Integer maTaiKhoan) throws SQLException {
         String sql = "SELECT * FROM DonHang WHERE MaTaiKhoan = ? AND TrangThai = 'CHO_THANH_TOAN'";
         try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -199,7 +199,7 @@ public class DonHangDAO implements CrudDAO<DonHang, Integer> {
         }
         return null;
     }
-    
+
     public boolean updateGiaMua(Integer maDonHang, BigDecimal giaMoi) throws SQLException {
         String sql = "UPDATE DonHang SET GiaMua = ? WHERE MaDonHang = ?";
         try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -210,6 +210,7 @@ public class DonHangDAO implements CrudDAO<DonHang, Integer> {
             return ps.executeUpdate() > 0;
         }
     }
+
     public boolean updateTrangThai(Integer maDonHang, String trangThaiMoi, LocalDateTime thoiGianMua) throws SQLException {
         String sql = "UPDATE DonHang SET TrangThai = ?, ThoiGianMua = ? WHERE MaDonHang = ?";
         try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -220,5 +221,46 @@ public class DonHangDAO implements CrudDAO<DonHang, Integer> {
 
             return ps.executeUpdate() > 0;
         }
+    }
+
+    public int getTotalCount() throws SQLException {
+        String sql = "SELECT COUNT(*) FROM DONHANG";
+        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        }
+        return 0;
+    }
+
+    public int getCountByTrangThai(String trangThai) throws SQLException {
+        String sql = "SELECT COUNT(*) FROM DONHANG WHERE TrangThai = ?";
+        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, trangThai);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1);
+                }
+            }
+        }
+        return 0;
+    }
+
+    // Lấy danh sách các đơn từ OFFSET + 1, lấy tối đa LIMIT đơn, trả về theo thứ tự đơn mới hơn xếp trước
+    public List<DonHang> getAllPaginated(int page, int recordsPerPage) throws SQLException {
+        List<DonHang> list = new ArrayList<>();
+        int offset = (page - 1) * recordsPerPage;
+        String sql = "SELECT * FROM DONHANG ORDER BY ThoiGianTao DESC LIMIT ? OFFSET ?";
+
+        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, recordsPerPage);
+            ps.setInt(2, offset);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    list.add(mapResultSetToDonHang(rs));
+                }
+            }
+        }
+        return list;
     }
 }

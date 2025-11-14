@@ -44,7 +44,7 @@ public class DonHangSlotSteamDAO implements CrudDAO<DonHangSlotSteam, Integer> {
     @Override
     public List<DonHangSlotSteam> getAll() throws SQLException {
         List<DonHangSlotSteam> list = new ArrayList<>();
-        String sql = "SELECT * FROM DONHANG_SLOT_STEAM";
+        String sql = "SELECT * FROM DONHANG_SLOT_STEAM ORDER BY ThoiGianTao DESC"; // Sửa: Thêm ORDER BY
         try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
                 list.add(mapResultSetToDonHangSlotSteam(rs));
@@ -208,7 +208,7 @@ public class DonHangSlotSteamDAO implements CrudDAO<DonHangSlotSteam, Integer> {
         }
         return list;
     }
-    
+
     public List<DonHangSlotSteam> getByMaTaiKhoanChoThanhToan(Integer maTaiKhoan) throws SQLException {
         String sql = "SELECT * FROM DonHang_SLOT_STEAM WHERE MaTaiKhoanSteam = ? AND TrangThai = 'CHO_THANH_TOAN'";
         List<DonHangSlotSteam> list = new ArrayList<>();
@@ -223,7 +223,7 @@ public class DonHangSlotSteamDAO implements CrudDAO<DonHangSlotSteam, Integer> {
         }
         return list;
     }
-    
+
     public List<DonHangSlotSteam> getByMaGameSteamChoThanhToan(Integer maGameSteam) throws SQLException {
         String sql = "SELECT * FROM DonHang_SLOT_STEAM WHERE MaGameSteam = ? AND TrangThai = 'CHO_THANH_TOAN'";
         List<DonHangSlotSteam> list = new ArrayList<>();
@@ -238,7 +238,7 @@ public class DonHangSlotSteamDAO implements CrudDAO<DonHangSlotSteam, Integer> {
         }
         return list;
     }
-    
+
     public List<DonHangSlotSteam> getMaNguoiDungDaHoanThanh(Integer maNguoiDung) throws SQLException {
         String sql = "SELECT * FROM DonHang_SLOT_STEAM WHERE MaNguoiDung = ? AND TrangThai = 'DA_HOAN_THANH'";
         List<DonHangSlotSteam> list = new ArrayList<>();
@@ -252,5 +252,28 @@ public class DonHangSlotSteamDAO implements CrudDAO<DonHangSlotSteam, Integer> {
             }
         }
         return list;
+    }
+
+    public int getTotalCount() throws SQLException {
+        String sql = "SELECT COUNT(*) FROM DONHANG_SLOT_STEAM";
+        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        }
+        return 0;
+    }
+
+    public int getCountByTrangThai(String trangThai) throws SQLException {
+        String sql = "SELECT COUNT(*) FROM DONHANG_SLOT_STEAM WHERE TrangThai = ?";
+        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, trangThai);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1);
+                }
+            }
+        }
+        return 0;
     }
 }

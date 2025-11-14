@@ -59,10 +59,9 @@ public class GameSteamDAO implements CrudDAO<GameSteam, Integer> {
     @Override
     public List<GameSteam> getAll() throws SQLException {
         List<GameSteam> list = new ArrayList<>();
-        String sql = "SELECT * FROM GAME_STEAM";
+        String sql = "SELECT * FROM GAME_STEAM ORDER BY ThoiGianDang DESC"; // Sửa: Thêm ORDER BY
 
         try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
-
             while (rs.next()) {
                 list.add(mapResultSetToGameSteam(rs));
             }
@@ -76,9 +75,7 @@ public class GameSteamDAO implements CrudDAO<GameSteam, Integer> {
         String sql = "SELECT * FROM GAME_STEAM WHERE MaGameSteam = ?";
 
         try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
-
             ps.setObject(1, id);
-
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     result = mapResultSetToGameSteam(rs);
@@ -90,20 +87,43 @@ public class GameSteamDAO implements CrudDAO<GameSteam, Integer> {
 
     @Override
     public Integer insert(GameSteam entity) throws SQLException {
+        try (Connection conn = getConnection()) {
+            return insert(entity, conn); // Gọi hàm transaction-aware
+        }
+    }
+
+    @Override
+    public boolean update(GameSteam entity) throws SQLException {
+        try (Connection conn = getConnection()) {
+            return update(entity, conn); // Gọi hàm transaction-aware
+        }
+    }
+
+    @Override
+    public boolean delete(Integer id) throws SQLException {
+        // ON DELETE CASCADE trong CSDL sẽ tự xóa các BaiViet, GameTaiKhoanSteam, DonHangSlotSteam
+        String sql = "DELETE FROM GAME_STEAM WHERE MaGameSteam=?";
+        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setObject(1, id);
+            return ps.executeUpdate() > 0;
+        }
+    }
+
+    // Đây là các hàm transaction-aware, thay vì tự gọi kết nối thì nó sẽ chỉ sử dụng kết nối được cấp
+    // Cơ chế này sẽ để cho servlet bên trên kiểm soát nếu muốn làm một chuỗi các thao tác phụ thuộc
+    public Integer insert(GameSteam entity, Connection conn) throws SQLException {
         String sql = """
             INSERT INTO GAME_STEAM 
             (TenGame, MoTaGame, GiaGoc, GiaBan, LuotXem, ThoiGianDang, IdVideoTrailer, DuongDanAnh)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         """;
 
-        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-
+        try (PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, entity.getTenGame());
             ps.setString(2, entity.getMoTaGame());
             ps.setBigDecimal(3, entity.getGiaGoc());
             ps.setBigDecimal(4, entity.getGiaBan());
-
-            ps.setObject(5, entity.getLuotXem());
+            ps.setObject(5, entity.getLuotXem() != null ? entity.getLuotXem() : 0); // Sửa: Đảm bảo không null
 
             if (entity.getThoiGianDang() != null) {
                 ps.setTimestamp(6, Timestamp.valueOf(entity.getThoiGianDang()));
@@ -128,8 +148,7 @@ public class GameSteamDAO implements CrudDAO<GameSteam, Integer> {
         return null;
     }
 
-    @Override
-    public boolean update(GameSteam entity) throws SQLException {
+    public boolean update(GameSteam entity, Connection conn) throws SQLException {
         String sql = """
             UPDATE GAME_STEAM
             SET TenGame=?, MoTaGame=?, GiaGoc=?, GiaBan=?, LuotXem=?, 
@@ -137,31 +156,17 @@ public class GameSteamDAO implements CrudDAO<GameSteam, Integer> {
             WHERE MaGameSteam=?
         """;
 
-        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
-
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, entity.getTenGame());
             ps.setString(2, entity.getMoTaGame());
             ps.setBigDecimal(3, entity.getGiaGoc());
             ps.setBigDecimal(4, entity.getGiaBan());
-
             ps.setObject(5, entity.getLuotXem());
-
             ps.setTimestamp(6, entity.getThoiGianDang() != null ? Timestamp.valueOf(entity.getThoiGianDang()) : null);
             ps.setString(7, entity.getIdVideoTrailer());
             ps.setString(8, entity.getDuongDanAnh());
-
             ps.setObject(9, entity.getMaGameSteam());
 
-            return ps.executeUpdate() > 0;
-        }
-    }
-
-    @Override
-    public boolean delete(Integer id) throws SQLException {
-        String sql = "DELETE FROM GAME_STEAM WHERE MaGameSteam=?";
-        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
-
-            ps.setObject(1, id);
             return ps.executeUpdate() > 0;
         }
     }
@@ -169,9 +174,7 @@ public class GameSteamDAO implements CrudDAO<GameSteam, Integer> {
     public String getMoTaGame(Integer maGameSteam) throws SQLException {
         String sql = "SELECT MoTaGame FROM GAME_STEAM WHERE MaGameSteam = ?";
         try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
-
             ps.setObject(1, maGameSteam);
-
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     return rs.getString("MoTaGame");
@@ -189,9 +192,36 @@ public class GameSteamDAO implements CrudDAO<GameSteam, Integer> {
         """;
 
         try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
-
             while (rs.next()) {
                 list.add(mapFast(rs));
+            }
+        }
+        return list;
+    }
+
+    public int getTotalCount() throws SQLException {
+        String sql = "SELECT COUNT(*) FROM GAME_STEAM";
+        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        }
+        return 0;
+    }
+
+    // Trả về danh sách tối đa LIMIT GameSteam từ vị trí OFFSET + 1 theo thứ tự mới nhất xếp trước
+    public List<GameSteam> getAllPaginated(int page, int recordsPerPage) throws SQLException {
+        List<GameSteam> list = new ArrayList<>();
+        int offset = (page - 1) * recordsPerPage;
+        String sql = "SELECT * FROM GAME_STEAM ORDER BY ThoiGianDang DESC LIMIT ? OFFSET ?";
+
+        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, recordsPerPage);
+            ps.setInt(2, offset);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    list.add(mapResultSetToGameSteam(rs));
+                }
             }
         }
         return list;

@@ -66,20 +66,39 @@ public class BaiVietGioiThieuDAO implements CrudDAO<BaiVietGioiThieu, Integer> {
 
     @Override
     public Integer insert(BaiVietGioiThieu entity) throws SQLException {
+        try (Connection conn = getConnection()) {
+            return insert(entity, conn); // Gọi hàm transaction-aware
+        }
+    }
+
+    @Override
+    public boolean update(BaiVietGioiThieu entity) throws SQLException {
+        try (Connection conn = getConnection()) {
+            return update(entity, conn); // Gọi hàm transaction-aware
+        }
+    }
+
+    @Override
+    public boolean delete(Integer id) throws SQLException {
+        String sql = "DELETE FROM BAIVIET_GIOITHIEU WHERE MaBaiViet = ?";
+        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setObject(1, id);
+            return ps.executeUpdate() > 0;
+        }
+    }
+
+    public Integer insert(BaiVietGioiThieu entity, Connection conn) throws SQLException {
         String sql = """
             INSERT INTO BAIVIET_GIOITHIEU 
-            (MaGameSteam, TieuDeBaiViet, NoiDung, ThoiGianTao, ThoiGianCapNhatCuoi)
-            VALUES (?, ?, ?, ?, ?)
+            (MaGameSteam, TieuDeBaiViet, NoiDung, ThoiGianTao) 
+            VALUES (?, ?, ?, ?)
             """;
-        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             ps.setObject(1, entity.getMaGameSteam());
             ps.setString(2, entity.getTieuDeBaiViet());
             ps.setString(3, entity.getNoiDung());
-
-            LocalDateTime now = LocalDateTime.now();
-            ps.setTimestamp(4, Timestamp.valueOf(entity.getThoiGianTao() != null ? entity.getThoiGianTao() : now));
-            ps.setTimestamp(5, Timestamp.valueOf(entity.getThoiGianCapNhatCuoi() != null ? entity.getThoiGianCapNhatCuoi() : now));
+            ps.setTimestamp(4, Timestamp.valueOf(LocalDateTime.now())); // Luôn đặt thời gian tạo
 
             int affectedRows = ps.executeUpdate();
             if (affectedRows == 0) {
@@ -95,16 +114,13 @@ public class BaiVietGioiThieuDAO implements CrudDAO<BaiVietGioiThieu, Integer> {
         return null;
     }
 
-    @Override
-    public boolean update(BaiVietGioiThieu entity) throws SQLException {
-        // ThoiGianCapNhatCuoi tự động cập nhật theo Schema CSDL
+    public boolean update(BaiVietGioiThieu entity, Connection conn) throws SQLException {
         String sql = """
             UPDATE BAIVIET_GIOITHIEU
             SET MaGameSteam = ?, TieuDeBaiViet = ?, NoiDung = ?
             WHERE MaBaiViet = ?
             """;
-        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
-
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setObject(1, entity.getMaGameSteam());
             ps.setString(2, entity.getTieuDeBaiViet());
             ps.setString(3, entity.getNoiDung());
@@ -114,21 +130,11 @@ public class BaiVietGioiThieuDAO implements CrudDAO<BaiVietGioiThieu, Integer> {
         }
     }
 
-    @Override
-    public boolean delete(Integer id) throws SQLException {
-        String sql = "DELETE FROM BAIVIET_GIOITHIEU WHERE MaBaiViet = ?";
-        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
-
-            ps.setObject(1, id);
-            return ps.executeUpdate() > 0;
-        }
-    }
-
     public List<BaiVietGioiThieu> getByMaGameSteam(Integer maGameSteam) throws SQLException {
         List<BaiVietGioiThieu> list = new ArrayList<>();
         String sql = "SELECT * FROM BAIVIET_GIOITHIEU WHERE MaGameSteam = ?";
         try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
-            
+
             ps.setObject(1, maGameSteam);
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
@@ -140,9 +146,14 @@ public class BaiVietGioiThieuDAO implements CrudDAO<BaiVietGioiThieu, Integer> {
     }
 
     public boolean deleteByMaGameSteam(Integer maGameSteam) throws SQLException {
-        String sql = "DELETE FROM BAIVIET_GIOITHIEU WHERE MaGameSteam = ?";
-        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = getConnection()) {
+            return deleteByMaGameSteam(maGameSteam, conn);
+        }
+    }
 
+    public boolean deleteByMaGameSteam(Integer maGameSteam, Connection conn) throws SQLException {
+        String sql = "DELETE FROM BAIVIET_GIOITHIEU WHERE MaGameSteam = ?";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setObject(1, maGameSteam);
             return ps.executeUpdate() > 0;
         }

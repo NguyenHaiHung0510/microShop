@@ -23,7 +23,7 @@
         <h2>
             <c:if test="${empty game.maGameSteam}">Thêm Game Steam Mới</c:if>
             <c:if test="${not empty game.maGameSteam}">Cập nhật Game: ${game.tenGame}</c:if>
-        </h2>
+            </h2>
 
         <c:if test="${not empty game.maGameSteam}">
             <input type="hidden" name="maGameSteam" value="${game.maGameSteam}" />
@@ -47,12 +47,12 @@
             </div>
 
             <div class="form-group">
-                <label for="duongDanAnh">Đường dẫn ảnh (Vd: assets/images/root_image/steam_elden_ring.jpg)</label>
+                <label for="duongDanAnh">Đường dẫn ảnh</label>
                 <input type="text" id="duongDanAnh" name="duongDanAnh" value="${game.duongDanAnh}">
             </div>
 
             <div class="form-group">
-                <label for="idVideoTrailer">ID Video Trailer YouTube (Vd: E3Huy2CdjfA)</label>
+                <label for="idVideoTrailer">ID Video Trailer YouTube</label>
                 <input type="text" id="idVideoTrailer" name="idVideoTrailer" value="${game.idVideoTrailer}">
             </div>
 
@@ -66,7 +66,7 @@
                 <input type="hidden" name="maBaiViet1" value="${baiViet1.maBaiViet}">
                 <div class="form-group">
                     <label for="tieuDe1">Tiêu Đề Bài Viết 1</label>
-                    <input type="text" id="tieuDe1" name="tieuDe1" value="${baiViet1.tieuDeBaiViet}" placeholder="Vd: Giới thiệu Elden Ring">
+                    <input type="text" id="tieuDe1" name="tieuDe1" value="${baiViet1.tieuDeBaiViet}">
                 </div>
                 <div class="form-group" style="margin-bottom: 0;">
                     <label for="noiDung1">Nội Dung Bài Viết 1</label>
@@ -77,10 +77,9 @@
             <fieldset class="form-group full-width" style="border: 1px solid #ddd; padding: 15px; border-radius: 8px;">
                 <legend style="font-weight: 500;">Bài Viết 2 (Cấu hình)</legend>
                 <input type="hidden" name="maBaiViet2" value="${baiViet2.maBaiViet}">
-                <div class="form-group">
-                    <label for="tieuDe2">Tiêu Đề Bài Viết 2</label>
-                    <input type="text" id="tieuDe2" name="tieuDe2" value="${baiViet2.tieuDeBaiViet}" placeholder="Vd: Cấu hình yêu cầu">
-                </div>
+
+                <input type="hidden" name="tieuDe2" value="Cấu hình game:" />
+
                 <div class="form-group" style="margin-bottom: 0;">
                     <label for="noiDung2">Nội Dung Bài Viết 2</label>
                     <textarea id="noiDung2" name="noiDung2">${baiViet2.noiDung}</textarea>

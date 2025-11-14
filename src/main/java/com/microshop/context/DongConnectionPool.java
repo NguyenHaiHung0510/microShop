@@ -6,6 +6,7 @@ import jakarta.servlet.annotation.WebListener;
 import java.util.Timer;
 import com.microshop.listener.OrderCleanupTask;
 import com.microshop.dao.DonHangDAO; 
+import com.microshop.dao.DonHangSlotSteamDAO;
 
 // Nghe khi Web bị ngắt và thực hiện thu hồi connection pool an toàn
 @WebListener
@@ -16,7 +17,7 @@ public class DongConnectionPool implements ServletContextListener {
     
     // Khởi tạo DAO (chú ý: phải thread-safe nếu DAO có trạng thái)
     private final DonHangDAO donHangDAO = new DonHangDAO(); 
-
+    private final DonHangSlotSteamDAO donHangSlotSteamDAO = new DonHangSlotSteamDAO(); 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         System.out.println("Web da duoc khoi chay thanh cong! - DongConnectionPool dang nghe");
@@ -37,7 +38,7 @@ public class DongConnectionPool implements ServletContextListener {
         
         // Lên lịch cho tác vụ chạy định kỳ
         cleanupTimer.scheduleAtFixedRate(
-            new OrderCleanupTask(donHangDAO, cleanupThresholdMinutes), 
+            new OrderCleanupTask(donHangDAO, donHangSlotSteamDAO, cleanupThresholdMinutes), 
             initialDelay, 
             repeatPeriod
         );

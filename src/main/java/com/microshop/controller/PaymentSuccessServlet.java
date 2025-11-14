@@ -1,9 +1,12 @@
 package com.microshop.controller;
 
 import com.microshop.dao.DonHangDAO; // Cần DAO để lưu đơn hàng
+import com.microshop.dao.DonHangSlotSteamDAO;
 import com.microshop.dao.NguoiDungDAO;
 import com.microshop.dao.TaiKhoanDAO;
+import com.microshop.dao.TaiKhoanSteamDAO;
 import com.microshop.model.DonHang;
+import com.microshop.model.DonHangSlotSteam;
 import com.microshop.model.NguoiDung;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -15,6 +18,7 @@ import jakarta.servlet.http.HttpSession;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -25,7 +29,9 @@ import java.util.logging.Logger;
 public class PaymentSuccessServlet extends HttpServlet {
     
     private final DonHangDAO donHangDAO = new DonHangDAO(); // Giả định
+    private final DonHangSlotSteamDAO donHangSlotSteamDAO = new DonHangSlotSteamDAO(); // Giả định
     private final TaiKhoanDAO taiKhoanDAO = new TaiKhoanDAO();
+    private final TaiKhoanSteamDAO taiKhoanSteamDAO = new TaiKhoanSteamDAO();    
     private final NguoiDungDAO nguoidungDAO = new NguoiDungDAO();
     
     // Phương thức này là điểm cuối của form thanh toán (POST từ checkout.jsp)
@@ -46,7 +52,8 @@ public class PaymentSuccessServlet extends HttpServlet {
         String maTaiKhoanParam = request.getParameter("maTaiKhoan");
         String giaParam = request.getParameter("gia");
         String paymentMethod = request.getParameter("paymentMethod");
-
+        int type = Integer.parseInt(request.getParameter("type"));
+        System.out.println("type = " + type);
         if (maTaiKhoanParam == null || paymentMethod == null) {
              // Lỗi thiếu dữ liệu, chuyển hướng về trang chủ
              response.sendRedirect(request.getContextPath() + "/home");
@@ -60,14 +67,32 @@ public class PaymentSuccessServlet extends HttpServlet {
             // 3. XỬ LÝ LOGIC QUAN TRỌNG (Giao dịch thật)
             
             // TODO: Triển khai logic giao dịch thật (Ghi vào DONHANG, cập nhật trạng thái TAIKHOAN)
-            DonHang donhang = donHangDAO.getByMaTaiKhoanChoThanhToan(maTaiKhoan);
-            String current_status = donhang.getTrangThai();
-            if(current_status.equals("DA_HOAN_THANH")){
-                request.getRequestDispatcher("/payment_fail.jsp").forward(request, response);
-                return;
+            if(type == 1){
+                System.out.println("Đơn hàng taikhoan");
+                DonHang donhang = donHangDAO.getByMaTaiKhoanChoThanhToan(maTaiKhoan);
+                String current_status = donhang.getTrangThai();
+                if(current_status.equals("DA_HOAN_THANH")){
+                    request.getRequestDispatcher("/payment_fail.jsp").forward(request, response);
+                    return;
+                }
+                donHangDAO.updateTrangThai(donhang.getMaDonHang(), "DA_HOAN_THANH", LocalDateTime.now());
+                taiKhoanDAO.updateTrangThai(maTaiKhoan, "DA_BAN");
             }
-            donHangDAO.updateTrangThai(donhang.getMaDonHang(), "DA_HOAN_THANH", LocalDateTime.now());
-            taiKhoanDAO.updateTrangThai(maTaiKhoan, "DA_BAN");
+            else{
+                List<DonHangSlotSteam> donhangsteam = donHangSlotSteamDAO.getByMaTaiKhoanChoThanhToan(maTaiKhoan);
+                DonHangSlotSteam donhang = null;
+                for(DonHangSlotSteam x : donhangsteam){
+                    if(x.getMaNguoiDung().equals(user.getMaNguoiDung())){
+                        donhang = x; break;
+                    }
+                }
+                String current_status = donhang.getTrangThai();
+                if(current_status.equals("DA_HOAN_THANH")){
+                    request.getRequestDispatcher("/payment_fail.jsp").forward(request, response);
+                    return;
+                }
+                donHangSlotSteamDAO.updateTrangThai(donhang.getMaDonHangSlot(), "DA_HOAN_THANH", LocalDateTime.now());          
+            }
             
             // update tổng tiền và hạng thành viên
             nguoidungDAO.updateTongTienDaChi(user.getMaNguoiDung(),new BigDecimal(giaParam));

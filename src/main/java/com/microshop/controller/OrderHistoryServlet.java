@@ -1,7 +1,9 @@
 package com.microshop.controller;
 
 import com.microshop.dao.DonHangDAO;
+import com.microshop.dao.DonHangSlotSteamDAO;
 import com.microshop.model.DonHang;
+import com.microshop.model.DonHangSlotSteam;
 import com.microshop.model.NguoiDung;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -23,7 +25,7 @@ public class OrderHistoryServlet extends HttpServlet {
 
     // Khởi tạo DAO (Giả định DonHangDAO đã có phương thức getByMaNguoiDung)
     private final DonHangDAO donHangDAO = new DonHangDAO();
-
+    private final DonHangSlotSteamDAO donHangSlotSteamDAO = new DonHangSlotSteamDAO();
     /**
      * Handles the HTTP <code>GET</code> method.
      * Xử lý yêu cầu xem lịch sử đơn hàng.
@@ -48,10 +50,10 @@ public class OrderHistoryServlet extends HttpServlet {
 
             // 3. Gọi DAO để lấy danh sách đơn hàng
             List<DonHang> orderList = donHangDAO.getByMaNguoiDung(maNguoiDung);
-
+            List<DonHangSlotSteam> steamOrderList = donHangSlotSteamDAO.getByMaNguoiDung(maNguoiDung);
             // 4. Đặt danh sách đơn hàng vào Request Scope để JSP có thể truy cập
             request.setAttribute("orderList", orderList);
-
+            request.setAttribute("steamOrderList", steamOrderList);
             // 5. Chuyển tiếp (Forward) sang View (JSP)
             // (Bạn cần tạo file /order_history.jsp để hiển thị)
             request.getRequestDispatcher("/orders.jsp").forward(request, response);

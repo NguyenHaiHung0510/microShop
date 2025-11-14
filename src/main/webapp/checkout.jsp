@@ -1,5 +1,6 @@
 <%@page import="com.microshop.model.NguoiDung"%>
 <%@page import="com.microshop.model.TaiKhoan"%>
+<%@page import="com.microshop.model.TaiKhoanSteam"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -127,6 +128,8 @@
 <c:set var="user" value="${sessionScope.user}" />
 <c:set var="sanPham" value="${requestScope.sanPhamThanhToan}" />
 <c:set var="thoiGianConLaiGiay" value="${requestScope.thoiGianConLai}" />
+<c:set var="maGame" value="${requestScope.maGame}" />
+<c:set var="type" value="${requestScope.type}" />
 <div class="checkout-container">
     <h2>Xác Nhận Thanh Toán</h2>
 
@@ -138,20 +141,57 @@
     </c:if>
 
     <c:if test="${sanPham != null}">
-        <div class="order-summary">
-            <h3>Sản phẩm:</h3>
+<div class="order-summary">
+    <h3>Sản phẩm:</h3>
+    
+    <c:choose>
+        <%-- 
+            IF: Kiểm tra xem 'sanPham' có phải là (hoặc kế thừa từ) 
+            'com.microshop.model.TaiKhoan' hay không.
+        --%>
+        <c:when test="${type == 1}">
             <div class="product-item">
-                <span><strong>Mã TK #${sanPham.maTaiKhoan}</strong>: ${sanPham.diemNoiBat}</span>
+                <span>
+                    <strong>Mã TK #${sanPham.maTaiKhoan}</strong>: ${sanPham.diemNoiBat}
+                </span>
                 <span style="font-weight:600;">
                     <fmt:formatNumber value="${sanPham.giaBan}" type="currency" currencyCode="VND" maxFractionDigits="0"/> VNĐ
                 </span>
             </div>
-            <div class="total-amount">
-                Tổng cộng: 
-                <fmt:formatNumber value="${sanPham.giaBan}" type="currency" currencyCode="VND" maxFractionDigits="0"/> VNĐ
+        </c:when>
+        
+        <%-- 
+            ELSE: Nếu 'sanPham' là một loại đối tượng khác 
+            (ví dụ: một dịch vụ, item, v.v.)
+        --%>
+        <c:otherwise>
+            <div class="product-item">
+                <span>
+                    <strong>Mã TK #${sanPham.maTaiKhoanSteam}</strong>
+                    <strong>Mã Game #${maGame}</strong>
+                </span>
+                <span style="font-weight:600;">
+                    <fmt:formatNumber value="${requestScope.giaBanDau}" type="currency" currencyCode="VND" maxFractionDigits="0"/> VNĐ
+                </span>
             </div>
-        </div>
+        </c:otherwise>
+    </c:choose>
 
+    <%-- Phần Chiết khấu và Tổng cộng (Không thay đổi) --%>
+    <div class="product-item" style="color: #28a745;">
+        <span>
+            <strong>Chiết khấu (Hạng ${requestScope.tenHang}):</strong>
+        </span>
+        <span style="font-weight:600;">
+            - <fmt:formatNumber value="${requestScope.tienChietKhau}" type="currency" currencyCode="VND" maxFractionDigits="0"/> VNĐ
+        </span>
+    </div>
+        
+    <div class="total-amount">
+        Tổng cộng: 
+        <fmt:formatNumber value="${requestScope.giaCuoiCung}" type="currency" currencyCode="VND" maxFractionDigits="0"/> VNĐ
+    </div>
+</div>
         <div class="order-summary">
             <h3>Thông tin người mua:</h3>
             <p><strong>Người dùng:</strong> ${user.tenDangNhap}</p>
@@ -160,8 +200,17 @@
         </div>
 
         <form id="checkoutForm" action="${pageContext.request.contextPath}/payment/success" method="POST">
-            <input type="hidden" name="maTaiKhoan" value="${sanPham.maTaiKhoan}">
-            <input type="hidden" name="gia" value="${sanPham.giaBan}">
+            <c:choose>
+                <c:when test="${type == 1}">
+                    <input type="hidden" name="maTaiKhoan" value="${sanPham.maTaiKhoan}" />
+                </c:when>
+                <c:otherwise>
+                    <input type="hidden" name="maTaiKhoan" value="${sanPham.maTaiKhoanSteam}" />
+                </c:otherwise>
+            </c:choose>
+            <input type="hidden" name="type" value="${requestScope.type}">
+            <input type="hidden" name="maGame" value="${maGame}">
+            <input type="hidden" name="gia" value="${requestScope.giaCuoiCung}">
             <input type="hidden" id="finalMethod" name="paymentMethod" value="">
 
             <div id="selectionBlock">
@@ -185,7 +234,7 @@
                 <img src="${pageContext.request.contextPath}/assets/images/sample_qr.png" alt="Mã QR Thanh Toán Giả Lập"> 
                 <p>Tổng tiền cần thanh toán: 
                     <span style="color:#c92a2a;">
-                        <fmt:formatNumber value="${sanPham.giaBan}" type="currency" currencyCode="VND" maxFractionDigits="0"/> VNĐ
+                        <fmt:formatNumber value="${requestScope.giaCuoiCung}" type="currency" currencyCode="VND" maxFractionDigits="0"/> VNĐ
                     </span>
                 </p>
                 <p style="color:red;font-size:0.9em;margin-top:10px;">(Đây là bước giả lập. Vui lòng nhấn Xác nhận)</p>
@@ -217,7 +266,8 @@
     // Lấy giá trị ẩn của form để gửi qua AJAX
     const maSanPhamInput = document.querySelector('input[name="maTaiKhoan"]');
     const giaBanInput = document.querySelector('input[name="gia"]');
-
+    const type = document.querySelector('input[name="type"]');
+    const maGame = document.querySelector('input[name="maGame"]');
     initiateBtn.addEventListener('click', () => {
         const selected = document.querySelector('input[name="tempMethod"]:checked');
         if (!selected) {
@@ -241,6 +291,8 @@
             // Gửi dữ liệu sản phẩm và phương thức thanh toán
             body: new URLSearchParams({
                 'maSanPham': maSanPhamInput.value,
+                'type' : type.value,           
+                'maGame' : maGame.value, 
                 'giaBan': giaBanInput.value,
                 'paymentMethod': paymentMethod
             })

@@ -49,8 +49,32 @@ public class TaiKhoanGameServlet extends HttpServlet {
             default -> null;
         };
 
+        int currentPage = 1;
+        int pageSize = 4; // tạm thời là 1 trang 4 tk
+        String pageParam = request.getParameter("page");
+        if (pageParam == null || pageParam.trim().isEmpty())
+        {
+            pageParam = "1";
+        }
+        try{
+            currentPage = Integer.parseInt(pageParam);
+        }
+        catch (NumberFormatException e) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "ID không hợp lệ");
+            return;
+        }
+        
+        int totalItems = dsTaiKhoan.size();
+        int totalPages = (int) Math.ceil((double) totalItems / pageSize);
+
+        int start = (currentPage - 1) * pageSize;
+        int end = Math.min(start + pageSize, totalItems);
+        List<? extends TaiKhoan> pageList = dsTaiKhoan.subList(start, end);
+        
         request.setAttribute("category", category);
-        request.setAttribute("dsTaiKhoan", dsTaiKhoan);
+        request.setAttribute("currentPage", currentPage);
+        request.setAttribute("totalPages", totalPages);
+        request.setAttribute("dsTaiKhoan", pageList);
 
         RequestDispatcher rd = request.getRequestDispatcher("/taikhoangame.jsp");
         rd.forward(request, response);

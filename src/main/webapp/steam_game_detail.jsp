@@ -128,7 +128,7 @@
     }
 
     .right-panel h3 {
-        color: #00bfff;
+        color: #FF3333;
         border-bottom: 2px solid #00bfff;
         padding-bottom: 8px;
         margin-top: 0;
@@ -179,7 +179,7 @@
 
     .small-back {
         display: inline-block;
-        background: #00bfff;
+        background: #000000;
         color: white;
         padding: 6px 10px;
         border-radius: 6px;
@@ -197,7 +197,7 @@
     <!-- LEFT -->
     <div class="left-panel">
         <img src="${pageContext.request.contextPath}/${gameSteam.duongDanAnh}" alt="${gameSteam.tenGame}">
-        <h2 class="game-title">${gameSteam.tenGame}</h2>
+            <h2 class="game-title">${gameSteam.tenGame}</h2>
 
         <div class="price">
             <span class="old-price">${gameSteam.giaGoc} VNĐ</span>
@@ -206,18 +206,28 @@
 
         <p class="desc">${gameSteam.moTaGame}</p>
 
-        <!-- Trailer -->
-        <c:if test="${not empty gameSteam.idVideoTrailer}">
-            <iframe src="https://www.youtube.com/embed/${gameSteam.idVideoTrailer}"
-                    allowfullscreen></iframe>
+        <!-- ===== Bài viết cấu hình ===== -->
+        <c:if test="${not empty baiVietCauHinh}">
+            <div class="article" style="background-color: #f0f8ff; margin-top: 30px;">
+                <h3>${baiVietCauHinh.tieuDeBaiViet}</h3>
+                <div class="article-content">
+                    <c:out value="${baiVietCauHinh.noiDung}" escapeXml="false"/>
+                </div>
+            </div>
         </c:if>
 
-        <!-- Bài viết giới thiệu -->
-        <c:if test="${not empty baiViet}">
-            <div class="article">
-                <h3>${baiViet.tieuDeBaiViet}</h3>
+        <!-- ===== Video trailer ===== -->
+        <c:if test="${not empty gameSteam.idVideoTrailer}">
+            <iframe src="https://www.youtube.com/embed/${gameSteam.idVideoTrailer}"
+                    allowfullscreen style="margin-top: 20px;"></iframe>
+        </c:if>
+
+        <!-- ===== Bài viết giới thiệu ===== -->
+        <c:if test="${not empty baiVietGame}">
+            <div class="article" style="background-color: #fff0f5; margin-top: 30px;">
+                <h3>${baiVietGame.tieuDeBaiViet}</h3>
                 <div class="article-content">
-                    <c:out value="${baiViet.noiDung}" escapeXml="false"/>
+                    <c:out value="${baiVietGame.noiDung}" escapeXml="false"/>
                 </div>
             </div>
         </c:if>

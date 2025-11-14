@@ -10,18 +10,20 @@
 
     <div class="service-carousel-wrapper">
         <div class="services-grid">
-            <a href="${pageContext.request.contextPath}/shop/game?category=lienquan" class="service-card lienquan">
+            <a href="${pageContext.request.contextPath}/shop/game?category=lienquan&page=1" class="service-card lienquan">
                 <h3>Tài Khoản Liên Quân</h3>
             </a>
-            <a href="${pageContext.request.contextPath}/shop/game?category=freefire" class="service-card freefire">
+            <a href="${pageContext.request.contextPath}/shop/game?category=freefire&page=1" class="service-card freefire">
                 <h3>Tài Khoản FreeFire</h3>
             </a>
-            <a href="${pageContext.request.contextPath}/shop/game?category=riot" class="service-card riot">
+            <a href="${pageContext.request.contextPath}/shop/game?category=riot&page=1" class="service-card riot">
                 <h3>Tài Khoản LMHT & TFT</h3>
             </a>
 
-            <a href="${pageContext.request.contextPath}/shop/steam" class="service-card steam">
+            <a href="${pageContext.request.contextPath}/shop/steam?page=1" class="service-card steam">
+                <h3>Game Steam</h3>
             </a>
+    
 
             <a href="#" class="service-card youtube">
                 <span>Dịch vụ sắp tới</span>
@@ -30,17 +32,17 @@
                 <span>Dịch vụ sắp tới</span>
             </a>
 
-            <a href="${pageContext.request.contextPath}/shop/game?category=lienquan" class="service-card lienquan">
+            <a href="${pageContext.request.contextPath}/shop/game?category=lienquan&page=1" class="service-card lienquan">
                 <h3>Tài Khoản Liên Quân</h3>
             </a>
-            <a href="${pageContext.request.contextPath}/shop/game?category=freefire" class="service-card freefire">
+            <a href="${pageContext.request.contextPath}/shop/game?category=freefire&page=1" class="service-card freefire">
                 <h3>Tài Khoản FreeFire</h3>
             </a>
-            <a href="${pageContext.request.contextPath}/shop/game?category=riot" class="service-card riot">
+            <a href="${pageContext.request.contextPath}/shop/game?category=riot&page=1" class="service-card riot">
                 <h3>Tài Khoản LMHT & TFT</h3>
             </a>
 
-            <a href="${pageContext.request.contextPath}/shop/steam" class="service-card steam">
+            <a href="${pageContext.request.contextPath}/shop/steam?page=1" class="service-card steam">
             </a>
 
             <a href="#" class="service-card youtube">

@@ -15,12 +15,12 @@ INSERT INTO `DANHMUC` (`TenDanhMuc`) VALUES
 -- Tài khoản admin
 -- Sử dụng tạm mật khẩu 1, giai đoạn sản phẩm sẽ chỉ được lưu các giá trị hashed
 INSERT INTO `NGUOIDUNG` (`TenDangNhap`, `MatKhau`, `VaiTro`) VALUES
-     ('admin', '1', 'ADMIN');
+     ('admin', '$12$/PElopUk26hoxKVwXVR66OAoJan0yTglwDGirXxTihV1tEZKHnqgG', 'ADMIN');
 
 -- Các tài khoản test
 INSERT INTO `NGUOIDUNG` (`TenDangNhap`, `MatKhau`, `Email`, `VaiTro`) VALUES
-    ('testuser1', '1', 'usertest1@gmail.com', 'USER'),
-    ('testuser2', '1', 'usertest2@gmail.com', 'USER'),
-    ('testuser3', '1', 'usertest3@gmail.com', 'USER'),
-    ('testuser4', '1', 'usertest4@gmail.com', 'USER'),
-    ('testuser5', '1', 'usertest5@gmail.com', 'USER');
+    ('testuser1', '$12$/PElopUk26hoxKVwXVR66OAoJan0yTglwDGirXxTihV1tEZKHnqgG', 'usertest1@gmail.com', 'USER'),
+    ('testuser2', '$12$/PElopUk26hoxKVwXVR66OAoJan0yTglwDGirXxTihV1tEZKHnqgG', 'usertest2@gmail.com', 'USER'),
+    ('testuser3', '$12$/PElopUk26hoxKVwXVR66OAoJan0yTglwDGirXxTihV1tEZKHnqgG', 'usertest3@gmail.com', 'USER'),
+    ('testuser4', '$12$/PElopUk26hoxKVwXVR66OAoJan0yTglwDGirXxTihV1tEZKHnqgG', 'usertest4@gmail.com', 'USER'),
+    ('testuser5', '$12$/PElopUk26hoxKVwXVR66OAoJan0yTglwDGirXxTihV1tEZKHnqgG', 'usertest5@gmail.com', 'USER');

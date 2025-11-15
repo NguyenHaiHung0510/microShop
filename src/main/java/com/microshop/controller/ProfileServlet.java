@@ -33,8 +33,9 @@ public class ProfileServlet extends HttpServlet {
         
         // 2. Kiểm tra xác thực (Authentication Check)
         // Kiểm tra xem đối tượng "user" đã được lưu trong Session hay chưa
-        NguoiDung user = (NguoiDung) session.getAttribute("user");
-        if (user != null) {
+
+        if (session != null && session.getAttribute("user") != null) {
+            NguoiDung user = (NguoiDung) session.getAttribute("user");
             try {
                 HangThanhVien htv = dao.getById(user.getMaHangThanhVien());
                 request.setAttribute("HangNguoiDung", htv.getTenHang());

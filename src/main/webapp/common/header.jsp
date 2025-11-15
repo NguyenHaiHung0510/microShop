@@ -69,27 +69,27 @@
                 <a href="${pageContext.request.contextPath}/shop/game?category=freefire&page=1">Tài khoản Free Fire</a>
                 <a href="${pageContext.request.contextPath}/shop/game?category=riot&page=1">Tài khoản LMHT & TFT</a>
                 <a href="${pageContext.request.contextPath}/shop/steam?page=1">Dịch vụ Game Steam</a>
-                <a href="${pageContext.request.contextPath}/contact">Liên hệ Admin</a>
+                <a href="${pageContext.request.contextPath}/policy">Chính sách bảo hành</a>
             </nav>
         </header>
 
         <main>
             <%-- Phần thân trang (home.jsp) sẽ được chèn vào đây --%>
 
-        <script>
-            // --- Hiệu ứng header ẩn khi cuộn xuống, hiện khi cuộn lên ---
-            let lastScrollY = window.scrollY;
-            const header = document.getElementById("mainHeader");
+            <script>
+                // --- Hiệu ứng header ẩn khi cuộn xuống, hiện khi cuộn lên ---
+                let lastScrollY = window.scrollY;
+                const header = document.getElementById("mainHeader");
 
-            window.addEventListener("scroll", () => {
-                if (window.scrollY > lastScrollY && window.scrollY > 100) {
-                    // Cuộn xuống -> ẩn header
-                    header.style.top = "-120px";
-                } else {
-                    // Cuộn lên -> hiện lại header
-                    header.style.top = "0";
-                }
-                lastScrollY = window.scrollY;
-            });
-        </script>
+                window.addEventListener("scroll", () => {
+                    if (window.scrollY > lastScrollY && window.scrollY > 100) {
+                        // Cuộn xuống -> ẩn header
+                        header.style.top = "-120px";
+                    } else {
+                        // Cuộn lên -> hiện lại header
+                        header.style.top = "0";
+                    }
+                    lastScrollY = window.scrollY;
+                });
+            </script>
     </body>

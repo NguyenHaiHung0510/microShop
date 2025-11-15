@@ -121,8 +121,8 @@
                     </span>
                 </p>
                 <div class="wait-message" style="padding: 15px; background-color: #f8f9fa; border: 1px solid #dee2e6; border-radius: 4px; text-align: center; margin-top: 20px;">
-                    <p style="font-weight: 500; margin: 0;">Vui lòng chờ Admin xác nhận thanh toán.</p>
-                    <p style="font-size: 0.9em; margin: 5px 0 0 0;">Bạn có thể tải lại trang này để kiểm tra trạng thái.</p>
+                    <p style="font-weight: 500; margin: 0;">Đơn hàng đang chờ Admin xác nhận thanh toán.</p>
+                    <p style="font-size: 0.9em; margin: 5px 0 0 0;">Bạn vui lòng vào "Trang cá nhân" / "Lịch sử đơn hàng" để xem tình trạng duyệt nhé!</p>
                 </div>
             </div>
         </form>

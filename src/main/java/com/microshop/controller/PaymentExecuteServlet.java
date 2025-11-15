@@ -5,15 +5,17 @@ import com.microshop.dao.DonHangSlotSteamDAO;
 import com.microshop.dao.GameSteamDAO;
 import com.microshop.dao.GameTaiKhoanSteamDAO;
 import com.microshop.dao.HangThanhVienDAO;
+import com.microshop.dao.NguoiDungDAO; // SỬA: Thêm DAO người dùng
+import com.microshop.dao.TaiKhoanDAO;
 import com.microshop.dao.TaiKhoanFreeFireDAO;
-import com.microshop.dao.TaiKhoanLienQuanDAO; // Ví dụ: Cần DAO để kiểm tra tồn kho
+import com.microshop.dao.TaiKhoanLienQuanDAO;
 import com.microshop.dao.TaiKhoanRiotDAO;
 import com.microshop.dao.TaiKhoanSteamDAO;
-
 import com.microshop.model.NguoiDung;
-import com.microshop.model.TaiKhoan; // Giả định đây là lớp cha cho các loại tài khoản
+import com.microshop.model.TaiKhoan;
 import com.microshop.model.DonHang;
 import com.microshop.model.DonHangSlotSteam;
+import com.microshop.model.GameSteam;
 import com.microshop.model.HangThanhVien;
 import com.microshop.model.TaiKhoanSteam;
 import java.io.IOException;
@@ -27,9 +29,7 @@ import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -39,153 +39,185 @@ public class PaymentExecuteServlet extends HttpServlet {
     private final TaiKhoanLienQuanDAO lienQuanDAO = new TaiKhoanLienQuanDAO();
     private final TaiKhoanFreeFireDAO freeFireDAO = new TaiKhoanFreeFireDAO();
     private final TaiKhoanRiotDAO riotDAO = new TaiKhoanRiotDAO();
-    private final DonHangDAO donhangDAO = new DonHangDAO(); // Vẫn cần để kiểm tra
-    private final DonHangSlotSteamDAO donhangsteamDAO = new DonHangSlotSteamDAO(); // Vẫn cần để kiểm tra
+    private final TaiKhoanDAO taiKhoanDAO = new TaiKhoanDAO();
+    private final DonHangDAO donhangDAO = new DonHangDAO();
+    private final DonHangSlotSteamDAO donhangsteamDAO = new DonHangSlotSteamDAO();
     private final TaiKhoanSteamDAO tksteamDAO = new TaiKhoanSteamDAO();
     private final GameTaiKhoanSteamDAO gametksteamDAO = new GameTaiKhoanSteamDAO();
     private final GameSteamDAO gamesteamDAO = new GameSteamDAO();
+    private final HangThanhVienDAO hangDao = new HangThanhVienDAO();
+    private final NguoiDungDAO nguoiDungDAO = new NguoiDungDAO(); // SỬA: Thêm DAO
+    private final int NGUONG_HUY_PHUT = 3;
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         HttpSession session = request.getSession(false);
-        NguoiDung user = (session != null) ? (NguoiDung) session.getAttribute("user") : null;
+        NguoiDung userCu = (session != null) ? (NguoiDung) session.getAttribute("user") : null;
 
-        if (user == null) {
+        if (userCu == null) {
             response.sendRedirect(request.getContextPath() + "/login");
             return;
         }
 
         String idParam = request.getParameter("id");
-        String type = request.getParameter("type");
+        String typeParam = request.getParameter("type");
+        String redirectURL;
 
-        if (idParam == null || type == null) {
+        if (idParam == null || typeParam == null) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Thiếu thông tin sản phẩm.");
             return;
         }
 
         try {
+            // =================================================================
+            // SỬA LỖI SESSION: Làm mới người dùng từ CSDL
+            // =================================================================
+            NguoiDung user = nguoiDungDAO.getById(userCu.getMaNguoiDung());
+            if (user == null) { // Trường hợp hy hữu: tài khoản bị xóa
+                session.invalidate();
+                response.sendRedirect(request.getContextPath() + "/login");
+                return;
+            }
+            // Cập nhật lại session ngay lập tức
+            session.setAttribute("user", user);
+            // =================================================================
+
             int maSanPham = Integer.parseInt(idParam);
-            TaiKhoan sanPham = null;
-            TaiKhoanSteam sanPhamSteam = null;
-            switch (type.toLowerCase()) {
-                case "lienquan":
-                    sanPham = lienQuanDAO.getById(maSanPham);
-                    break;
-                case "freefire":
-                    sanPham = freeFireDAO.getById(maSanPham);
-                    break;
-                case "riot":
-                    sanPham = riotDAO.getById(maSanPham);
-                    break;
-                default:
-//                    response.sendError(HttpServletResponse.SC_NOT_FOUND, "Loại sản phẩm không hợp lệ.");
-//                    return;
-                    break;
+            Object sanPham = null;
+            DonHang donHangGame = null;
+            DonHangSlotSteam donHangSteam = null;
+
+            int type; // 1=Game, 2=Steam
+            int maGame = -1;
+
+            HangThanhVien htv = hangDao.getById(user.getMaHangThanhVien()); // Dùng user MỚI
+            BigDecimal chietKhauPhanTram = htv.getChietKhau();
+
+            // 1. KIỂM TRA ĐƠN HÀNG TỒN TẠI
+            if ("steam".equals(typeParam)) {
+                type = 2;
+                maGame = maSanPham;
+                redirectURL = request.getContextPath() + "/shop/steam/detail?id=" + maSanPham;
+                donHangSteam = donhangsteamDAO.getByMaGameVaNguoiDungChoThanhToan(maGame, user.getMaNguoiDung());
+                if (donHangSteam != null) {
+                    sanPham = tksteamDAO.getById(donHangSteam.getMaTaiKhoanSteam());
+                }
+            } else { // Game Account
+                type = 1;
+                redirectURL = request.getContextPath() + "/shop/game/detail?id=" + maSanPham + "&category=" + typeParam;
+                donHangGame = donhangDAO.getByMaTaiKhoanVaNguoiDung(maSanPham, user.getMaNguoiDung());
+                if (donHangGame != null) {
+                    sanPham = getTaiKhoanGame(maSanPham, typeParam);
+                }
             }
 
-            if(!type.toLowerCase().equals("steam")){
-                if (sanPham == null) {
-                    response.sendError(HttpServletResponse.SC_NOT_FOUND, "Sản phẩm không tồn tại.");
+            // 2. XỬ LÝ KỊCH BẢN
+            // --- Kịch bản 1: Đã được Admin duyệt (DA_HOAN_THANH) ---
+            if (donHangGame != null && "DA_HOAN_THANH".equals(donHangGame.getTrangThai())) {
+                request.setAttribute("paymentSuccessStatus", true);
+                request.setAttribute("transactionMethod", "ADMIN_APPROVED");
+                request.setAttribute("transactionId", "TXN-" + donHangGame.getMaDonHang());
+                request.getRequestDispatcher("/payment_success.jsp").forward(request, response);
+                return;
+            }
+
+            // --- Kịch bản 2: Đang chờ duyệt (CHO_THANH_TOAN) ---
+            if ((donHangGame != null && "CHO_THANH_TOAN".equals(donHangGame.getTrangThai()))
+                    || (donHangSteam != null && "CHO_THANH_TOAN".equals(donHangSteam.getTrangThai()))) {
+
+                LocalDateTime thoiGianTao = (donHangGame != null) ? donHangGame.getThoiGianTao() : donHangSteam.getThoiGianTao();
+                LocalDateTime thoiGianHetHan = thoiGianTao.plusMinutes(NGUONG_HUY_PHUT);
+                Duration remaining = Duration.between(LocalDateTime.now(), thoiGianHetHan);
+                long thoiGianConLaiGiay = remaining.getSeconds();
+
+                if (thoiGianConLaiGiay <= 0) {
+                    response.sendRedirect(redirectURL + "&status=expired");
                     return;
                 }
 
-                // KIỂM TRA TỒN KHO VÀ TRẠNG THÁI (Không thay đổi)
-                if (sanPham.getTrangThai().equals("DA_BAN")) {
-                    response.sendRedirect(request.getContextPath() + "/shop/game/detail?id=" + maSanPham + "&category=" + type + "&status=sold");
-                    return;
-                }
-                DonHang dh = donhangDAO.getByMaTaiKhoanChoThanhToan(maSanPham);
-                if (dh != null && !dh.getMaNguoiDung().equals(user.getMaNguoiDung())) {
-                    response.sendRedirect(request.getContextPath() + "/shop/game/detail?id=" + maSanPham + "&category=" + type + "&status=in_transaction");
-                    return;
-                }
+                BigDecimal giaDaLuuTrongDon = (donHangGame != null) ? donHangGame.getGiaMua() : donHangSteam.getGiaMua();
+                BigDecimal giaBanGoc;
 
-                // Chỉ đặt sản phẩm vào request và chuyển tiếp
-                // KHÔNG TẠO ĐƠN HÀNG Ở ĐÂY
+                if (type == 1) {
+                    giaBanGoc = ((TaiKhoan) sanPham).getGiaBan();
+                } else {
+                    GameSteam game = gamesteamDAO.getById(maGame);
+                    giaBanGoc = game.getGiaBan();
+                }
+                BigDecimal tienChietKhau = giaBanGoc.subtract(giaDaLuuTrongDon);
+
                 request.setAttribute("sanPhamThanhToan", sanPham);
-                
-                HangThanhVienDAO hangDao = new HangThanhVienDAO(); // Khởi tạo DAO
-    
-                // Lấy hạng thành viên của người dùng
-                HangThanhVien htv = hangDao.getById(user.getMaHangThanhVien());
-                // TRUYỀN DỮ LIỆU CHIẾT KHẤU SANG JSP
-
-                BigDecimal giaBan = sanPham.getGiaBan(); // Giá gốc
-                BigDecimal chietKhauPhanTram = htv.getChietKhau(); // Ví dụ: 0.02 (2%)
-                BigDecimal tienChietKhau = giaBan.multiply(chietKhauPhanTram);
-                // Tính giá cuối cùng
-                BigDecimal giaCuoiCung = giaBan.subtract(tienChietKhau);
-//                if(dh != null){
-//                    donhangDAO.updateGiaMua(dh.getMaDonHang(), giaCuoiCung);
-//                }
-                request.setAttribute("type", 1);
-                request.setAttribute("maGame", -1);
+                request.setAttribute("isWaiting", true);
+                request.setAttribute("thoiGianConLai", thoiGianConLaiGiay);
+                request.setAttribute("type", type);
+                request.setAttribute("maGame", maGame);
                 request.setAttribute("tenHang", htv.getTenHang());
-                request.setAttribute("giaBanDau", giaBan);
+                request.setAttribute("giaBanDau", giaBanGoc);
                 request.setAttribute("tienChietKhau", tienChietKhau);
-                request.setAttribute("giaCuoiCung", giaCuoiCung);
+                request.setAttribute("giaCuoiCung", giaDaLuuTrongDon);
+
+                request.getRequestDispatcher("/checkout.jsp").forward(request, response);
+                return;
             }
-            else{
-                // Lấy list tài khoản chứa steam game theo số slot giảm dần
-                List<TaiKhoanSteam> tk_chua_game = gametksteamDAO.getAllTaiKhoanByMaGameSteamSorted(maSanPham);
-                // Kiểm tra xem tài khoản nhiểu slot nhất còn slot không
-                TaiKhoanSteam tk_nhieu_slot_nhat = tk_chua_game.get(0);
-                Integer tong_so_slot = tk_nhieu_slot_nhat.getTongSoSlot();
-                Integer so_slot_da_ban = tk_nhieu_slot_nhat.getSoSlotDaBan();                
 
-                List<DonHangSlotSteam> list_dh_game = donhangsteamDAO.getByMaGameSteamChoThanhToan(maSanPham);
-                boolean dh_dang_duoc_user_thanh_toan = false;
-                for(DonHangSlotSteam dh : list_dh_game){
-                    if(dh.getMaNguoiDung().equals(user.getMaNguoiDung())){
-                        dh_dang_duoc_user_thanh_toan = true;
-                        break;
+            // --- Kịch bản 3: Lần đầu vào mua (Hoặc mua lại Steam) ---
+            if (sanPham == null) {
+                if (type == 2) {
+                    List<TaiKhoanSteam> tk_chua_game = gametksteamDAO.getAllTaiKhoanByMaGameSteamSorted(maSanPham);
+                    if (tk_chua_game.isEmpty()) {
+                        response.sendRedirect(redirectURL + "&status=no_accounts");
+                        return;
                     }
-                } 
-                if(tong_so_slot - so_slot_da_ban <= 0 && !dh_dang_duoc_user_thanh_toan){
-                    response.sendRedirect(request.getContextPath() + "/shop/steam/detail?id=" + maSanPham + "&category=" + type + "&status=sold");
-                    return;
-                }
-                // Tìm xem tài khoản nào có còn slot
-                for(TaiKhoanSteam tk : tk_chua_game){
-                    // Xem tài khoản này có đang được giao dịch hay không?
-                    List<DonHangSlotSteam> listdh = donhangsteamDAO.getByMaTaiKhoanChoThanhToan(tk.getMaTaiKhoanSteam());   
-                    Integer sl = tk.getTongSoSlot();
-                    Integer sold_sl = tk.getSoSlotDaBan();
-                    // Nếu còn slot chưa được giao dịch
-                    if(listdh.size() != (sl - sold_sl)){
-                        sanPhamSteam = tk;
-                        break;
+                    sanPham = tk_chua_game.get(0);
+                    boolean hetSlot = true;
+                    for (TaiKhoanSteam tk : tk_chua_game) {
+                        if (tk.getSoSlotDaBan() < tk.getTongSoSlot()) {
+                            hetSlot = false;
+                            break;
+                        }
                     }
+                    if (hetSlot) {
+                        response.sendRedirect(redirectURL + "&status=sold_out");
+                        return;
+                    }
+                } else {
+                    sanPham = getTaiKhoanGame(maSanPham, typeParam);
                 }
-
-                // Chỉ đặt sản phẩm vào request và chuyển tiếp
-                // KHÔNG TẠO ĐƠN HÀNG Ở ĐÂY
-                request.setAttribute("sanPhamThanhToan", sanPhamSteam);
-                
-                HangThanhVienDAO hangDao = new HangThanhVienDAO(); // Khởi tạo DAO
-    
-                // Lấy hạng thành viên của người dùng
-                HangThanhVien htv = hangDao.getById(user.getMaHangThanhVien());
-                // TRUYỀN DỮ LIỆU CHIẾT KHẤU SANG JSP
-
-                BigDecimal giaBan = gamesteamDAO.getById(maSanPham).getGiaBan(); // Giá gốc
-                BigDecimal chietKhauPhanTram = htv.getChietKhau(); // Ví dụ: 0.02 (2%)
-                BigDecimal tienChietKhau = giaBan.multiply(chietKhauPhanTram);
-                // Tính giá cuối cùng
-                BigDecimal giaCuoiCung = giaBan.subtract(tienChietKhau);
-                request.setAttribute("type", 2);
-                request.setAttribute("maGame", maSanPham);
-                request.setAttribute("tenHang", htv.getTenHang());
-                request.setAttribute("giaBanDau", giaBan);
-                request.setAttribute("tienChietKhau", tienChietKhau);
-                request.setAttribute("giaCuoiCung", giaCuoiCung);
             }
-            // Đặt thời gian mặc định (sẽ được cập nhật bởi AJAX)
-            // Bạn có thể đặt thời gian này trong file cấu hình
-            final int NGUONG_HUY_PHUT = 3;
+
+            if (sanPham == null) {
+                response.sendError(HttpServletResponse.SC_NOT_FOUND, "Sản phẩm không tồn tại.");
+                return;
+            }
+
+            if (type == 1 && "DA_BAN".equals(((TaiKhoan) sanPham).getTrangThai())) {
+                response.sendRedirect(redirectURL + "&status=sold_out");
+                return;
+            }
+
+            BigDecimal giaBan;
+            if (type == 2) {
+                GameSteam game = gamesteamDAO.getById(maSanPham);
+                giaBan = game.getGiaBan();
+            } else {
+                giaBan = ((TaiKhoan) sanPham).getGiaBan();
+            }
+
+            BigDecimal tienChietKhau = giaBan.multiply(chietKhauPhanTram); // Tính chiết khấu
+            BigDecimal giaCuoiCung = giaBan.subtract(tienChietKhau);
+
+            request.setAttribute("sanPhamThanhToan", sanPham);
+            request.setAttribute("isWaiting", false);
             request.setAttribute("thoiGianConLai", NGUONG_HUY_PHUT * 60);
-            
+            request.setAttribute("type", type);
+            request.setAttribute("maGame", maGame);
+            request.setAttribute("tenHang", htv.getTenHang());
+            request.setAttribute("giaBanDau", giaBan);
+            request.setAttribute("tienChietKhau", tienChietKhau);
+            request.setAttribute("giaCuoiCung", giaCuoiCung);
+
             request.getRequestDispatcher("/checkout.jsp").forward(request, response);
 
         } catch (NumberFormatException e) {
@@ -193,6 +225,36 @@ public class PaymentExecuteServlet extends HttpServlet {
         } catch (SQLException ex) {
             Logger.getLogger(PaymentExecuteServlet.class.getName()).log(Level.SEVERE, null, ex);
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Lỗi cơ sở dữ liệu.");
+        }
+    }
+
+    private TaiKhoan getTaiKhoanGame(int maSanPham, String type) throws SQLException {
+        if ("1".equals(type) || "game".equals(type)) {
+            TaiKhoan tk = taiKhoanDAO.getById(maSanPham);
+            if (tk == null) {
+                return null;
+            }
+            int maDanhMuc = tk.getMaDanhMuc();
+            if (maDanhMuc == 1) {
+                return freeFireDAO.getById(maSanPham);
+            }
+            if (maDanhMuc == 2) {
+                return lienQuanDAO.getById(maSanPham);
+            }
+            if (maDanhMuc == 3) {
+                return riotDAO.getById(maSanPham);
+            }
+            return tk;
+        }
+        switch (type.toLowerCase()) {
+            case "lienquan":
+                return lienQuanDAO.getById(maSanPham);
+            case "freefire":
+                return freeFireDAO.getById(maSanPham);
+            case "riot":
+                return riotDAO.getById(maSanPham);
+            default:
+                return null;
         }
     }
 }

@@ -20,7 +20,6 @@ public class GameTaiKhoanSteamDAO {
     public boolean addGameToTaiKhoan(Integer maGameSteam, Integer maTaiKhoanSteam) throws SQLException {
         String sql = "INSERT INTO GAME_TAIKHOAN_STEAM (MaGameSteam, MaTaiKhoanSteam) VALUES (?, ?)";
         try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
-
             ps.setObject(1, maGameSteam);
             ps.setObject(2, maTaiKhoanSteam);
             return ps.executeUpdate() > 0;
@@ -30,7 +29,6 @@ public class GameTaiKhoanSteamDAO {
     public boolean removeGameFromTaiKhoan(Integer maGameSteam, Integer maTaiKhoanSteam) throws SQLException {
         String sql = "DELETE FROM GAME_TAIKHOAN_STEAM WHERE MaGameSteam = ? AND MaTaiKhoanSteam = ?";
         try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
-
             ps.setObject(1, maGameSteam);
             ps.setObject(2, maTaiKhoanSteam);
             return ps.executeUpdate() > 0;
@@ -45,7 +43,6 @@ public class GameTaiKhoanSteamDAO {
             WHERE gts.MaTaiKhoanSteam = ?
             """;
         try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
-
             ps.setObject(1, maTaiKhoanSteam);
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
@@ -64,7 +61,6 @@ public class GameTaiKhoanSteamDAO {
             WHERE gts.MaGameSteam = ?
             """;
         try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
-
             ps.setObject(1, maGameSteam);
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
@@ -74,16 +70,20 @@ public class GameTaiKhoanSteamDAO {
         }
         return list;
     }
+
+    /**
+     * SỬA LỖI: Cập nhật câu SQL để sắp xếp theo (TongSoSlot - SoSlotDaBan) Đây
+     * là logic cân bằng tải.
+     */
     public List<TaiKhoanSteam> getAllTaiKhoanByMaGameSteamSorted(Integer maGameSteam) throws SQLException {
         List<TaiKhoanSteam> list = new ArrayList<>();
         String sql = """
             SELECT ts.* FROM TAIKHOAN_STEAM ts 
             JOIN GAME_TAIKHOAN_STEAM gts ON ts.MaTaiKhoanSteam = gts.MaTaiKhoanSteam 
             WHERE gts.MaGameSteam = ? 
-            ORDER BY ts.TongSoSlot DESC
+            ORDER BY (ts.TongSoSlot - ts.SoSlotDaBan) DESC
             """;
         try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
-
             ps.setObject(1, maGameSteam);
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
@@ -93,6 +93,7 @@ public class GameTaiKhoanSteamDAO {
         }
         return list;
     }
+
     private TaiKhoanSteam mapResultSetToTaiKhoanSteam(ResultSet rs) throws SQLException {
         TaiKhoanSteam tk = new TaiKhoanSteam();
         tk.setMaTaiKhoanSteam(rs.getObject("MaTaiKhoanSteam", Integer.class));

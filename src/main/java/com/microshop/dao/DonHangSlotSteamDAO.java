@@ -44,7 +44,7 @@ public class DonHangSlotSteamDAO implements CrudDAO<DonHangSlotSteam, Integer> {
     @Override
     public List<DonHangSlotSteam> getAll() throws SQLException {
         List<DonHangSlotSteam> list = new ArrayList<>();
-        String sql = "SELECT * FROM DONHANG_SLOT_STEAM ORDER BY ThoiGianTao DESC"; // Sửa: Thêm ORDER BY
+        String sql = "SELECT * FROM DONHANG_SLOT_STEAM ORDER BY ThoiGianTao DESC";
         try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
                 list.add(mapResultSetToDonHangSlotSteam(rs));
@@ -114,13 +114,9 @@ public class DonHangSlotSteamDAO implements CrudDAO<DonHangSlotSteam, Integer> {
             ps.setObject(2, entity.getMaGameSteam());
             ps.setObject(3, entity.getMaTaiKhoanSteam());
             ps.setBigDecimal(4, entity.getGiaMua());
-
             ps.setTimestamp(5, entity.getThoiGianMua() != null ? Timestamp.valueOf(entity.getThoiGianMua()) : null);
-
             ps.setString(6, entity.getTrangThai());
-
             ps.setTimestamp(7, entity.getThoiGianTao() != null ? Timestamp.valueOf(entity.getThoiGianTao()) : null);
-
             ps.setObject(8, entity.getMaDonHangSlot());
 
             return ps.executeUpdate() > 0;
@@ -275,5 +271,22 @@ public class DonHangSlotSteamDAO implements CrudDAO<DonHangSlotSteam, Integer> {
             }
         }
         return 0;
+    }
+
+    public List<DonHangSlotSteam> getAllPaginated(int page, int recordsPerPage) throws SQLException {
+        List<DonHangSlotSteam> list = new ArrayList<>();
+        int offset = (page - 1) * recordsPerPage;
+        String sql = "SELECT * FROM DONHANG_SLOT_STEAM ORDER BY ThoiGianTao DESC LIMIT ? OFFSET ?";
+
+        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, recordsPerPage);
+            ps.setInt(2, offset);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    list.add(mapResultSetToDonHangSlotSteam(rs));
+                }
+            }
+        }
+        return list;
     }
 }

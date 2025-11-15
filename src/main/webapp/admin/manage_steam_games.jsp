@@ -6,25 +6,26 @@
     <jsp:param name="pageTitle" value="Quản lý Game Steam"/>
 </jsp:include>
 
-
 <div class="admin-container">
 
-    <%-- 1. Thanh Điều Hướng Admin --%>
     <nav class="admin-nav">
         <a href="${pageContext.request.contextPath}/admin/dashboard">Bảng Điều Khiển</a>
-        <a href="${pageContext.request.contextPath}/admin/products?type=game">Quản lý Tài Khoản Game</a>
+        <%-- SỬA LINK: Bỏ "?type=game" --%>
+        <a href="${pageContext.request.contextPath}/admin/products/game">Quản lý Tài Khoản Game</a>
         <a href="${pageContext.request.contextPath}/admin/products/steam" class="active">Quản lý Game Steam</a>
         <a href="${pageContext.request.contextPath}/admin/orders">Quản lý Đơn Hàng</a>
-        <a href="${pageContext.request.contextPath}/admin/users">Quản lý Người Dùng</a>
-        <a href="${pageContext.request.contextPath}/admin/import">Nhập Hàng</a>
     </nav>
 
+    <%-- (Phần còn lại của file giữ nguyên) --%>
     <div style="display: flex; justify-content: space-between; align-items: center;">
         <h2>Quản lý Game Steam (${totalRecords} sản phẩm)</h2>
         <a href="${pageContext.request.contextPath}/admin/steam/add" class="nav-button accent" style="color: white; border: none;">Thêm Game Mới</a>
     </div>
 
-    <%-- 2. Bảng Danh sách Game Steam --%>
+    <c:if test="${not empty errorMessage}">
+        <div class="alert-danger" style="margin: 15px 0;">${errorMessage}</div>
+    </c:if>
+
     <section class="admin-table-wrapper">
         <table class="admin-table">
             <thead>
@@ -64,7 +65,6 @@
                         <td style="min-width: 200px;">
                             <a href="${pageContext.request.contextPath}/admin/steam/edit?id=${game.maGameSteam}" class="nav-button" style="background-color: #007bff; color: white; border: none; padding: 8px 12px; font-size: 13px;">Sửa</a>
 
-                            <%-- Form Xóa (An toàn hơn dùng link GET) --%>
                             <form action="${pageContext.request.contextPath}/admin/steam/delete" method="POST" style="display: inline;" 
                                   onsubmit="return confirm('Bạn có chắc chắn muốn xóa game [${game.tenGame}] không? TOÀN BỘ bài viết, slot, đơn hàng liên quan sẽ bị xóa!');">
                                 <input type="hidden" name="id" value="${game.maGameSteam}">
@@ -77,28 +77,17 @@
         </table>
     </section>
 
-    <%-- 3. Thanh Phân Trang --%>
     <div class="pagination">
         <c:if test="${currentPage > 1}">
             <a href="products/steam?page=${currentPage - 1}">Trước</a>
         </c:if>
-
         <c:forEach begin="1" end="${noOfPages}" var="i">
-            <c:choose>
-                <c:when test="${currentPage == i}">
-                    <a class="active">${i}</a>
-                </c:when>
-                <c:otherwise>
-                    <a href="products/steam?page=${i}">${i}</a>
-                </c:otherwise>
-            </c:choose>
+            <a href="products/steam?page=${i}" class="${currentPage == i ? 'active' : ''}">${i}</a>
         </c:forEach>
-
         <c:if test="${currentPage < noOfPages}">
             <a href="products/steam?page=${currentPage + 1}">Sau</a>
         </c:if>
     </div>
-
 </div>
 
 <jsp:include page="/common/footer.jsp" />

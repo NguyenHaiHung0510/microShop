@@ -7,13 +7,12 @@
 
 <div class="admin-container">
     <nav class="admin-nav">
-        <%-- (Giữ nguyên nav) --%>
         <a href="${pageContext.request.contextPath}/admin/dashboard">Bảng Điều Khiển</a>
-        <a href="${pageContext.request.contextPath}/admin/products?type=game">Quản lý Tài Khoản Game</a>
+        <%-- SỬA LINK: Bỏ "?type=game" --%>
+        <a href="${pageContext.request.contextPath}/admin/products/game">Quản lý Tài Khoản Game</a>
         <a href="${pageContext.request.contextPath}/admin/products/steam" class="active">Quản lý Game Steam</a>
         <a href="${pageContext.request.contextPath}/admin/orders">Quản lý Đơn Hàng</a>
-        <a href="${pageContext.request.contextPath}/admin/users">Quản lý Người Dùng</a>
-        <a href="${pageContext.request.contextPath}/admin/import">Nhập Hàng</a>
+        <%-- SỬA TÊN: "Nhập Hàng" --%>
     </nav>
 </div>
 
@@ -38,14 +37,17 @@
                 <label for="tenGame">Tên Game</label>
                 <input type="text" id="tenGame" name="tenGame" value="${game.tenGame}" required>
             </div>
+
             <div class="form-group">
                 <label for="giaGoc">Giá Gốc (VNĐ)</label>
                 <input type="number" id="giaGoc" name="giaGoc" value="${game.giaGoc}" required>
             </div>
+
             <div class="form-group">
                 <label for="giaBan">Giá Bán Slot (VNĐ)</label>
                 <input type="number" id="giaBan" name="giaBan" value="${game.giaBan}" required>
             </div>
+
             <div class="form-group">
                 <label for="idVideoTrailer">ID Video Trailer YouTube (Vd: E3Huy2CdjfA)</label>
                 <input type="text" id="idVideoTrailer" name="idVideoTrailer" value="${game.idVideoTrailer}">
@@ -58,7 +60,7 @@
 
                 <c:if test="${not empty game.duongDanAnh}">
                     <span class="note" style="margin-top: 5px;">
-                        Ảnh hiện tại: ${game.duongDanAnh}
+                        Ảnh hiện tại: 
                         <img src="${pageContext.request.contextPath}/${game.duongDanAnh}" width="100" style="display: block; margin-top: 5px; border-radius: 4px;">
                     </span>
                     <span class="note">Bỏ trống nếu không muốn thay đổi ảnh.</span>
@@ -82,6 +84,7 @@
                     <textarea id="noiDung1" name="noiDung1">${baiViet1.noiDung}</textarea>
                 </div>
             </fieldset>
+
             <fieldset class="form-group full-width" style="border: 1px solid #ddd; padding: 15px; border-radius: 8px;">
                 <legend style="font-weight: 500;">Bài Viết 2 (Cấu hình)</legend>
                 <input type="hidden" name="maBaiViet2" value="${baiViet2.maBaiViet}">

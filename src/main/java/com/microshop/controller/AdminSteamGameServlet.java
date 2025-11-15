@@ -40,20 +40,15 @@ public class AdminSteamGameServlet extends HttpServlet {
 
     private GameSteamDAO gameSteamDAO;
     private BaiVietGioiThieuDAO baiVietDAO;
-    private String uploadPath; // Đường dẫn vật lý tuyệt đối tới .../uploads
+
+    // --- SỬA 1: Đặt đường dẫn vật lý ra ngoài Desktop ---
+    // (Dùng / để Java tự xử lý, an toàn hơn File.separator)
+    private final String EXTERNAL_UPLOAD_PATH = "C:/Users/os/Desktop/microshop_uploads";
 
     @Override
     public void init() {
         gameSteamDAO = new GameSteamDAO();
         baiVietDAO = new BaiVietGioiThieuDAO();
-
-        // Lấy đường dẫn vật lý trên server để lưu file
-        uploadPath = getServletContext().getRealPath("") + File.separator + "assets" + File.separator + "images" + File.separator + "uploads";
-
-        File uploadDir = new File(uploadPath);
-        if (!uploadDir.exists()) {
-            uploadDir.mkdirs();
-        }
     }
 
     @Override
@@ -92,23 +87,22 @@ public class AdminSteamGameServlet extends HttpServlet {
                     break;
             }
         } catch (ServletException | IOException | SQLException e) {
-            // Kiểm tra xem có phải lỗi do file quá lớn không
-            if (e instanceof IOException || e instanceof IllegalStateException || e instanceof ServletException) {
+            String errorMessage = "Đã xảy ra lỗi. Vui lòng thử lại.";
+            if (e instanceof IllegalStateException || e instanceof IOException || e instanceof ServletException) {
+                errorMessage = "Lỗi: File upload quá lớn (Tối đa 10MB).";
                 Logger.getLogger(AdminSteamGameServlet.class.getName()).log(Level.WARNING, "Lỗi upload file: " + e.getMessage());
-
-                // Gửi thông báo lỗi về form
-                request.setAttribute("errorMessage", "Lỗi: File upload quá lớn (Tối đa 10MB) hoặc request quá nặng.");
-
-                try {
-                    // cần tải lại dữ liệu cho form (nếu là form edit)
-                    // Hoặc đơn giản là forward về trang form rỗng (nếu là add)
-                    // Để đơn giản, chuyển hướng về trang danh sách
-                    listSteamGames(request, response); // Tạm thời chuyển về trang list
-                } catch (SQLException ex) {
-                    System.getLogger(AdminSteamGameServlet.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-                }
             } else {
-                throw new ServletException(e);
+                Logger.getLogger(AdminSteamGameServlet.class.getName()).log(Level.SEVERE, "Lỗi SQL", e);
+                errorMessage = "Lỗi CSDL: " + e.getMessage();
+            }
+
+            request.setAttribute("errorMessage", errorMessage);
+            // Cố gắng tải lại trang list (vì form cần data, có thể bị lỗi)
+            try {
+                listSteamGames(request, response);
+            } catch (Exception ex) {
+                Logger.getLogger(AdminSteamGameServlet.class.getName()).log(Level.SEVERE, "Không thể tải lại trang list", ex);
+                response.sendRedirect(request.getContextPath() + "/admin/dashboard"); // Chuyển về dashboard nếu lỗi kép
             }
         }
     }
@@ -160,13 +154,12 @@ public class AdminSteamGameServlet extends HttpServlet {
             throws SQLException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
 
-        // Xóa file ảnh trước khi xóa bản ghi
         GameSteam game = gameSteamDAO.getById(id);
         if (game != null && game.getDuongDanAnh() != null && !game.getDuongDanAnh().isEmpty()) {
             deleteFile(game.getDuongDanAnh());
         }
 
-        gameSteamDAO.delete(id); // CSDL tự xóa bài viết vì ON DELETE CASCADE
+        gameSteamDAO.delete(id);
         response.sendRedirect(request.getContextPath() + "/admin/products/steam");
     }
 
@@ -176,22 +169,18 @@ public class AdminSteamGameServlet extends HttpServlet {
 
         Connection conn = null;
         String newImagePath = null;
+        String anhHienTai = request.getParameter("anhHienTai");
 
         try {
             Part filePart = request.getPart("fileAnh");
-            String anhHienTai = request.getParameter("anhHienTai"); // Lấy ảnh cũ (nếu có)
 
             if (filePart != null && filePart.getSize() > 0) {
-                // 1. Có file mới: Lưu file mới
-                newImagePath = saveFile(filePart);
-
-                // 2. Nếu có ảnh cũ (anhHienTai), xóa nó đi
+                newImagePath = saveFile(filePart); // Lưu file mới
                 if (anhHienTai != null && !anhHienTai.isEmpty()) {
-                    deleteFile(anhHienTai);
+                    deleteFile(anhHienTai); // Xóa file cũ
                 }
             } else {
-                // 3. Không có file mới: Giữ lại ảnh cũ
-                newImagePath = anhHienTai;
+                newImagePath = anhHienTai; // Giữ file cũ
             }
 
             conn = DBContext.getConnection();
@@ -211,10 +200,9 @@ public class AdminSteamGameServlet extends HttpServlet {
             game.setGiaBan(giaBan);
             game.setMoTaGame(moTaGame);
             game.setIdVideoTrailer(idVideoTrailer);
-            game.setDuongDanAnh(newImagePath);
+            game.setDuongDanAnh(newImagePath); // Gán đường dẫn mới
 
             Integer gameIdToUse;
-
             if (maGameSteam == null) {
                 game.setLuotXem(0);
                 gameIdToUse = gameSteamDAO.insert(game, conn);
@@ -263,11 +251,10 @@ public class AdminSteamGameServlet extends HttpServlet {
             if (conn != null) {
                 conn.rollback();
             }
-            // Nếu có lỗi, file mới có thể đã được lưu -> xóa nó đi
-            if (newImagePath != null && !newImagePath.equals(request.getParameter("anhHienTai"))) {
+            if (newImagePath != null && !newImagePath.equals(anhHienTai)) {
                 deleteFile(newImagePath);
             }
-            throw new ServletException(e); // Ném lỗi ra ngoài để `doPost` xử lý
+            throw new ServletException(e);
         } finally {
             if (conn != null) {
                 conn.setAutoCommit(true);
@@ -278,6 +265,9 @@ public class AdminSteamGameServlet extends HttpServlet {
         response.sendRedirect(request.getContextPath() + "/admin/products/steam");
     }
 
+    /**
+     * SỬA 2: Hàm lưu file đã được cập nhật
+     */
     private String saveFile(Part filePart) throws IOException {
         String originalFileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
         String fileExtension = "";
@@ -287,32 +277,35 @@ public class AdminSteamGameServlet extends HttpServlet {
         }
         String newFileName = UUID.randomUUID().toString() + fileExtension;
 
-        // Đường dẫn vật lý tuyệt đối
-        String filePath = uploadPath + File.separator + newFileName;
+        // Đường dẫn vật lý tuyệt đối (trỏ ra Desktop)
+        String filePath = EXTERNAL_UPLOAD_PATH + File.separator + newFileName;
         filePart.write(filePath);
 
-        // Trả về đường dẫn tương đối (dùng cho CSDL và <img>)
-        return "assets/images/uploads/" + newFileName;
+        // SỬA: Đường dẫn CSDL bây giờ phải là URL ảo mà chúng ta sẽ tạo
+        return "uploads/" + newFileName;
     }
 
+    /**
+     * SỬA 3: Hàm xóa file đã được cập nhật
+     */
     private void deleteFile(String dbPath) {
-        if (dbPath == null || dbPath.isEmpty()) {
+        if (dbPath == null || dbPath.isEmpty() || !dbPath.startsWith("uploads/")) {
+            // Nếu đường dẫn là "assets/images/root_images/..." (ảnh cũ) thì không xóa
             return;
         }
 
         try {
-            // Lấy tên file từ đường dẫn CSDL (vd: assets/images/uploads/uuid.jpg -> uuid.jpg)
+            // Lấy tên file từ đường dẫn CSDL (vd: uploads/uuid.jpg -> uuid.jpg)
             String fileName = Paths.get(dbPath).getFileName().toString();
 
-            // Tạo đường dẫn vật lý tuyệt đối
-            String absolutePath = uploadPath + File.separator + fileName;
+            // Tạo đường dẫn vật lý tuyệt đối (trỏ ra Desktop)
+            String absolutePath = EXTERNAL_UPLOAD_PATH + File.separator + fileName;
 
             File fileToDelete = new File(absolutePath);
             if (fileToDelete.exists()) {
                 fileToDelete.delete();
             }
         } catch (Exception e) {
-            // Ghi log lỗi, nhưng không dừng chương trình
             Logger.getLogger(AdminSteamGameServlet.class.getName()).log(Level.WARNING, "Không thể xóa file cũ: " + dbPath, e);
         }
     }

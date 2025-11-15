@@ -48,7 +48,7 @@ public class SteamGameServlet extends HttpServlet {
 
         List<GameSteam> listSteam = gameSteamDAO.fastGetAll(); 
 
-        int pageSize = 4; 
+        int pageSize = 12; 
         int currentPage = 1;
 
         String pageParam = request.getParameter("page");

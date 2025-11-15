@@ -76,7 +76,6 @@
                             <td><fmt:formatNumber value="${order.giaMua}" type="number"/> VNĐ</td>
                             <td>${order.trangThai}</td>
 
-                            <%-- SỬA: Đây là dòng 176 bị lỗi --%>
                             <td>
                                 <%
                                     // 1. Lấy đối tượng DonHang từ biến "order" của vòng lặp
@@ -97,7 +96,6 @@
             </table>
         </div>
 
-        <%-- 4. Thanh Phân Trang (Pagination) --%>
         <div class="pagination">
             <c:if test="${currentPage > 1}">
                 <a href="dashboard?page=${currentPage - 1}">Trước</a>

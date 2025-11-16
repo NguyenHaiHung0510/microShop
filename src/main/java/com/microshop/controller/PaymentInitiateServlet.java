@@ -107,6 +107,13 @@ public class PaymentInitiateServlet extends HttpServlet {
                         null, "CHO_THANH_TOAN", null
                 );
                 int maDonHang = donhangDAO.insert(donhang);
+                // Lưu mã đơn hàng vào session để quản lý
+                List<Integer> listMaDonHang = (List<Integer>) session.getAttribute("maDonHangDangXuLy");
+                if (listMaDonHang == null) {
+                    listMaDonHang = new ArrayList<>();
+                }
+                listMaDonHang.add(maDonHang);
+                session.setAttribute("maDonHangDangXuLy", listMaDonHang);
 
                 long thoiGianConLaiGiay = NGUONG_HUY_PHUT * 60;
                 response.setStatus(HttpServletResponse.SC_OK);
@@ -169,6 +176,13 @@ public class PaymentInitiateServlet extends HttpServlet {
 
                 // 5. Commit Transaction
                 conn.commit();
+                // Lưu mã đơn hàng vào session để quản lý
+                List<Integer> listMaDonHang = (List<Integer>) session.getAttribute("maDonHangSlotSteamDangXuLy");
+                if (listMaDonHang == null) {
+                    listMaDonHang = new ArrayList<>();
+                }
+                listMaDonHang.add(maDonHang);
+                session.setAttribute("maDonHangSlotSteamDangXuLy", listMaDonHang);
 
                 long thoiGianConLaiGiay = NGUONG_HUY_PHUT * 60;
                 response.setStatus(HttpServletResponse.SC_OK);

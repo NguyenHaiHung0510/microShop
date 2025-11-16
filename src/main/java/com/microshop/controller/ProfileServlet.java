@@ -2,6 +2,7 @@ package com.microshop.controller;
 
 import com.microshop.model.NguoiDung;
 import com.microshop.dao.HangThanhVienDAO;
+import com.microshop.dao.NguoiDungDAO; // SỬA: Thêm DAO người dùng
 import com.microshop.model.HangThanhVien;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -11,74 +12,65 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-// Đổi đường dẫn ánh xạ (urlPatterns) sang /profile để dễ đọc và dễ gọi hơn
 @WebServlet(name = "ProfileServlet", urlPatterns = {"/profile"})
 public class ProfileServlet extends HttpServlet {
 
-    // Xóa bỏ processRequest và chỉ tập trung vào doGet/doPost
+    private final HangThanhVienDAO hangDao = new HangThanhVienDAO();
+    private final NguoiDungDAO nguoiDungDAO = new NguoiDungDAO(); // SỬA: Thêm DAO
 
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     * Xử lý yêu cầu hiển thị trang hồ sơ.
-     */
-    private final HangThanhVienDAO dao = new HangThanhVienDAO();
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        
-        // 1. Lấy Session hiện tại
-        HttpSession session = request.getSession(false); // Không tạo Session mới nếu chưa có
-        
-        // 2. Kiểm tra xác thực (Authentication Check)
-        // Kiểm tra xem đối tượng "user" đã được lưu trong Session hay chưa
 
-        if (session != null && session.getAttribute("user") != null) {
-            NguoiDung user = (NguoiDung) session.getAttribute("user");
+        HttpSession session = request.getSession(false);
+
+        NguoiDung userCu = (session != null) ? (NguoiDung) session.getAttribute("user") : null;
+
+        if (userCu != null) {
             try {
-                HangThanhVien htv = dao.getById(user.getMaHangThanhVien());
+                // =================================================================
+                // SỬA LỖI SESSION: Làm mới người dùng từ CSDL
+                // =================================================================
+                NguoiDung user = nguoiDungDAO.getById(userCu.getMaNguoiDung());
+                if (user == null) { // Trường hợp hy hữu: tài khoản bị xóa
+                    session.invalidate();
+                    response.sendRedirect(request.getContextPath() + "/login");
+                    return;
+                }
+                // Cập nhật lại session ngay lập tức
+                session.setAttribute("user", user);
+                // =================================================================
+
+                // Lấy Hạng Thành Viên bằng user MỚI
+                HangThanhVien htv = hangDao.getById(user.getMaHangThanhVien());
                 request.setAttribute("HangNguoiDung", htv.getTenHang());
+
+                // Chuyển tiếp đến JSP
+                request.getRequestDispatcher("/profile.jsp").forward(request, response);
+
             } catch (SQLException e) {
-                e.printStackTrace();
+                Logger.getLogger(ProfileServlet.class.getName()).log(Level.SEVERE, "Lỗi SQL khi tải profile", e);
                 response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Lỗi truy vấn CSDL");
             }
-            // Người dùng đã đăng nhập: Chuyển tiếp đến trang profile JSP
-            // (Đảm bảo file profile.jsp tồn tại trong thư mục webapp)
-            request.getRequestDispatcher("/profile.jsp").forward(request, response);
-            
         } else {
-            
-            // Người dùng CHƯA đăng nhập:
-            // 3.1. Thiết lập thông báo lỗi (tùy chọn)
-            request.setAttribute("errorMessage", "Vui lòng đăng nhập để xem hồ sơ.");
-            
-            // 3.2. Chuyển hướng về trang đăng nhập
-            // (Sử dụng sendRedirect hoặc forward tùy thuộc vào cách LoginServlet được ánh xạ)
+            // Người dùng CHƯA đăng nhập
             response.sendRedirect(request.getContextPath() + "/login");
         }
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     * Phương thức này sẽ được dùng để xử lý việc cập nhật thông tin hồ sơ.
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        // 1. Kiểm tra Session/Đăng nhập lại
+
         HttpSession session = request.getSession(false);
-        
+
         if (session != null && session.getAttribute("user") != null) {
-            // 2. Xử lý Logic Cập nhật Hồ sơ (ví dụ: Thay đổi tên, email, mật khẩu)
-            
-            // ... (Code gọi DAO để cập nhật dữ liệu) ...
-            
-            // 3. Chuyển hướng về trang profile sau khi cập nhật thành công
+            // (Hiện tại chưa dùng, nhưng để đây cho logic /profile/edit sau này)
             response.sendRedirect(request.getContextPath() + "/profile?status=success");
         } else {
-            // Chưa đăng nhập: Chuyển hướng về trang đăng nhập
             response.sendRedirect(request.getContextPath() + "/login");
         }
     }

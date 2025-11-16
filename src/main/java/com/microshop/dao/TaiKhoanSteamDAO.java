@@ -42,7 +42,6 @@ public class TaiKhoanSteamDAO implements CrudDAO<TaiKhoanSteam, Integer> {
     public TaiKhoanSteam getById(Integer id) throws SQLException {
         String sql = "SELECT * FROM TAIKHOAN_STEAM WHERE MaTaiKhoanSteam = ?";
         try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
-
             ps.setObject(1, id);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
@@ -61,17 +60,14 @@ public class TaiKhoanSteamDAO implements CrudDAO<TaiKhoanSteam, Integer> {
             VALUES (?, ?, ?, ?)
             """;
         try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-
             ps.setString(1, entity.getTenDangNhapSteam());
             ps.setString(2, entity.getMatKhauSteam());
             ps.setObject(3, entity.getTongSoSlot());
             ps.setObject(4, entity.getSoSlotDaBan() != null ? entity.getSoSlotDaBan() : 0);
-
             int affectedRows = ps.executeUpdate();
             if (affectedRows == 0) {
                 return null;
             }
-
             try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
                     return generatedKeys.getInt(1);
@@ -89,13 +85,11 @@ public class TaiKhoanSteamDAO implements CrudDAO<TaiKhoanSteam, Integer> {
             WHERE MaTaiKhoanSteam = ?
             """;
         try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
-
             ps.setString(1, entity.getTenDangNhapSteam());
             ps.setString(2, entity.getMatKhauSteam());
             ps.setObject(3, entity.getTongSoSlot());
             ps.setObject(4, entity.getSoSlotDaBan());
             ps.setObject(5, entity.getMaTaiKhoanSteam());
-
             return ps.executeUpdate() > 0;
         }
     }
@@ -104,26 +98,62 @@ public class TaiKhoanSteamDAO implements CrudDAO<TaiKhoanSteam, Integer> {
     public boolean delete(Integer id) throws SQLException {
         String sql = "DELETE FROM TAIKHOAN_STEAM WHERE MaTaiKhoanSteam = ?";
         try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
-
             ps.setObject(1, id);
             return ps.executeUpdate() > 0;
         }
     }
 
+    /**
+     * SỬA LỖI (BUG 1): Nâng cấp hàm để chống Race Condition. Chỉ tăng/giảm nếu
+     * hợp lệ và trả về boolean.
+     */
     public boolean updateSoSlotDaBan(Integer maTaiKhoanSteam, int soLuongThayDoi) throws SQLException {
-        String sql = "UPDATE TAIKHOAN_STEAM SET SoSlotDaBan = SoSlotDaBan + ? WHERE MaTaiKhoanSteam = ?";
-        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+        String sql;
 
+        if (soLuongThayDoi > 0) {
+            // Logic khi THÊM slot (mua hàng): Chỉ update NẾU SoSlotDaBan < TongSoSlot
+            sql = "UPDATE TAIKHOAN_STEAM SET SoSlotDaBan = SoSlotDaBan + ? WHERE MaTaiKhoanSteam = ? AND SoSlotDaBan < TongSoSlot";
+        } else {
+            // Logic khi TRỪ slot (hủy đơn): Chỉ update NẾU SoSlotDaBan > 0
+            sql = "UPDATE TAIKHOAN_STEAM SET SoSlotDaBan = SoSlotDaBan + ? WHERE MaTaiKhoanSteam = ? AND SoSlotDaBan > 0";
+        }
+
+        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, soLuongThayDoi);
             ps.setObject(2, maTaiKhoanSteam);
-            return ps.executeUpdate() > 0;
+            return ps.executeUpdate() > 0; // Trả về true nếu CÓ dòng bị ảnh hưởng
+        }
+    }
+
+    // =========================================================================
+    // HÀM MỚI (SỬA BUG 1)
+    // =========================================================================
+    /**
+     * HÀM MỚI: Overload hàm updateSoSlotDaBan để dùng trong Transaction. Hàm
+     * này nhận một Connection có sẵn.
+     */
+    public boolean updateSoSlotDaBan(Connection conn, Integer maTaiKhoanSteam, int soLuongThayDoi) throws SQLException {
+        String sql;
+
+        if (soLuongThayDoi > 0) {
+            // Logic khi THÊM slot (mua hàng): Chỉ update NẾU SoSlotDaBan < TongSoSlot
+            sql = "UPDATE TAIKHOAN_STEAM SET SoSlotDaBan = SoSlotDaBan + ? WHERE MaTaiKhoanSteam = ? AND SoSlotDaBan < TongSoSlot";
+        } else {
+            // Logic khi TRỪ slot (hủy đơn): Chỉ update NẾU SoSlotDaBan > 0
+            sql = "UPDATE TAIKHOAN_STEAM SET SoSlotDaBan = SoSlotDaBan + ? WHERE MaTaiKhoanSteam = ? AND SoSlotDaBan > 0";
+        }
+
+        // KHÔNG dùng try-with-resources cho 'conn'
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, soLuongThayDoi);
+            ps.setObject(2, maTaiKhoanSteam);
+            return ps.executeUpdate() > 0; // Trả về true nếu CÓ dòng bị ảnh hưởng
         }
     }
 
     public TaiKhoanSteam getByTenDangNhap(String tenDangNhap) throws SQLException {
         String sql = "SELECT * FROM TAIKHOAN_STEAM WHERE TenDangNhapSteam = ?";
         try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
-
             ps.setString(1, tenDangNhap);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {

@@ -1,2 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Context path="/microShop"/>
+<Context path="/microShop">
+    
+    <Resources>
+        <PreResources 
+            className="org.apache.catalina.webresources.DirResourceSet"
+            base="C:/Users/os/Desktop/microshop_uploads"
+            webAppMount="/uploads" />
+    </Resources>
+    
+</Context>

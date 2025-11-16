@@ -2,8 +2,10 @@ package com.microshop.controller;
 
 import com.microshop.dao.GameSteamDAO;
 import com.microshop.dao.BaiVietGioiThieuDAO;
+import com.microshop.dao.GameTaiKhoanSteamDAO; // SỬA: Thêm DAO
 import com.microshop.model.GameSteam;
 import com.microshop.model.BaiVietGioiThieu;
+import com.microshop.model.TaiKhoanSteam; // SỬA: Thêm Model
 
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
@@ -17,11 +19,13 @@ public class SteamGameServlet extends HttpServlet {
 
     private GameSteamDAO gameSteamDAO;
     private BaiVietGioiThieuDAO baiVietDAO;
+    private GameTaiKhoanSteamDAO gameTkSteamDAO; // SỬA: Thêm DAO
 
     @Override
     public void init() throws ServletException {
         gameSteamDAO = new GameSteamDAO();
         baiVietDAO = new BaiVietGioiThieuDAO();
+        gameTkSteamDAO = new GameTaiKhoanSteamDAO(); // SỬA: Khởi tạo DAO
     }
 
     @Override
@@ -42,20 +46,20 @@ public class SteamGameServlet extends HttpServlet {
         }
     }
 
-    // ------------------- Hiển thị danh sách -------------------
+    // ------------------- Hiển thị danh sách (Giữ nguyên) -------------------
     private void handleList(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, ServletException, IOException {
 
-        List<GameSteam> listSteam = gameSteamDAO.fastGetAll(); 
+        List<GameSteam> listSteam = gameSteamDAO.fastGetAll();
 
-        int pageSize = 4; 
+        int pageSize = 12;
         int currentPage = 1;
 
         String pageParam = request.getParameter("page");
         if (pageParam == null || pageParam.trim().isEmpty()) {
-            pageParam = "1";  //mặc định là mở ở 1//
+            pageParam = "1";
         }
-        
+
         try {
             currentPage = Integer.parseInt(pageParam);
         } catch (NumberFormatException e) {
@@ -78,7 +82,7 @@ public class SteamGameServlet extends HttpServlet {
         rd.forward(request, response);
     }
 
-    // ------------------- Hiển thị chi tiết -------------------
+    // ------------------- Hiển thị chi tiết (Sửa) -------------------
     private void handleDetail(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, ServletException, IOException {
 
@@ -102,26 +106,46 @@ public class SteamGameServlet extends HttpServlet {
             return;
         }
 
-        List<BaiVietGioiThieu> listBaiViet = baiVietDAO.getByMaGameSteam(id);
-        if (listBaiViet == null){
-            response.sendError(HttpServletResponse.SC_NOT_FOUND, "Bài viết không tồn tại");
-            return;
+        // --- SỬA: LOGIC KIỂM TRA HẾT HÀNG ---
+        boolean isSoldOut = false;
+        // 1. Lấy danh sách tài khoản đã sắp xếp (cân bằng tải)
+        List<TaiKhoanSteam> accounts = gameTkSteamDAO.getAllTaiKhoanByMaGameSteamSorted(id);
+
+        if (accounts == null || accounts.isEmpty()) {
+            // 2. Nếu không có tài khoản nào chứa game này -> Hết hàng
+            isSoldOut = true;
+        } else {
+            // 3. Lấy tài khoản còn nhiều slot nhất (ở vị trí 0)
+            TaiKhoanSteam bestAccount = accounts.get(0);
+            if (bestAccount.getSoSlotDaBan() >= bestAccount.getTongSoSlot()) {
+                // 4. Nếu tài khoản tốt nhất cũng đã đầy -> Hết hàng
+                isSoldOut = true;
+            }
         }
+        // 5. Gửi cờ (flag) trạng thái hết hàng sang JSP
+        request.setAttribute("isSoldOut", isSoldOut);
+        // --- KẾT THÚC SỬA ---
+
+        List<BaiVietGioiThieu> listBaiViet = baiVietDAO.getByMaGameSteam(id);
+        if (listBaiViet == null) {
+            // Không cần báo lỗi, có thể game không có bài viết
+        }
+
         BaiVietGioiThieu baiVietCauHinh = null;
         BaiVietGioiThieu baiVietGame = null;
-        for (BaiVietGioiThieu baiViet : listBaiViet)
-        {
-            if(baiViet.getTieuDeBaiViet() != null && 
-                    baiViet.getTieuDeBaiViet().trim().equalsIgnoreCase("Cấu hình game:")) {
-                baiVietCauHinh = baiViet;
-            }
-            else if (baiViet.getTieuDeBaiViet() != null && baiVietGame == null) {
-                baiVietGame = baiViet;
+        if (listBaiViet != null) {
+            for (BaiVietGioiThieu baiViet : listBaiViet) {
+                if (baiViet.getTieuDeBaiViet() != null
+                        && baiViet.getTieuDeBaiViet().trim().equalsIgnoreCase("Cấu hình game:")) {
+                    baiVietCauHinh = baiViet;
+                } else if (baiViet.getTieuDeBaiViet() != null && baiVietGame == null) {
+                    baiVietGame = baiViet;
+                }
             }
         }
-        
+
         List<GameSteam> listSteamDetail = gameSteamDAO.fastGetAll();
-        
+
         request.setAttribute("gameSteam", gameSteam);
         request.setAttribute("baiVietCauHinh", baiVietCauHinh);
         request.setAttribute("baiVietGame", baiVietGame);

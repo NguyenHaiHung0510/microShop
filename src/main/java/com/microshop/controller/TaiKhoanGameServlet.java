@@ -50,7 +50,7 @@ public class TaiKhoanGameServlet extends HttpServlet {
         };
 
         int currentPage = 1;
-        int pageSize = 4; // tạm thời là 1 trang 4 tk
+        int pageSize = 12;
         String pageParam = request.getParameter("page");
         if (pageParam == null || pageParam.trim().isEmpty())
         {

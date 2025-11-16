@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 import com.microshop.dao.NguoiDungDAO;
 import com.microshop.model.NguoiDung;
 import com.microshop.util.PasswordUtils;
+import com.microshop.util.PhoneValidator;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -69,7 +70,6 @@ public class ProfileEditServlet extends HttpServlet {
                 errorMessage = "Vui lòng nhập mật khẩu hiện tại để thay đổi mật khẩu mới.";
                 
             // 3.2. KIỂM TRA MẬT KHẨU CŨ CÓ KHỚP VỚI MẬT KHẨU TRONG DB/SESSION KHÔNG
-            // CẢNH BÁO: Trong thực tế, bạn phải dùng hàm xác minh HASH (bcrypt/Argon2)
             // So sánh mật khẩu cũ bằng cơ chế BCrypt
             } else if (!PasswordUtils.verifyPassword(oldPassword, currentUser.getMatKhau())) {
                 errorMessage = "Mật khẩu hiện tại không chính xác.";
@@ -89,6 +89,14 @@ public class ProfileEditServlet extends HttpServlet {
             }
         }
         
+        // --- Kiểm tra số điện thoại ---
+        if (errorMessage == null) {
+            String phoneError = PhoneValidator.validatePhone(newSdt);
+            if (phoneError != null) {
+                errorMessage = phoneError;
+            }
+        }
+
         // --- Xử lý Cập nhật Thông tin khác nếu không có lỗi mật khẩu ---
         if (errorMessage == null) {
             // Cập nhật các trường khác vào đối tượng Model

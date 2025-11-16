@@ -26,7 +26,7 @@
     <div class="profile-info">
         <%-- Kiểm tra user null để tránh lỗi nếu truy cập trực tiếp trang profile mà chưa đăng nhập --%>
         <% if (user != null) {%>
-        <p><strong>ID Người Dùng:</strong> <%= user.getMaNguoiDung()%></p>
+        <%--<p><strong>ID Người Dùng:</strong> <%= user.getMaNguoiDung()%></p>--%>
         <p><strong>Tên Đăng Nhập:</strong> <%= user.getTenDangNhap()%></p>
         <p><strong>Email:</strong> <%= (user.getEmail() != null && !user.getEmail().isEmpty()) ? user.getEmail() : "(Chưa cập nhật)"%></p>
         <p><strong>SĐT:</strong> <%= (user.getSoDienThoai() != null && !user.getSoDienThoai().isEmpty()) ? user.getSoDienThoai() : "(Chưa cập nhật)"%></p>

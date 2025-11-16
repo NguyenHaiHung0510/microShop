@@ -68,16 +68,19 @@ public class ProfileEditServlet extends HttpServlet {
             // 3.1. KIỂM TRA MẬT KHẨU CŨ CÓ BỊ BỎ TRỐNG KHÔNG
             if (oldPassword == null || oldPassword.trim().isEmpty()) {
                 errorMessage = "Vui lòng nhập mật khẩu hiện tại để thay đổi mật khẩu mới.";
-                
             // 3.2. KIỂM TRA MẬT KHẨU CŨ CÓ KHỚP VỚI MẬT KHẨU TRONG DB/SESSION KHÔNG
             // So sánh mật khẩu cũ bằng cơ chế BCrypt
             } else if (!PasswordUtils.verifyPassword(oldPassword, currentUser.getMatKhau())) {
                 errorMessage = "Mật khẩu hiện tại không chính xác.";
                 
-            // 3.3. KIỂM TRA MẬT KHẨU MỚI VÀ XÁC NHẬN CÓ KHỚP KHÔNG
-            } else if (confirmPassword == null || !newPassword.equals(confirmPassword)) {
+            // 3.3. KIỂM TRA ĐỘ DÀI MẬT KHẨU MỚI
+            } else if (newPassword.length() < 8) {
+                errorMessage = "Mật khẩu mới phải có ít nhất 8 ký tự.";
+            }
+
+            // 3.4. KIỂM TRA KHỚP XÁC NHẬN
+            else if (confirmPassword == null || !newPassword.equals(confirmPassword)) {
                 errorMessage = "Mật khẩu mới và xác nhận mật khẩu không khớp.";
-                
             }
             else if (PasswordUtils.verifyPassword(newPassword, currentUser.getMatKhau())){
                 errorMessage = "Mật khẩu mới và mật khẩu cũ không được giống nhau.";

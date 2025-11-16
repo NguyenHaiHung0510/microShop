@@ -41,7 +41,9 @@ public class RegisterServlet extends HttpServlet {
         String errorMessage = null;
 
         // 1. Kiểm tra mật khẩu
-        if (!password.equals(confirmPassword)) {
+        if (password == null || password.length() < 8) {
+            errorMessage = "Mật khẩu phải có ít nhất 8 ký tự.";
+        } else if (!password.equals(confirmPassword)) {
             errorMessage = "Mật khẩu và xác nhận mật khẩu không khớp.";
         }
 

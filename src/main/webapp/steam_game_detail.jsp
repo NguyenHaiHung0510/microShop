@@ -76,6 +76,10 @@
         color: #000000;
         margin-bottom: 10px;
     }
+    .article-content {
+        font-size: 15px;  
+        line-height: 1.7;
+    }
     .actions {
         margin-top: 25px;
     }
@@ -114,7 +118,7 @@
         margin-bottom: 15px;
     }
     .game-item {
-        background: #EEEEEE;
+        background: #f5f5f5;
         border-radius: 10px;
         padding: 10px;
         margin-bottom: 15px;
@@ -177,7 +181,7 @@
             <p class="desc">${gameSteam.moTaGame}</p>
 
             <c:if test="${not empty baiVietCauHinh}">
-                <div class="article" style="background-color: #f0f8ff; margin-top: 30px;">
+                <div class="article" style="background-color: #f5f5f5; margin-top: 30px;">
                     <h3>${baiVietCauHinh.tieuDeBaiViet}</h3>
                     <div class="article-content">
                         <c:out value="${baiVietCauHinh.noiDung}" escapeXml="false"/>
@@ -191,7 +195,7 @@
                 </c:if>
 
             <c:if test="${not empty baiVietGame}">
-                <div class="article" style="background-color: #fff0f5; margin-top: 30px;">
+                <div class="article" style="background-color: #f5f5f5; margin-top: 30px;">
                     <h3>${baiVietGame.tieuDeBaiViet}</h3>
                     <div class="article-content">
                         <c:out value="${baiVietGame.noiDung}" escapeXml="false"/>
@@ -227,15 +231,21 @@
 
         <div class="right-panel">
             <h3>Các game khác</h3>
+            <c:set var="count" value="0"/>
             <c:forEach var="gs" items="${listSteamDetail}">
-                <div class="game-item">
-                    <img src="${pageContext.request.contextPath}/${gs.duongDanAnh}" alt="${gs.tenGame}">
-                    <div class="game-info">
-                        <a href="${pageContext.request.contextPath}/shop/steam/detail?id=${gs.maGameSteam}">${gs.tenGame}</a>
-                        <div class="game-price"><fmt:formatNumber value="${gs.giaBan}" type="number"/> VNĐ</div>
-                    </div>
-                    <a href="${pageContext.request.contextPath}/shop/steam" class="small-back">Quay lại</a>
-                </div>
+                <c:if test="${gs.maGameSteam != gameSteam.maGameSteam}">
+                    <c:if test="${count < 15}">
+                        <div class="game-item">
+                            <img src="${pageContext.request.contextPath}/${gs.duongDanAnh}" alt="${gs.tenGame}">
+                            <div class="game-info">
+                                <a href="${pageContext.request.contextPath}/shop/steam/detail?id=${gs.maGameSteam}">${gs.tenGame}</a>
+                                <div class="game-price"><fmt:formatNumber value="${gs.giaBan}" type="number"/> VNĐ</div>
+                            </div>
+                            <a href="${pageContext.request.contextPath}/shop/steam" class="small-back">Quay lại</a>
+                        </div>
+                        <c:set var="count" value="${count + 1}"/>
+                    </c:if>
+                </c:if>
             </c:forEach>
         </div>
     </div>

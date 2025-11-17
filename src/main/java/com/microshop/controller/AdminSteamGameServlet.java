@@ -132,6 +132,7 @@ public class AdminSteamGameServlet extends HttpServlet {
         request.setAttribute("game", new GameSteam());
         request.setAttribute("baiViet1", new BaiVietGioiThieu());
         request.setAttribute("baiViet2", new BaiVietGioiThieu());
+        request.setAttribute("baiViet3", new BaiVietGioiThieu());
         RequestDispatcher dispatcher = request.getRequestDispatcher("/admin/form_steam_game.jsp");
         dispatcher.forward(request, response);
     }
@@ -145,6 +146,7 @@ public class AdminSteamGameServlet extends HttpServlet {
         request.setAttribute("game", existingGame);
         request.setAttribute("baiViet1", baiViets.size() > 0 ? baiViets.get(0) : new BaiVietGioiThieu());
         request.setAttribute("baiViet2", baiViets.size() > 1 ? baiViets.get(1) : new BaiVietGioiThieu());
+        request.setAttribute("baiViet3", baiViets.size() > 2 ? baiViets.get(2) : new BaiVietGioiThieu());
         RequestDispatcher dispatcher = request.getRequestDispatcher("/admin/form_steam_game.jsp");
         dispatcher.forward(request, response);
     }
@@ -232,6 +234,7 @@ public class AdminSteamGameServlet extends HttpServlet {
             String maBaiViet2Param = request.getParameter("maBaiViet2");
             Integer maBaiViet2 = (maBaiViet2Param == null || maBaiViet2Param.isEmpty() || "0".equals(maBaiViet2Param)) ? null : Integer.parseInt(maBaiViet2Param);
             String tieuDe2 = request.getParameter("tieuDe2");
+            tieuDe2 = "Thông tin game:";
             String noiDung2 = request.getParameter("noiDung2");
             BaiVietGioiThieu bv2 = new BaiVietGioiThieu();
             bv2.setMaGameSteam(gameIdToUse);
@@ -242,6 +245,23 @@ public class AdminSteamGameServlet extends HttpServlet {
             } else if (maBaiViet2 != null) {
                 bv2.setMaBaiViet(maBaiViet2);
                 baiVietDAO.update(bv2, conn);
+            }
+
+            // Xử lý Bài Viết 3
+            String maBaiViet3Param = request.getParameter("maBaiViet3");
+            Integer maBaiViet3 = (maBaiViet3Param == null || maBaiViet3Param.isEmpty() || "0".equals(maBaiViet3Param)) ? null : Integer.parseInt(maBaiViet3Param);
+            String tieuDe3 = request.getParameter("tieuDe3");
+            tieuDe3 = "Cấu hình game:";
+            String noiDung3 = request.getParameter("noiDung3");
+            BaiVietGioiThieu bv3 = new BaiVietGioiThieu();
+            bv3.setMaGameSteam(gameIdToUse);
+            bv3.setTieuDeBaiViet(tieuDe3);
+            bv3.setNoiDung(noiDung3);
+            if (maBaiViet3 == null && !tieuDe3.isEmpty()) {
+                baiVietDAO.insert(bv3, conn);
+            } else if (maBaiViet3 != null) {
+                bv3.setMaBaiViet(maBaiViet3);
+                baiVietDAO.update(bv3, conn);
             }
 
             conn.commit();

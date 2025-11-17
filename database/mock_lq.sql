@@ -446,21 +446,23 @@ INSERT INTO ANH_TAIKHOAN (MaTaiKhoan, DuongDanAnh) VALUES
 -- ACC 20: #36122
 -- ============================================
 
-INSERT INTO TAIKHOAN (
-    MaDanhMuc, GiaGoc, GiaBan, TrangThai, DiemNoiBat, ThoiGianDang, DuongDanAnh
-) VALUES (
-    2, 500000, 450000, 'DANG_BAN',
-    'Rank Tinh Anh IV, Tướng: 122, Trang phục: 250, Ngọc: 90',
-    NOW() - INTERVAL 18 DAY,
-    'uploads/lqacc122_img00.jpg'
-);
-SET @last_tk_id = LAST_INSERT_ID();
+-- Tài khoản này bị lỗi id + lỗi thiếu ảnh
 
-INSERT INTO TAIKHOAN_LIENQUAN (
-    MaTaiKhoan, TenDangNhap, MatKhau, HangRank, SoTuong, SoTrangPhuc, BacNgoc, LoaiDangKy
-) VALUES (
-    @last_tk_id, 'lq_acc_36199', 'pass122', 'Tinh Anh IV', 121, 224, 90, 'Garena'
-);
+-- INSERT INTO TAIKHOAN (
+--     MaDanhMuc, GiaGoc, GiaBan, TrangThai, DiemNoiBat, ThoiGianDang, DuongDanAnh
+-- ) VALUES (
+--     2, 500000, 450000, 'DANG_BAN',
+--     'Rank Tinh Anh IV, Tướng: 122, Trang phục: 250, Ngọc: 90',
+--     NOW() - INTERVAL 18 DAY,
+--     'uploads/lqacc122_img00.jpg'
+-- );
+-- SET @last_tk_id = LAST_INSERT_ID();
 
-INSERT INTO ANH_TAIKHOAN (MaTaiKhoan, DuongDanAnh) VALUES
-(@last_tk_id, 'uploads/lqacc122_img00.jpg');
+-- INSERT INTO TAIKHOAN_LIENQUAN (
+--     MaTaiKhoan, TenDangNhap, MatKhau, HangRank, SoTuong, SoTrangPhuc, BacNgoc, LoaiDangKy
+-- ) VALUES (
+--     @last_tk_id, 'lq_acc_36122', 'pass122', 'Tinh Anh IV', 121, 224, 90, 'Garena'
+-- );
+
+-- INSERT INTO ANH_TAIKHOAN (MaTaiKhoan, DuongDanAnh) VALUES
+-- (@last_tk_id, 'uploads/lqacc122_img00.jpg');

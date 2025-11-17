@@ -46,3 +46,4 @@ select * from donhang_slot_steam;
 
 select * from taikhoan_steam;
 update taikhoan_steam set soslotdaban = 0 where mataikhoansteam > 0;
+select * from game_taikhoan_steam;

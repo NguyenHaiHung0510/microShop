@@ -47,7 +47,6 @@ public class HomeServlet extends HttpServlet {
             throws ServletException, IOException {
 
         try {
-
             List<TaiKhoanLienQuan> listLienQuan = taiKhoanLienQuanDAO.getByTrangThai("DANG_BAN");
 
             List<TaiKhoanFreeFire> listFreeFire = taiKhoanFreeFireDAO.getByTrangThai("DANG_BAN");

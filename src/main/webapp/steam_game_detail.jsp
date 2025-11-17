@@ -152,7 +152,7 @@
         font-size: 0.9rem;
         font-weight: 600;
     }
-    .small-back {
+    .small-info {
         display: inline-block;
         background: #000000;
         color: white;
@@ -162,7 +162,7 @@
         font-size: 0.85rem;
         transition: 0.3s;
     }
-    .small-back:hover {
+    .small-info:hover {
         background: #009fd6;
     }
 </style>
@@ -241,7 +241,7 @@
                                 <a href="${pageContext.request.contextPath}/shop/steam/detail?id=${gs.maGameSteam}">${gs.tenGame}</a>
                                 <div class="game-price"><fmt:formatNumber value="${gs.giaBan}" type="number"/> VNĐ</div>
                             </div>
-                            <a href="${pageContext.request.contextPath}/shop/steam" class="small-back">Quay lại</a>
+                            <a href="${pageContext.request.contextPath}/shop/steam/detail?id=${gs.maGameSteam}" class="small-info">Xem chi tiết</a>
                         </div>
                         <c:set var="count" value="${count + 1}"/>
                     </c:if>

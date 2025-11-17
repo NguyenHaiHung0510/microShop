@@ -459,7 +459,7 @@ SET @last_tk_id = LAST_INSERT_ID();
 INSERT INTO TAIKHOAN_LIENQUAN (
     MaTaiKhoan, TenDangNhap, MatKhau, HangRank, SoTuong, SoTrangPhuc, BacNgoc, LoaiDangKy
 ) VALUES (
-    @last_tk_id, 'lq_acc_36122', 'pass122', 'Tinh Anh IV', 121, 224, 90, 'Garena'
+    @last_tk_id, 'lq_acc_36199', 'pass122', 'Tinh Anh IV', 121, 224, 90, 'Garena'
 );
 
 INSERT INTO ANH_TAIKHOAN (MaTaiKhoan, DuongDanAnh) VALUES

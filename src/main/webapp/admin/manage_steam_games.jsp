@@ -79,13 +79,13 @@
 
     <div class="pagination">
         <c:if test="${currentPage > 1}">
-            <a href="products/steam?page=${currentPage - 1}">Trước</a>
+            <a href="steam?page=${currentPage - 1}">Trước</a>
         </c:if>
         <c:forEach begin="1" end="${noOfPages}" var="i">
-            <a href="products/steam?page=${i}" class="${currentPage == i ? 'active' : ''}">${i}</a>
+            <a href="steam?page=${i}" class="${currentPage == i ? 'active' : ''}">${i}</a>
         </c:forEach>
         <c:if test="${currentPage < noOfPages}">
-            <a href="products/steam?page=${currentPage + 1}">Sau</a>
+            <a href="steam?page=${currentPage + 1}">Sau</a>
         </c:if>
     </div>
 </div>

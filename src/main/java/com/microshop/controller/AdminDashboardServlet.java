@@ -49,7 +49,7 @@ public class AdminDashboardServlet extends HttpServlet {
             request.setAttribute("totalDonHangCho", totalDonHangCho);
 
             int page = 1;
-            int recordsPerPage = 5; // Sửa: Giảm số lượng bản ghi để hiển thị 2 bảng
+            int recordsPerPage = 10; // Sửa: Giảm số lượng bản ghi để hiển thị 2 bảng
             if (request.getParameter("page") != null) {
                 try {
                     page = Integer.parseInt(request.getParameter("page"));

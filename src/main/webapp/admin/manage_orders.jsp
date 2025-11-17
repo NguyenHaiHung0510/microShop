@@ -118,16 +118,7 @@
                         <td>${order.maGameSteam}</td>
                         <td>${order.maTaiKhoanSteam}</td>
                         <td><fmt:formatNumber value="${order.giaMua}" type="number"/> VNĐ</td>
-                    <td>
-                        <%
-                            com.microshop.model.DonHangSlotSteam donHang = (com.microshop.model.DonHangSlotSteam) pageContext.getAttribute("order");
-                            if (donHang != null && donHang.getThoiGianTao() != null) {
-                                out.print(donHang.getThoiGianTao().format(dtf));
-                            } else {
-                                out.print("N/A");
-                            }
-                        %>
-                    </td>
+                    
                     <td><span class="status-${order.trangThai}">${order.trangThai}</span></td>
                     <td>
                     <c:if test="${order.trangThai == 'CHO_THANH_TOAN'}">

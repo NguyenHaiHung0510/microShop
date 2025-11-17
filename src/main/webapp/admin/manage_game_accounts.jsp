@@ -95,7 +95,6 @@
     <%-- 3. Thanh Phân Trang --%>
     <div class="pagination">
         <c:if test="${currentPage > 1}">
-            <%-- SỬA LINK: Phải là /admin/products/game --%>
             <a href="game?page=${currentPage - 1}">Trước</a>
         </c:if>
 

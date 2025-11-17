@@ -3,7 +3,7 @@ package com.microshop.controller;
 import com.microshop.context.DBContext;
 import com.microshop.dao.DonHangDAO;
 import com.microshop.dao.DonHangSlotSteamDAO;
-import com.microshop.dao.NguoiDungDAO; // SỬA: Thêm DAO người dùng
+import com.microshop.dao.NguoiDungDAO;
 import com.microshop.dao.TaiKhoanDAO;
 import com.microshop.dao.TaiKhoanSteamDAO;
 import com.microshop.model.DonHang;
@@ -29,7 +29,7 @@ public class AdminOrderServlet extends HttpServlet {
     private DonHangSlotSteamDAO donHangSlotSteamDAO;
     private TaiKhoanDAO taiKhoanDAO;
     private TaiKhoanSteamDAO taiKhoanSteamDAO;
-    private NguoiDungDAO nguoiDungDAO; // SỬA: Thêm NguoiDungDAO
+    private NguoiDungDAO nguoiDungDAO;
 
     @Override
     public void init() {
@@ -37,7 +37,7 @@ public class AdminOrderServlet extends HttpServlet {
         donHangSlotSteamDAO = new DonHangSlotSteamDAO();
         taiKhoanDAO = new TaiKhoanDAO();
         taiKhoanSteamDAO = new TaiKhoanSteamDAO();
-        nguoiDungDAO = new NguoiDungDAO(); // SỬA: Khởi tạo
+        nguoiDungDAO = new NguoiDungDAO();
     }
 
     @Override
@@ -66,10 +66,8 @@ public class AdminOrderServlet extends HttpServlet {
         }
     }
 
-    // (Hàm listOrders giữ nguyên, không thay đổi)
     private void listOrders(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, ServletException, IOException {
-        // ... (Giữ nguyên code của bạn) ...
         int recordsPerPage = 10;
         int pageGame = 1;
         if (request.getParameter("pageGame") != null) {
@@ -95,9 +93,6 @@ public class AdminOrderServlet extends HttpServlet {
         dispatcher.forward(request, response);
     }
 
-    /**
-     * SỬA: Nâng cấp toàn bộ hàm này để xử lý logic duyệt/hủy chính xác.
-     */
     private void updateOrderStatus(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException {
 
@@ -115,7 +110,6 @@ public class AdminOrderServlet extends HttpServlet {
                 if (donHang != null && "CHO_THANH_TOAN".equals(donHang.getTrangThai())) {
 
                     if ("approve".equals(status)) {
-                        // --- Logic chuyển từ PaymentSuccessServlet về đây ---
                         // 1. Cập nhật đơn hàng
                         donHangDAO.updateTrangThai(id, "DA_HOAN_THANH", LocalDateTime.now());
                         // 2. Cập nhật trạng thái sản phẩm
@@ -123,12 +117,9 @@ public class AdminOrderServlet extends HttpServlet {
                         // 3. Cập nhật tổng chi tiêu và hạng thành viên cho người dùng
                         nguoiDungDAO.updateTongTienDaChi(donHang.getMaNguoiDung(), donHang.getGiaMua());
                         nguoiDungDAO.updateHangThanhVien(donHang.getMaNguoiDung());
-                        // --- Kết thúc logic mới ---
 
                     } else if ("cancel".equals(status)) {
                         donHangDAO.updateTrangThai(id, "DA_HUY", null);
-                        // Tài khoản game không cần trả lại, vì nó vẫn là "DANG_BAN"
-                        // (Logic này của bạn đã đúng)
                     }
                 }
             } else if ("steam".equals(type)) {
@@ -136,28 +127,20 @@ public class AdminOrderServlet extends HttpServlet {
                 if (donHangSteam != null && "CHO_THANH_TOAN".equals(donHangSteam.getTrangThai())) {
 
                     if ("approve".equals(status)) {
-                        // --- Logic chuyển từ PaymentSuccessServlet về đây ---
                         // 1. Cập nhật đơn hàng
                         donHangSlotSteamDAO.updateTrangThai(id, "DA_HOAN_THANH", LocalDateTime.now());
-                        // 2. Slot đã bị tăng tạm thời (SoSlotDaBan + 1) khi tạo đơn,
-                        //    giờ đơn hàng hoàn thành nên ta không cần làm gì thêm.
-                        // 3. Cập nhật tổng chi tiêu và hạng thành viên cho người dùng
+                        // 2. Cập nhật tổng chi tiêu và hạng thành viên cho người dùng
                         nguoiDungDAO.updateTongTienDaChi(donHangSteam.getMaNguoiDung(), donHangSteam.getGiaMua());
                         nguoiDungDAO.updateHangThanhVien(donHangSteam.getMaNguoiDung());
-                        // --- Kết thúc logic mới ---
 
                     } else if ("cancel".equals(status)) {
                         donHangSlotSteamDAO.updateTrangThai(id, "DA_HUY", null);
-                        // HOÀN TRẢ SLOT
-                        // Khi tạo đơn (PaymentInitiate), SoSlotDaBan đã +1
-                        // Giờ hủy đơn, ta phải -1 để hoàn trả slot.
-                        // (Logic này của bạn đã đúng)
                         taiKhoanSteamDAO.updateSoSlotDaBan(donHangSteam.getMaTaiKhoanSteam(), -1);
                     }
                 }
             }
 
-            conn.commit(); // Lưu tất cả thay đổi (cả đơn hàng, sản phẩm, và người dùng)
+            conn.commit();
 
         } catch (SQLException e) {
             if (conn != null) {

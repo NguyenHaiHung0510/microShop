@@ -1,4 +1,3 @@
-<%-- Đảm bảo dòng này ở đầu tiên để fix lỗi font Tiếng Việt --%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
@@ -36,15 +35,12 @@
 
     <body>
         <header id="mainHeader">
-            <%-- 1. Thanh Top Bar --%>
             <div class="top-bar">
                 <div class="logo">
                     <a href="${pageContext.request.contextPath}/home" class="logo-link">
                         <img src="${pageContext.request.contextPath}/assets/images/root_images/microshop_logo.png" alt="MicroShop Logo">
                     </a>
                 </div>
-
-                <%-- SỬA: Đã xóa thanh tìm kiếm theo yêu cầu --%>
 
                 <div class="user-actions">
                     <c:if test="${empty sessionScope.user}">
@@ -63,7 +59,6 @@
                 </div>
             </div>
 
-            <%-- 2. Thanh Menu Chính (Màu đỏ) --%>
             <nav class="main-nav">
                 <a href="${pageContext.request.contextPath}/shop/game?category=lienquan&page=1">Tài khoản Liên Quân</a>
                 <a href="${pageContext.request.contextPath}/shop/game?category=freefire&page=1">Tài khoản Free Fire</a>
@@ -74,8 +69,6 @@
         </header>
 
         <main>
-            <%-- Phần thân trang (home.jsp) sẽ được chèn vào đây --%>
-
             <script>
                 // --- Hiệu ứng header ẩn khi cuộn xuống, hiện khi cuộn lên ---
                 let lastScrollY = window.scrollY;

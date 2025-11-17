@@ -13,7 +13,6 @@
 
 <div class="admin-container">
 
-    <%-- 1. Thanh Điều Hướng Admin --%>
     <nav class="admin-nav">
         <a href="${pageContext.request.contextPath}/admin/dashboard">Bảng Điều Khiển</a>
         <a href="${pageContext.request.contextPath}/admin/products/game">Quản lý Tài Khoản Game</a>
@@ -23,7 +22,6 @@
 
     <h2>Quản lý Đơn Hàng</h2>
 
-    <%-- 2. Bảng Đơn Hàng Tài Khoản Game --%>
     <section class="recent-orders">
         <h3>Đơn Hàng Tài Khoản Game</h3>
         <div class="admin-table-wrapper">
@@ -80,7 +78,6 @@
                 </tbody>
             </table>
         </div>
-        <%-- Phân Trang cho Đơn Game --%>
         <div class="pagination">
             <c:forEach begin="1" end="${pagesGame}" var="i">
                 <a href="orders?pageGame=${i}&pageSteam=${currentPageSteam}" class="${currentPageGame == i ? 'active' : ''}">${i}</a>
@@ -90,7 +87,6 @@
 
     <hr style="margin: 30px 0;">
 
-    <%-- 3. Bảng Đơn Hàng Game Steam --%>
     <section class="recent-orders">
         <h3>Đơn Hàng Slot Game Steam</h3>
         <div class="admin-table-wrapper">
@@ -150,7 +146,6 @@
                 </tbody>
             </table>
         </div>
-        <%-- Phân Trang cho Đơn Steam --%>
         <div class="pagination">
             <c:forEach begin="1" end="${pagesSteam}" var="i">
                 <a href="orders?pageGame=${currentPageGame}&pageSteam=${i}" class="${currentPageSteam == i ? 'active' : ''}">${i}</a>

@@ -41,8 +41,6 @@ public class AdminSteamGameServlet extends HttpServlet {
     private GameSteamDAO gameSteamDAO;
     private BaiVietGioiThieuDAO baiVietDAO;
 
-    // --- SỬA 1: Đặt đường dẫn vật lý ra ngoài Desktop ---
-    // (Dùng / để Java tự xử lý, an toàn hơn File.separator)
     private final String EXTERNAL_UPLOAD_PATH = "C:/Users/os/Desktop/microshop_uploads";
 
     @Override
@@ -285,15 +283,12 @@ public class AdminSteamGameServlet extends HttpServlet {
         response.sendRedirect(request.getContextPath() + "/admin/products/steam");
     }
 
-    /**
-     * SỬA 2: Hàm lưu file đã được cập nhật
-     */
     private String saveFile(Part filePart) throws IOException {
         String originalFileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
         String fileExtension = "";
         int i = originalFileName.lastIndexOf('.');
         if (i > 0) {
-            fileExtension = originalFileName.substring(i); // Vd: ".jpg"
+            fileExtension = originalFileName.substring(i);
         }
         String newFileName = UUID.randomUUID().toString() + fileExtension;
 
@@ -301,16 +296,11 @@ public class AdminSteamGameServlet extends HttpServlet {
         String filePath = EXTERNAL_UPLOAD_PATH + File.separator + newFileName;
         filePart.write(filePath);
 
-        // SỬA: Đường dẫn CSDL bây giờ phải là URL ảo mà chúng ta sẽ tạo
         return "uploads/" + newFileName;
     }
 
-    /**
-     * SỬA 3: Hàm xóa file đã được cập nhật
-     */
     private void deleteFile(String dbPath) {
         if (dbPath == null || dbPath.isEmpty() || !dbPath.startsWith("uploads/")) {
-            // Nếu đường dẫn là "assets/images/root_images/..." (ảnh cũ) thì không xóa
             return;
         }
 

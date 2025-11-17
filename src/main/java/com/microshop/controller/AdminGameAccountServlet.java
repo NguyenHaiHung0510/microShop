@@ -15,28 +15,27 @@ import com.microshop.model.TaiKhoanLienQuan;
 import com.microshop.model.TaiKhoanRiot;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.MultipartConfig; // <-- BỔ SUNG 1
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.Part; // <-- BỔ SUNG 2
+import jakarta.servlet.http.Part;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.nio.file.Paths; // <-- BỔ SUNG 3
-import java.util.ArrayList; // <-- BỔ SUNG 4
-import java.util.Collection; // <-- BỔ SUNG 5
+import java.nio.file.Paths;
+import java.util.ArrayList; 
+import java.util.Collection; 
 import java.util.List;
 import java.util.Map;
-import java.util.UUID; // <-- BỔ SUNG 6
+import java.util.UUID; 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-// BỔ SUNG 7: Thêm Annotation @MultipartConfig
 @MultipartConfig(
         fileSizeThreshold = 1024 * 1024 * 1, // 1 MB
         maxFileSize = 1024 * 1024 * 10, // 10 MB
@@ -44,9 +43,9 @@ import java.util.stream.Collectors;
 )
 @WebServlet(name = "AdminGameAccountServlet", urlPatterns = {
     "/admin/products/game", // GET
-    "/admin/account/add", // GET
-    "/admin/account/edit", // GET
-    "/admin/account/save", // POST
+    "/admin/account/add",   // GET
+    "/admin/account/edit",  // GET
+    "/admin/account/save",  // POST
     "/admin/account/delete" // POST
 })
 public class AdminGameAccountServlet extends HttpServlet {
@@ -60,7 +59,6 @@ public class AdminGameAccountServlet extends HttpServlet {
 
     private Map<Integer, String> categoryMap;
 
-    // BỔ SUNG 8: Đường dẫn lưu file vĩnh viễn (giống hệt AdminSteamGameServlet)
     private final String EXTERNAL_UPLOAD_PATH = "C:/Users/os/Desktop/microshop_uploads";
 
     @Override
@@ -79,7 +77,6 @@ public class AdminGameAccountServlet extends HttpServlet {
             throw new RuntimeException("Không thể tải Danh Mục!", e);
         }
 
-        // BỔ SUNG 9: Tạo thư mục uploads nếu chưa có
         File uploadDir = new File(EXTERNAL_UPLOAD_PATH);
         if (!uploadDir.exists()) {
             uploadDir.mkdirs();
@@ -121,7 +118,7 @@ public class AdminGameAccountServlet extends HttpServlet {
                     deleteGameAccount(request, response);
                     break;
             }
-        } catch (Exception e) { // Bắt lỗi rộng
+        } catch (Exception e) {
             Logger.getLogger(AdminGameAccountServlet.class.getName()).log(Level.SEVERE, "Lỗi doPost", e);
             request.setAttribute("errorMessage", "Lỗi nghiêm trọng: " + e.getMessage());
             try {
@@ -132,10 +129,8 @@ public class AdminGameAccountServlet extends HttpServlet {
         }
     }
 
-    // (Giữ nguyên)
     private void listGameAccounts(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, ServletException, IOException {
-        // ... (Code từ bước trước) ...
         int page = 1;
         int recordsPerPage = 15;
         if (request.getParameter("page") != null) {
@@ -153,12 +148,10 @@ public class AdminGameAccountServlet extends HttpServlet {
         dispatcher.forward(request, response);
     }
 
-    // (Giữ nguyên)
     private void deleteGameAccount(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
 
-        // Nâng cấp: Xóa ảnh
         TaiKhoan tk = taiKhoanDAO.getById(id);
         if (tk != null && tk.getDuongDanAnh() != null) {
             deleteFile(tk.getDuongDanAnh());
@@ -174,7 +167,6 @@ public class AdminGameAccountServlet extends HttpServlet {
         response.sendRedirect(request.getContextPath() + "/admin/products/game");
     }
 
-    // (Giữ nguyên)
     private void showNewForm(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.setAttribute("taiKhoan", new TaiKhoan());
@@ -183,7 +175,6 @@ public class AdminGameAccountServlet extends HttpServlet {
         dispatcher.forward(request, response);
     }
 
-    // (Giữ nguyên)
     private void showEditForm(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
@@ -202,19 +193,17 @@ public class AdminGameAccountServlet extends HttpServlet {
             taiKhoanFull = lienQuanDAO.getById(id);
         } else if (maDanhMuc == 3) { // Riot
             taiKhoanFull = riotDAO.getById(id);
-        } else {
-            taiKhoanFull = taiKhoan; // Trường hợp danh mục lạ
+        } else { 
+            taiKhoanFull = taiKhoan; // Trường hợp danh mục lạ ( đề phòng lỗi quỷ )
         }
 
         request.setAttribute("taiKhoan", taiKhoanFull);
         request.setAttribute("danhMucMap", categoryMap);
 
-        // (Sẽ thêm logic hiển thị ảnh chi tiết ở đây sau)
         RequestDispatcher dispatcher = request.getRequestDispatcher("/admin/form_game_account.jsp");
         dispatcher.forward(request, response);
     }
 
-    // --- BƯỚC MỚI: XỬ LÝ LƯU TÀI KHOẢN GAME ---
     private void saveGameAccount(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException, ServletException {
 
@@ -389,7 +378,6 @@ public class AdminGameAccountServlet extends HttpServlet {
         response.sendRedirect(request.getContextPath() + "/admin/products/game");
     }
 
-    // --- CÁC HÀM TIỆN ÍCH UPLOAD (Copy từ AdminSteamGameServlet) ---
     private String saveFile(Part filePart) throws IOException {
         String originalFileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
         String fileExtension = "";

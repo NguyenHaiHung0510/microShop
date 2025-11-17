@@ -34,10 +34,8 @@ public class AuthorizationFilter implements Filter {
         }
 
         if (!isAdmin) {
-            // Nếu không phải admin (do user=null, vaiTro=null, hoặc vaiTro="USER")
             res.sendRedirect(req.getContextPath() + "/home");
         } else {
-            // Là admin, cho phép truy cập
             chain.doFilter(request, response);
         }
     }

@@ -11,7 +11,7 @@ import com.microshop.util.PasswordUtils;
 import com.microshop.util.PhoneValidator;
 
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet; // nếu bạn tách riêng file băm mật khẩu
+import jakarta.servlet.annotation.WebServlet; 
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -24,7 +24,6 @@ public class RegisterServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
-        // Hiển thị form đăng ký
         request.getRequestDispatcher("/register.jsp").forward(request, response);
     }
 

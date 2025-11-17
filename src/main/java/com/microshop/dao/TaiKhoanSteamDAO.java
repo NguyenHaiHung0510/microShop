@@ -121,7 +121,7 @@ public class TaiKhoanSteamDAO implements CrudDAO<TaiKhoanSteam, Integer> {
         try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, soLuongThayDoi);
             ps.setObject(2, maTaiKhoanSteam);
-            return ps.executeUpdate() > 0; // Trả về true nếu CÓ dòng bị ảnh hưởng
+            return ps.executeUpdate() > 0; 
         }
     }
 

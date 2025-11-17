@@ -2,10 +2,10 @@ package com.microshop.controller;
 
 import com.microshop.dao.GameSteamDAO;
 import com.microshop.dao.BaiVietGioiThieuDAO;
-import com.microshop.dao.GameTaiKhoanSteamDAO; // SỬA: Thêm DAO
+import com.microshop.dao.GameTaiKhoanSteamDAO;
 import com.microshop.model.GameSteam;
 import com.microshop.model.BaiVietGioiThieu;
-import com.microshop.model.TaiKhoanSteam; // SỬA: Thêm Model
+import com.microshop.model.TaiKhoanSteam; 
 
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
@@ -19,13 +19,13 @@ public class SteamGameServlet extends HttpServlet {
 
     private GameSteamDAO gameSteamDAO;
     private BaiVietGioiThieuDAO baiVietDAO;
-    private GameTaiKhoanSteamDAO gameTkSteamDAO; // SỬA: Thêm DAO
+    private GameTaiKhoanSteamDAO gameTkSteamDAO;
 
     @Override
     public void init() throws ServletException {
         gameSteamDAO = new GameSteamDAO();
         baiVietDAO = new BaiVietGioiThieuDAO();
-        gameTkSteamDAO = new GameTaiKhoanSteamDAO(); // SỬA: Khởi tạo DAO
+        gameTkSteamDAO = new GameTaiKhoanSteamDAO();
     }
 
     @Override
@@ -46,7 +46,7 @@ public class SteamGameServlet extends HttpServlet {
         }
     }
 
-    // ------------------- Hiển thị danh sách (Giữ nguyên) -------------------
+    // ------------------- Hiển thị danh sách -------------------
     private void handleList(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, ServletException, IOException {
 
@@ -56,9 +56,6 @@ public class SteamGameServlet extends HttpServlet {
         int currentPage = 1;
 
         String pageParam = request.getParameter("page");
-        if (pageParam == null || pageParam.trim().isEmpty()) {
-            pageParam = "1";
-        }
 
         try {
             currentPage = Integer.parseInt(pageParam);
@@ -82,7 +79,7 @@ public class SteamGameServlet extends HttpServlet {
         rd.forward(request, response);
     }
 
-    // ------------------- Hiển thị chi tiết (Sửa) -------------------
+    // ------------------- Hiển thị chi tiết -------------------
     private void handleDetail(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, ServletException, IOException {
 
@@ -127,9 +124,6 @@ public class SteamGameServlet extends HttpServlet {
         // --- KẾT THÚC SỬA ---
 
         List<BaiVietGioiThieu> listBaiViet = baiVietDAO.getByMaGameSteam(id);
-        if (listBaiViet == null) {
-            // Không cần báo lỗi, có thể game không có bài viết
-        }
 
         BaiVietGioiThieu baiVietCauHinh = null;
         BaiVietGioiThieu baiVietGame = null;

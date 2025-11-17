@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
+
 @WebServlet(urlPatterns = {"/shop/game", "/shop/game/detail"})
 public class TaiKhoanGameServlet extends HttpServlet {
 
@@ -18,6 +19,7 @@ public class TaiKhoanGameServlet extends HttpServlet {
     private final TaiKhoanRiotDAO riotDAO = new TaiKhoanRiotDAO();
     private final AnhTaiKhoanDAO anhDAO = new AnhTaiKhoanDAO();
 
+    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -51,11 +53,9 @@ public class TaiKhoanGameServlet extends HttpServlet {
 
         int currentPage = 1;
         int pageSize = 12;
+        
         String pageParam = request.getParameter("page");
-        if (pageParam == null || pageParam.trim().isEmpty())
-        {
-            pageParam = "1";
-        }
+        
         try{
             currentPage = Integer.parseInt(pageParam);
         }
@@ -63,6 +63,7 @@ public class TaiKhoanGameServlet extends HttpServlet {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "ID không hợp lệ");
             return;
         }
+        
         
         int totalItems = dsTaiKhoan.size();
         int totalPages = (int) Math.ceil((double) totalItems / pageSize);

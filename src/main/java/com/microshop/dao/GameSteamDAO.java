@@ -59,7 +59,7 @@ public class GameSteamDAO implements CrudDAO<GameSteam, Integer> {
     @Override
     public List<GameSteam> getAll() throws SQLException {
         List<GameSteam> list = new ArrayList<>();
-        String sql = "SELECT * FROM GAME_STEAM ORDER BY ThoiGianDang DESC"; // Sửa: Thêm ORDER BY
+        String sql = "SELECT * FROM GAME_STEAM ORDER BY ThoiGianDang DESC";
 
         try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
@@ -88,14 +88,14 @@ public class GameSteamDAO implements CrudDAO<GameSteam, Integer> {
     @Override
     public Integer insert(GameSteam entity) throws SQLException {
         try (Connection conn = getConnection()) {
-            return insert(entity, conn); // Gọi hàm transaction-aware
+            return insert(entity, conn);
         }
     }
 
     @Override
     public boolean update(GameSteam entity) throws SQLException {
         try (Connection conn = getConnection()) {
-            return update(entity, conn); // Gọi hàm transaction-aware
+            return update(entity, conn); 
         }
     }
 
@@ -123,7 +123,7 @@ public class GameSteamDAO implements CrudDAO<GameSteam, Integer> {
             ps.setString(2, entity.getMoTaGame());
             ps.setBigDecimal(3, entity.getGiaGoc());
             ps.setBigDecimal(4, entity.getGiaBan());
-            ps.setObject(5, entity.getLuotXem() != null ? entity.getLuotXem() : 0); // Sửa: Đảm bảo không null
+            ps.setObject(5, entity.getLuotXem() != null ? entity.getLuotXem() : 0); 
 
             if (entity.getThoiGianDang() != null) {
                 ps.setTimestamp(6, Timestamp.valueOf(entity.getThoiGianDang()));
@@ -209,7 +209,7 @@ public class GameSteamDAO implements CrudDAO<GameSteam, Integer> {
         return 0;
     }
 
-    // Trả về danh sách tối đa LIMIT GameSteam từ vị trí OFFSET + 1 theo thứ tự mới nhất xếp trước
+    // Trả về danh sách tối đa LIMIT GameSteam từ vị trí OFFSET + 1 theo thứ tự mới 
     public List<GameSteam> getAllPaginated(int page, int recordsPerPage) throws SQLException {
         List<GameSteam> list = new ArrayList<>();
         int offset = (page - 1) * recordsPerPage;

@@ -19,18 +19,14 @@ import jakarta.servlet.http.HttpSession;
 @WebServlet(name = "LoginServlet", urlPatterns = {"/login"})
 public class LoginServlet extends HttpServlet {
     
-    // Khởi tạo DAO để truy cập DB (Giả định)
     private final NguoiDungDAO nguoiDungDAO = new NguoiDungDAO();
     
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) 
            throws ServletException, IOException {
         
-        // Hiển thị form đăng nhập
         request.getRequestDispatcher("/login.jsp").forward(request, response);
     }
-    
-    //---------------------------------------------------------
     
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) 

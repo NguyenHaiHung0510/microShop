@@ -19,7 +19,7 @@ import java.util.logging.Logger;
 public class ProfileServlet extends HttpServlet {
 
     private final HangThanhVienDAO hangDao = new HangThanhVienDAO();
-    private final NguoiDungDAO nguoiDungDAO = new NguoiDungDAO(); // SỬA: Thêm DAO
+    private final NguoiDungDAO nguoiDungDAO = new NguoiDungDAO(); 
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)

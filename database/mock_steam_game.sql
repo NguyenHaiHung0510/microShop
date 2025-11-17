@@ -43,9 +43,8 @@ VALUES (1, 'Cyberpunk 2077 – Thành phố công nghệ và tội phạm',
 <p>Dựa trên gameplay và cấu hình của <strong>Cyberpunk 2077</strong>, trò chơi hứa hẹn mang đến những pha combat mãn nhãn cùng một cốt truyện hấp dẫn. Mặc dù bị delay đến cuối năm 2020, game vẫn được phát hành trên nhiều nền tảng như Microsoft Windows, PS4, PS5, Stadia, Xbox One và Xbox Series X/S.</p>
 <p>Bạn có thể tìm hiểu thêm thông tin qua các nền tảng: Reddit – Steam – Epic Games – GOG – Twitter.</p>
 ');
-
 INSERT INTO BAIVIET_GIOITHIEU (MaGameSteam, TieuDeBaiViet, NoiDung)
-VALUES (1, 'Cấu hình game:', 
+VALUES (1, 'Thông tin game:', 
 '<ul>
     <li><strong>Thể loại:</strong> Hành động, Nhập vai</li>
     <li><strong>Trò chơi:</strong> Cyberpunk 2077</li>
@@ -56,8 +55,40 @@ VALUES (1, 'Cấu hình game:',
     <li><strong>Hệ điều hành:</strong> Windows 7 hoặc 10</li>
     <li><strong>Ngày ra mắt:</strong> 10/12/2020</li>
     <li><strong>Giá game:</strong> Có phí</li>
+</ul>');
+
+INSERT INTO BAIVIET_GIOITHIEU (MaGameSteam, TieuDeBaiViet, NoiDung)
+VALUES (1, 'Cấu hình game:', 
+'<h3>💻 Cấu hình PC cho Cyberpunk 2077 (Sau bản cập nhật 2.0)</h3>
+
+<h4>I. Cấu hình Tối thiểu (Minimum)</h4>
+<p>Cấu hình này cho phép chơi game ở độ phân giải **1080p** với thiết lập đồ họa **Thấp (Low)**.</p>
+<ul>
+    <li><strong>Hệ điều hành:</strong> 64-bit Windows 10</li>
+    <li><strong>Bộ xử lý (CPU):</strong> Intel Core i7-6700 hoặc AMD Ryzen 5 1600</li>
+    <li><strong>Bộ nhớ (RAM):</strong> 12 GB</li>
+    <li><strong>Card đồ họa (GPU):</strong> NVIDIA GeForce GTX 1060 6GB hoặc AMD Radeon RX 580 8GB</li>
+    <li><strong>Dung lượng ổ đĩa:</strong> 70 GB SSD</li>
 </ul>
-');
+
+<h4>II. Cấu hình Khuyến nghị (Recommended)</h4>
+<p>Cấu hình này cho phép chơi game ở độ phân giải **1080p** với thiết lập đồ họa **Cao (High)**.</p>
+<ul>
+    <li><strong>Hệ điều hành:</strong> 64-bit Windows 10</li>
+    <li><strong>Bộ xử lý (CPU):</strong> Intel Core i7-12700 hoặc AMD Ryzen 7 7800X3D</li>
+    <li><strong>Bộ nhớ (RAM):</strong> 16 GB</li>
+    <li><strong>Card đồ họa (GPU):</strong> NVIDIA GeForce RTX 2060 SUPER hoặc AMD Radeon RX 5700 XT</li>
+    <li><strong>Dung lượng ổ đĩa:</strong> 70 GB SSD</li>
+</ul>
+
+<h4>III. Cấu hình Cao (Ultra)</h4>
+<p>Cấu hình này cho phép chơi game ở độ phân giải **2160p (4K)** với thiết lập đồ họa **Tối đa (Ultra)**.</p>
+<ul>
+    <li><strong>Bộ xử lý (CPU):</strong> Intel Core i9-12900 hoặc AMD Ryzen 9 7900X</li>
+    <li><strong>Bộ nhớ (RAM):</strong> 24 GB</li>
+    <li><strong>Card đồ họa (GPU):</strong> NVIDIA GeForce RTX 3080 hoặc AMD Radeon RX 7900 XTX</li>
+    <li><strong>Dung lượng ổ đĩa:</strong> 70 GB NVMe</li>
+</ul>');
 
 -- Game 2
 INSERT INTO GAME_STEAM (TenGame, MoTaGame, GiaGoc, GiaBan, LuotXem, IdVideoTrailer, DuongDanAnh)
@@ -84,7 +115,7 @@ VALUES (2, 'Elden Ring – Kiệt tác thế giới mở huyền bí',
 <p>Các khu vực <strong>Legacy Dungeons</strong> được thiết kế phức tạp, chứa nhiều bí mật chưa từng khám phá. Người chơi sẽ đối mặt với các kẻ thù mới và hơn 10 boss, trong đó có <strong>Messmer the Impaler</strong> – một trong những boss khó nhất từng xuất hiện.</p>
 <p>Để truy cập DLC, người chơi cần đánh bại <strong>Starscourge Radahn</strong> và <strong>Mohg</strong> trong game gốc, sau đó tương tác với cánh tay khô héo nơi <strong>Miquella’s Cocoon</strong> để bước vào Realm of Shadow.</p>');
 INSERT INTO BAIVIET_GIOITHIEU (MaGameSteam, TieuDeBaiViet, NoiDung)
-VALUES (2, 'Cấu hình game:', 
+VALUES (2, 'Thông tin game:', 
 '<ul>
     <li><strong>Thể loại:</strong> Nhập vai hành động (ARPG)</li>
     <li><strong>Đồ họa:</strong> 3D</li>
@@ -94,6 +125,41 @@ VALUES (2, 'Cấu hình game:',
     <li><strong>Nền tảng:</strong> PlayStation 4/5, Xbox One/Series X|S, Windows</li>
     <li><strong>Ngày phát hành:</strong> 25/2/2022</li>
     <li><strong>Giá game:</strong> 59.99 USD</li>
+</ul>');
+INSERT INTO BAIVIET_GIOITHIEU (MaGameSteam, TieuDeBaiViet, NoiDung)
+VALUES (2, 'Cấu hình game:', 
+'<h3>💍 Cấu hình PC cho Elden Ring</h3>
+
+<h4>I. Cấu hình Tối thiểu (Minimum)</h4>
+<p>Cấu hình này cho phép chơi game ở độ phân giải **1080p** với thiết lập đồ họa **Thấp (Low)**.</p>
+<ul>
+    <li><strong>Hệ điều hành:</strong> 64-bit Windows 10</li>
+    <li><strong>Bộ xử lý (CPU):</strong> Intel Core i5-8400 hoặc AMD Ryzen 3 3300X</li>
+    <li><strong>Bộ nhớ (RAM):</strong> 12 GB</li>
+    <li><strong>Card đồ họa (GPU):</strong> NVIDIA GeForce GTX 1060 3 GB hoặc AMD Radeon RX 580 4 GB</li>
+    <li><strong>DirectX:</strong> Phiên bản 12</li>
+    <li><strong>Dung lượng ổ đĩa:</strong> 60 GB</li>
+</ul>
+
+<h4>II. Cấu hình Khuyến nghị (Recommended)</h4>
+<p>Cấu hình này cho phép chơi game ở độ phân giải **1080p** với thiết lập đồ họa **Cao (High)**.</p>
+<ul>
+    <li><strong>Hệ điều hành:</strong> 64-bit Windows 10/11</li>
+    <li><strong>Bộ xử lý (CPU):</strong> Intel Core i7-8700K hoặc AMD Ryzen 5 3600X</li>
+    <li><strong>Bộ nhớ (RAM):</strong> 16 GB</li>
+    <li><strong>Card đồ họa (GPU):</strong> NVIDIA GeForce GTX 1070 8 GB hoặc AMD Radeon RX Vega 56 8 GB hoặc NVIDIA GeForce RTX 3060 Ti</li>
+    <li><strong>DirectX:</strong> Phiên bản 12</li>
+    <li><strong>Dung lượng ổ đĩa:</strong> 60 GB</li>
+</ul>
+
+<h4>III. Cấu hình Cao/4K (Ultra/4K)</h4>
+<p>Cấu hình này cho phép chơi game ở độ phân giải **4K** với thiết lập đồ họa **Tối đa (Max)**.</p>
+<ul>
+    <li><strong>Bộ xử lý (CPU):</strong> Intel Core i9-12900K hoặc AMD Ryzen 9 5900X</li>
+    <li><strong>Bộ nhớ (RAM):</strong> 32 GB</li>
+    <li><strong>Card đồ họa (GPU):</strong> NVIDIA GeForce RTX 3080 hoặc AMD Radeon RX 6800 XT</li>
+    <li><strong>DirectX:</strong> Phiên bản 12</li>
+    <li><strong>Dung lượng ổ đĩa:</strong> 60 GB SSD</li>
 </ul>');
 
 -- Game 3
@@ -142,7 +208,7 @@ VALUES (3, 'Red Dead Redemption 2 – Huyền thoại miền Tây hoang dã',
     <li>Người chơi có thể <strong>"crack" khả năng đấu súng này vào bất kỳ khi nào mình muốn</strong>, chứ không cần trò chơi crack như trước đó nữa. Đây là một điểm khá thú vị khi bạn có thể quan sát hành vi của từng nhân vật trong game và quyết định nên "tiễn" hắn "về trời" hay không.</li>
 </ul>');
 INSERT INTO BAIVIET_GIOITHIEU (MaGameSteam, TieuDeBaiViet, NoiDung)
-VALUES (3, 'Cấu hình game:', 
+VALUES (3, 'Thông tin game:', 
 '<ul>
     <li><strong>Thể loại:</strong> Nhập vai hành động (ARPG)</li>
     <li><strong>Đồ họa:</strong> 3D</li>
@@ -153,6 +219,41 @@ VALUES (3, 'Cấu hình game:',
     <li><strong>Ngày phát hành:</strong> 26/10/2018</li>
     <li><strong>Giá game:</strong> 59.99 USD</li>
 </ul>');      
+INSERT INTO BAIVIET_GIOITHIEU (MaGameSteam, TieuDeBaiViet, NoiDung)
+VALUES (3, 'Cấu hình game:', 
+'<h3>🤠 Cấu hình PC cho Red Dead Redemption 2 (RDR2)</h3>
+
+<h4>I. Cấu hình Tối thiểu (Minimum)</h4>
+<p>Cấu hình này cho phép game chạy ở mức chấp nhận được.</p>
+<ul>
+    <li><strong>Hệ điều hành:</strong> Windows 7 - Service Pack 1 (6.1.7601)</li>
+    <li><strong>Bộ xử lý (CPU):</strong> Intel Core i5-2500K hoặc AMD FX-6300</li>
+    <li><strong>Bộ nhớ (RAM):</strong> 8 GB</li>
+    <li><strong>Card đồ họa (GPU):</strong> Nvidia GeForce GTX 770 2GB hoặc AMD Radeon R9 280 3GB</li>
+    <li><strong>Dung lượng ổ đĩa:</strong> 150 GB</li>
+    <li><strong>Card âm thanh:</strong> Tương thích DirectX</li>
+</ul>
+
+<h4>II. Cấu hình Khuyến nghị (Recommended)</h4>
+<p>Cấu hình này cho phép trải nghiệm game mượt mà hơn ở thiết lập đồ họa cao hơn.</p>
+<ul>
+    <li><strong>Hệ điều hành:</strong> Windows 10 - April 2018 Update (v1803)</li>
+    <li><strong>Bộ xử lý (CPU):</strong> Intel Core i7-4770K hoặc AMD Ryzen 5 1500X</li>
+    <li><strong>Bộ nhớ (RAM):</strong> 12 GB</li>
+    <li><strong>Card đồ họa (GPU):</strong> Nvidia GeForce GTX 1060 6GB hoặc AMD Radeon RX 480 4GB</li>
+    <li><strong>Dung lượng ổ đĩa:</strong> 150 GB</li>
+    <li><strong>Card âm thanh:</strong> Tương thích DirectX</li>
+</ul>
+
+<h4>III. Cấu hình Cao/4K (Ultra/4K)</h4>
+<p>Cấu hình này cho phép trải nghiệm game ở độ phân giải **4K** với thiết lập đồ họa **Rất Cao (Very High)** và tốc độ khung hình ổn định.</p>
+<ul>
+    <li><strong>Hệ điều hành:</strong> Windows 10 (64-bit)</li>
+    <li><strong>Bộ xử lý (CPU):</strong> Intel Core i7-9700K hoặc AMD Ryzen 7 3700X</li>
+    <li><strong>Bộ nhớ (RAM):</strong> 16 GB</li>
+    <li><strong>Card đồ họa (GPU):</strong> NVIDIA GeForce RTX 2080 Ti hoặc AMD Radeon RX 6900 XT</li>
+    <li><strong>Dung lượng ổ đĩa:</strong> 150 GB SSD</li>
+</ul>');
 
 -- Game 4
 INSERT INTO GAME_STEAM (TenGame, MoTaGame, GiaGoc, GiaBan, LuotXem, IdVideoTrailer, DuongDanAnh)
@@ -192,7 +293,7 @@ VALUES (4, 'Resident Evil 4 Remake – Sống sót trong kinh dị',
 </ul>
 <p>Resident Evil 4 Remake được phát hành trên các nền tảng Windows, Xbox Series X | S, PlayStation 4, và PlayStation 5.</p>');
 INSERT INTO BAIVIET_GIOITHIEU (MaGameSteam, TieuDeBaiViet, NoiDung)
-VALUES (4, 'Cấu hình game:', 
+VALUES (4, 'Thông tin game:', 
 '<h3>📰 Thông tin chung về Resident Evil 4 Remake</h3>
 <ul>
     <li><strong>Thể loại:</strong> Kinh dị sinh tồn, Hành động góc nhìn thứ ba</li>
@@ -203,6 +304,38 @@ VALUES (4, 'Cấu hình game:',
     <li><strong>Nền tảng:</strong> Windows, PlayStation 4/5, Xbox Series X|S</li>
     <li><strong>Ngày phát hành:</strong> 24/03/2023</li>
     <li><strong>Giá game:</strong> (Giá khác nhau tùy nền tảng và khu vực)</li>
+</ul>');
+INSERT INTO BAIVIET_GIOITHIEU (MaGameSteam, TieuDeBaiViet, NoiDung)
+VALUES (4, 'Cấu hình game:', 
+'<h3>🧟 Cấu hình PC cho Resident Evil 4 Remake</h3>
+
+<h4>I. Cấu hình Tối thiểu (Minimum)</h4>
+<p>Cấu hình này cho phép chơi game ở độ phân giải **1080p** với thiết lập đồ họa **Ưu tiên Hiệu suất (Prioritize Performance)** và **45 FPS**.</p>
+<ul>
+    <li><strong>Hệ điều hành:</strong> Windows 10 (64-bit)</li>
+    <li><strong>Bộ xử lý (CPU):</strong> AMD Ryzen 3 1200 hoặc Intel Core i5-7500</li>
+    <li><strong>Bộ nhớ (RAM):</strong> 8 GB</li>
+    <li><strong>Card đồ họa (GPU):</strong> AMD Radeon RX 560 (4GB VRAM) hoặc NVIDIA GeForce GTX 1050 Ti (4GB VRAM)</li>
+    <li><strong>DirectX:</strong> Phiên bản 12</li>
+</ul>
+
+<h4>II. Cấu hình Khuyến nghị (Recommended)</h4>
+<p>Cấu hình này cho phép chơi game ở độ phân giải **1080p** với thiết lập đồ họa **Cao (High)** và **60 FPS**.</p>
+<ul>
+    <li><strong>Hệ điều hành:</strong> Windows 10 (64-bit) hoặc Windows 11 (64-bit)</li>
+    <li><strong>Bộ xử lý (CPU):</strong> AMD Ryzen 5 3600 hoặc Intel Core i7-8700</li>
+    <li><strong>Bộ nhớ (RAM):</strong> 16 GB</li>
+    <li><strong>Card đồ họa (GPU):</strong> AMD Radeon RX 5700 hoặc NVIDIA GeForce GTX 1070</li>
+    <li><strong>DirectX:</strong> Phiên bản 12</li>
+</ul>
+
+<h4>III. Cấu hình Cao/4K (Ultra/4K)</h4>
+<p>Cấu hình này cho phép chơi game ở độ phân giải **4K** với thiết lập đồ họa **Tối đa (Max)** và tốc độ khung hình cao.</p>
+<ul>
+    <li><strong>Bộ xử lý (CPU):</strong> AMD Ryzen 5 5600X hoặc Intel Core i7-11700K</li>
+    <li><strong>Bộ nhớ (RAM):</strong> 16 GB</li>
+    <li><strong>Card đồ họa (GPU):</strong> NVIDIA GeForce RTX 4070 Ti hoặc AMD Radeon RX 7900 XT</li>
+    <li><strong>DirectX:</strong> Phiên bản 12</li>
 </ul>');
 
 -- Game 5
@@ -240,7 +373,7 @@ VALUES (5, 'Hollow Knight – Thế giới sâu thẳm của côn trùng',
 </ul>
 <p>Với lượng nội dung đồ sộ lên đến hàng chục giờ chơi và hàng loạt các DLC miễn phí đã ra mắt, Hollow Knight là một sản phẩm cực kỳ giá trị so với mức giá của nó.</p>');
 INSERT INTO BAIVIET_GIOITHIEU (MaGameSteam, TieuDeBaiViet, NoiDung)
-VALUES (5, 'Cấu hình game:', 
+VALUES (5, 'Thông tin game:', 
 '<h3>📰 Thông tin chung về Hollow Knight</h3>
 <ul>
     <li><strong>Thể loại:</strong> Metroidvania, Hành động-Phiêu lưu (Action-Adventure)</li>
@@ -251,6 +384,39 @@ VALUES (5, 'Cấu hình game:',
     <li><strong>Nền tảng:</strong> PC (Windows/macOS/Linux), Nintendo Switch, PlayStation 4, Xbox One</li>
     <li><strong>Ngày phát hành:</strong> 24/02/2017</li>
     <li><strong>Giá game:</strong> Có phí</li>
+</ul>');
+INSERT INTO BAIVIET_GIOITHIEU (MaGameSteam, TieuDeBaiViet, NoiDung)
+VALUES (5, 'Cấu hình game:', 
+'<h3>🗡️ Cấu hình PC cho Hollow Knight</h3>
+
+<h4>I. Cấu hình Tối thiểu (Minimum)</h4>
+<p>Cấu hình này đủ để chạy game.</p>
+<ul>
+    <li><strong>Hệ điều hành:</strong> Windows 7</li>
+    <li><strong>Bộ xử lý (CPU):</strong> Intel Core 2 Duo E5200</li>
+    <li><strong>Bộ nhớ (RAM):</strong> 4 GB</li>
+    <li><strong>Card đồ họa (GPU):</strong> GeForce 9800GTX+ (1GB)</li>
+    <li><strong>Dung lượng ổ đĩa:</strong> 9 GB</li>
+</ul>
+
+<h4>II. Cấu hình Khuyến nghị (Recommended)</h4>
+<p>Cấu hình này cho phép trải nghiệm game mượt mà hơn.</p>
+<ul>
+    <li><strong>Hệ điều hành:</strong> Windows 10</li>
+    <li><strong>Bộ xử lý (CPU):</strong> Intel Core i5</li>
+    <li><strong>Bộ nhớ (RAM):</strong> 8 GB</li>
+    <li><strong>Card đồ họa (GPU):</strong> NVIDIA GeForce GTX 560</li>
+    <li><strong>Dung lượng ổ đĩa:</strong> 9 GB</li>
+</ul>
+
+<h4>III. Cấu hình Cao/4K (Ultra/4K)</h4>
+<p>Do Hollow Knight là game 2D đồ họa vẽ tay, cấu hình Khuyến nghị thường đã đủ để chơi ở độ phân giải 4K. Cấu hình sau được coi là cao cấp để đảm bảo hiệu suất tốt nhất ở mọi thiết lập.</p>
+<ul>
+    <li><strong>Hệ điều hành:</strong> Windows 10</li>
+    <li><strong>Bộ xử lý (CPU):</strong> Intel Core i7</li>
+    <li><strong>Bộ nhớ (RAM):</strong> 8 GB trở lên</li>
+    <li><strong>Card đồ họa (GPU):</strong> NVIDIA GeForce GTX 970 hoặc cao hơn</li>
+    <li><strong>Dung lượng ổ đĩa:</strong> 9 GB SSD</li>
 </ul>');
 
 -- Game 6
@@ -288,7 +454,7 @@ VALUES (6, 'Baldur’s Gate 3 – Tự do tuyệt đối trong thế giới D&D'
 </ul>
 <p>Với hơn 17.000 kết thúc khác nhau, BG3 mang lại giá trị chơi lại cực kỳ cao.</p>');
 INSERT INTO BAIVIET_GIOITHIEU (MaGameSteam, TieuDeBaiViet, NoiDung)
-VALUES (6, 'Cấu hình game:', 
+VALUES (6, 'Thông tin game:', 
 '<h3>📰 Thông tin chung về Baldur’s Gate 3</h3>
 <ul>
     <li><strong>Thể loại:</strong> Nhập vai chiến thuật theo lượt (Tactical RPG)</li>
@@ -299,6 +465,41 @@ VALUES (6, 'Cấu hình game:',
     <li><strong>Nền tảng:</strong> PC (Windows/macOS), PlayStation 5, Xbox Series X|S</li>
     <li><strong>Ngày phát hành:</strong> 03/08/2023 (PC); 06/09/2023 (PS5)</li>
     <li><strong>Giá game:</strong> Có phí</li>
+</ul>');
+INSERT INTO BAIVIET_GIOITHIEU (MaGameSteam, TieuDeBaiViet, NoiDung)
+VALUES (6, 'Cấu hình game:', 
+'<h3>🐉 Cấu hình PC cho Baldur’s Gate 3</h3>
+
+<h4>I. Cấu hình Tối thiểu (Minimum)</h4>
+<p>Cấu hình này cho phép chơi game ở độ phân giải 1080p với thiết lập Thấp (Low).</p>
+<ul>
+    <li><strong>Hệ điều hành:</strong> Windows 10 (64-bit)</li>
+    <li><strong>Bộ xử lý (CPU):</strong> Intel Core i7-4790K hoặc AMD Ryzen 5 1500X</li>
+    <li><strong>Bộ nhớ (RAM):</strong> 8 GB</li>
+    <li><strong>Card đồ họa (GPU):</strong> NVIDIA GeForce GTX 970 hoặc AMD Radeon RX 480 (4GB VRAM)</li>
+    <li><strong>DirectX:</strong> Phiên bản 11</li>
+    <li><strong>Dung lượng ổ đĩa:</strong> 150 GB SSD</li>
+</ul>
+
+<h4>II. Cấu hình Khuyến nghị (Recommended)</h4>
+<p>Cấu hình này cho phép chơi game ở độ phân giải 1440p với thiết lập Cao (High).</p>
+<ul>
+    <li><strong>Hệ điều hành:</strong> Windows 10 (64-bit)</li>
+    <li><strong>Bộ xử lý (CPU):</strong> Intel Core i7-8700K hoặc AMD Ryzen 5 3600</li>
+    <li><strong>Bộ nhớ (RAM):</strong> 16 GB</li>
+    <li><strong>Card đồ họa (GPU):</strong> NVIDIA GeForce RTX 2060 SUPER hoặc AMD Radeon RX 5700 XT (8GB VRAM)</li>
+    <li><strong>DirectX:</strong> Phiên bản 11</li>
+    <li><strong>Dung lượng ổ đĩa:</strong> 150 GB SSD</li>
+</ul>
+
+<h4>III. Cấu hình Cao/4K (Ultra/4K)</h4>
+<p>Cấu hình này được dự đoán để chơi game ở độ phân giải **4K** với thiết lập đồ họa **Tối đa (Max)**.</p>
+<ul>
+    <li><strong>Bộ xử lý (CPU):</strong> Intel Core i7-13700K hoặc AMD Ryzen 7 7700X</li>
+    <li><strong>Bộ nhớ (RAM):</strong> 32 GB</li>
+    <li><strong>Card đồ họa (GPU):</strong> NVIDIA GeForce RTX 4070 Ti hoặc AMD Radeon RX 7900 XT</li>
+    <li><strong>DirectX:</strong> Phiên bản 11</li>
+    <li><strong>Dung lượng ổ đĩa:</strong> 150 GB NVMe SSD</li>
 </ul>');
 
 -- Game 7
@@ -344,7 +545,7 @@ VALUES (7, 'Stardew Valley – Cuộc sống mộng mơ nơi nông trại',
 </ul>
 <p>Stardew Valley đã được thêm vào Tesla Arcade và thậm chí còn có một phiên bản boardgame hợp tác. Trò chơi không chỉ mang tính giải trí mà còn nhấn mạnh thông điệp sâu sắc về việc kết nối với thiên nhiên và cân bằng giữa công việc và cuộc sống cá nhân.</p>');
 INSERT INTO BAIVIET_GIOITHIEU (MaGameSteam, TieuDeBaiViet, NoiDung)
-VALUES (7, 'Cấu hình game:', 
+VALUES (7, 'Thông tin game:', 
 '<h3>📰 Thông tin chung về Stardew Valley</h3>
 <ul>
     <li><strong>Thể loại:</strong> Mô phỏng cuộc sống, Nhập vai (RPG)</li>
@@ -356,7 +557,41 @@ VALUES (7, 'Cấu hình game:',
     <li><strong>Ngày phát hành:</strong> 26/02/2016 (PC)</li>
     <li><strong>Giá game:</strong> Có phí</li>
 </ul>');
+INSERT INTO BAIVIET_GIOITHIEU (MaGameSteam, TieuDeBaiViet, NoiDung)
+VALUES (7, 'Cấu hình game:', 
+'<h3>🌻 Cấu hình PC cho Stardew Valley</h3>
 
+<h4>I. Cấu hình Tối thiểu (Minimum)</h4>
+<p>Cấu hình này đủ để chạy game.</p>
+<ul>
+    <li><strong>Hệ điều hành:</strong> Windows Vista trở lên</li>
+    <li><strong>Bộ xử lý (CPU):</strong> 2 GHz</li>
+    <li><strong>Bộ nhớ (RAM):</strong> 2 GB</li>
+    <li><strong>Card đồ họa (GPU):</strong> 256 MB VRAM, hỗ trợ Shader Model 3.0+</li>
+    <li><strong>DirectX:</strong> Phiên bản 10</li>
+    <li><strong>Dung lượng ổ đĩa:</strong> 500 MB</li>
+</ul>
+
+<h4>II. Cấu hình Khuyến nghị (Recommended)</h4>
+<p>Cấu hình này cho phép trải nghiệm game mượt mà hơn.</p>
+<ul>
+    <li><strong>Hệ điều hành:</strong> Windows 10</li>
+    <li><strong>Bộ xử lý (CPU):</strong> Intel Core i3 trở lên</li>
+    <li><strong>Bộ nhớ (RAM):</strong> 4 GB</li>
+    <li><strong>Card đồ họa (GPU):</strong> 512 MB VRAM</li>
+    <li><strong>DirectX:</strong> Phiên bản 10</li>
+    <li><strong>Dung lượng ổ đĩa:</strong> 1 GB</li>
+</ul>
+
+<h4>III. Cấu hình Cao/4K (Ultra/4K)</h4>
+<p>Do Stardew Valley là game 2D đồ họa đơn giản, cấu hình Khuyến nghị thường đã đủ để chơi ở độ phân giải 4K. Cấu hình sau được coi là cao cấp để đảm bảo hiệu suất tốt nhất ở mọi thiết lập.</p>
+<ul>
+    <li><strong>Hệ điều hành:</strong> Windows 10/11</li>
+    <li><strong>Bộ xử lý (CPU):</strong> Intel Core i5 hoặc AMD Ryzen 5 tương đương</li>
+    <li><strong>Bộ nhớ (RAM):</strong> 8 GB</li>
+    <li><strong>Card đồ họa (GPU):</strong> 1GB VRAM hoặc cao hơn</li>
+    <li><strong>Dung lượng ổ đĩa:</strong> 1 GB SSD</li>
+</ul>');
 
 -- Game 8
 INSERT INTO GAME_STEAM (TenGame, MoTaGame, GiaGoc, GiaBan, LuotXem, IdVideoTrailer, DuongDanAnh)
@@ -394,7 +629,7 @@ VALUES (8, 'Grand Theft Auto V – thế giới tội phạm không giới hạn
 </ul>
 <p>GTA V được đánh giá cao về đồ họa sắc nét, kịch bản hấp dẫn và tính năng đa dạng, trở thành trò chơi điện tử bán chạy thứ hai trong lịch sử với doanh thu toàn cầu xấp xỉ 10 tỉ đô-la.</p>');
 INSERT INTO BAIVIET_GIOITHIEU (MaGameSteam, TieuDeBaiViet, NoiDung)
-VALUES (8, 'Cấu hình game: ',
+VALUES (8, 'Thông tin game:',
 '<h3>📰 Thông tin chung về Grand Theft Auto V</h3>
 <ul>
     <li><strong>Thể loại:</strong> Hành động Phiêu lưu Thế giới mở (Open-world Action-Adventure)</li>
@@ -405,6 +640,38 @@ VALUES (8, 'Cấu hình game: ',
     <li><strong>Nền tảng:</strong> PC (Windows), PlayStation 3/4/5, Xbox 360/One/Series X|S</li>
     <li><strong>Ngày phát hành:</strong> 17/09/2013 (Phiên bản gốc)</li>
     <li><strong>Giá game:</strong> Có phí</li>
+</ul>');
+INSERT INTO BAIVIET_GIOITHIEU (MaGameSteam, TieuDeBaiViet, NoiDung)
+VALUES (8, 'Cấu hình game:',
+'<h3>🔫 Cấu hình PC cho Grand Theft Auto V (GTA V)</h3>
+
+<h4>I. Cấu hình Tối thiểu (Minimum)</h4>
+<p>Cấu hình này cho phép chơi game ở thiết lập đồ họa cơ bản.</p>
+<ul>
+    <li><strong>Hệ điều hành:</strong> Windows 10 64 Bit, Windows 8.1 64 Bit, Windows 8 64 Bit, Windows 7 64 Bit Service Pack 1</li>
+    <li><strong>Bộ xử lý (CPU):</strong> Intel Core 2 Quad CPU Q6600 @ 2.40GHz (4 CPUs) hoặc AMD Phenom 9850 Quad-Core Processor (4 CPUs) @ 2.5GHz</li>
+    <li><strong>Bộ nhớ (RAM):</strong> 4 GB</li>
+    <li><strong>Card đồ họa (GPU):</strong> NVIDIA 9800 GT 1GB hoặc AMD HD 4870 1GB (DX 10)</li>
+    <li><strong>Dung lượng ổ đĩa:</strong> 72 GB</li>
+</ul>
+
+<h4>II. Cấu hình Khuyến nghị (Recommended)</h4>
+<p>Cấu hình này cho phép trải nghiệm game mượt mà hơn ở thiết lập đồ họa cao.</p>
+<ul>
+    <li><strong>Hệ điều hành:</strong> Windows 10 64 Bit, Windows 8.1 64 Bit, Windows 8 64 Bit, Windows 7 64 Bit Service Pack 1</li>
+    <li><strong>Bộ xử lý (CPU):</strong> Intel Core i5 3470 @ 3.2GHZ (4 CPUs) hoặc AMD X8 FX-8350 @ 4GHZ (8 CPUs)</li>
+    <li><strong>Bộ nhớ (RAM):</strong> 8 GB</li>
+    <li><strong>Card đồ họa (GPU):</strong> NVIDIA GTX 660 2GB hoặc AMD HD7870 2GB</li>
+    <li><strong>Dung lượng ổ đĩa:</strong> 72 GB</li>
+</ul>
+
+<h4>III. Cấu hình Cao/4K (Ultra/4K)</h4>
+<p>Cấu hình này cho phép chơi game ở độ phân giải **4K** với thiết lập đồ họa **Tối đa (Max)** và tốc độ khung hình cao.</p>
+<ul>
+    <li><strong>Bộ xử lý (CPU):</strong> Intel Core i7-7700K hoặc AMD Ryzen 7 1700X</li>
+    <li><strong>Bộ nhớ (RAM):</strong> 16 GB</li>
+    <li><strong>Card đồ họa (GPU):</strong> NVIDIA GeForce GTX 1080 hoặc AMD Radeon RX Vega 64</li>
+    <li><strong>Dung lượng ổ đĩa:</strong> 72 GB SSD</li>
 </ul>');
 
 -- Game 9
@@ -446,7 +713,7 @@ VALUES (9, 'Little Nightmares 3 – Hành trình kinh dị mới', '<h3>👻 Lit
     <li><strong>Quan ngại về AI:</strong> Sự khác biệt này dấy lên quan ngại về mức độ thông minh của AI. Một AI kém có thể gây cản trở, nhưng nếu nó quá thông minh thì có thể vô tình đưa ra các chỉ dẫn, làm mất trải nghiệm khám phá của người chơi.</li>
 </ul>');
 INSERT INTO BAIVIET_GIOITHIEU (MaGameSteam, TieuDeBaiViet, NoiDung)
-VALUES (9, 'Cấu hình game:', '<h3>📰 Thông tin chung về Little Nightmares 3</h3>
+VALUES (9, 'Thông tin game:', '<h3>📰 Thông tin chung về Little Nightmares 3</h3>
 <ul>
     <li><strong>Thể loại:</strong> Kinh dị sinh tồn, Giải đố, Phiêu lưu</li>
     <li><strong>Đồ họa:</strong> 3D</li>
@@ -457,6 +724,33 @@ VALUES (9, 'Cấu hình game:', '<h3>📰 Thông tin chung về Little Nightmare
     <li><strong>Nền tảng:</strong> PC (Steam/Microsoft Store), PlayStation 4/5, Xbox One/Series X|S, Nintendo Switch</li>
     <li><strong>Ngày phát hành:</strong> 10/10/2025</li>
 </ul>');
+INSERT INTO BAIVIET_GIOITHIEU (MaGameSteam, TieuDeBaiViet, NoiDung)
+VALUES (9, 'Cấu hình game:', '<h3>👻 Cấu hình PC cho Little Nightmares 3</h3>
+
+<h4>I. Cấu hình Tối thiểu (Minimum)</h4>
+<p>Cấu hình này đủ để chạy game ở độ phân giải **1080p** với thiết lập cơ bản.</p>
+<ul>
+    <li><strong>Hệ điều hành:</strong> Windows 10 (64-bit)</li>
+    <li><strong>Bộ xử lý (CPU):</strong> Intel Core i5-6600 hoặc AMD Ryzen 5 1400</li>
+    <li><strong>Bộ nhớ (RAM):</strong> 8 GB</li>
+    <li><strong>Card đồ họa (GPU):</strong> NVIDIA GeForce GTX 960 4GB hoặc AMD Radeon R9 380</li>
+    <li><strong>DirectX:</strong> Phiên bản 12</li>
+    <li><strong>Dung lượng ổ đĩa:</strong> 25 GB SSD (Dự kiến)</li>
+</ul>
+
+<h4>II. Cấu hình Khuyến nghị (Recommended)</h4>
+<p>Cấu hình này cho phép trải nghiệm game ở độ phân giải **1080p** với thiết lập đồ họa cao.</p>
+<ul>
+    <li><strong>Hệ điều hành:</strong> Windows 10 (64-bit) hoặc Windows 11</li>
+    <li><strong>Bộ xử lý (CPU):</strong> Intel Core i7-7700 hoặc AMD Ryzen 5 2600</li>
+    <li><strong>Bộ nhớ (RAM):</strong> 16 GB</li>
+    <li><strong>Card đồ họa (GPU):</strong> NVIDIA GeForce GTX 1070 8GB hoặc AMD Radeon RX Vega 56</li>
+    <li><strong>DirectX:</strong> Phiên bản 12</li>
+    <li><strong>Dung lượng ổ đĩa:</strong> 25 GB SSD (Dự kiến)</li>
+</ul>
+
+<h4>III. Cấu hình Cao/4K (Ultra/4K)</h4>
+<p>Thông số cấu hình cụ thể cho độ phân giải 4K hiện **chưa được nhà phát triển công bố**.</p>');
 
 -- Game 10
 INSERT INTO GAME_STEAM (TenGame, MoTaGame, GiaGoc, GiaBan, LuotXem, IdVideoTrailer, DuongDanAnh)
@@ -494,7 +788,7 @@ VALUES (10, 'Giới thiệu Digimon Story Time Stranger', '<h3>🧬 Digimon Stor
 </ul>
 <p>Digimon Story: Time Stranger là một món quà cho những ai đã gắn bó với Digimon từ thuở nhỏ, và là điểm khởi đầu tuyệt vời cho người chơi mới muốn khám phá thế giới kỹ thuật số này.</p>');
 INSERT INTO BAIVIET_GIOITHIEU (MaGameSteam, TieuDeBaiViet, NoiDung)
-VALUES (10, 'Cấu hình game:', '<h3>📰 Thông tin chung về Digimon Story: Time Stranger</h3>
+VALUES (10, 'Thông tin game:', '<h3>📰 Thông tin chung về Digimon Story: Time Stranger</h3>
 <ul>
     <li><strong>Thể loại:</strong> Nhập vai theo lượt (Turn-based RPG), Thuần hóa Monster</li>
     <li><strong>Đồ họa:</strong> 3D</li>
@@ -505,6 +799,40 @@ VALUES (10, 'Cấu hình game:', '<h3>📰 Thông tin chung về Digimon Story: 
     <li><strong>Nền tảng:</strong> PC (Steam), PlayStation 5, Xbox Series X|S</li>
     <li><strong>Ngày phát hành:</strong> 03/10/2025</li>
     <li><strong>Thông số kỹ thuật:</strong> Hỗ trợ 4K trên PS5/Xbox Series X, PC hỗ trợ 60fps</li>
+</ul>');
+INSERT INTO BAIVIET_GIOITHIEU (MaGameSteam, TieuDeBaiViet, NoiDung)
+VALUES (10, 'Cấu hình game:', '<h3>🧬 Cấu hình PC cho Digimon Story: Time Stranger</h3>
+
+<h4>I. Cấu hình Tối thiểu (Minimum)</h4>
+<p>Cấu hình này đủ để chạy game.</p>
+<ul>
+    <li><strong>Hệ điều hành:</strong> Windows 10 (64-bit)</li>
+    <li><strong>Bộ xử lý (CPU):</strong> Intel Core i5-3470 hoặc AMD Ryzen 3 1200</li>
+    <li><strong>Bộ nhớ (RAM):</strong> 8 GB</li>
+    <li><strong>Card đồ họa (GPU):</strong> NVIDIA GeForce GTX 960 (4GB VRAM) hoặc AMD Radeon R9 280 (3GB VRAM)</li>
+    <li><strong>DirectX:</strong> Phiên bản 12</li>
+    <li><strong>Dung lượng ổ đĩa:</strong> 30 GB</li>
+</ul>
+
+<h4>II. Cấu hình Khuyến nghị (Recommended)</h4>
+<p>Cấu hình này cho phép trải nghiệm game mượt mà hơn ở thiết lập đồ họa Cao (High).</p>
+<ul>
+    <li><strong>Hệ điều hành:</strong> Windows 10 (64-bit) hoặc Windows 11</li>
+    <li><strong>Bộ xử lý (CPU):</strong> Intel Core i7-6700 hoặc AMD Ryzen 5 1600</li>
+    <li><strong>Bộ nhớ (RAM):</strong> 16 GB</li>
+    <li><strong>Card đồ họa (GPU):</strong> NVIDIA GeForce RTX 2060 hoặc AMD Radeon RX 5700 XT</li>
+    <li><strong>DirectX:</strong> Phiên bản 12</li>
+    <li><strong>Dung lượng ổ đĩa:</strong> 30 GB SSD</li>
+</ul>
+
+<h4>III. Cấu hình Cao/4K (Ultra/4K)</h4>
+<p>Cấu hình này cho phép chơi game ở độ phân giải **4K** với thiết lập đồ họa **Tối đa (Max)**.</p>
+<ul>
+    <li><strong>Bộ xử lý (CPU):</strong> Intel Core i9-9900K hoặc AMD Ryzen 7 3700X</li>
+    <li><strong>Bộ nhớ (RAM):</strong> 32 GB</li>
+    <li><strong>Card đồ họa (GPU):</strong> NVIDIA GeForce RTX 3080 hoặc AMD Radeon RX 6800 XT</li>
+    <li><strong>DirectX:</strong> Phiên bản 12</li>
+    <li><strong>Dung lượng ổ đĩa:</strong> 30 GB NVMe SSD</li>
 </ul>');
 
 -- Game 11
@@ -546,7 +874,7 @@ VALUES (11, 'Jurassic World Evolution 3 – Công viên tối thượng', '<h3>�
 </ul>
 <p>JWE 3 cũng có tính năng **chia sẻ đa nền tảng** thông qua Frontier Workshop, cho phép người chơi chia sẻ các sáng tạo của họ với cộng đồng toàn cầu.</p>');
 INSERT INTO BAIVIET_GIOITHIEU (MaGameSteam, TieuDeBaiViet, NoiDung)
-VALUES (11, 'Cấu hình game:', '<h3>📰 Thông tin chung về Jurassic World Evolution 3</h3>
+VALUES (11, 'Thông tin game:', '<h3>📰 Thông tin chung về Jurassic World Evolution 3</h3>
 <ul>
     <li><strong>Thể loại:</strong> Mô phỏng quản lý công viên, Chiến thuật</li>
     <li><strong>Đồ họa:</strong> 3D</li>
@@ -557,6 +885,38 @@ VALUES (11, 'Cấu hình game:', '<h3>📰 Thông tin chung về Jurassic World 
     <li><strong>Nền tảng:</strong> PC (Windows), PlayStation 5, Xbox Series X|S</li>
     <li><strong>Ngày phát hành:</strong> 21/10/2025</li>
     <li><strong>Giá game (phiên bản Tiêu chuẩn):</strong> £49.99/$59.99/€59.99</li>
+</ul>');
+INSERT INTO BAIVIET_GIOITHIEU (MaGameSteam, TieuDeBaiViet, NoiDung)
+VALUES (11, 'Cấu hình game:', '<h3>🦖 Cấu hình PC cho Jurassic World Evolution 3 (Dự kiến)</h3>
+
+<h4>I. Cấu hình Tối thiểu (Minimum)</h4>
+<p>Cấu hình này cho phép game chạy ở độ phân giải **1080p** với thiết lập đồ họa cơ bản.</p>
+<ul>
+    <li><strong>Hệ điều hành:</strong> Windows 10 (64-bit)</li>
+    <li><strong>Bộ xử lý (CPU):</strong> Intel Core i5-6600K hoặc AMD Ryzen 5 2600</li>
+    <li><strong>Bộ nhớ (RAM):</strong> 16 GB</li>
+    <li><strong>Card đồ họa (GPU):</strong> NVIDIA GeForce GTX 1060 (6GB VRAM) hoặc AMD tương đương</li>
+    <li><strong>Dung lượng ổ đĩa:</strong> 50 GB SSD (Dự kiến)</li>
+</ul>
+
+<h4>II. Cấu hình Khuyến nghị (Recommended)</h4>
+<p>Cấu hình này cho phép trải nghiệm game mượt mà ở độ phân giải **1080p/1440p** với thiết lập đồ họa cao.</p>
+<ul>
+    <li><strong>Hệ điều hành:</strong> Windows 10/11 (64-bit)</li>
+    <li><strong>Bộ xử lý (CPU):</strong> Intel Core i7-10700K hoặc AMD Ryzen 7 5800</li>
+    <li><strong>Bộ nhớ (RAM):</strong> 16 GB</li>
+    <li><strong>Card đồ họa (GPU):</strong> NVIDIA GeForce RTX 2070 Super (8GB VRAM) hoặc AMD tương đương</li>
+    <li><strong>Dung lượng ổ đĩa:</strong> 50 GB SSD (Dự kiến)</li>
+</ul>
+
+<h4>III. Cấu hình Cao/4K (Ultra/4K)</h4>
+<p>Cấu hình này được dự đoán để chơi game ở độ phân giải **4K** với thiết lập đồ họa **Tối đa (Ultra)** và tốc độ khung hình cao.</p>
+<ul>
+    <li><strong>Hệ điều hành:</strong> Windows 11 (64-bit)</li>
+    <li><strong>Bộ xử lý (CPU):</strong> Intel Core i9-12900K hoặc AMD Ryzen 9 7900X</li>
+    <li><strong>Bộ nhớ (RAM):</strong> 32 GB</li>
+    <li><strong>Card đồ họa (GPU):</strong> NVIDIA GeForce RTX 4070 Ti hoặc AMD Radeon RX 7900 XT</li>
+    <li><strong>Dung lượng ổ đĩa:</strong> 50 GB NVMe SSD</li>
 </ul>');
 
 -- Game 12
@@ -594,7 +954,7 @@ VALUES (12, 'ARC Raiders – Chiến đấu sinh tồn', '<h3>🤖 ARC Raiders: 
 </ul>
 <p>Với hình ảnh ấn tượng và lối chơi năng động, ARC Raiders được kỳ vọng sẽ là một đối thủ nặng ký trong thị trường game bắn súng miễn phí.</p>');
 INSERT INTO BAIVIET_GIOITHIEU (MaGameSteam, TieuDeBaiViet, NoiDung)
-VALUES (12, 'Cấu hình game:', '<h3>📰 Thông tin chung về ARC Raiders</h3>
+VALUES (12, 'Thông tin game:', '<h3>📰 Thông tin chung về ARC Raiders</h3>
 <ul>
     <li><strong>Thể loại:</strong> Bắn súng góc nhìn thứ ba (TPS), Hành động, Co-op</li>
     <li><strong>Đồ họa:</strong> 3D</li>
@@ -605,6 +965,40 @@ VALUES (12, 'Cấu hình game:', '<h3>📰 Thông tin chung về ARC Raiders</h3
     <li><strong>Nền tảng:</strong> PC (Steam/Epic Games Store), PlayStation 5, Xbox Series X|S</li>
     <li><strong>Ngày phát hành:</strong> Dự kiến 2025</li>
     <li><strong>Giá game:</strong> Miễn phí (Free-to-Play)</li>
+</ul>');
+INSERT INTO BAIVIET_GIOITHIEU (MaGameSteam, TieuDeBaiViet, NoiDung)
+VALUES (12, 'Cấu hình game:', '<h3>🤖 Cấu hình PC cho ARC Raiders (Dự kiến)</h3>
+
+<h4>I. Cấu hình Tối thiểu (Minimum)</h4>
+<p>Cấu hình này đủ để chạy game ở độ phân giải **1080p** với thiết lập cơ bản.</p>
+<ul>
+    <li><strong>Hệ điều hành:</strong> Windows 10 (64-bit)</li>
+    <li><strong>Bộ xử lý (CPU):</strong> Intel Core i5-6600K hoặc AMD Ryzen 5 1600</li>
+    <li><strong>Bộ nhớ (RAM):</strong> 12 GB</li>
+    <li><strong>Card đồ họa (GPU):</strong> NVIDIA GeForce GTX 1060 hoặc AMD Radeon RX 580</li>
+    <li><strong>DirectX:</strong> Phiên bản 12</li>
+    <li><strong>Dung lượng ổ đĩa:</strong> 50 GB SSD</li>
+</ul>
+
+<h4>II. Cấu hình Khuyến nghị (Recommended)</h4>
+<p>Cấu hình này cho phép trải nghiệm game mượt mà ở độ phân giải **1080p/1440p** với thiết lập đồ họa cao.</p>
+<ul>
+    <li><strong>Hệ điều hành:</strong> Windows 10 (64-bit) hoặc Windows 11</li>
+    <li><strong>Bộ xử lý (CPU):</strong> Intel Core i7-8700K hoặc AMD Ryzen 5 3600</li>
+    <li><strong>Bộ nhớ (RAM):</strong> 16 GB</li>
+    <li><strong>Card đồ họa (GPU):</strong> NVIDIA GeForce RTX 2070 hoặc AMD Radeon RX 5700 XT</li>
+    <li><strong>DirectX:</strong> Phiên bản 12</li>
+    <li><strong>Dung lượng ổ đĩa:</strong> 50 GB SSD</li>
+</ul>
+
+<h4>III. Cấu hình Cao/4K (Ultra/4K)</h4>
+<p>Cấu hình này được dự đoán để chơi game ở độ phân giải **4K** với thiết lập đồ họa **Tối đa (Max)** và tốc độ khung hình cao.</p>
+<ul>
+    <li><strong>Bộ xử lý (CPU):</strong> Intel Core i7-12700K hoặc AMD Ryzen 7 5800X3D</li>
+    <li><strong>Bộ nhớ (RAM):</strong> 32 GB</li>
+    <li><strong>Card đồ họa (GPU):</strong> NVIDIA GeForce RTX 4070 Ti hoặc AMD Radeon RX 7900 XT</li>
+    <li><strong>DirectX:</strong> Phiên bản 12</li>
+    <li><strong>Dung lượng ổ đĩa:</strong> 50 GB NVMe SSD</li>
 </ul>');
 
 -- Game 13
@@ -641,7 +1035,7 @@ VALUES (13, 'Battlefield 6 – Chiến tranh hiện đại', '<h3>💥 Battlefie
 </ul>
 <p>Battlefield 2042 tiếp tục được hỗ trợ và phát triển nội dung mới thông qua các Mùa (Seasons), bổ sung thêm Specialist, bản đồ và vũ khí mới để làm phong phú thêm trải nghiệm chiến trường.</p>');
 INSERT INTO BAIVIET_GIOITHIEU (MaGameSteam, TieuDeBaiViet, NoiDung)
-VALUES (13, 'Cấu hình game:', '<h3>📰 Thông tin chung về Battlefield 2042</h3>
+VALUES (13, 'Thông tin game:', '<h3>📰 Thông tin chung về Battlefield 2042</h3>
 <ul>
     <li><strong>Thể loại:</strong> Bắn súng góc nhìn thứ nhất (FPS), Chiến đấu quy mô lớn</li>
     <li><strong>Đồ họa:</strong> 3D</li>
@@ -652,6 +1046,43 @@ VALUES (13, 'Cấu hình game:', '<h3>📰 Thông tin chung về Battlefield 204
     <li><strong>Nền tảng:</strong> PC (Windows), PlayStation 4/5, Xbox One/Series X|S</li>
     <li><strong>Ngày phát hành:</strong> 19/11/2021</li>
     <li><strong>Giá game:</strong> Có phí</li>
+</ul>');
+INSERT INTO BAIVIET_GIOITHIEU (MaGameSteam, TieuDeBaiViet, NoiDung)
+VALUES (13, 'Cấu hình game:', '<h3>💥 Cấu hình PC cho Battlefield 2042</h3>
+
+<h4>I. Cấu hình Tối thiểu (Minimum)</h4>
+<p>Cấu hình này cho phép chơi game ở độ phân giải **1080p** với thiết lập đồ họa thấp.</p>
+<ul>
+    <li><strong>Hệ điều hành:</strong> Windows 10 (64-bit)</li>
+    <li><strong>Bộ xử lý (CPU):</strong> AMD Ryzen 5 3600 hoặc Intel Core i5 6600K</li>
+    <li><strong>Bộ nhớ (RAM):</strong> 8 GB</li>
+    <li><strong>Card đồ họa (GPU):</strong> NVIDIA GeForce GTX 1050 Ti hoặc AMD Radeon RX 560</li>
+    <li><strong>VRAM:</strong> 4 GB</li>
+    <li><strong>DirectX:</strong> Phiên bản 12</li>
+    <li><strong>Dung lượng ổ đĩa:</strong> 100 GB SSD</li>
+</ul>
+
+<h4>II. Cấu hình Khuyến nghị (Recommended)</h4>
+<p>Cấu hình này cho phép trải nghiệm game mượt mà ở độ phân giải **1080p** với thiết lập đồ họa cao.</p>
+<ul>
+    <li><strong>Hệ điều hành:</strong> Windows 10 (64-bit)</li>
+    <li><strong>Bộ xử lý (CPU):</strong> AMD Ryzen 7 2700X hoặc Intel Core i7 4790</li>
+    <li><strong>Bộ nhớ (RAM):</strong> 16 GB</li>
+    <li><strong>Card đồ họa (GPU):</strong> NVIDIA GeForce RTX 3060 hoặc AMD Radeon RX 6600 XT</li>
+    <li><strong>VRAM:</strong> 8 GB</li>
+    <li><strong>DirectX:</strong> Phiên bản 12</li>
+    <li><strong>Dung lượng ổ đĩa:</strong> 100 GB SSD</li>
+</ul>
+
+<h4>III. Cấu hình Cao/4K (Ultra/4K)</h4>
+<p>Cấu hình này được dự đoán để chơi game ở độ phân giải **4K** với thiết lập đồ họa **Tối đa (Max)**.</p>
+<ul>
+    <li><strong>Hệ điều hành:</strong> Windows 11 (64-bit)</li>
+    <li><strong>Bộ xử lý (CPU):</strong> Intel Core i9-12900K hoặc AMD Ryzen 9 5900X</li>
+    <li><strong>Bộ nhớ (RAM):</strong> 32 GB</li>
+    <li><strong>Card đồ họa (GPU):</strong> NVIDIA GeForce RTX 3080 Ti hoặc AMD Radeon RX 6900 XT</li>
+    <li><strong>VRAM:</strong> 12 GB trở lên</li>
+    <li><strong>Dung lượng ổ đĩa:</strong> 100 GB NVMe SSD</li>
 </ul>');
 
 -- Game 14
@@ -690,7 +1121,7 @@ VALUES (14, 'Rust – Sinh tồn khốc liệt', '<h3>🔨 Rust: Sinh Tồn Kh�
 </ul>
 <p>Rust là một tựa game dành cho những người chơi yêu thích sự thử thách, hợp tác trong nhóm nhỏ và không ngại mất tất cả sau một đêm.</p>');
 INSERT INTO BAIVIET_GIOITHIEU (MaGameSteam, TieuDeBaiViet, NoiDung)
-VALUES (14, 'Cấu hình game:', '<h3>📰 Thông tin chung về Rust</h3>
+VALUES (14, 'Thông tin game:', '<h3>📰 Thông tin chung về Rust</h3>
 <ul>
     <li><strong>Thể loại:</strong> Sinh tồn (Survival), Thế giới mở (Open-world), PvP</li>
     <li><strong>Đồ họa:</strong> 3D</li>
@@ -701,6 +1132,41 @@ VALUES (14, 'Cấu hình game:', '<h3>📰 Thông tin chung về Rust</h3>
     <li><strong>Nền tảng:</strong> PC (Windows/macOS), PlayStation 4, Xbox One</li>
     <li><strong>Ngày phát hành:</strong> 08/02/2018 (Chính thức)</li>
     <li><strong>Giá game:</strong> Có phí</li>
+</ul>');
+INSERT INTO BAIVIET_GIOITHIEU (MaGameSteam, TieuDeBaiViet, NoiDung)
+VALUES (14, 'Cấu hình game:', '<h3>🔨 Cấu hình PC cho Rust</h3>
+
+<h4>I. Cấu hình Tối thiểu (Minimum)</h4>
+<p>Cấu hình này đủ để chạy game.</p>
+<ul>
+    <li><strong>Hệ điều hành:</strong> Windows 8.1 64bit</li>
+    <li><strong>Bộ xử lý (CPU):</strong> Intel Core i7-3770 hoặc AMD FX-9590</li>
+    <li><strong>Bộ nhớ (RAM):</strong> 10 GB</li>
+    <li><strong>Card đồ họa (GPU):</strong> NVIDIA GeForce GTX 670 hoặc AMD Radeon R9 280</li>
+    <li><strong>DirectX:</strong> Phiên bản 11</li>
+    <li><strong>Dung lượng ổ đĩa:</strong> 25 GB HDD (Nên dùng SSD)</li>
+</ul>
+
+<h4>II. Cấu hình Khuyến nghị (Recommended)</h4>
+<p>Cấu hình này cho phép trải nghiệm game mượt mà hơn ở thiết lập đồ họa trung bình/cao.</p>
+<ul>
+    <li><strong>Hệ điều hành:</strong> Windows 10 64bit</li>
+    <li><strong>Bộ xử lý (CPU):</strong> Intel Core i7-4690K hoặc AMD Ryzen 5 1600</li>
+    <li><strong>Bộ nhớ (RAM):</strong> 16 GB</li>
+    <li><strong>Card đồ họa (GPU):</strong> NVIDIA GeForce GTX 980 hoặc AMD R9 Fury</li>
+    <li><strong>DirectX:</strong> Phiên bản 12</li>
+    <li><strong>Dung lượng ổ đĩa:</strong> 25 GB SSD</li>
+</ul>
+
+<h4>III. Cấu hình Cao/4K (Ultra/4K)</h4>
+<p>Cấu hình này được dự đoán để chơi game ở độ phân giải **4K** với thiết lập đồ họa **Tối đa (Max)**.</p>
+<ul>
+    <li><strong>Hệ điều hành:</strong> Windows 10/11 64bit</li>
+    <li><strong>Bộ xử lý (CPU):</strong> Intel Core i9-13900K hoặc AMD Ryzen 9 7950X</li>
+    <li><strong>Bộ nhớ (RAM):</strong> 32 GB</li>
+    <li><strong>Card đồ họa (GPU):</strong> NVIDIA GeForce RTX 4080 hoặc AMD Radeon RX 7900 XT</li>
+    <li><strong>DirectX:</strong> Phiên bản 12</li>
+    <li><strong>Dung lượng ổ đĩa:</strong> 25 GB NVMe SSD</li>
 </ul>');
 
 -- Game 15
@@ -737,7 +1203,7 @@ VALUES (15, 'Football Manager 26 – Quản lý bóng đá', '<h3>⚽ Football M
 </ul>
 <p>FM26 được kỳ vọng sẽ không chỉ là bản cập nhật danh sách cầu thủ mà còn là một bước tiến quan trọng trong việc hoàn thiện nền tảng gameplay mới, nhằm giữ vững vị thế là game quản lý bóng đá hàng đầu thế giới.</p>');
 INSERT INTO BAIVIET_GIOITHIEU (MaGameSteam, TieuDeBaiViet, NoiDung)
-VALUES (15, 'Cấu hình game:', '<h3>📰 Thông tin chung về Football Manager 26</h3>
+VALUES (15, 'Thông tin game:', '<h3>📰 Thông tin chung về Football Manager 26</h3>
 <ul>
     <li><strong>Thể loại:</strong> Mô phỏng quản lý (Management Simulation), Chiến thuật</li>
     <li><strong>Đồ họa:</strong> 3D (Sử dụng Unity Engine)</li>
@@ -748,6 +1214,41 @@ VALUES (15, 'Cấu hình game:', '<h3>📰 Thông tin chung về Football Manage
     <li><strong>Nền tảng:</strong> PC (Windows/macOS), Console (PS5, Xbox Series X|S), Mobile (iOS/Android), Switch</li>
     <li><strong>Ngày phát hành:</strong> Dự kiến Tháng 11 năm 2025</li>
     <li><strong>Giá game:</strong> Có phí</li>
+</ul>');
+INSERT INTO BAIVIET_GIOITHIEU (MaGameSteam, TieuDeBaiViet, NoiDung)
+VALUES (15, 'Cấu hình game:', '<h3>⚽ Cấu hình PC cho Football Manager 26 (Dự kiến dựa trên FM25)</h3>
+
+<h4>I. Cấu hình Tối thiểu (Minimum)</h4>
+<p>Cấu hình này đủ để chạy game với đồ họa 3D ở mức cơ bản.</p>
+<ul>
+    <li><strong>Hệ điều hành:</strong> Windows 10 (64-bit), Windows 11 (64-bit)</li>
+    <li><strong>Bộ xử lý (CPU):</strong> Intel Core i3-3250 / AMD FX-6350</li>
+    <li><strong>Bộ nhớ (RAM):</strong> 8 GB</li>
+    <li><strong>Card đồ họa (GPU):</strong> NVIDIA GeForce GTX 960 / AMD Radeon R9 285</li>
+    <li><strong>VRAM:</strong> 4 GB</li>
+    <li><strong>DirectX:</strong> Phiên bản 12</li>
+    <li><strong>Dung lượng ổ đĩa:</strong> 7 GB SSD</li>
+</ul>
+
+<h4>II. Cấu hình Khuyến nghị (Recommended)</h4>
+<p>Cấu hình này cho phép trải nghiệm game mượt mà hơn, đặc biệt với các file dữ liệu lớn và độ phân giải cao hơn.</p>
+<ul>
+    <li><strong>Hệ điều hành:</strong> Windows 10 (64-bit), Windows 11 (64-bit)</li>
+    <li><strong>Bộ xử lý (CPU):</strong> Intel Core i5-8400 / AMD Ryzen 5 2600</li>
+    <li><strong>Bộ nhớ (RAM):</strong> 16 GB</li>
+    <li><strong>Card đồ họa (GPU):</strong> NVIDIA GeForce RTX 2060 / AMD Radeon RX 5600 XT</li>
+    <li><strong>VRAM:</strong> 6 GB</li>
+    <li><strong>DirectX:</strong> Phiên bản 12</li>
+    <li><strong>Dung lượng ổ đĩa:</strong> 7 GB SSD</li>
+</ul>
+
+<h4>III. Cấu hình Cao/4K (Ultra/4K)</h4>
+<p>Thông số cấu hình cụ thể cho độ phân giải 4K hiện **chưa được nhà phát triển công bố**. Tuy nhiên, để đạt 4K/60FPS với file dữ liệu lớn, cấu hình sau được dự đoán:</p>
+<ul>
+    <li><strong>Bộ xử lý (CPU):</strong> Intel Core i7-12700K hoặc AMD Ryzen 7 5800X</li>
+    <li><strong>Bộ nhớ (RAM):</strong> 32 GB</li>
+    <li><strong>Card đồ họa (GPU):</strong> NVIDIA GeForce RTX 4070 hoặc AMD Radeon RX 7800 XT</li>
+    <li><strong>Dung lượng ổ đĩa:</strong> NVMe SSD</li>
 </ul>');
 
 -- Game 16
@@ -784,7 +1285,7 @@ VALUES (16, 'Black Myth: Wukong – Phiêu lưu thần thoại', '<h3>🐒 Black
     <li><strong>Đồ họa Unreal Engine 5:</strong> Trò chơi được phát triển trên Unreal Engine 5, mang lại chất lượng hình ảnh tuyệt đẹp, mô hình nhân vật và môi trường cực kỳ chi tiết.</li>
 </ul>');
 INSERT INTO BAIVIET_GIOITHIEU (MaGameSteam, TieuDeBaiViet, NoiDung)
-VALUES (16, 'Cấu hình game:', '<h3>📰 Thông tin chung về Black Myth: Wukong</h3>
+VALUES (16, 'Thông tin game:', '<h3>📰 Thông tin chung về Black Myth: Wukong</h3>
 <ul>
     <li><strong>Thể loại:</strong> Hành động Nhập vai (Action RPG), Soulslike</li>
     <li><strong>Đồ họa:</strong> 3D (Sử dụng Unreal Engine 5)</li>
@@ -795,6 +1296,40 @@ VALUES (16, 'Cấu hình game:', '<h3>📰 Thông tin chung về Black Myth: Wuk
     <li><strong>Nền tảng:</strong> PC (Steam/Epic Games Store), PlayStation 5, Xbox Series X|S</li>
     <li><strong>Ngày phát hành:</strong> 20/08/2024</li>
     <li><strong>Giá game:</strong> Có phí</li>
+</ul>');
+INSERT INTO BAIVIET_GIOITHIEU (MaGameSteam, TieuDeBaiViet, NoiDung)
+VALUES (16, 'Cấu hình game:', '<h3>🐒 Cấu hình PC cho Black Myth: Wukong</h3>
+
+<h4>I. Cấu hình Tối thiểu (Minimum)</h4>
+<p>Cấu hình này cho phép chơi game ở độ phân giải **1080p** với thiết lập đồ họa **Thấp (Low)** và tốc độ khung hình 30 FPS.</p>
+<ul>
+    <li><strong>Hệ điều hành:</strong> Windows 10/11 64-bit</li>
+    <li><strong>Bộ xử lý (CPU):</strong> Intel Core i5-8400 hoặc AMD Ryzen 5 1600</li>
+    <li><strong>Bộ nhớ (RAM):</strong> 16 GB</li>
+    <li><strong>Card đồ họa (GPU):</strong> NVIDIA GeForce GTX 1060 6GB hoặc AMD Radeon RX 580 8GB</li>
+    <li><strong>DirectX:</strong> Phiên bản 12</li>
+    <li><strong>Dung lượng ổ đĩa:</strong> 130 GB SSD</li>
+</ul>
+
+<h4>II. Cấu hình Khuyến nghị (Recommended)</h4>
+<p>Cấu hình này cho phép chơi game ở độ phân giải **1080p** với thiết lập đồ họa **Cao (High)** và tốc độ khung hình 60 FPS.</p>
+<ul>
+    <li><strong>Hệ điều hành:</strong> Windows 10/11 64-bit</li>
+    <li><strong>Bộ xử lý (CPU):</strong> Intel Core i7-9700K hoặc AMD Ryzen 5 5600</li>
+    <li><strong>Bộ nhớ (RAM):</strong> 16 GB</li>
+    <li><strong>Card đồ họa (GPU):</strong> NVIDIA GeForce RTX 2060 hoặc AMD Radeon RX 5700 XT</li>
+    <li><strong>DirectX:</strong> Phiên bản 12</li>
+    <li><strong>Dung lượng ổ đĩa:</strong> 130 GB SSD</li>
+</ul>
+
+<h4>III. Cấu hình Cao/4K (Ultra/4K)</h4>
+<p>Cấu hình này cho phép chơi game ở độ phân giải **4K** với thiết lập đồ họa **Tối đa (Max)** và sử dụng Ray Tracing.</p>
+<ul>
+    <li><strong>Bộ xử lý (CPU):</strong> Intel Core i7-12700K hoặc AMD Ryzen 7 7700X</li>
+    <li><strong>Bộ nhớ (RAM):</strong> 32 GB</li>
+    <li><strong>Card đồ họa (GPU):</strong> NVIDIA GeForce RTX 4070 Ti hoặc AMD Radeon RX 7900 XT</li>
+    <li><strong>DirectX:</strong> Phiên bản 12</li>
+    <li><strong>Dung lượng ổ đĩa:</strong> 130 GB NVMe SSD</li>
 </ul>');
 
 -- Game 17
@@ -831,7 +1366,7 @@ VALUES (17, 'Palworld – Pokemon có súng', '<h3>🔫 Palworld: Khám Phá, Si
 </ul>
 <p>Palworld tiếp tục nhận được các bản cập nhật thường xuyên trong giai đoạn Early Access để mở rộng nội dung, bổ sung Pal và cải thiện các tính năng cốt lõi.</p>');
 INSERT INTO BAIVIET_GIOITHIEU (MaGameSteam, TieuDeBaiViet, NoiDung)
-VALUES (17, 'Cấu hình game:', '<h3>📰 Thông tin chung về Palworld</h3>
+VALUES (17, 'Thông tin game:', '<h3>📰 Thông tin chung về Palworld</h3>
 <ul>
     <li><strong>Thể loại:</strong> Sinh tồn (Survival), Thế giới mở (Open-world), Hành động, Thu thập Quái vật</li>
     <li><strong>Đồ họa:</strong> 3D (Phong cách hoạt hình)</li>
@@ -842,6 +1377,41 @@ VALUES (17, 'Cấu hình game:', '<h3>📰 Thông tin chung về Palworld</h3>
     <li><strong>Nền tảng:</strong> PC (Steam/Microsoft Store), Xbox One, Xbox Series X|S</li>
     <li><strong>Ngày phát hành:</strong> 19/01/2024 (Early Access)</li>
     <li><strong>Giá game:</strong> Có phí (Có sẵn trên Xbox Game Pass)</li>
+</ul>');
+INSERT INTO BAIVIET_GIOITHIEU (MaGameSteam, TieuDeBaiViet, NoiDung)
+VALUES (17, 'Cấu hình game:', '<h3>🔫 Cấu hình PC cho Palworld</h3>
+
+<h4>I. Cấu hình Tối thiểu (Minimum)</h4>
+<p>Cấu hình này đủ để chạy game ở độ phân giải **720p** với thiết lập đồ họa thấp.</p>
+<ul>
+    <li><strong>Hệ điều hành:</strong> Windows 10 (64-bit)</li>
+    <li><strong>Bộ xử lý (CPU):</strong> Intel Core i5-3570K</li>
+    <li><strong>Bộ nhớ (RAM):</strong> 16 GB</li>
+    <li><strong>Card đồ họa (GPU):</strong> NVIDIA GeForce GTX 1050 (2GB VRAM)</li>
+    <li><strong>DirectX:</strong> Phiên bản 11</li>
+    <li><strong>Dung lượng ổ đĩa:</strong> 40 GB SSD</li>
+</ul>
+
+<h4>II. Cấu hình Khuyến nghị (Recommended)</h4>
+<p>Cấu hình này cho phép trải nghiệm game mượt mà hơn ở độ phân giải **1080p** với thiết lập đồ họa trung bình/cao.</p>
+<ul>
+    <li><strong>Hệ điều hành:</strong> Windows 10 (64-bit) trở lên</li>
+    <li><strong>Bộ xử lý (CPU):</strong> Intel Core i9-9900K</li>
+    <li><strong>Bộ nhớ (RAM):</strong> 32 GB</li>
+    <li><strong>Card đồ họa (GPU):</strong> NVIDIA GeForce RTX 2070</li>
+    <li><strong>DirectX:</strong> Phiên bản 11</li>
+    <li><strong>Dung lượng ổ đĩa:</strong> 40 GB SSD</li>
+</ul>
+
+<h4>III. Cấu hình Cao/4K (Ultra/4K)</h4>
+<p>Cấu hình này được dự đoán để chơi game ở độ phân giải **4K** với thiết lập đồ họa **Tối đa (Max)**.</p>
+<ul>
+    <li><strong>Hệ điều hành:</strong> Windows 11 (64-bit)</li>
+    <li><strong>Bộ xử lý (CPU):</strong> Intel Core i7-13700K hoặc AMD Ryzen 7 7700X</li>
+    <li><strong>Bộ nhớ (RAM):</strong> 32 GB</li>
+    <li><strong>Card đồ họa (GPU):</strong> NVIDIA GeForce RTX 4070 Ti hoặc AMD Radeon RX 7900 XT</li>
+    <li><strong>DirectX:</strong> Phiên bản 11 hoặc 12 (Dự kiến)</li>
+    <li><strong>Dung lượng ổ đĩa:</strong> 40 GB NVMe SSD</li>
 </ul>');
 
 -- Game 18
@@ -887,7 +1457,7 @@ VALUES (18, 'EA SPORTS FC 25 – Cập nhật đội hình', '<h3>⚽ EA SPORTS 
 </ul>
 <p>Ngoài ra, EA SPORTS FC 25 tiếp tục duy trì và cải tiến các chế độ chơi quen thuộc như **Ultimate Team** (với sự bổ sung của cầu thủ nữ) và **Career Mode** (có thêm bóng đá nữ và khả năng bắt đầu sự nghiệp cầu thủ với các huyền thoại).</p>');
 INSERT INTO BAIVIET_GIOITHIEU (MaGameSteam, TieuDeBaiViet, NoiDung)
-VALUES (18, 'Cấu hình game:', '<h3>📰 Thông tin chung về EA SPORTS FC 25</h3>
+VALUES (18, 'Thông tin game:', '<h3>📰 Thông tin chung về EA SPORTS FC 25</h3>
 <ul>
     <li><strong>Thể loại:</strong> Thể thao, Mô phỏng bóng đá</li>
     <li><strong>Đồ họa:</strong> 3D (Sử dụng Frostbite Engine)</li>
@@ -898,6 +1468,42 @@ VALUES (18, 'Cấu hình game:', '<h3>📰 Thông tin chung về EA SPORTS FC 25
     <li><strong>Nền tảng:</strong> PC (Windows), PlayStation 4/5, Xbox One/Series X|S, Nintendo Switch</li>
     <li><strong>Ngày phát hành:</strong> 27/09/2024</li>
     <li><strong>Giá game:</strong> Có phí (Phiên bản Standard khoảng $69.99 USD)</li>
+</ul>');
+INSERT INTO BAIVIET_GIOITHIEU (MaGameSteam, TieuDeBaiViet, NoiDung)
+VALUES (18, 'Cấu hình game:', '<h3>⚽ Cấu hình PC cho EA SPORTS FC 25</h3>
+
+<h4>I. Cấu hình Tối thiểu (Minimum)</h4>
+<p>Cấu hình này đủ để chạy game ở độ phân giải **1080p** với thiết lập đồ họa thấp.</p>
+<ul>
+    <li><strong>Hệ điều hành:</strong> Windows 10 (64-bit)</li>
+    <li><strong>Bộ xử lý (CPU):</strong> Intel Core i5-6600K hoặc AMD Ryzen 5 1600</li>
+    <li><strong>Bộ nhớ (RAM):</strong> 8 GB</li>
+    <li><strong>Card đồ họa (GPU):</strong> NVIDIA GeForce GTX 1050 Ti hoặc AMD Radeon RX 570</li>
+    <li><strong>VRAM:</strong> 4 GB</li>
+    <li><strong>DirectX:</strong> Phiên bản 12</li>
+    <li><strong>Dung lượng ổ đĩa:</strong> 100 GB SSD</li>
+</ul>
+
+<h4>II. Cấu hình Khuyến nghị (Recommended)</h4>
+<p>Cấu hình này cho phép trải nghiệm game mượt mà hơn ở độ phân giải **1080p** với thiết lập đồ họa cao.</p>
+<ul>
+    <li><strong>Hệ điều hành:</strong> Windows 10 (64-bit) hoặc Windows 11</li>
+    <li><strong>Bộ xử lý (CPU):</strong> Intel Core i7-7700 hoặc AMD Ryzen 7 2700X</li>
+    <li><strong>Bộ nhớ (RAM):</strong> 12 GB</li>
+    <li><strong>Card đồ họa (GPU):</strong> NVIDIA GeForce RTX 2060 hoặc AMD Radeon RX 5600 XT</li>
+    <li><strong>VRAM:</strong> 6 GB</li>
+    <li><strong>DirectX:</strong> Phiên bản 12</li>
+    <li><strong>Dung lượng ổ đĩa:</strong> 100 GB SSD</li>
+</ul>
+
+<h4>III. Cấu hình Cao/4K (Ultra/4K)</h4>
+<p>Cấu hình này cho phép chơi game ở độ phân giải **4K** với thiết lập đồ họa **Tối đa (Max)** và tốc độ khung hình cao.</p>
+<ul>
+    <li><strong>Bộ xử lý (CPU):</strong> Intel Core i7-12700K hoặc AMD Ryzen 7 5800X</li>
+    <li><strong>Bộ nhớ (RAM):</strong> 16 GB</li>
+    <li><strong>Card đồ họa (GPU):</strong> NVIDIA GeForce RTX 4070 hoặc AMD Radeon RX 7800 XT</li>
+    <li><strong>DirectX:</strong> Phiên bản 12</li>
+    <li><strong>Dung lượng ổ đĩa:</strong> 100 GB NVMe SSD</li>
 </ul>');
 
 -- Game 19
@@ -935,7 +1541,7 @@ VALUES (19, 'Hogwarts Legacy – Thế giới phù thủy', '<h3>🧙 Hogwarts L
 </ul>
 <p>Hogwarts Legacy đã được cộng đồng game thủ đón nhận nồng nhiệt vì đã thành công trong việc mang lại trải nghiệm trở thành phù thủy mà nhiều người hâm mộ đã chờ đợi.</p>');
 INSERT INTO BAIVIET_GIOITHIEU (MaGameSteam, TieuDeBaiViet, NoiDung)
-VALUES (19, 'Cấu hình game:', '<h3>📰 Thông tin chung về Hogwarts Legacy</h3>
+VALUES (19, 'Thông tin game:', '<h3>📰 Thông tin chung về Hogwarts Legacy</h3>
 <ul>
     <li><strong>Thể loại:</strong> Nhập vai Hành động (Action RPG), Thế giới mở</li>
     <li><strong>Đồ họa:</strong> 3D</li>
@@ -946,6 +1552,40 @@ VALUES (19, 'Cấu hình game:', '<h3>📰 Thông tin chung về Hogwarts Legacy
     <li><strong>Nền tảng:</strong> PC (Windows), PlayStation 4/5, Xbox One/Series X|S, Nintendo Switch</li>
     <li><strong>Ngày phát hành:</strong> 10/02/2023</li>
     <li><strong>Giá game:</strong> Có phí</li>
+</ul>');
+INSERT INTO BAIVIET_GIOITHIEU (MaGameSteam, TieuDeBaiViet, NoiDung)
+VALUES (19, 'Cấu hình game:', '<h3>🧙 Cấu hình PC cho Hogwarts Legacy</h3>
+
+<h4>I. Cấu hình Tối thiểu (Minimum)</h4>
+<p>Cấu hình này cho phép chơi game ở độ phân giải **720p** với thiết lập đồ họa **Thấp (Low)** và tốc độ khung hình 30 FPS.</p>
+<ul>
+    <li><strong>Hệ điều hành:</strong> Windows 10 (64-bit)</li>
+    <li><strong>Bộ xử lý (CPU):</strong> Intel Core i5-6600 (3.3GHz) hoặc AMD Ryzen 5 1400</li>
+    <li><strong>Bộ nhớ (RAM):</strong> 16 GB</li>
+    <li><strong>Card đồ họa (GPU):</strong> NVIDIA GeForce GTX 960 4GB hoặc AMD Radeon RX 470 4GB</li>
+    <li><strong>DirectX:</strong> Phiên bản 12</li>
+    <li><strong>Dung lượng ổ đĩa:</strong> 85 GB HDD (Nên dùng SSD)</li>
+</ul>
+
+<h4>II. Cấu hình Khuyến nghị (Recommended)</h4>
+<p>Cấu hình này cho phép chơi game ở độ phân giải **1080p** với thiết lập đồ họa **Cao (High)** và tốc độ khung hình 60 FPS.</p>
+<ul>
+    <li><strong>Hệ điều hành:</strong> Windows 10 (64-bit)</li>
+    <li><strong>Bộ xử lý (CPU):</strong> Intel Core i7-8700 hoặc AMD Ryzen 5 3600</li>
+    <li><strong>Bộ nhớ (RAM):</strong> 16 GB</li>
+    <li><strong>Card đồ họa (GPU):</strong> NVIDIA GeForce GTX 1080 Ti hoặc AMD Radeon RX 5700 XT</li>
+    <li><strong>DirectX:</strong> Phiên bản 12</li>
+    <li><strong>Dung lượng ổ đĩa:</strong> 85 GB SSD</li>
+</ul>
+
+<h4>III. Cấu hình Cao/4K (Ultra/4K)</h4>
+<p>Cấu hình này cho phép chơi game ở độ phân giải **4K** với thiết lập đồ họa **Tối đa (Ultra)** và tốc độ khung hình 60 FPS.</p>
+<ul>
+    <li><strong>Bộ xử lý (CPU):</strong> Intel Core i7-10700K hoặc AMD Ryzen 7 5800X</li>
+    <li><strong>Bộ nhớ (RAM):</strong> 32 GB</li>
+    <li><strong>Card đồ họa (GPU):</strong> NVIDIA GeForce RTX 3090 Ti hoặc AMD Radeon RX 7900 XT</li>
+    <li><strong>DirectX:</strong> Phiên bản 12</li>
+    <li><strong>Dung lượng ổ đĩa:</strong> 85 GB NVMe SSD</li>
 </ul>');
 
 -- Game 20
@@ -983,7 +1623,7 @@ VALUES (20, 'Fallout 76 – Sinh tồn trong Appalachia', '<h3>☢️ Fallout 76
 </ul>
 <p>Game đã có sự thay đổi lớn từ khi ra mắt, chuyển từ một trải nghiệm tập trung vào sinh tồn PvP (Người chơi chống Người chơi) sang một tựa game nhập vai Co-op (Hợp tác) tập trung vào cốt truyện và khám phá.</p>');
 INSERT INTO BAIVIET_GIOITHIEU (MaGameSteam, TieuDeBaiViet, NoiDung)
-VALUES (20, 'Cấu hình game:', '<h3>📰 Thông tin chung về Fallout 76</h3>
+VALUES (20, 'Thông tin game:', '<h3>📰 Thông tin chung về Fallout 76</h3>
 <ul>
     <li><strong>Thể loại:</strong> Nhập vai Hành động Trực tuyến (MMORPG/ARPG), Thế giới mở</li>
     <li><strong>Đồ họa:</strong> 3D</li>
@@ -994,6 +1634,38 @@ VALUES (20, 'Cấu hình game:', '<h3>📰 Thông tin chung về Fallout 76</h3>
     <li><strong>Nền tảng:</strong> PC (Windows), PlayStation 4, Xbox One</li>
     <li><strong>Ngày phát hành:</strong> 14/11/2018</li>
     <li><strong>Giá game:</strong> Có phí (Có sẵn dưới dạng dịch vụ thuê bao)</li>
+</ul>');
+INSERT INTO BAIVIET_GIOITHIEU (MaGameSteam, TieuDeBaiViet, NoiDung)
+VALUES (20, 'Cấu hình game:', '<h3>☢️ Cấu hình PC cho Fallout 76</h3>
+
+<h4>I. Cấu hình Tối thiểu (Minimum)</h4>
+<p>Cấu hình này đủ để chạy game.</p>
+<ul>
+    <li><strong>Hệ điều hành:</strong> Windows 10 (64-bit)</li>
+    <li><strong>Bộ xử lý (CPU):</strong> Intel Core i7-4790 hoặc AMD Ryzen 3 1300X</li>
+    <li><strong>Bộ nhớ (RAM):</strong> 8 GB</li>
+    <li><strong>Card đồ họa (GPU):</strong> NVIDIA GeForce GTX 780 hoặc AMD Radeon R9 280X</li>
+    <li><strong>Dung lượng ổ đĩa:</strong> 90 GB</li>
+</ul>
+
+<h4>II. Cấu hình Khuyến nghị (Recommended)</h4>
+<p>Cấu hình này cho phép trải nghiệm game mượt mà hơn ở thiết lập đồ họa Cao (High).</p>
+<ul>
+    <li><strong>Hệ điều hành:</strong> Windows 10 (64-bit)</li>
+    <li><strong>Bộ xử lý (CPU):</strong> Intel Core i7-9700K hoặc AMD Ryzen 7 2600X</li>
+    <li><strong>Bộ nhớ (RAM):</strong> 12 GB</li>
+    <li><strong>Card đồ họa (GPU):</strong> NVIDIA GeForce GTX 1070 Ti hoặc AMD Radeon RX Vega 56</li>
+    <li><strong>Dung lượng ổ đĩa:</strong> 90 GB SSD</li>
+</ul>
+
+<h4>III. Cấu hình Cao/4K (Ultra/4K)</h4>
+<p>Cấu hình này được dự đoán để chơi game ở độ phân giải **4K** với thiết lập đồ họa **Tối đa (Max)**.</p>
+<ul>
+    <li><strong>Hệ điều hành:</strong> Windows 10/11 (64-bit)</li>
+    <li><strong>Bộ xử lý (CPU):</strong> Intel Core i9-12900K hoặc AMD Ryzen 7 5800X</li>
+    <li><strong>Bộ nhớ (RAM):</strong> 16 GB</li>
+    <li><strong>Card đồ họa (GPU):</strong> NVIDIA GeForce RTX 3080 hoặc AMD Radeon RX 6800 XT</li>
+    <li><strong>Dung lượng ổ đĩa:</strong> 90 GB NVMe SSD</li>
 </ul>');
 
 -- Game 21
@@ -1031,7 +1703,7 @@ VALUES (21, 'Lethal Company – Kinh dị hợp tác', '<h3>🌑 Lethal Company:
 </ul>
 <p>Sự thành công của Lethal Company nằm ở khả năng tạo ra những câu chuyện đáng nhớ giữa những người chơi, nơi ranh giới giữa nỗi sợ hãi và tiếng cười trở nên mờ nhạt.</p>');
 INSERT INTO BAIVIET_GIOITHIEU (MaGameSteam, TieuDeBaiViet, NoiDung)
-VALUES (21, 'Cấu hình game:', '<h3>📰 Thông tin chung về Lethal Company</h3>
+VALUES (21, 'Thông tin game:', '<h3>📰 Thông tin chung về Lethal Company</h3>
 <ul>
     <li><strong>Thể loại:</strong> Kinh dị sinh tồn, Hợp tác (Co-op), Góc nhìn thứ nhất</li>
     <li><strong>Đồ họa:</strong> 3D (Phong cách Low-poly)</li>
@@ -1042,6 +1714,38 @@ VALUES (21, 'Cấu hình game:', '<h3>📰 Thông tin chung về Lethal Company<
     <li><strong>Nền tảng:</strong> PC (Steam)</li>
     <li><strong>Ngày phát hành:</strong> 23/10/2023 (Early Access)</li>
     <li><strong>Giá game:</strong> Có phí</li>
+</ul>');
+INSERT INTO BAIVIET_GIOITHIEU (MaGameSteam, TieuDeBaiViet, NoiDung)
+VALUES (21, 'Cấu hình game:', '<h3>🌑 Cấu hình PC cho Lethal Company</h3>
+
+<h4>I. Cấu hình Tối thiểu (Minimum)</h4>
+<p>Cấu hình này đủ để chạy game với tốc độ khung hình chấp nhận được.</p>
+<ul>
+    <li><strong>Hệ điều hành:</strong> Windows 10</li>
+    <li><strong>Bộ xử lý (CPU):</strong> Intel Core i5-7400 @ 3.00GHz hoặc tương đương</li>
+    <li><strong>Bộ nhớ (RAM):</strong> 8 GB</li>
+    <li><strong>Card đồ họa (GPU):</strong> NVIDIA GeForce GTX 1050 Ti</li>
+    <li><strong>Dung lượng ổ đĩa:</strong> 1 GB</li>
+</ul>
+
+<h4>II. Cấu hình Khuyến nghị (Recommended)</h4>
+<p>Cấu hình này cho phép trải nghiệm game mượt mà hơn với tốc độ khung hình cao.</p>
+<ul>
+    <li><strong>Hệ điều hành:</strong> Windows 10</li>
+    <li><strong>Bộ xử lý (CPU):</strong> Intel Core i7-7700 @ 3.60GHz hoặc tương đương</li>
+    <li><strong>Bộ nhớ (RAM):</strong> 16 GB</li>
+    <li><strong>Card đồ họa (GPU):</strong> NVIDIA GeForce GTX 1080</li>
+    <li><strong>Dung lượng ổ đĩa:</strong> 1 GB</li>
+</ul>
+
+<h4>III. Cấu hình Cao/4K (Ultra/4K)</h4>
+<p>Do game có đồ họa Low-poly, cấu hình khuyến nghị thường đã đủ cho trải nghiệm 4K. Tuy nhiên, để đảm bảo tốc độ khung hình cao nhất ở **4K** với thiết lập đồ họa **Tối đa (Max)**, cấu hình sau được dự đoán:</p>
+<ul>
+    <li><strong>Hệ điều hành:</strong> Windows 10/11</li>
+    <li><strong>Bộ xử lý (CPU):</strong> Intel Core i5-12600K hoặc AMD Ryzen 5 5600X</li>
+    <li><strong>Bộ nhớ (RAM):</strong> 16 GB</li>
+    <li><strong>Card đồ họa (GPU):</strong> NVIDIA GeForce RTX 3060 hoặc AMD Radeon RX 6600 XT</li>
+    <li><strong>Dung lượng ổ đĩa:</strong> 1 GB SSD</li>
 </ul>');
 
 -- Game 22
@@ -1080,7 +1784,7 @@ VALUES (22, 'Microsoft Flight Simulator – Phiêu lưu trên bầu trời', '<h
 </ul>
 <p>Phiên bản Kỷ niệm 40 năm không chỉ là một sự tri ân lịch sử mà còn là một bước tiến quan trọng trong việc hoàn thiện MSFS trở thành nền tảng mô phỏng chuyến bay toàn diện nhất.</p>');
 INSERT INTO BAIVIET_GIOITHIEU (MaGameSteam, TieuDeBaiViet, NoiDung)
-VALUES (22, 'Cấu hình game:', '<h3>📰 Thông tin chung về Microsoft Flight Simulator (2020) 40th Anniversary Edition</h3>
+VALUES (22, 'Thông tin game:', '<h3>📰 Thông tin chung về Microsoft Flight Simulator (2020) 40th Anniversary Edition</h3>
 <ul>
     <li><strong>Thể loại:</strong> Mô phỏng Chuyến bay (Flight Simulation)</li>
     <li><strong>Đồ họa:</strong> 3D (Photorealistic)</li>
@@ -1091,6 +1795,44 @@ VALUES (22, 'Cấu hình game:', '<h3>📰 Thông tin chung về Microsoft Fligh
     <li><strong>Nền tảng:</strong> PC (Windows), Xbox Series X|S</li>
     <li><strong>Ngày phát hành:</strong> 11/11/2022 (Ngày ra mắt phiên bản Kỷ niệm 40 năm)</li>
     <li><strong>Giá game:</strong> Bản cập nhật Miễn phí cho người chơi đã sở hữu MSFS (2020)</li>
+</ul>');
+INSERT INTO BAIVIET_GIOITHIEU (MaGameSteam, TieuDeBaiViet, NoiDung)
+VALUES (22, 'Cấu hình game:', '<h3>✈️ Cấu hình PC cho Microsoft Flight Simulator (2020)</h3>
+
+<h4>I. Cấu hình Tối thiểu (Minimum)</h4>
+<p>Cấu hình này cho phép chơi game ở độ phân giải **720p** với thiết lập đồ họa cơ bản.</p>
+<ul>
+    <li><strong>Hệ điều hành:</strong> Windows 10 (64-bit)</li>
+    <li><strong>Bộ xử lý (CPU):</strong> Intel Core i5-4460 hoặc AMD Ryzen 3 1200</li>
+    <li><strong>Bộ nhớ (RAM):</strong> 8 GB</li>
+    <li><strong>Card đồ họa (GPU):</strong> NVIDIA GeForce GTX 770 hoặc AMD Radeon RX 570</li>
+    <li><strong>VRAM:</strong> 2 GB</li>
+    <li><strong>DirectX:</strong> Phiên bản 11</li>
+    <li><strong>Dung lượng ổ đĩa:</strong> 150 GB</li>
+</ul>
+
+<h4>II. Cấu hình Khuyến nghị (Recommended)</h4>
+<p>Cấu hình này cho phép trải nghiệm game mượt mà hơn ở độ phân giải **1080p** với thiết lập đồ họa cao.</p>
+<ul>
+    <li><strong>Hệ điều hành:</strong> Windows 10 (64-bit)</li>
+    <li><strong>Bộ xử lý (CPU):</strong> Intel Core i5-8400 hoặc AMD Ryzen 5 1500X</li>
+    <li><strong>Bộ nhớ (RAM):</strong> 16 GB</li>
+    <li><strong>Card đồ họa (GPU):</strong> NVIDIA GeForce GTX 970 hoặc AMD Radeon RX 590</li>
+    <li><strong>VRAM:</strong> 4 GB</li>
+    <li><strong>DirectX:</strong> Phiên bản 11</li>
+    <li><strong>Dung lượng ổ đĩa:</strong> 150 GB SSD</li>
+</ul>
+
+<h4>III. Cấu hình Cao/4K (Ideal/Ultra)</h4>
+<p>Cấu hình này được công bố là **Cấu hình Lý tưởng (Ideal)**, cho phép chơi game ở độ phân giải **4K** với thiết lập đồ họa **Tối đa (Ultra)**.</p>
+<ul>
+    <li><strong>Hệ điều hành:</strong> Windows 10 (64-bit)</li>
+    <li><strong>Bộ xử lý (CPU):</strong> Intel Core i7-9800X hoặc AMD Ryzen 7 Pro 2700X</li>
+    <li><strong>Bộ nhớ (RAM):</strong> 32 GB</li>
+    <li><strong>Card đồ họa (GPU):</strong> NVIDIA GeForce RTX 2080 hoặc AMD Radeon VII</li>
+    <li><strong>VRAM:</strong> 8 GB</li>
+    <li><strong>DirectX:</strong> Phiên bản 11</li>
+    <li><strong>Dung lượng ổ đĩa:</strong> 150 GB NVMe SSD</li>
 </ul>');
 
 -- Game 23
@@ -1137,7 +1879,7 @@ VALUES (23, 'Street Fighter 6 – Đấu trường mới', '<h3>👊 Street Figh
 </ul>
 <p>Sự kết hợp của các hệ thống này đã khiến Street Fighter 6 trở thành một trong những tựa game đối kháng được đánh giá cao nhất trong lịch sử.</p>');
 INSERT INTO BAIVIET_GIOITHIEU (MaGameSteam, TieuDeBaiViet, NoiDung)
-VALUES (23, 'Cấu hình game:', '<h3>📰 Thông tin chung về Street Fighter 6</h3>
+VALUES (23, 'Thông tin game:', '<h3>📰 Thông tin chung về Street Fighter 6</h3>
 <ul>
     <li><strong>Thể loại:</strong> Đối kháng (Fighting Game)</li>
     <li><strong>Đồ họa:</strong> 3D (Sử dụng RE Engine)</li>
@@ -1148,6 +1890,40 @@ VALUES (23, 'Cấu hình game:', '<h3>📰 Thông tin chung về Street Fighter 
     <li><strong>Nền tảng:</strong> PC (Windows), PlayStation 4/5, Xbox Series X|S</li>
     <li><strong>Ngày phát hành:</strong> 02/06/2023</li>
     <li><strong>Giá game:</strong> Có phí</li>
+</ul>');
+INSERT INTO BAIVIET_GIOITHIEU (MaGameSteam, TieuDeBaiViet, NoiDung)
+VALUES (23, 'Cấu hình game:', '<h3>👊 Cấu hình PC cho Street Fighter 6</h3>
+
+<h4>I. Cấu hình Tối thiểu (Minimum)</h4>
+<p>Cấu hình này đủ để chạy game ở độ phân giải **1080p** và tốc độ khung hình 30 FPS.</p>
+<ul>
+    <li><strong>Hệ điều hành:</strong> Windows 10 (64-bit)</li>
+    <li><strong>Bộ xử lý (CPU):</strong> Intel Core i5-7500 hoặc AMD Ryzen 3 1200</li>
+    <li><strong>Bộ nhớ (RAM):</strong> 8 GB</li>
+    <li><strong>Card đồ họa (GPU):</strong> NVIDIA GeForce GTX 1060 (6GB VRAM) hoặc AMD Radeon RX 580 (8GB VRAM)</li>
+    <li><strong>DirectX:</strong> Phiên bản 12</li>
+    <li><strong>Dung lượng ổ đĩa:</strong> 25 GB</li>
+</ul>
+
+<h4>II. Cấu hình Khuyến nghị (Recommended)</h4>
+<p>Cấu hình này cho phép trải nghiệm game mượt mà ở độ phân giải **1080p** và tốc độ khung hình 60 FPS.</p>
+<ul>
+    <li><strong>Hệ điều hành:</strong> Windows 10 (64-bit)</li>
+    <li><strong>Bộ xử lý (CPU):</strong> Intel Core i7-8700 hoặc AMD Ryzen 5 3600</li>
+    <li><strong>Bộ nhớ (RAM):</strong> 16 GB</li>
+    <li><strong>Card đồ họa (GPU):</strong> NVIDIA GeForce RTX 2070 hoặc AMD Radeon RX 5700 XT</li>
+    <li><strong>DirectX:</strong> Phiên bản 12</li>
+    <li><strong>Dung lượng ổ đĩa:</strong> 25 GB SSD</li>
+</ul>
+
+<h4>III. Cấu hình Cao/4K (Ultra/4K)</h4>
+<p>Cấu hình này cho phép chơi game ở độ phân giải **4K** với thiết lập đồ họa **Tối đa (Max)** và tốc độ khung hình cao.</p>
+<ul>
+    <li><strong>Bộ xử lý (CPU):</strong> Intel Core i7-12700K hoặc AMD Ryzen 7 5800X</li>
+    <li><strong>Bộ nhớ (RAM):</strong> 32 GB</li>
+    <li><strong>Card đồ họa (GPU):</strong> NVIDIA GeForce RTX 3080 Ti hoặc AMD Radeon RX 6900 XT</li>
+    <li><strong>DirectX:</strong> Phiên bản 12</li>
+    <li><strong>Dung lượng ổ đĩa:</strong> 25 GB NVMe SSD</li>
 </ul>');
 
 -- Game 24
@@ -1190,7 +1966,7 @@ VALUES (24, 'Warhammer Darktide – Co-op chặt chém', '<h3>🔥 Warhammer 40,
 </ul>
 <p>Darktide đã được khen ngợi vì lối chơi cuốn hút và kịch tính, mặc dù khi ra mắt game phải đối mặt với một số vấn đề về kỹ thuật và hệ thống trang bị, nhưng đã được cải thiện đáng kể qua các bản vá.</p>');
 INSERT INTO BAIVIET_GIOITHIEU (MaGameSteam, TieuDeBaiViet, NoiDung)
-VALUES (24, 'Cấu hình game:', '<h3>📰 Thông tin chung về Warhammer 40,000: Darktide</h3>
+VALUES (24, 'Thông tin game:', '<h3>📰 Thông tin chung về Warhammer 40,000: Darktide</h3>
 <ul>
     <li><strong>Thể loại:</strong> Hành động, Bắn súng góc nhìn thứ nhất (FPS), Hợp tác (Co-op 4 người)</li>
     <li><strong>Đồ họa:</strong> 3D</li>
@@ -1201,6 +1977,42 @@ VALUES (24, 'Cấu hình game:', '<h3>📰 Thông tin chung về Warhammer 40,00
     <li><strong>Nền tảng:</strong> PC (Windows), Xbox Series X|S</li>
     <li><strong>Ngày phát hành:</strong> 30/11/2022 (PC)</li>
     <li><strong>Giá game:</strong> Có phí (Có sẵn trên dịch vụ PC Game Pass)</li>
+</ul>');
+INSERT INTO BAIVIET_GIOITHIEU (MaGameSteam, TieuDeBaiViet, NoiDung)
+VALUES (24, 'Cấu hình game:', '<h3>🔥 Cấu hình PC cho Warhammer 40,000: Darktide</h3>
+
+<h4>I. Cấu hình Tối thiểu (Minimum)</h4>
+<p>Cấu hình này đủ để chạy game ở độ phân giải **1080p** với thiết lập đồ họa **Thấp (Low)** và tốc độ khung hình 30 FPS.</p>
+<ul>
+    <li><strong>Hệ điều hành:</strong> Windows 10 (64-bit)</li>
+    <li><strong>Bộ xử lý (CPU):</strong> Intel Core i5-6600K (3.5 GHz) hoặc AMD Ryzen 5 2600 (3.4 GHz)</li>
+    <li><strong>Bộ nhớ (RAM):</strong> 8 GB</li>
+    <li><strong>Card đồ họa (GPU):</strong> NVIDIA GeForce GTX 970 hoặc AMD Radeon RX 570</li>
+    <li><strong>VRAM:</strong> 4 GB</li>
+    <li><strong>DirectX:</strong> Phiên bản 12</li>
+    <li><strong>Dung lượng ổ đĩa:</strong> 50 GB SSD</li>
+</ul>
+
+<h4>II. Cấu hình Khuyến nghị (Recommended)</h4>
+<p>Cấu hình này cho phép chơi game ở độ phân giải **1080p** với thiết lập đồ họa **Trung bình/Cao (Medium/High)** và tốc độ khung hình 60 FPS.</p>
+<ul>
+    <li><strong>Hệ điều hành:</strong> Windows 10 (64-bit)</li>
+    <li><strong>Bộ xử lý (CPU):</strong> Intel Core i7-9700K (3.6 GHz) hoặc AMD Ryzen 5 3600 (3.6 GHz)</li>
+    <li><strong>Bộ nhớ (RAM):</strong> 16 GB</li>
+    <li><strong>Card đồ họa (GPU):</strong> NVIDIA GeForce RTX 3060 hoặc AMD Radeon RX 5700 XT</li>
+    <li><strong>VRAM:</strong> 8 GB</li>
+    <li><strong>DirectX:</strong> Phiên bản 12</li>
+    <li><strong>Dung lượng ổ đĩa:</strong> 50 GB SSD</li>
+</ul>
+
+<h4>III. Cấu hình Cao/4K (Ultra/4K)</h4>
+<p>Cấu hình này cho phép chơi game ở độ phân giải **4K** với thiết lập đồ họa **Tối đa (Max)** và sử dụng Ray Tracing.</p>
+<ul>
+    <li><strong>Bộ xử lý (CPU):</strong> Intel Core i9-12900K hoặc AMD Ryzen 7 7700X</li>
+    <li><strong>Bộ nhớ (RAM):</strong> 32 GB</li>
+    <li><strong>Card đồ họa (GPU):</strong> NVIDIA GeForce RTX 4070 Ti hoặc AMD Radeon RX 7900 XT</li>
+    <li><strong>VRAM:</strong> 12 GB trở lên</li>
+    <li><strong>Dung lượng ổ đĩa:</strong> 50 GB NVMe SSD</li>
 </ul>');
 
 -- Game 25
@@ -1242,7 +2054,7 @@ VALUES (25, 'Dying Light 2 – Parkour & zombie', '<h3>🧟 Dying Light 2 Stay H
     <li><strong>Chu kỳ Ngày/Đêm:</strong> Chu kỳ này là yếu tố sinh tồn quan trọng. Ban ngày, thành phố tương đối an toàn, nhưng ban đêm, những sinh vật zombie nguy hiểm hơn (Volatiles) xuất hiện, và các khu vực bị nhiễm trùng trở nên dễ tiếp cận hơn (nhưng cũng nguy hiểm hơn).</li>
 </ul>');
 INSERT INTO BAIVIET_GIOITHIEU (MaGameSteam, TieuDeBaiViet, NoiDung)
-VALUES (25, 'Cấu hình game:', '<h3>📰 Thông tin chung về Dying Light 2 Stay Human: Reloaded Edition</h3>
+VALUES (25, 'Thông tin game:', '<h3>📰 Thông tin chung về Dying Light 2 Stay Human: Reloaded Edition</h3>
 <ul>
     <li><strong>Thể loại:</strong> Hành động Nhập vai (Action RPG), Sinh tồn, Thế giới mở</li>
     <li><strong>Đồ họa:</strong> 3D</li>
@@ -1254,6 +2066,40 @@ VALUES (25, 'Cấu hình game:', '<h3>📰 Thông tin chung về Dying Light 2 S
     <li><strong>Ngày phát hành:</strong> 22/02/2024 (Ngày ra mắt Reloaded Edition)</li>
     <li><strong>Giá game:</strong> Có phí (Bao gồm game gốc + Bản mở rộng Bloody Ties)</li>
 </ul>');
+INSERT INTO BAIVIET_GIOITHIEU (MaGameSteam, TieuDeBaiViet, NoiDung)
+VALUES (25, 'Cấu hình game:', '<h3>🧟 Cấu hình PC cho Dying Light 2 Stay Human: Reloaded Edition</h3>
+
+<h4>I. Cấu hình Tối thiểu (Minimum)</h4>
+<p>Cấu hình này cho phép chơi game ở độ phân giải **1080p** với thiết lập đồ họa **Thấp (Low)** và tốc độ khung hình 30 FPS, **không** bật Ray-Tracing.</p>
+<ul>
+    <li><strong>Hệ điều hành:</strong> Windows 7</li>
+    <li><strong>Bộ xử lý (CPU):</strong> Intel Core i3-9100 hoặc AMD Ryzen 3 2300X</li>
+    <li><strong>Bộ nhớ (RAM):</strong> 8 GB</li>
+    <li><strong>Card đồ họa (GPU):</strong> NVIDIA GeForce GTX 1050 Ti hoặc AMD Radeon RX 560</li>
+    <li><strong>VRAM:</strong> 4 GB</li>
+    <li><strong>Dung lượng ổ đĩa:</strong> 60 GB</li>
+</ul>
+
+<h4>II. Cấu hình Khuyến nghị (Recommended)</h4>
+<p>Cấu hình này cho phép trải nghiệm game mượt mà ở độ phân giải **1080p** với thiết lập đồ họa **Cao (High)** và tốc độ khung hình 60 FPS, **không** bật Ray-Tracing.</p>
+<ul>
+    <li><strong>Hệ điều hành:</strong> Windows 10</li>
+    <li><strong>Bộ xử lý (CPU):</strong> Intel Core i5-8600K hoặc AMD Ryzen 5 3600X</li>
+    <li><strong>Bộ nhớ (RAM):</strong> 16 GB</li>
+    <li><strong>Card đồ họa (GPU):</strong> NVIDIA GeForce RTX 2060 6GB hoặc AMD Radeon RX Vega 56 8GB</li>
+    <li><strong>Dung lượng ổ đĩa:</strong> 60 GB SSD</li>
+</ul>
+
+<h4>III. Cấu hình Cao/Ray Tracing (Ultra/4K)</h4>
+<p>Cấu hình này được khuyến nghị để chơi game ở độ phân giải **1080p** với tốc độ khung hình 60 FPS **khi bật Ray-Tracing**.</p>
+<ul>
+    <li><strong>Hệ điều hành:</strong> Windows 10</li>
+    <li><strong>Bộ xử lý (CPU):</strong> Intel Core i5-8600K hoặc AMD Ryzen 7 3700X</li>
+    <li><strong>Bộ nhớ (RAM):</strong> 16 GB</li>
+    <li><strong>Card đồ họa (GPU):</strong> NVIDIA GeForce RTX 3080 10GB</li>
+    <li><strong>Dung lượng ổ đĩa:</strong> 60 GB SSD</li>
+</ul>
+<p>Để chơi ở độ phân giải **4K** với thiết lập Ray Tracing **Tối đa (Ultra)**, cần có các card đồ họa cao cấp hơn như NVIDIA RTX 5090 hoặc RTX 3090.</p>');
 
 -- Game 26
 INSERT INTO GAME_STEAM (TenGame, MoTaGame, GiaGoc, GiaBan, LuotXem, IdVideoTrailer, DuongDanAnh)
@@ -1292,7 +2138,7 @@ VALUES (26, 'DayZ – Sinh tồn thực tế', '<h3>🧟 DayZ: Thử Thách Sinh
 <p>DayZ không phải là game dành cho tất cả mọi người, nhưng chính sự tàn nhẫn và không khoan nhượng của nó lại là thứ tạo nên một cộng đồng người hâm mộ trung thành.</p>');
 
 INSERT INTO BAIVIET_GIOITHIEU (MaGameSteam, TieuDeBaiViet, NoiDung)
-VALUES (26, 'Cấu hình game:', '<h3>📰 Thông tin chung về DayZ</h3>
+VALUES (26, 'Thông tin game:', '<h3>📰 Thông tin chung về DayZ</h3>
 <ul>
     <li><strong>Thể loại:</strong> Sinh tồn (Survival), Thế giới mở (Open-world), Hardcore PvP</li>
     <li><strong>Đồ họa:</strong> 3D</li>
@@ -1303,6 +2149,43 @@ VALUES (26, 'Cấu hình game:', '<h3>📰 Thông tin chung về DayZ</h3>
     <li><strong>Nền tảng:</strong> PC (Windows), PlayStation 4, Xbox One</li>
     <li><strong>Ngày phát hành:</strong> 13/12/2018 (Chính thức)</li>
     <li><strong>Giá game:</strong> Có phí</li>
+</ul>');
+INSERT INTO BAIVIET_GIOITHIEU (MaGameSteam, TieuDeBaiViet, NoiDung)
+VALUES (26, 'Cấu hình game:', '<h3>🧟 Cấu hình PC cho DayZ</h3>
+
+<h4>I. Cấu hình Tối thiểu (Minimum)</h4>
+<p>Cấu hình này đủ để chạy game với thiết lập đồ họa thấp.</p>
+<ul>
+    <li><strong>Hệ điều hành:</strong> Windows 10 (64-bit)</li>
+    <li><strong>Bộ xử lý (CPU):</strong> Intel Core i5-4460 hoặc AMD FX 4300</li>
+    <li><strong>Bộ nhớ (RAM):</strong> 8 GB</li>
+    <li><strong>Card đồ họa (GPU):</strong> NVIDIA GeForce GTX 760 hoặc AMD R9 270</li>
+    <li><strong>VRAM:</strong> 2 GB</li>
+    <li><strong>DirectX:</strong> Phiên bản 11</li>
+    <li><strong>Dung lượng ổ đĩa:</strong> 25 GB SSD</li>
+</ul>
+
+<h4>II. Cấu hình Khuyến nghị (Recommended)</h4>
+<p>Cấu hình này cho phép trải nghiệm game mượt mà hơn ở độ phân giải **1080p** với thiết lập đồ họa cao.</p>
+<ul>
+    <li><strong>Hệ điều hành:</strong> Windows 10 (64-bit)</li>
+    <li><strong>Bộ xử lý (CPU):</strong> Intel Core i7-6700K hoặc AMD Ryzen 5 3600X</li>
+    <li><strong>Bộ nhớ (RAM):</strong> 16 GB</li>
+    <li><strong>Card đồ họa (GPU):</strong> NVIDIA GeForce GTX 1070 hoặc AMD Radeon RX 580</li>
+    <li><strong>VRAM:</strong> 8 GB</li>
+    <li><strong>DirectX:</strong> Phiên bản 11</li>
+    <li><strong>Dung lượng ổ đĩa:</strong> 25 GB SSD</li>
+</ul>
+
+<h4>III. Cấu hình Cao/4K (Ultra/4K)</h4>
+<p>Cấu hình này được dự đoán để chơi game ở độ phân giải **4K** với thiết lập đồ họa **Tối đa (Max)** và tốc độ khung hình cao.</p>
+<ul>
+    <li><strong>Hệ điều hành:</strong> Windows 10/11 (64-bit)</li>
+    <li><strong>Bộ xử lý (CPU):</strong> Intel Core i9-13900K hoặc AMD Ryzen 7 7800X3D</li>
+    <li><strong>Bộ nhớ (RAM):</strong> 32 GB</li>
+    <li><strong>Card đồ họa (GPU):</strong> NVIDIA GeForce RTX 4070 Ti hoặc AMD Radeon RX 7900 XT</li>
+    <li><strong>DirectX:</strong> Phiên bản 12</li>
+    <li><strong>Dung lượng ổ đĩa:</strong> 25 GB NVMe SSD</li>
 </ul>');
 
 -- -----------------------------------------------------

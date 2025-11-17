@@ -180,11 +180,11 @@
 
             <p class="desc">${gameSteam.moTaGame}</p>
 
-            <c:if test="${not empty baiVietCauHinh}">
+            <c:if test="${not empty baiVietThongTin}">
                 <div class="article" style="background-color: #f5f5f5; margin-top: 30px;">
-                    <h3>${baiVietCauHinh.tieuDeBaiViet}</h3>
+                    <h3>${baiVietThongTin.tieuDeBaiViet}</h3>
                     <div class="article-content">
-                        <c:out value="${baiVietCauHinh.noiDung}" escapeXml="false"/>
+                        <c:out value="${baiVietThongTin.noiDung}" escapeXml="false"/>
                     </div>
                 </div>
             </c:if>
@@ -247,6 +247,13 @@
                     </c:if>
                 </c:if>
             </c:forEach>
+            <c:if test="${not empty baiVietCauHinh}">
+                <div class="article" style="background-color: #f5f5f5; margin-top: 30px;">
+                    <div class="article-content">
+                        <c:out value="${baiVietCauHinh.noiDung}" escapeXml="false"/>
+                    </div>
+                </div>
+            </c:if>
         </div>
     </div>
 </body>

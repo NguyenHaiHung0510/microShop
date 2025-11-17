@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 import com.microshop.dao.NguoiDungDAO;
 import com.microshop.model.NguoiDung;
 import com.microshop.util.PasswordUtils;
+import com.microshop.util.PhoneValidator;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -67,17 +68,19 @@ public class ProfileEditServlet extends HttpServlet {
             // 3.1. KIỂM TRA MẬT KHẨU CŨ CÓ BỊ BỎ TRỐNG KHÔNG
             if (oldPassword == null || oldPassword.trim().isEmpty()) {
                 errorMessage = "Vui lòng nhập mật khẩu hiện tại để thay đổi mật khẩu mới.";
-                
             // 3.2. KIỂM TRA MẬT KHẨU CŨ CÓ KHỚP VỚI MẬT KHẨU TRONG DB/SESSION KHÔNG
-            // CẢNH BÁO: Trong thực tế, bạn phải dùng hàm xác minh HASH (bcrypt/Argon2)
             // So sánh mật khẩu cũ bằng cơ chế BCrypt
             } else if (!PasswordUtils.verifyPassword(oldPassword, currentUser.getMatKhau())) {
                 errorMessage = "Mật khẩu hiện tại không chính xác.";
                 
-            // 3.3. KIỂM TRA MẬT KHẨU MỚI VÀ XÁC NHẬN CÓ KHỚP KHÔNG
-            } else if (confirmPassword == null || !newPassword.equals(confirmPassword)) {
+            // 3.3. KIỂM TRA ĐỘ DÀI MẬT KHẨU MỚI
+            } else if (newPassword.length() < 8) {
+                errorMessage = "Mật khẩu mới phải có ít nhất 8 ký tự.";
+            }
+
+            // 3.4. KIỂM TRA KHỚP XÁC NHẬN
+            else if (confirmPassword == null || !newPassword.equals(confirmPassword)) {
                 errorMessage = "Mật khẩu mới và xác nhận mật khẩu không khớp.";
-                
             }
             else if (PasswordUtils.verifyPassword(newPassword, currentUser.getMatKhau())){
                 errorMessage = "Mật khẩu mới và mật khẩu cũ không được giống nhau.";
@@ -89,6 +92,14 @@ public class ProfileEditServlet extends HttpServlet {
             }
         }
         
+        // --- Kiểm tra số điện thoại ---
+        if (errorMessage == null) {
+            String phoneError = PhoneValidator.validatePhone(newSdt);
+            if (phoneError != null) {
+                errorMessage = phoneError;
+            }
+        }
+
         // --- Xử lý Cập nhật Thông tin khác nếu không có lỗi mật khẩu ---
         if (errorMessage == null) {
             // Cập nhật các trường khác vào đối tượng Model

@@ -133,12 +133,18 @@ public class SteamGameServlet extends HttpServlet {
 
         BaiVietGioiThieu baiVietCauHinh = null;
         BaiVietGioiThieu baiVietGame = null;
+        BaiVietGioiThieu baiVietThongTin = null;
         if (listBaiViet != null) {
             for (BaiVietGioiThieu baiViet : listBaiViet) {
                 if (baiViet.getTieuDeBaiViet() != null
                         && baiViet.getTieuDeBaiViet().trim().equalsIgnoreCase("Cấu hình game:")) {
                     baiVietCauHinh = baiViet;
-                } else if (baiViet.getTieuDeBaiViet() != null && baiVietGame == null) {
+                } 
+                else if (baiViet.getTieuDeBaiViet() != null
+                        && baiViet.getTieuDeBaiViet().trim().equalsIgnoreCase("Thông tin game:")){
+                    baiVietThongTin = baiViet;
+                }
+                else if (baiViet.getTieuDeBaiViet() != null) {
                     baiVietGame = baiViet;
                 }
             }
@@ -149,6 +155,7 @@ public class SteamGameServlet extends HttpServlet {
         request.setAttribute("gameSteam", gameSteam);
         request.setAttribute("baiVietCauHinh", baiVietCauHinh);
         request.setAttribute("baiVietGame", baiVietGame);
+        request.setAttribute("baiVietThongTin", baiVietThongTin);
         request.setAttribute("listSteamDetail", listSteamDetail);
 
         RequestDispatcher rd = request.getRequestDispatcher("/steam_game_detail.jsp");

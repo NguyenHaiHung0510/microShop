@@ -57,18 +57,15 @@
             <p>Chưa có game nào trong danh sách.</p>
         </c:if>
 
-        <!-- Vòng lặp hiển thị 4 game của trang hiện tại -->
         <c:forEach var="gs" items="${listSteam}">
             <div class="product-card">
                 <div class="product-image">
-                    <!-- Click vào ảnh -> sang trang chi tiết -->
                     <a href="${pageContext.request.contextPath}/shop/steam/detail?id=${gs.maGameSteam}">
                         <img src="${pageContext.request.contextPath}/${gs.duongDanAnh}" alt="${gs.tenGame}">
                     </a>
                 </div>
 
                 <div class="product-info">
-                    <!-- Click vào tên -> sang trang chi tiết -->
                     <h4 class="product-title">
                         <a href="${pageContext.request.contextPath}/shop/steam/detail?id=${gs.maGameSteam}">
                             ${gs.tenGame}

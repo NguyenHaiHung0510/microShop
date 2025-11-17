@@ -86,17 +86,30 @@
             </fieldset>
 
             <fieldset class="form-group full-width" style="border: 1px solid #ddd; padding: 15px; border-radius: 8px;">
-                <legend style="font-weight: 500;">Bài Viết 2 (Cấu hình)</legend>
+                <legend style="font-weight: 500;">Bài Viết 2 (Thông tin game)</legend>
                 <input type="hidden" name="maBaiViet2" value="${baiViet2.maBaiViet}">
                 <div class="form-group">
                     <label for="tieuDe2">Tiêu Đề Bài Viết 2</label>
-                    <input type="text" id="tieuDe2" name="tieuDe2" value="${baiViet2.tieuDeBaiViet}" placeholder="Vd: Cấu hình yêu cầu">
+                    <input type="hidden" id="tieuDe2" name="tieuDe2" value="${baiViet2.tieuDeBaiViet}" placeholder="Vd: Thông tin game">
                 </div>
                 <div class="form-group" style="margin-bottom: 0;">
                     <label for="noiDung2">Nội Dung Bài Viết 2</label>
                     <textarea id="noiDung2" name="noiDung2">${baiViet2.noiDung}</textarea>
                 </div>
             </fieldset>
+                
+            <fieldset class="form-group full-width" style="border: 1px solid #ddd; padding: 15px; border-radius: 8px;">
+                <legend style="font-weight: 500;">Bài Viết 3 (Cấu hình)</legend>
+                <input type="hidden" name="maBaiViet3" value="${baiViet3.maBaiViet}">
+                <div class="form-group">
+                    <label for="tieuDe3">Tiêu Đề Bài Viết 3</label>
+                    <input type="hidden" id="tieuDe3" name="tieuDe3" value="${baiViet3.tieuDeBaiViet}" placeholder="Vd: Cấu hình yêu cầu">
+                </div>
+                <div class="form-group" style="margin-bottom: 0;">
+                    <label for="noiDung3">Nội Dung Bài Viết 3</label>
+                    <textarea id="noiDung3" name="noiDung3">${baiViet3.noiDung}</textarea>
+                </div>
+            </fieldset>    
 
             <div class="form-actions">
                 <a href="${pageContext.request.contextPath}/admin/products/steam" class="nav-button">Hủy</a>

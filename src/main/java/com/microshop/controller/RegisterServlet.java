@@ -8,9 +8,10 @@ import java.time.LocalDateTime;
 import com.microshop.dao.NguoiDungDAO;
 import com.microshop.model.NguoiDung;
 import com.microshop.util.PasswordUtils;
+import com.microshop.util.PhoneValidator;
 
-import jakarta.servlet.ServletException; // nếu bạn tách riêng file băm mật khẩu
-import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet; 
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -23,7 +24,6 @@ public class RegisterServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
-        // Hiển thị form đăng ký
         request.getRequestDispatcher("/register.jsp").forward(request, response);
     }
 
@@ -40,11 +40,21 @@ public class RegisterServlet extends HttpServlet {
         String errorMessage = null;
 
         // 1. Kiểm tra mật khẩu
-        if (!password.equals(confirmPassword)) {
+        if (password == null || password.length() < 8) {
+            errorMessage = "Mật khẩu phải có ít nhất 8 ký tự.";
+        } else if (!password.equals(confirmPassword)) {
             errorMessage = "Mật khẩu và xác nhận mật khẩu không khớp.";
         }
 
-        // 2. Kiểm tra username, email và số điện thoại hoặc đã tồn tại chưa
+        // 2. Kiểm tra số điện thoại hợp lệ
+        if (errorMessage == null) {
+            String phoneError = PhoneValidator.validatePhone(sdt);
+            if (phoneError != null) {
+                errorMessage = phoneError;
+            }
+        }
+
+        // 3. Kiểm tra username, email và số điện thoại hoặc đã tồn tại chưa
         if (errorMessage == null) {
             try {
                 if (nguoiDungDAO.getByTenDangNhap(username) != null) {
@@ -59,14 +69,14 @@ public class RegisterServlet extends HttpServlet {
             }
         }
 
-        // 3. Nếu có lỗi -> forward lại register.jsp
+        // 4. Nếu có lỗi -> forward lại register.jsp
         if (errorMessage != null) {
             request.setAttribute("registerError", errorMessage);
             request.getRequestDispatcher("/register.jsp").forward(request, response);
             return;
         }
 
-        // 4. Nếu hợp lệ -> tạo đối tượng NguoiDung và lưu vào DB (email có thể null)
+        // 5. Nếu hợp lệ -> tạo đối tượng NguoiDung và lưu vào DB (email có thể null)
         NguoiDung newUser = new NguoiDung();
         newUser.setTenDangNhap(username);
         newUser.setEmail((email == null || email.isEmpty()) ? null : email); // Để trống
@@ -74,14 +84,24 @@ public class RegisterServlet extends HttpServlet {
         newUser.setMatKhau(PasswordUtils.hashPassword(password)); // TODO: Hash mật khẩu trong thực tế
         newUser.setVaiTro("USER"); // mặc định user
         newUser.setTongTienDaChi(BigDecimal.ZERO);
-        newUser.setMaHangThanhVien(null);
+        newUser.setMaHangThanhVien(1);
         newUser.setThoiGianTao(LocalDateTime.now());
 
         try {
             Integer id = nguoiDungDAO.insert(newUser);
             if (id != null) {
-                // Đăng ký thành công -> redirect về trang login
-                response.sendRedirect(request.getContextPath() + "/login?register=success");
+                // Lấy session để kiểm tra xem có URL gốc (redirect sau đăng nhập) không
+                var session = request.getSession();
+                String redirectUrl = (String) session.getAttribute("redirectAfterLogin");
+                session.removeAttribute("redirectAfterLogin"); // Xóa sau khi dùng
+
+                if (redirectUrl != null && !redirectUrl.contains("/home")) {
+                    // Nếu có trang gốc, quay lại đó và gửi kèm thông báo đăng ký thành công
+                    response.sendRedirect(redirectUrl + (redirectUrl.contains("?") ? "&" : "?") + "registered=success");
+                } else {
+                    // Nếu không có redirect, quay về login như bình thường
+                    response.sendRedirect(request.getContextPath() + "/login?registered=success");
+                }
             } else {
                 request.setAttribute("registerError", "Không thể tạo tài khoản. Vui lòng thử lại.");
                 request.getRequestDispatcher("/register.jsp").forward(request, response);

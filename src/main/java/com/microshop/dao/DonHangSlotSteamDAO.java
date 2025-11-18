@@ -26,14 +26,11 @@ public class DonHangSlotSteamDAO implements CrudDAO<DonHangSlotSteam, Integer> {
         donHang.setMaGameSteam(rs.getObject("MaGameSteam", Integer.class));
         donHang.setMaTaiKhoanSteam(rs.getObject("MaTaiKhoanSteam", Integer.class));
         donHang.setGiaMua(rs.getBigDecimal("GiaMua"));
-
         Timestamp thoiGianMua = rs.getTimestamp("ThoiGianMua");
         if (thoiGianMua != null) {
             donHang.setThoiGianMua(thoiGianMua.toLocalDateTime());
         }
-
         donHang.setTrangThai(rs.getString("TrangThai"));
-
         Timestamp thoiGianTao = rs.getTimestamp("ThoiGianTao");
         if (thoiGianTao != null) {
             donHang.setThoiGianTao(thoiGianTao.toLocalDateTime());
@@ -44,7 +41,7 @@ public class DonHangSlotSteamDAO implements CrudDAO<DonHangSlotSteam, Integer> {
     @Override
     public List<DonHangSlotSteam> getAll() throws SQLException {
         List<DonHangSlotSteam> list = new ArrayList<>();
-        String sql = "SELECT * FROM DONHANG_SLOT_STEAM";
+        String sql = "SELECT * FROM DONHANG_SLOT_STEAM ORDER BY ThoiGianTao DESC";
         try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
                 list.add(mapResultSetToDonHangSlotSteam(rs));
@@ -57,7 +54,6 @@ public class DonHangSlotSteamDAO implements CrudDAO<DonHangSlotSteam, Integer> {
     public DonHangSlotSteam getById(Integer id) throws SQLException {
         String sql = "SELECT * FROM DONHANG_SLOT_STEAM WHERE MaDonHangSlot = ?";
         try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
-
             ps.setObject(1, id);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
@@ -76,21 +72,17 @@ public class DonHangSlotSteamDAO implements CrudDAO<DonHangSlotSteam, Integer> {
             VALUES (?, ?, ?, ?, ?, ?, ?)
             """;
         try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-
             ps.setObject(1, entity.getMaNguoiDung());
             ps.setObject(2, entity.getMaGameSteam());
             ps.setObject(3, entity.getMaTaiKhoanSteam());
             ps.setBigDecimal(4, entity.getGiaMua());
-
             ps.setTimestamp(5, entity.getThoiGianMua() != null ? Timestamp.valueOf(entity.getThoiGianMua()) : null);
             ps.setString(6, entity.getTrangThai());
             ps.setTimestamp(7, entity.getThoiGianTao() != null ? Timestamp.valueOf(entity.getThoiGianTao()) : Timestamp.valueOf(LocalDateTime.now()));
-
             int affectedRows = ps.executeUpdate();
             if (affectedRows == 0) {
                 return null;
             }
-
             try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
                     return generatedKeys.getInt(1);
@@ -109,20 +101,14 @@ public class DonHangSlotSteamDAO implements CrudDAO<DonHangSlotSteam, Integer> {
             WHERE MaDonHangSlot = ?
             """;
         try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
-
             ps.setObject(1, entity.getMaNguoiDung());
             ps.setObject(2, entity.getMaGameSteam());
             ps.setObject(3, entity.getMaTaiKhoanSteam());
             ps.setBigDecimal(4, entity.getGiaMua());
-
             ps.setTimestamp(5, entity.getThoiGianMua() != null ? Timestamp.valueOf(entity.getThoiGianMua()) : null);
-
             ps.setString(6, entity.getTrangThai());
-
             ps.setTimestamp(7, entity.getThoiGianTao() != null ? Timestamp.valueOf(entity.getThoiGianTao()) : null);
-
             ps.setObject(8, entity.getMaDonHangSlot());
-
             return ps.executeUpdate() > 0;
         }
     }
@@ -131,7 +117,6 @@ public class DonHangSlotSteamDAO implements CrudDAO<DonHangSlotSteam, Integer> {
     public boolean delete(Integer id) throws SQLException {
         String sql = "DELETE FROM DONHANG_SLOT_STEAM WHERE MaDonHangSlot = ?";
         try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
-
             ps.setObject(1, id);
             return ps.executeUpdate() > 0;
         }
@@ -141,7 +126,6 @@ public class DonHangSlotSteamDAO implements CrudDAO<DonHangSlotSteam, Integer> {
         List<DonHangSlotSteam> list = new ArrayList<>();
         String sql = "SELECT * FROM DONHANG_SLOT_STEAM WHERE MaNguoiDung = ?";
         try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
-
             ps.setObject(1, maNguoiDung);
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
@@ -156,7 +140,6 @@ public class DonHangSlotSteamDAO implements CrudDAO<DonHangSlotSteam, Integer> {
         List<DonHangSlotSteam> list = new ArrayList<>();
         String sql = "SELECT * FROM DONHANG_SLOT_STEAM WHERE MaTaiKhoanSteam = ?";
         try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
-
             ps.setObject(1, maTaiKhoanSteam);
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
@@ -171,7 +154,6 @@ public class DonHangSlotSteamDAO implements CrudDAO<DonHangSlotSteam, Integer> {
         List<DonHangSlotSteam> list = new ArrayList<>();
         String sql = "SELECT * FROM DONHANG_SLOT_STEAM WHERE MaGameSteam = ?";
         try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
-
             ps.setObject(1, maGameSteam);
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
@@ -185,11 +167,9 @@ public class DonHangSlotSteamDAO implements CrudDAO<DonHangSlotSteam, Integer> {
     public boolean updateTrangThai(Integer maDonHangSlot, String trangThaiMoi, LocalDateTime thoiGianMua) throws SQLException {
         String sql = "UPDATE DONHANG_SLOT_STEAM SET TrangThai = ?, ThoiGianMua = ? WHERE MaDonHangSlot = ?";
         try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
-
             ps.setString(1, trangThaiMoi);
             ps.setTimestamp(2, (thoiGianMua != null ? Timestamp.valueOf(thoiGianMua) : null));
             ps.setObject(3, maDonHangSlot);
-
             return ps.executeUpdate() > 0;
         }
     }
@@ -198,7 +178,6 @@ public class DonHangSlotSteamDAO implements CrudDAO<DonHangSlotSteam, Integer> {
         List<DonHangSlotSteam> list = new ArrayList<>();
         String sql = "SELECT * FROM DONHANG_SLOT_STEAM WHERE TrangThai = ?";
         try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
-
             ps.setString(1, trangThai);
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
@@ -207,5 +186,163 @@ public class DonHangSlotSteamDAO implements CrudDAO<DonHangSlotSteam, Integer> {
             }
         }
         return list;
+    }
+
+    public List<DonHangSlotSteam> getByMaTaiKhoanChoThanhToan(Integer maTaiKhoan) throws SQLException {
+        String sql = "SELECT * FROM DonHang_SLOT_STEAM WHERE MaTaiKhoanSteam = ? AND TrangThai = 'CHO_THANH_TOAN'";
+        List<DonHangSlotSteam> list = new ArrayList<>();
+        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setObject(1, maTaiKhoan);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    list.add(mapResultSetToDonHangSlotSteam(rs));
+                }
+            }
+        }
+        return list;
+    }
+
+    public List<DonHangSlotSteam> getByMaGameSteamChoThanhToan(Integer maGameSteam) throws SQLException {
+        String sql = "SELECT * FROM DonHang_SLOT_STEAM WHERE MaGameSteam = ? AND TrangThai = 'CHO_THANH_TOAN'";
+        List<DonHangSlotSteam> list = new ArrayList<>();
+        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setObject(1, maGameSteam);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    list.add(mapResultSetToDonHangSlotSteam(rs));
+                }
+            }
+        }
+        return list;
+    }
+
+    public List<DonHangSlotSteam> getMaNguoiDungDaHoanThanh(Integer maNguoiDung) throws SQLException {
+        String sql = "SELECT * FROM DonHang_SLOT_STEAM WHERE MaNguoiDung = ? AND TrangThai = 'DA_HOAN_THANH'";
+        List<DonHangSlotSteam> list = new ArrayList<>();
+        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setObject(1, maNguoiDung);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    list.add(mapResultSetToDonHangSlotSteam(rs));
+                }
+            }
+        }
+        return list;
+    }
+
+    public int getTotalCount() throws SQLException {
+        String sql = "SELECT COUNT(*) FROM DONHANG_SLOT_STEAM";
+        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        }
+        return 0;
+    }
+
+    public int getCountByTrangThai(String trangThai) throws SQLException {
+        String sql = "SELECT COUNT(*) FROM DONHANG_SLOT_STEAM WHERE TrangThai = ?";
+        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, trangThai);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1);
+                }
+            }
+        }
+        return 0;
+    }
+
+    public List<DonHangSlotSteam> getAllPaginated(int page, int recordsPerPage) throws SQLException {
+        List<DonHangSlotSteam> list = new ArrayList<>();
+        int offset = (page - 1) * recordsPerPage;
+        String sql = "SELECT * FROM DONHANG_SLOT_STEAM ORDER BY ThoiGianTao DESC LIMIT ? OFFSET ?";
+        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, recordsPerPage);
+            ps.setInt(2, offset);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    list.add(mapResultSetToDonHangSlotSteam(rs));
+                }
+            }
+        }
+        return list;
+    }
+
+    // =========================================================================
+    // HÀM MỚI (SỬA BUG 1 & 2)
+    // =========================================================================
+    /**
+     * HÀM MỚI 1: Insert mới hỗ trợ Transaction
+     */
+    public Integer insert(DonHangSlotSteam entity, Connection conn) throws SQLException {
+        String sql = """
+            INSERT INTO DONHANG_SLOT_STEAM 
+            (MaNguoiDung, MaGameSteam, MaTaiKhoanSteam, GiaMua, ThoiGianMua, TrangThai, ThoiGianTao)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+            """;
+        // KHÔNG dùng try-with-resources cho 'conn' vì nó được quản lý bên ngoài
+        try (PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+
+            ps.setObject(1, entity.getMaNguoiDung());
+            ps.setObject(2, entity.getMaGameSteam());
+            ps.setObject(3, entity.getMaTaiKhoanSteam());
+            ps.setBigDecimal(4, entity.getGiaMua());
+            ps.setTimestamp(5, entity.getThoiGianMua() != null ? Timestamp.valueOf(entity.getThoiGianMua()) : null);
+            ps.setString(6, entity.getTrangThai());
+            ps.setTimestamp(7, entity.getThoiGianTao() != null ? Timestamp.valueOf(entity.getThoiGianTao()) : Timestamp.valueOf(LocalDateTime.now()));
+
+            int affectedRows = ps.executeUpdate();
+            if (affectedRows == 0) {
+                return null;
+            }
+
+            try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    return generatedKeys.getInt(1);
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * HÀM MỚI 2: Lấy đơn hàng (bất kể trạng thái) của 1 user cho 1 game. Dùng
+     * để kiểm tra khi tải lại trang checkout (Sửa Bug 2)
+     */
+    public DonHangSlotSteam getByMaGameVaNguoiDung(Integer maGameSteam, Integer maNguoiDung) throws SQLException {
+        String sql = "SELECT * FROM DONHANG_SLOT_STEAM WHERE MaGameSteam = ? AND MaNguoiDung = ? ORDER BY ThoiGianTao DESC LIMIT 1";
+        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setObject(1, maGameSteam);
+            ps.setObject(2, maNguoiDung);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return mapResultSetToDonHangSlotSteam(rs);
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * HÀM MỚI 3: Lấy đơn hàng ĐANG CHỜ của 1 user cho 1 game. Dùng để kiểm tra
+     * khi bấm "Tiến hành thanh toán" (Sửa Bug 1)
+     */
+    public DonHangSlotSteam getByMaGameVaNguoiDungChoThanhToan(Integer maGameSteam, Integer maNguoiDung) throws SQLException {
+        String sql = "SELECT * FROM DONHANG_SLOT_STEAM WHERE MaGameSteam = ? AND MaNguoiDung = ? AND TrangThai = 'CHO_THANH_TOAN' LIMIT 1";
+        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setObject(1, maGameSteam);
+            ps.setObject(2, maNguoiDung);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return mapResultSetToDonHangSlotSteam(rs);
+                }
+            }
+        }
+        return null;
     }
 }

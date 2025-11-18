@@ -33,7 +33,6 @@
 
 <c:if test="${not empty sessionScope.user}">
     
-    <!-- 🔹 Thêm phần tử hiển thị cảnh báo -->
     <div id="sessionWarningToast" class="session-toast"></div>
 
     <c:set var="sessionTimeoutSeconds" value="${pageContext.session.maxInactiveInterval}" />

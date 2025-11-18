@@ -1,0 +1,8 @@
+TenDangNhap,MatKhau,GiaGoc,GiaBan,TrangThai,DiemNoiBat,DuongDanAnhChinh,HangRank,SoTuong,SoTrangPhuc,BacNgoc,LoaiDangKy,AnhPhu
+lq_thachdau_01,pass123,5000000,3990000,DANG_BAN,"Acc VIP Thách Đấu 100 Sao, 500 Skin",assets/images/lq/acc1_main.png,Thách Đấu,116,500,90,Garena,assets/images/lq/acc1_img1.png
+lq_thachdau_01,,,,,,,,,,,assets/images/lq/acc1_img2.png
+lq_thachdau_01,,,,,,,,,,,assets/images/lq/acc1_img3.png
+lq_thachdau_01,,,,,,,,,,,assets/images/lq/acc1_img4.png
+lq_caothu_02,pass456,1500000,999000,DANG_BAN,"Acc Cao Thủ, 250 Skin, Full Tướng",assets/images/lq/acc2_main.png,Cao Thủ,116,250,90,Facebook,assets/images/lq/acc2_img1.png
+lq_tinhanh_03,pass789,500000,350000,DANG_BAN,"Rank Tinh Anh, 100 Skin, Trắng TT",assets/images/lq/acc3_main.png,Tinh Anh I,110,100,60,Garena,assets/images/lq/acc3_img1.png
+lq_tinhanh_03,,,,,,,,,,,assets/images/lq/acc3_img2.png

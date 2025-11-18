@@ -1,7 +1,10 @@
 package com.microshop.listener;
 
 import com.microshop.dao.DonHangDAO; // Cần thiết để thao tác với đơn hàng
+import com.microshop.dao.DonHangSlotSteamDAO;
+import com.microshop.dao.TaiKhoanSteamDAO;
 import com.microshop.model.DonHang;
+import com.microshop.model.DonHangSlotSteam;
 import jakarta.servlet.annotation.WebListener;
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.HttpSessionEvent;
@@ -20,7 +23,8 @@ public class SessionDestroyListener implements HttpSessionListener {
     
     // Khởi tạo DAO (Nên dùng Singleton Pattern nếu có, nhưng ở đây dùng tạm)
     private final DonHangDAO donHangDAO = new DonHangDAO(); 
-
+    private final DonHangSlotSteamDAO donHangSlotSteamDAO = new DonHangSlotSteamDAO(); 
+    private final TaiKhoanSteamDAO taiKhoanSteamDAO = new TaiKhoanSteamDAO();     
     /**
      * Phương thức này được gọi khi một phiên làm việc (Session) hết hạn hoặc bị hủy (invalidate).
      * @param se HttpSessionEvent chứa Session bị hủy.
@@ -60,9 +64,35 @@ public class SessionDestroyListener implements HttpSessionListener {
                         .log(Level.SEVERE, "Lỗi DB khi hủy đơn hàng #" + listMaDonHang, ex);
             }
         }
-        
+        List<Integer> listMaDonHangSteam = (List<Integer>) session.getAttribute("maDonHangSlotSteamDangXuLy");
+
+        if (listMaDonHangSteam != null && !listMaDonHangSteam.isEmpty()) {
+            try {
+                for(int maDonHang : listMaDonHangSteam){
+                    // xoá những đơn hàng đang chờ thanh toán ra khỏi csdl
+                    DonHangSlotSteam donHang = donHangSlotSteamDAO.getById(maDonHang);
+                    if(donHang.getTrangThai().equals("CHO_THANH_TOAN")){
+                        donHang.setTrangThai("DA_HUY");
+                        // Trừ 1 slot đã tăng tạm thời
+                        boolean success1 = taiKhoanSteamDAO.updateSoSlotDaBan(donHang.getMaTaiKhoanSteam(), -1);
+                        boolean success = donHangSlotSteamDAO.update(donHang);
+                        if (success && success1) {
+                            Logger.getLogger(SessionDestroyListener.class.getName())
+                                    .log(Level.INFO, "Đơn hàng slot steam #{0} đã bị hủy và sản phẩm được giải phóng do Session timeout.", maDonHang);
+                        } else {
+                             Logger.getLogger(SessionDestroyListener.class.getName())
+                                    .log(Level.WARNING, "Không thể hủy đơn hàng slot steam #{0} trong DB.", maDonHang);
+                        }
+                    }
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(SessionDestroyListener.class.getName())
+                        .log(Level.SEVERE, "Lỗi DB khi hủy đơn hàng (Slot Steam) #" + listMaDonHangSteam, ex);
+            }
+        }        
         // Dọn dẹp thuộc tính session sau khi xử lý
         session.removeAttribute("maDonHangDangXuLy");
+        session.removeAttribute("maDonHangSlotSteamDangXuLy");
     }
 
     /**

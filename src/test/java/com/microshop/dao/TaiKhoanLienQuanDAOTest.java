@@ -9,7 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
+// import java.sql.Statement; // Không cần thiết cho các mock này
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -37,7 +37,6 @@ class TaiKhoanLienQuanDAOTest {
     @Mock
     private ResultSet rs;
 
-    // Mock DAO cha, vì đây là một dependency
     @Mock
     private TaiKhoanDAO taiKhoanDAO;
 
@@ -46,7 +45,7 @@ class TaiKhoanLienQuanDAOTest {
 
     private TaiKhoanLienQuan sampleTKLQ;
     private final LocalDateTime timeNow = LocalDateTime.now();
-    private final String sampleAnh = "path/to/lq.jpg"; // THÊM MỚI
+    private final String sampleAnh = "path/to/lq.jpg";
 
     @BeforeEach
     void setUp() {
@@ -58,7 +57,7 @@ class TaiKhoanLienQuanDAOTest {
         sampleTKLQ.setTrangThai("DANG_BAN");
         sampleTKLQ.setLuotXem(50);
         sampleTKLQ.setThoiGianDang(timeNow);
-        sampleTKLQ.setDuongDanAnh(sampleAnh); // THÊM MỚI
+        sampleTKLQ.setDuongDanAnh(sampleAnh);
         // Thuộc tính con
         sampleTKLQ.setTenDangNhap("tklq_user");
         sampleTKLQ.setMatKhau("123456");
@@ -82,7 +81,7 @@ class TaiKhoanLienQuanDAOTest {
         when(rs.getTimestamp("ThoiGianDang")).thenReturn(Timestamp.valueOf(timeNow));
         when(rs.getBigDecimal("GiaGoc")).thenReturn(sampleTKLQ.getGiaGoc());
         when(rs.getString("DiemNoiBat")).thenReturn(sampleTKLQ.getDiemNoiBat());
-        when(rs.getString("DuongDanAnh")).thenReturn(sampleTKLQ.getDuongDanAnh()); // THÊM MỚI
+        when(rs.getString("DuongDanAnh")).thenReturn(sampleTKLQ.getDuongDanAnh());
 
         // Mock phần con (TAIKHOAN_LIENQUAN)
         when(rs.getString("TenDangNhap")).thenReturn(sampleTKLQ.getTenDangNhap());
@@ -110,7 +109,7 @@ class TaiKhoanLienQuanDAOTest {
             assertEquals(1, result.getMaTaiKhoan());
             assertEquals("Cao Thủ", result.getHangRank());
             assertEquals(110, result.getSoTuong());
-            assertEquals(sampleAnh, result.getDuongDanAnh()); // THÊM MỚI: Assert
+            assertEquals(sampleAnh, result.getDuongDanAnh());
             verify(ps).setObject(1, 1);
         }
     }
@@ -129,20 +128,20 @@ class TaiKhoanLienQuanDAOTest {
             assertNotNull(result);
             assertEquals(1, result.size());
             assertEquals("Cao Thủ", result.get(0).getHangRank());
-            assertEquals(sampleAnh, result.get(0).getDuongDanAnh()); // THÊM MỚI: Assert
+            assertEquals(sampleAnh, result.get(0).getDuongDanAnh());
         }
     }
 
     @Test
     void insert_ReturnsGeneratedId() throws SQLException {
-        // ... (Không thay đổi logic, vì taiKhoanDAO đã được mock)
         try (MockedStatic<DBContext> mockedDBContext = Mockito.mockStatic(DBContext.class)) {
-            // 1. Mock DAO cha
-            when(taiKhoanDAO.insert(any(TaiKhoan.class))).thenReturn(99); // Trả về ID mới
 
-            // 2. Mock DAO con
+            // --- SỬA LỖI TEST ---
+            // Dạy Mockito về hàm insert(TaiKhoan, Connection)
+            when(taiKhoanDAO.insert(any(TaiKhoan.class), any(Connection.class))).thenReturn(99);
+
             mockedDBContext.when(DBContext::getConnection).thenReturn(connection);
-            mockDatabaseConnection(); // Không cần keys
+            when(connection.prepareStatement(anyString())).thenReturn(ps); // Mock cho DAO con
             when(ps.executeUpdate()).thenReturn(1);
 
             // Act
@@ -152,8 +151,8 @@ class TaiKhoanLienQuanDAOTest {
             assertNotNull(newId);
             assertEquals(99, newId);
 
-            // Verify DAO cha được gọi
-            verify(taiKhoanDAO).insert(any(TaiKhoan.class));
+            // Verify DAO cha được gọi với Connection
+            verify(taiKhoanDAO).insert(any(TaiKhoan.class), any(Connection.class));
 
             // Verify DAO con được gọi với ID đúng
             verify(ps).setObject(1, 99); // MaTaiKhoan
@@ -164,12 +163,12 @@ class TaiKhoanLienQuanDAOTest {
 
     @Test
     void update_ReturnsTrue() throws SQLException {
-        // ... (Không thay đổi logic, vì taiKhoanDAO đã được mock)
         try (MockedStatic<DBContext> mockedDBContext = Mockito.mockStatic(DBContext.class)) {
-            // 1. Mock DAO cha
-            when(taiKhoanDAO.update(any(TaiKhoan.class))).thenReturn(true);
 
-            // 2. Mock DAO con
+            // --- SỬA LỖI TEST ---
+            // Dạy Mockito về hàm update(TaiKhoan, Connection)
+            when(taiKhoanDAO.update(any(TaiKhoan.class), any(Connection.class))).thenReturn(true);
+
             mockedDBContext.when(DBContext::getConnection).thenReturn(connection);
             mockDatabaseConnection();
             when(ps.executeUpdate()).thenReturn(1);
@@ -181,7 +180,7 @@ class TaiKhoanLienQuanDAOTest {
             assertTrue(success);
 
             // Verify DAO cha được gọi
-            verify(taiKhoanDAO).update(any(TaiKhoan.class));
+            verify(taiKhoanDAO).update(any(TaiKhoan.class), any(Connection.class));
 
             // Verify DAO con được gọi
             verify(ps).setObject(8, 1); // MaTaiKhoan (WHERE)
@@ -191,16 +190,12 @@ class TaiKhoanLienQuanDAOTest {
 
     @Test
     void delete_ReturnsTrue() throws SQLException {
-        // ... (Không thay đổi)
-        // 1. Mock DAO cha
+        // Mock DAO cha (Hàm delete này không cần connection)
         when(taiKhoanDAO.delete(1)).thenReturn(true);
-
         // Act
         boolean success = taiKhoanLienQuanDAO.delete(1);
-
         // Assert
         assertTrue(success);
-
         // Verify CHỈ DAO cha được gọi
         verify(taiKhoanDAO, times(1)).delete(1);
     }
@@ -219,19 +214,15 @@ class TaiKhoanLienQuanDAOTest {
 
             assertNotNull(result);
             assertEquals(1, result.size());
-            assertEquals(sampleAnh, result.get(0).getDuongDanAnh()); // THÊM MỚI: Assert
+            assertEquals(sampleAnh, result.get(0).getDuongDanAnh());
             verify(ps).setString(1, "DANG_BAN");
         }
     }
 
     @Test
     void updateTrangThai_CallsParentDAO() throws SQLException {
-        // ... (Không thay đổi)
-        // Không cần mock DBContext vì hàm này chỉ gọi DAO cha
-
         // Act
         taiKhoanLienQuanDAO.updateTrangThai(1, "DA_BAN");
-
         // Verify
         verify(taiKhoanDAO, times(1)).updateTrangThai(1, "DA_BAN");
     }

@@ -23,7 +23,7 @@ public class TaiKhoanDAO implements CrudDAO<TaiKhoan, Integer> {
         }
         return list;
     }
-    
+
     @Override
     public TaiKhoan getById(Integer id) throws SQLException {
         String sql = "SELECT * FROM TAIKHOAN WHERE MaTaiKhoan = ?";
@@ -42,18 +42,24 @@ public class TaiKhoanDAO implements CrudDAO<TaiKhoan, Integer> {
 
     @Override
     public Integer insert(TaiKhoan newAcc) throws SQLException {
+        try (Connection conn = DBContext.getConnection()) {
+            return insert(newAcc, conn);
+        }
+    }
+
+    public Integer insert(TaiKhoan newAcc, Connection conn) throws SQLException {
         String sql = """
                 INSERT INTO TAIKHOAN (MaDanhMuc, GiaGoc, GiaBan, TrangThai, DiemNoiBat, LuotXem, ThoiGianDang, DuongDanAnh)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?)
                 """;
-        try (Connection conn = DBContext.getConnection(); PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             ps.setObject(1, newAcc.getMaDanhMuc());
             ps.setBigDecimal(2, newAcc.getGiaGoc());
             ps.setBigDecimal(3, newAcc.getGiaBan());
             ps.setString(4, newAcc.getTrangThai());
             ps.setString(5, newAcc.getDiemNoiBat());
-            ps.setObject(6, newAcc.getLuotXem());
+            ps.setObject(6, newAcc.getLuotXem() != null ? newAcc.getLuotXem() : 0);
             ps.setTimestamp(7, Timestamp.valueOf(
                     newAcc.getThoiGianDang() != null ? newAcc.getThoiGianDang() : LocalDateTime.now())
             );
@@ -74,12 +80,18 @@ public class TaiKhoanDAO implements CrudDAO<TaiKhoan, Integer> {
 
     @Override
     public boolean update(TaiKhoan entity) throws SQLException {
+        try (Connection conn = DBContext.getConnection()) {
+            return update(entity, conn);
+        }
+    }
+
+    public boolean update(TaiKhoan entity, Connection conn) throws SQLException {
         String sql = """
                 UPDATE TAIKHOAN
                 SET MaDanhMuc = ?, GiaGoc = ?, GiaBan = ?, TrangThai = ?, DiemNoiBat = ?, LuotXem = ?, ThoiGianDang = ?, DuongDanAnh = ?
                 WHERE MaTaiKhoan = ?
                 """;
-        try (Connection conn = DBContext.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setObject(1, entity.getMaDanhMuc());
             ps.setBigDecimal(2, entity.getGiaGoc());
@@ -97,15 +109,14 @@ public class TaiKhoanDAO implements CrudDAO<TaiKhoan, Integer> {
 
     @Override
     public boolean delete(Integer id) throws SQLException {
+        // CSDL đã có ON DELETE CASCADE, tự động xóa các bảng con (LQ, FF, Riot) và Ảnh
         String sql = "DELETE FROM TAIKHOAN WHERE MaTaiKhoan = ?";
         try (Connection conn = DBContext.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
-
             ps.setObject(1, id);
             return ps.executeUpdate() > 0;
         }
     }
 
-    // ---------------------- Hàm mở rộng riêng ----------------------
     public List<TaiKhoan> getByMaDanhMuc(Integer maDanhMuc) throws SQLException {
         List<TaiKhoan> list = new ArrayList<>();
         String sql = "SELECT * FROM TAIKHOAN WHERE MaDanhMuc = ?";
@@ -136,20 +147,24 @@ public class TaiKhoanDAO implements CrudDAO<TaiKhoan, Integer> {
         }
         return list;
     }
-    
+
     public List<TaiKhoan> getAllByList(List<Integer> maTaiKhoan) throws SQLException {
         List<TaiKhoan> list = new ArrayList<>();
         TaiKhoanLienQuanDAO lqdao = new TaiKhoanLienQuanDAO();
         TaiKhoanFreeFireDAO ffdao = new TaiKhoanFreeFireDAO();
         TaiKhoanRiotDAO rtdao = new TaiKhoanRiotDAO();
-        
-        for(int id : maTaiKhoan){
+
+        for (int id : maTaiKhoan) {
             TaiKhoan x = lqdao.getById(id), y = ffdao.getById(id), z = rtdao.getById(id);
-            if(x != null) list.add(x);
-            else if(y != null) list.add(y);
-            else list.add(z);
+            if (x != null) {
+                list.add(x);
+            } else if (y != null) {
+                list.add(y);
+            } else {
+                list.add(z);
+            }
         }
-        
+
         return list;
     }
 
@@ -184,9 +199,31 @@ public class TaiKhoanDAO implements CrudDAO<TaiKhoan, Integer> {
         return tk;
     }
 
-    // Đã fix các lỗi by Hưng:
-    // Xóa hàm insertAndReturnId, chỉ dùng insert trả về id đã tạo hoặc null
-    // Sửa hết setInt/getInt sang setObject/getObject để xử lý cả null
-    
-    // Cập nhật 02/11/2025: Thêm thuộc tính DuongDanAnh cho TaiKhoan
+    public int getTotalCount() throws SQLException {
+        String sql = "SELECT COUNT(*) FROM TAIKHOAN";
+        try (Connection conn = DBContext.getConnection(); PreparedStatement ps = conn.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        }
+        return 0;
+    }
+
+    public List<TaiKhoan> getAllPaginated(int page, int recordsPerPage) throws SQLException {
+        List<TaiKhoan> list = new ArrayList<>();
+        int offset = (page - 1) * recordsPerPage;
+        // Sắp xếp theo ID mới nhất
+        String sql = "SELECT * FROM TAIKHOAN ORDER BY MaTaiKhoan DESC LIMIT ? OFFSET ?";
+
+        try (Connection conn = DBContext.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, recordsPerPage);
+            ps.setInt(2, offset);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    list.add(mapResultSetToTaiKhoan(rs));
+                }
+            }
+        }
+        return list;
+    }
 }

@@ -1,6 +1,5 @@
 package com.microshop.controller;
 
-import com.microshop.util.PasswordUtils;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -8,6 +7,7 @@ import java.util.logging.Logger;
 
 import com.microshop.dao.NguoiDungDAO;
 import com.microshop.model.NguoiDung;
+import com.microshop.util.PasswordUtils;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -19,18 +19,14 @@ import jakarta.servlet.http.HttpSession;
 @WebServlet(name = "LoginServlet", urlPatterns = {"/login"})
 public class LoginServlet extends HttpServlet {
     
-    // Khởi tạo DAO để truy cập DB (Giả định)
     private final NguoiDungDAO nguoiDungDAO = new NguoiDungDAO();
     
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) 
            throws ServletException, IOException {
         
-        // Hiển thị form đăng nhập
         request.getRequestDispatcher("/login.jsp").forward(request, response);
     }
-    
-    //---------------------------------------------------------
     
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) 
@@ -78,7 +74,20 @@ public class LoginServlet extends HttpServlet {
                 
                 // 3.2. Chuyển hướng đến trang chủ hoặc trang sau đăng nhập
                 // Sử dụng sendRedirect để thay đổi URL trong trình duyệt
-                response.sendRedirect(request.getContextPath() + "/home"); // Giả định có Controller /home
+                String redirectAfterLogin = (String) session.getAttribute("redirectAfterLogin");
+                if (redirectAfterLogin != null) {
+                    session.removeAttribute("redirectAfterLogin"); // Xóa để tránh lặp
+                    // Thêm query param báo thành công
+                    if (redirectAfterLogin.contains("?")) {
+                        redirectAfterLogin += "&login=success";
+                    } else {
+                        redirectAfterLogin += "?login=success";
+                    }
+                    response.sendRedirect(redirectAfterLogin);
+                } else {
+                    response.sendRedirect(request.getContextPath() + "/home"); // Giả định có Controller /home
+                }
+                
                 return;
             }
         

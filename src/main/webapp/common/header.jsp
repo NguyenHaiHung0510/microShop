@@ -1,4 +1,3 @@
-<%-- Đảm bảo dòng này ở đầu tiên để fix lỗi font Tiếng Việt --%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
@@ -36,15 +35,12 @@
 
     <body>
         <header id="mainHeader">
-            <%-- 1. Thanh Top Bar --%>
             <div class="top-bar">
                 <div class="logo">
                     <a href="${pageContext.request.contextPath}/home" class="logo-link">
-                        <img src="${pageContext.request.contextPath}/assets/images/microshop_logo.png" alt="MicroShop Logo">
+                        <img src="${pageContext.request.contextPath}/assets/images/root_images/microshop_logo.png" alt="MicroShop Logo">
                     </a>
                 </div>
-
-                <%-- SỬA: Đã xóa thanh tìm kiếm theo yêu cầu --%>
 
                 <div class="user-actions">
                     <c:if test="${empty sessionScope.user}">
@@ -63,32 +59,30 @@
                 </div>
             </div>
 
-            <%-- 2. Thanh Menu Chính (Màu đỏ) --%>
             <nav class="main-nav">
-                <a href="${pageContext.request.contextPath}/shop/game?category=lienquan">Tài khoản Liên Quân</a>
-                <a href="${pageContext.request.contextPath}/shop/game?category=freefire">Tài khoản Free Fire</a>
-                <a href="${pageContext.request.contextPath}/shop/game?category=riot">Tài khoản LMHT & TFT</a>
-                <a href="${pageContext.request.contextPath}/shop/steam">Dịch vụ Game Steam</a>
-                <a href="${pageContext.request.contextPath}/contact">Liên hệ Admin</a>
+                <a href="${pageContext.request.contextPath}/shop/game?category=lienquan&page=1">Tài khoản Liên Quân</a>
+                <a href="${pageContext.request.contextPath}/shop/game?category=freefire&page=1">Tài khoản Free Fire</a>
+                <a href="${pageContext.request.contextPath}/shop/game?category=riot&page=1">Tài khoản LMHT & TFT</a>
+                <a href="${pageContext.request.contextPath}/shop/steam?page=1">Dịch vụ Game Steam</a>
+                <a href="${pageContext.request.contextPath}/policy">Chính sách bảo hành</a>
             </nav>
         </header>
 
         <main>
-            <%-- Phần thân trang (home.jsp) sẽ được chèn vào đây --%>
+            <script>
+                // --- Hiệu ứng header ẩn khi cuộn xuống, hiện khi cuộn lên ---
+                let lastScrollY = window.scrollY;
+                const header = document.getElementById("mainHeader");
 
-        <script>
-            // --- Hiệu ứng header ẩn khi cuộn xuống, hiện khi cuộn lên ---
-            let lastScrollY = window.scrollY;
-            const header = document.getElementById("mainHeader");
-
-            window.addEventListener("scroll", () => {
-                if (window.scrollY > lastScrollY && window.scrollY > 100) {
-                    // Cuộn xuống -> ẩn header
-                    header.style.top = "-120px";
-                } else {
-                    // Cuộn lên -> hiện lại header
-                    header.style.top = "0";
-                }
-                lastScrollY = window.scrollY;
-            });
-        </script>
+                window.addEventListener("scroll", () => {
+                    if (window.scrollY > lastScrollY && window.scrollY > 100) {
+                        // Cuộn xuống -> ẩn header
+                        header.style.top = "-120px";
+                    } else {
+                        // Cuộn lên -> hiện lại header
+                        header.style.top = "0";
+                    }
+                    lastScrollY = window.scrollY;
+                });
+            </script>
+    </body>

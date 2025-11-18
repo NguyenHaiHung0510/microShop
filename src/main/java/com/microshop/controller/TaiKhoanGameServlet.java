@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
+
 @WebServlet(urlPatterns = {"/shop/game", "/shop/game/detail"})
 public class TaiKhoanGameServlet extends HttpServlet {
 
@@ -18,6 +19,7 @@ public class TaiKhoanGameServlet extends HttpServlet {
     private final TaiKhoanRiotDAO riotDAO = new TaiKhoanRiotDAO();
     private final AnhTaiKhoanDAO anhDAO = new AnhTaiKhoanDAO();
 
+    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -49,8 +51,31 @@ public class TaiKhoanGameServlet extends HttpServlet {
             default -> null;
         };
 
+        int currentPage = 1;
+        int pageSize = 12;
+        
+        String pageParam = request.getParameter("page");
+        
+        try{
+            currentPage = Integer.parseInt(pageParam);
+        }
+        catch (NumberFormatException e) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "ID không hợp lệ");
+            return;
+        }
+        
+        
+        int totalItems = dsTaiKhoan.size();
+        int totalPages = (int) Math.ceil((double) totalItems / pageSize);
+
+        int start = (currentPage - 1) * pageSize;
+        int end = Math.min(start + pageSize, totalItems);
+        List<? extends TaiKhoan> pageList = dsTaiKhoan.subList(start, end);
+        
         request.setAttribute("category", category);
-        request.setAttribute("dsTaiKhoan", dsTaiKhoan);
+        request.setAttribute("currentPage", currentPage);
+        request.setAttribute("totalPages", totalPages);
+        request.setAttribute("dsTaiKhoan", pageList);
 
         RequestDispatcher rd = request.getRequestDispatcher("/taikhoangame.jsp");
         rd.forward(request, response);

@@ -47,7 +47,6 @@ public class HomeServlet extends HttpServlet {
             throws ServletException, IOException {
 
         try {
-
             List<TaiKhoanLienQuan> listLienQuan = taiKhoanLienQuanDAO.getByTrangThai("DANG_BAN");
 
             List<TaiKhoanFreeFire> listFreeFire = taiKhoanFreeFireDAO.getByTrangThai("DANG_BAN");
@@ -66,13 +65,12 @@ public class HomeServlet extends HttpServlet {
             for(TaiKhoanLienQuan x : tmpLienQuan){
                 System.out.println(x);
             }
-            // Đẩy 4 danh sách này ra JSP
+            
             request.setAttribute("listLienQuan", tmpLienQuan);
             request.setAttribute("listFreeFire", tmpFreeFire);
             request.setAttribute("listRiot", tmpRiot);
             request.setAttribute("listSteam", tmpSteam);
 
-            // Forward sang home.jsp
             request.getRequestDispatcher("home.jsp").forward(request, response);
 
         } catch (SQLException e) {

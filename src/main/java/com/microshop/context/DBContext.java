@@ -17,6 +17,8 @@ public class DBContext {
     private static final String username = "Hello";
     private static final String API_KEY = "Hellolsh98fhw983ffah8fh89h389h&**&*";
     private static final String GITHUB_TOKEN = "ghp_1234567890abcdefghijklmnopqrstuvwxyz";
+    private static final String AWS_TOKEN = "ghp_1234567890abcdefghijklmnopqrstuvwxyz82339";
+    
     
     private static HikariDataSource dataSource;
 

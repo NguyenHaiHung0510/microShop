@@ -13,6 +13,9 @@ public class DBContext {
     // Cái này là tài khoản root của MySQL server trên máy của <Hưng>
     private static final String DB_USER = "root";
     private static final String DB_PASSWORD = "hung";
+    private static final String password = "Hello";
+    private static final String username = "Hello";
+    private static final String API_KEY = "Hello";
 
     private static HikariDataSource dataSource;
 

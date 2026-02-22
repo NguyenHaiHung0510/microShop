@@ -1,5 +1,15 @@
 repos:
   - repo: https://github.com/gitleaks/gitleaks
-    rev: v8.18.2
+    rev: v8.30.0
     hooks:
       - id: gitleaks
+      
+  - repo: local
+    hooks:
+      - id: maven-pmd-spotbugs
+        name: Run PMD and SpotBugs Security Checks
+        entry: C:\\Users\\os\\Desktop\\old_prj\\microShop\\mvnw.cmd clean compile pmd:check spotbugs:check
+        language: system
+        types: [java]
+        pass_filenames: false
+        description: Biên dịch code và quét bằng PMD & SpotBugs.

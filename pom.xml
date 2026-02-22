@@ -85,6 +85,55 @@
     <build>
         <plugins>
             <plugin>
+                <!--DevSecOps - PMD-->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-pmd-plugin</artifactId>
+                <version>3.21.2</version> 
+                <configuration>
+                    <!--Audit mode: on = set false-->
+                    
+                    <!--<failOnViolation>true</failOnViolation>--> 
+                    <failOnViolation>false</failOnViolation> 
+                    
+                    <printFailingErrors>true</printFailingErrors>
+                    <rulesets>
+                        <ruleset>/rulesets/java/quickstart.xml</ruleset> 
+                    </rulesets>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!--DevSecOps - SpotBugs-->
+            <plugin>
+                <groupId>com.github.spotbugs</groupId>
+                <artifactId>spotbugs-maven-plugin</artifactId>
+                <version>4.8.3.1</version> 
+                <configuration>
+                    <effort>Max</effort>
+                    <threshold>High</threshold> 
+                    
+                    <!--Audit mode: on = set false-->
+                
+                    <!--<failOnError>true</failOnError>--> 
+                    <failOnError>false</failOnError> 
+                
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.12.1</version>

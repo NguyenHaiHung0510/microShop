@@ -8,9 +8,10 @@ repos:
     hooks:
       - id: maven-pmd-spotbugs
         name: Run PMD and SpotBugs Security Checks
-        entry: C:\\Users\\os\\Desktop\\old_prj\\microShop\\mvnw.cmd clean compile pmd:check spotbugs:check
+#       entry: mvnw.cmd clean compile pmd:check spotbugs:check
+        entry: cmd.exe /c mvnw.cmd clean compile pmd:check spotbugs:check 
         language: system
         types: [java]
         pass_filenames: false
-        verbose: true
+#        verbose: true
         description: Biên dịch code và quét bằng PMD & SpotBugs.

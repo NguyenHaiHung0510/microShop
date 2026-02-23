@@ -8,8 +8,8 @@ echo =========================================================
 :: 0. Kiem tra su ton tai cua Git tren he thong
 git --version >nul 2>&1
 IF %ERRORLEVEL% NEQ 0 (
-    echo [LOI NHIEM VU] Khong tim thay lenh 'git' tren may nay.
-    echo [GIAI PHAP] GitLeaks can Git de doc lich su commit. Vui long cai dat Git for Windows!
+    echo [ERROR] Khong tim thay lenh 'git' tren may nay.
+    echo [INFO] GitLeaks can Git de doc lich su commit. Vui long cai dat Git for Windows!
     pause
     exit /b 1
 )

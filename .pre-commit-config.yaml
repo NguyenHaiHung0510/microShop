@@ -3,7 +3,14 @@ repos:
     rev: v8.30.0
     hooks:
       - id: gitleaks
-      
+        verbose: true # Bắt buộc in log ra màn hình dù Passed
+        args:
+          - --verbose
+          - --report-format=json
+          - --report-path=target/gitleaks-commit-report.json
+#           audit mode off
+#          - --exit-code=0
+
   - repo: local
     hooks:
       - id: maven-pmd-spotbugs

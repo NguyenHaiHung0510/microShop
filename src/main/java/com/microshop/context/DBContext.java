@@ -13,12 +13,7 @@ public class DBContext {
     // Cái này là tài khoản root của MySQL server trên máy của <Hưng>
     private static final String DB_USER = "root";
     private static final String DB_PASSWORD = "hung";
-    private static final String password = "Hello";
-    private static final String username = "Hello";
-    private static final String API_KEY = "Hellolsh98fhw983ffah8fh89h389h&**&*";
-    private static final String GITHUB_TOKEN = "ghp_1234567890abcdefghijklmnopqrstuvwxyz";
-    private static final String AWS_TOKEN = "ghp_1234567890abcdefghijklmnopqrstuvwxyz82339";
-    
+    // Hello
     
     private static HikariDataSource dataSource;
 

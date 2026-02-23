@@ -5,6 +5,15 @@ echo Tools quet toan bo lich su commit su dung GitLeaks
 echo Chiu trach nhiem tool: Nguyen Hai Hung - Hoc vien Cong nghe Buu Chinh Vien Thong
 echo =========================================================
 
+:: 0. Kiem tra su ton tai cua Git tren he thong
+git --version >nul 2>&1
+IF %ERRORLEVEL% NEQ 0 (
+    echo [LOI NHIEM VU] Khong tim thay lenh 'git' tren may nay.
+    echo [GIAI PHAP] GitLeaks can Git de doc lich su commit. Vui long cai dat Git for Windows!
+    pause
+    exit /b 1
+)
+
 :: 1. Goi GitHub API de lay phien ban on dinh moi nhat
 echo [INFO] Dang kiem tra phien ban GitLeaks moi nhat tren GitHub...
 FOR /F "tokens=*" %%v IN ('powershell -Command "(Invoke-RestMethod -Uri 'https://api.github.com/repos/gitleaks/gitleaks/releases/latest').tag_name.TrimStart('v')"') DO SET LATEST_VERSION=%%v

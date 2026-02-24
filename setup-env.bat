@@ -1,9 +1,9 @@
 @echo off
 setlocal EnableDelayedExpansion
-echo =====================================================================
+echo =================================================================================
 echo Tool cai dat moi truong pha 1 (GitLeaks + PMD + SpotBugs)
 echo Chiu trach nhiem tool: Nguyen Hai Hung - Hoc vien Cong nghe Buu Chinh Vien Thong
-echo =====================================================================
+echo =================================================================================
 
 :: 1. Check Git
 git --version >nul 2>&1

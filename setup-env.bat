@@ -2,7 +2,7 @@
 setlocal EnableDelayedExpansion
 echo =================================================================================
 echo Tool cai dat moi truong pha 1 (GitLeaks + PMD + SpotBugs)
-echo Chiu trach nhiem tool: Nguyen Hai Hung - Hoc vien Cong nghe Buu Chinh Vien Thong
+echo Chiu trach nhiem: Nguyen Hai Hung - Hoc vien Cong nghe Buu Chinh Vien Thong
 echo =================================================================================
 
 :: 1. Check Git
@@ -127,6 +127,6 @@ IF EXIST "mvnw.cmd" (
 echo.
 
 echo =================================================================================
-echo                                HOAN TAT!
+echo                         HOAN TAT THIET LAP MOI TRUONG!
 echo =================================================================================
 pause

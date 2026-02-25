@@ -13,7 +13,7 @@ set "WHITE=%ESC%[97m"
 set "RESET=%ESC%[0m"
 
 echo %CYAN%=================================================================================%RESET%
-echo %GREEN%        TOOL CAI DAT MOI TRUONG PHA 1 (GitLeaks + PMD + SpotBugs) %RESET%
+echo %GREEN%        Tool cai dat moi truong pha 1 (GitLeaks + PMD + SpotBugs) %RESET%
 echo %YELLOW%        Chiu trach nhiem: Nguyen Hai Hung - Hoc vien Cong nghe BCVT %RESET%
 echo %CYAN%=================================================================================%RESET%
 echo.
@@ -160,6 +160,6 @@ IF EXIST "mvnw.cmd" (
 echo.
 
 echo %CYAN%=================================================================================%RESET%
-echo %GREEN%                               HOAN TAT THIET LAP! %RESET%
+echo %GREEN%                          HOAN TAT THIET LAP MOI TRUONG! %RESET%
 echo %CYAN%=================================================================================%RESET%
 pause

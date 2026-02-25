@@ -8,7 +8,7 @@ echo ===========================================================================
 :: 1. Check Git
 git --version >nul 2>&1
 IF %ERRORLEVEL% NEQ 0 (
-    echo [ERROR] Khong tim thay 'git'. Vui long cai dat Git for Windows!
+    echo [ERROR] Khong tim thay 'git'. Vui long cai dat 'Git for Windows'!
     pause
     exit /b 1
 ) ELSE (
@@ -49,7 +49,7 @@ java -version >nul 2>&1
 IF %ERRORLEVEL% NEQ 0 (
     echo [WARNING] Khong tim thay 'java' trong PATH. Vui long kiem tra lai!
 ) ELSE (
-    :: Dung bien dem (count) de chi lay dong dau tien thay vi dung GOTO (GOTO trong khoi IF/ELSE de gay loi)
+    :: Dung bien dem (count) de chi lay dong dau tien thay vi dung GOTO 
     set /a j_count=0
     FOR /F "tokens=*" %%v IN ('java -version 2^>^&1') DO (
         IF !j_count! EQU 0 (

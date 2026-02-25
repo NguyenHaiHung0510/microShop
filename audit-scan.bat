@@ -63,12 +63,12 @@ IF %ERRORLEVEL% EQU 0 (
     findstr /C:"Total bugs:" audit-reports\maven-audit.log
 
     echo.
-    echo =====================================================================
+    echo =====================================================================================================
     echo [HUONG DAN BASELINE - TAY TRANG LOI CU]
     echo 1. Gitleaks: Doc 'audit-reports\gitleaks-audit.json', copy cac commit loi vao file '.gitleaksignore'
     echo 2. PMD: Chon loc cac loi nghiem trong de sua, cac loi khac them vao file 'pmd-exclude.xml'
     echo 3. SpotBugs: Tuong tu, tao file 'spotbugs-exclude.xml' de bo qua cac loi hien tai.
-    echo =====================================================================
+    echo =====================================================================================================
 ) ELSE (
     echo.
     echo [TONG KET MAVEN BUILD]

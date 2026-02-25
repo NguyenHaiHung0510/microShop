@@ -69,6 +69,7 @@ IF %ERRORLEVEL% NEQ 0 (
 )
 
 :: 5. Cai dat Pre-commit Hook
+echo [*] Cai dat pre-commit hook
 echo [INFO] Cap nhat pip...
 python -m pip install --upgrade pip >nul 2>&1
 echo [INFO] Cai dat thu vien pre-commit...
@@ -84,6 +85,7 @@ IF %ERRORLEVEL% EQU 0 (
 
 :: 6. Chuan bi cong cu quet thu cong (GitLeaks CLI)
 :: Goi GitHub API de lay phien ban on dinh moi nhat
+echo [*] Cai dat GitLeaks
 FOR /F "tokens=*" %%v IN ('powershell -Command "(Invoke-RestMethod -Uri 'https://api.github.com/repos/gitleaks/gitleaks/releases/latest').tag_name.TrimStart('v')"') DO SET LATEST_VERSION=%%v
 
 set GITLEAKS_EXE=gitleaks.exe
@@ -115,7 +117,7 @@ IF !NEED_DOWNLOAD! EQU 1 (
     )
 )
 
-:: 4. Kiem tra Maven Wrapper
+:: 7. Kiem tra Maven Wrapper
 echo [*] Kiem tra maven
 IF EXIST "mvnw.cmd" (
     echo [INFO] Da phat hien Maven Wrapper 'mvnw.cmd' [OK]

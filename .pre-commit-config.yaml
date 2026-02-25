@@ -20,5 +20,5 @@ repos:
         language: system
         types: [java]
         pass_filenames: false
-        verbose: true
+#        verbose: true
         description: Biên dịch code và quét bằng PMD & SpotBugs.

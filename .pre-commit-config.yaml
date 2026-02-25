@@ -3,22 +3,22 @@ repos:
     rev: v8.30.0
     hooks:
       - id: gitleaks
+        name: Dang chay GitLeaks
         verbose: true # Bắt buộc in log ra màn hình dù Passed
         args:
           - --verbose
           - --report-format=json
           - --report-path=target/gitleaks-commit-report.json
-#           audit mode off
-#          - --exit-code=0
+
 
   - repo: local
     hooks:
       - id: maven-pmd-spotbugs
-        name: Run PMD and SpotBugs Security Checks
+        name: Dang chay PMD va SpotBugs (se mat khoang 15-30s, nghi mat chut nhe 👀️)
 #       entry: mvnw.cmd clean compile pmd:check spotbugs:check
         entry: cmd.exe /c mvnw.cmd clean compile pmd:check spotbugs:check 
         language: system
         types: [java]
         pass_filenames: false
-        verbose: true
+#        verbose: true
         description: Biên dịch code và quét bằng PMD & SpotBugs.

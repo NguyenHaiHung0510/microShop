@@ -67,3 +67,64 @@ IF %ERRORLEVEL% NEQ 0 (
         echo           Vui long kiem tra lai bien moi truong PATH va JAVA_HOME.
     )
 )
+
+:: 5. Cai dat Pre-commit Hook
+echo [INFO] Cap nhat pip...
+python -m pip install --upgrade pip >nul 2>&1
+echo [INFO] Cai dat thu vien pre-commit...
+python -m pip install pre-commit >nul 2>&1
+
+echo [INFO] Tich hop hook vao .git/hooks...
+python -m pre_commit install
+IF %ERRORLEVEL% EQU 0 (
+    echo [INFO] Pre-commit da tich hop thanh cong vao Git luong commit.
+) ELSE (
+    echo [ERROR] Loi khi cai dat pre-commit hook!
+)
+
+:: 6. Chuan bi cong cu quet thu cong (GitLeaks CLI)
+:: Goi GitHub API de lay phien ban on dinh moi nhat
+FOR /F "tokens=*" %%v IN ('powershell -Command "(Invoke-RestMethod -Uri 'https://api.github.com/repos/gitleaks/gitleaks/releases/latest').tag_name.TrimStart('v')"') DO SET LATEST_VERSION=%%v
+
+set GITLEAKS_EXE=gitleaks.exe
+set NEED_DOWNLOAD=1
+
+IF EXIST "%GITLEAKS_EXE%" (
+    FOR /F "tokens=*" %%c IN ('%GITLEAKS_EXE% version') DO SET CURRENT_VERSION=%%c
+    echo !CURRENT_VERSION! | findstr /C:"!LATEST_VERSION!" >nul
+    IF !ERRORLEVEL! EQU 0 (
+        echo [INFO] GitLeaks: v!LATEST_VERSION! [OK]
+        set NEED_DOWNLOAD=0
+    ) ELSE (
+        echo [INFO] Phat hien phien ban moi v!LATEST_VERSION!. Dang tien hanh cap nhat...
+    )
+)
+
+IF !NEED_DOWNLOAD! EQU 1 (
+    echo [INFO] Dang tai GitLeaks v!LATEST_VERSION! tu GitHub...
+    set DOWNLOAD_URL=https://github.com/gitleaks/gitleaks/releases/download/v!LATEST_VERSION!/gitleaks_!LATEST_VERSION!_windows_x64.zip
+    powershell -Command "Invoke-WebRequest -Uri '!DOWNLOAD_URL!' -OutFile 'gitleaks.zip'"
+    
+    IF EXIST "gitleaks.zip" (
+        echo [INFO] Dang giai nen Gitleaks...
+        powershell -Command "Expand-Archive -Path 'gitleaks.zip' -DestinationPath '.' -Force"
+        del gitleaks.zip
+        echo [INFO] Cai dat GitLeaks thanh cong!
+    ) ELSE (
+        echo [ERROR] Tai GitLeaks that bai. Vui long kiem tra mang.
+    )
+)
+
+:: 4. Kiem tra Maven Wrapper
+echo [*] Kiem tra maven
+IF EXIST "mvnw.cmd" (
+    echo [INFO] Da phat hien Maven Wrapper 'mvnw.cmd' [OK]
+) ELSE (
+    echo [WARNING] Khong tim thay mvnw.cmd. Hay dam bao ban co Maven de chay SAST.
+)
+echo.
+
+echo ==========
+echo HOAN TAT!
+echo ==========
+pause

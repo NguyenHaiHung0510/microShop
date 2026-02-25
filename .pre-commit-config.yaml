@@ -3,7 +3,7 @@ repos:
     rev: v8.30.0
     hooks:
       - id: gitleaks
-        name: Dang chay GitLeaks
+        name: Đang chạy công cụ dò quét bí mật GitLeaks
         verbose: true # Bắt buộc in log ra màn hình dù Passed
         args:
           - --verbose
@@ -14,7 +14,7 @@ repos:
   - repo: local
     hooks:
       - id: maven-pmd-spotbugs
-        name: Dang chay PMD va SpotBugs (se mat khoang 15-30s, nghi mat chut nhe 👀️)
+        name: Đang chạy PMD và SpotBugs (tổng quá trình 15-30s, nghỉ mắt chút nhé 👀️)
 #       entry: mvnw.cmd clean compile pmd:check spotbugs:check
         entry: cmd.exe /c mvnw.cmd clean compile pmd:check spotbugs:check 
         language: system

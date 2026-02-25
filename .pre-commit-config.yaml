@@ -14,11 +14,11 @@ repos:
   - repo: local
     hooks:
       - id: maven-pmd-spotbugs
-        name: Đang chạy PMD và SpotBugs (tổng quá trình 15-30s, nghỉ mắt chút nhé 👀️)
+        name: Đang chạy PMD và SpotBugs (thường khoảng 15-30s, nghỉ mắt chút nhé 👀️)
 #       entry: mvnw.cmd clean compile pmd:check spotbugs:check
         entry: cmd.exe /c mvnw.cmd clean compile pmd:check spotbugs:check 
         language: system
         types: [java]
         pass_filenames: false
-#        verbose: true
+        verbose: true
         description: Biên dịch code và quét bằng PMD & SpotBugs.

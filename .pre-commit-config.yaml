@@ -8,7 +8,7 @@ repos:
         args:
           - --verbose
           - --report-format=json
-          - --report-path=target/gitleaks-commit-report.json
+          - --report-path=audit-reports/gitleaks-commit.json
 
 
   - repo: local
@@ -20,5 +20,5 @@ repos:
         language: system
         types: [java]
         pass_filenames: false
-#        verbose: true
+        verbose: false
         description: Biên dịch code và quét bằng PMD & SpotBugs.

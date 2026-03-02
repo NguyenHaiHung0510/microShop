@@ -92,12 +92,17 @@
                 <configuration>
                     <!--Audit mode: on = set false-->
                     
-                    <!--<failOnViolation>true</failOnViolation>--> 
-                    <failOnViolation>false</failOnViolation> 
+                    <failOnViolation>true</failOnViolation> 
+                    <!--<failOnViolation>false</failOnViolation>--> 
                     
+                    <failurePriority>2</failurePriority>
+                    <includeTests>false</includeTests>
                     <printFailingErrors>true</printFailingErrors>
+                    <excludeFromFailureFile>${project.basedir}/exclude/pmd-exclude.properties</excludeFromFailureFile>
+                    
                     <rulesets>
-                        <ruleset>/rulesets/java/quickstart.xml</ruleset> 
+                        <ruleset>category/java/security.xml</ruleset>
+                        <ruleset>category/java/errorprone.xml</ruleset>
                     </rulesets>
                     <targetDirectory>${project.basedir}/audit-reports</targetDirectory>
                 </configuration>

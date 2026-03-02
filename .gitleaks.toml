@@ -2,7 +2,7 @@
 # File này kế thừa toàn bộ các rules mặc định của GitLeaks
 
 [allowlist]
-description = "Danh sach cac vung an toan duoc bo qua khong quet"
+description = "Danh sach cac vung an toan se duoc GitLeaks bo qua"
 
 # 1. Bỏ qua các file hoặc thư mục cụ thể (Dùng regex đường dẫn)
 paths = [

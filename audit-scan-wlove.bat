@@ -59,7 +59,7 @@ echo %WHITE%[*] PMD ^& SpotBugs - full source%RESET%
 echo %CYAN%=================================================================================%RESET%
 echo %CYAN%[INFO]%RESET%  Dang thuc hien quet, qua trinh se mat khoang 15-30s...
 echo %CYAN%[INFO]%RESET%  Let's go grab a coffee!
-call mvnw.cmd clean compile pmd:check spotbugs:check > audit-reports\maven-audit.log 2>&1
+call mvnw.cmd clean compile pmd:check spotbugs:check -P audit-mode > audit-reports\maven-audit.log 2>&1
 
 :: Kiem tra trang thai Build truoc tien (Fail-Fast)
 findstr /C:"BUILD SUCCESS" audit-reports\maven-audit.log >nul
@@ -84,10 +84,8 @@ IF %ERRORLEVEL% EQU 0 (
 
     echo.
     echo %CYAN%=====================================================================================================%RESET%
-    echo %WHITE%[HUONG DAN BASELINE - TAY TRANG LOI CU]%RESET%
-    echo %WHITE%1.%RESET% Gitleaks: Doc '%YELLOW%audit-reports\gitleaks-audit.json%RESET%', copy cac commit loi vao file '%YELLOW%.gitleaksignore%RESET%'
-    echo %WHITE%2.%RESET% PMD: Chon loc cac loi nghiem trong de sua, cac loi khac them vao file '%YELLOW%pmd-exclude.xml%RESET%'
-    echo %WHITE%3.%RESET% SpotBugs: Tuong tu, tao file '%YELLOW%spotbugs-exclude.xml%RESET%' de bo qua cac loi hien tai.
+    echo %GREEN%[AUDIT SCAN THANH CONG]%RESET%
+    echo %WHITE%Tat ca ket qua duoc luu tai thu muc:%RESET% %YELLOW%audit-reports%RESET%
     echo %CYAN%=====================================================================================================%RESET%
 ) ELSE (
     echo.

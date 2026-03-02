@@ -11,6 +11,8 @@ import com.microshop.dao.DonHangSlotSteamDAO;
 // Nghe khi Web bị ngắt và thực hiện thu hồi connection pool an toàn
 @WebListener
 public class DongConnectionPool implements ServletContextListener {
+    // Hello
+    
     
     // Khai báo Timer để quản lý tác vụ nền
     private Timer cleanupTimer;

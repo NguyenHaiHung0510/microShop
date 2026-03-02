@@ -39,7 +39,7 @@ echo =====================================================================
 echo [INFO] Dang thuc hien quet, qua trinh se mat khoang 15-30s...
 echo [INFO] Let's go grab a coffee!
 
-call mvnw.cmd clean compile pmd:check spotbugs:check > audit-reports\maven-audit.log 2>&1
+call mvnw.cmd clean compile pmd:check spotbugs:check -P audit-mode > audit-reports\maven-audit.log 2>&1
 
 :: Kiem tra trang thai Build truoc tien (Fail-Fast)
 findstr /C:"BUILD SUCCESS" audit-reports\maven-audit.log >nul
@@ -64,10 +64,8 @@ IF %ERRORLEVEL% EQU 0 (
 
     echo.
     echo =====================================================================================================
-    echo [HUONG DAN BASELINE - TAY TRANG LOI CU]
-    echo 1. Gitleaks: Doc 'audit-reports\gitleaks-audit.json', copy cac commit loi vao file '.gitleaksignore'
-    echo 2. PMD: Chon loc cac loi nghiem trong de sua, cac loi khac them vao file 'pmd-exclude.xml'
-    echo 3. SpotBugs: Tuong tu, tao file 'spotbugs-exclude.xml' de bo qua cac loi hien tai.
+    echo [AUDIT SCAN THANH CONG]
+    echo Tat ca ket qua duoc luu tai thu muc: audit-reports
     echo =====================================================================================================
 ) ELSE (
     echo.

@@ -24,6 +24,8 @@ public class AuthenticationFilter implements Filter {
 
         Object user = session.getAttribute("user");
 
+        // Hello
+        
         if (user == null) {
             // Lưu lại trang người dùng muốn truy cập (để quay lại sau khi login)
             if (session.getAttribute("redirectAfterLogin") == null) {

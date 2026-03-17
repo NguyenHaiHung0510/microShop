@@ -2,7 +2,6 @@ name: SCA - OWASP Dependency Check
 
 on:
   push:
-    branches: [ "main", "master" ]
 
 jobs:
   analyze:
@@ -25,7 +24,7 @@ jobs:
           out: 'reports'
           args: >
             --failOnCVSS 11
-            --nvdApiKey ${{ secrets.NVD_API_KEY }}
+            --nvdApiKey ${{ secrets.NVD_API_KEY_SON }}
             --enableExperimental
             --enableRetired
             --scan target

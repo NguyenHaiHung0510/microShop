@@ -22,3 +22,4 @@ src/main/java/com/microshop/context/DBContext.java
 
 gitleaks.exe
 /audit-reports
+/__pycache__

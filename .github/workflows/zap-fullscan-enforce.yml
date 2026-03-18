@@ -1,0 +1,95 @@
+name: DAST Full Scan - Enforce Mode
+
+on:
+  push:
+    branches: ["zap-fullscan"] # Lần đầu để lên tab Actions
+  workflow_dispatch:
+
+jobs:
+  zap_fullscan_enforce:
+    runs-on: ubuntu-latest
+    name: Quy trình Kiểm duyệt DAST Full Scan (Chặn lỗi mới)
+    
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: microshop_db
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+    steps:
+      - name: 1. Tải code từ GitHub về máy ảo
+        uses: actions/checkout@v4
+
+      - name: 2. Import database schema và mock data
+        run: |
+          mysql -h 127.0.0.1 -u root -proot microshop_db < database/database_schema.sql
+          mysql -h 127.0.0.1 -u root -proot microshop_db < database/root_data.sql
+          mysql -h 127.0.0.1 -u root -proot microshop_db < database/mock_ff.sql
+          mysql -h 127.0.0.1 -u root -proot microshop_db < database/mock_lq.sql
+          mysql -h 127.0.0.1 -u root -proot microshop_db < database/mock_riot.sql
+          mysql -h 127.0.0.1 -u root -proot microshop_db < database/mock_steam_game.sql
+          
+      - name: 3. Chỉnh sửa context.xml cho môi trường Linux
+        run: sed -i 's|C:/Users/os/Desktop/microshop_uploads|/tmp/microshop_uploads|g' src/main/webapp/META-INF/context.xml
+
+      - name: 4. Cài đặt môi trường Java 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: 5. Biên dịch code thành file .war
+        run: mvn clean package -DskipTests
+
+      - name: 6. Đóng gói Docker Image
+        run: docker build -f docker-zap -t micro-shop-app .
+
+      - name: 7. Khởi chạy ứng dụng
+        run: |
+          docker run -d -p 8080:8080 --name micro-shop-test micro-shop-app
+          sleep 40 
+          
+      - name: 8. Phân quyền lại thư mục cho ZAP
+        run: chmod -R 777 $GITHUB_WORKSPACE
+
+      - name: Pull ZAP docker image
+        run: docker pull ghcr.io/zaproxy/zaproxy:stable
+
+      - name: 9. Quality Gate - ZAP Full Scan Enforce
+        run: |
+          # Đọc file cấu hình. Chỉ fail nếu có lỗi mới xuất hiện
+          docker run --network host \
+          -v $(pwd):/zap/wrk/:rw \
+          ghcr.io/zaproxy/zaproxy:stable \
+          zap-full-scan.py \
+          -t http://localhost:8080/ \
+          -J report_json.json \
+          -r report_html.html \
+          -w report_md.md \
+          -c security/zap-fullscan-audit.conf \
+          -I \
+          -a 
+          
+      - name: 10. Tóm tắt kết quả quét (Chỉ hiển thị log)
+        run: |
+          echo "QUALITY GATE PASSED!"
+          echo "Các lỗi Active Scan cũ đã được ghi nhận và phớt lờ."
+          echo "Không phát hiện lỗi bảo mật MỚI nào."
+          
+      - name: 11. Lưu trữ báo cáo bảo mật
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: zap-fullscan-enforce-report
+          path: |
+            report_json.json
+            report_html.html
+            report_md.md

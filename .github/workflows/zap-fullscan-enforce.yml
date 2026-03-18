@@ -1,8 +1,7 @@
 name: DAST Full Scan - Enforce Mode
 
 on:
-  push:
-    branches: ["zap-fullscan"] # Lần đầu để lên tab Actions
+  pull_request:
   workflow_dispatch:
 
 jobs:

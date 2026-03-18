@@ -2,7 +2,7 @@ name: DAST Baseline Scan - Audit Mode
 
 on:
   push:
-    branches: ["zap-baseline"] #Chạy lần đầu để lên tab Actions
+    branches: ["zap-baseline"] #Chạy lần đầu để lên tab Actions và giữ riêng nhánh này để test
   workflow_dispatch: # Chỉ chạy thủ công để rà soát toàn bộ lỗi
 
 jobs:

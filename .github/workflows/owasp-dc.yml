@@ -2,7 +2,7 @@ name: SCA - OWASP Dependency Check
 
 on:
   push:
-    branches: ["owasp-dc"] #Chạy lần đầu
+  pull_request:
   workflow_dispatch:
 
 jobs:

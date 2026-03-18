@@ -1,0 +1,81 @@
+
+name: Container Build & Trivy Scan
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      enforce_gate:
+        description: "Bật/Tắt quality gate (true = fail nếu có HIGH/CRITICAL fixable)"
+        required: true
+        default: "true"
+
+jobs:
+  build-and-scan:
+    runs-on: ubuntu-latest
+
+    env:
+      IMAGE_NAME: local/tomcat-web
+      IMAGE_TAG: ${{ github.sha }}
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -f docker-trivy -t $IMAGE_NAME:$IMAGE_TAG .
+
+      - name: Install Trivy manually
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y wget gnupg lsb-release apt-transport-https
+          wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | \
+            sudo gpg --dearmor -o /usr/share/keyrings/trivy.gpg
+          echo "deb [signed-by=/usr/share/keyrings/trivy.gpg] https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main" | \
+            sudo tee /etc/apt/sources.list.d/trivy.list
+          sudo apt-get update
+          sudo apt-get install -y trivy
+          trivy --version
+      - name: Trivy scan (table -> file)
+        run: |
+          trivy image \
+            --scanners vuln \
+            --vuln-type os,library \
+            --format table \
+            --output trivy-image-table.txt \
+            --exit-code 0 \
+            $IMAGE_NAME:$IMAGE_TAG
+      - name: Print table to console
+        run: |
+          echo "----- Trivy table output -----"
+          cat trivy-image-table.txt || true
+      - name: Trivy scan (JSON report)
+        run: |
+          trivy image \
+            --scanners vuln \
+            --vuln-type os,library \
+            --format json \
+            --output trivy-image-report.json \
+            --exit-code 0 \
+            $IMAGE_NAME:$IMAGE_TAG
+      - name: Upload Trivy artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: trivy-results
+          path: |
+            trivy-image-table.txt
+            trivy-image-report.json
+          if-no-files-found: warn
+
+      - name: Quality gate (fail on severity if fixable)
+        if: ${{ github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && github.event.inputs.enforce_gate == 'true') }}
+        run: |
+          trivy image \
+            --scanners vuln \
+            --vuln-type os,library \
+            --severity HIGH,CRITICAL \
+            --ignore-unfixed \
+            --exit-code 1 \
+            $IMAGE_NAME:$IMAGE_TAG

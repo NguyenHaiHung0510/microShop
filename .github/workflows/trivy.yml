@@ -1,8 +1,9 @@
+
 name: Container Build & Trivy Scan
 
 on:
   push:
-    branches: ["main", "tho"]
+  pull_request:
   workflow_dispatch:
     inputs:
       enforce_gate:
@@ -36,7 +37,6 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y trivy
           trivy --version
-
       - name: Trivy scan (table -> file)
         run: |
           trivy image \
@@ -46,12 +46,10 @@ jobs:
             --output trivy-image-table.txt \
             --exit-code 0 \
             $IMAGE_NAME:$IMAGE_TAG
-
       - name: Print table to console
         run: |
           echo "----- Trivy table output -----"
           cat trivy-image-table.txt || true
-
       - name: Trivy scan (JSON report)
         run: |
           trivy image \
@@ -61,7 +59,6 @@ jobs:
             --output trivy-image-report.json \
             --exit-code 0 \
             $IMAGE_NAME:$IMAGE_TAG
-
       - name: Upload Trivy artifacts
         if: always()
         uses: actions/upload-artifact@v4

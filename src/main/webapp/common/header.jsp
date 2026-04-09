@@ -66,6 +66,15 @@
                 <a href="${pageContext.request.contextPath}/shop/steam?page=1">Dịch vụ Game Steam</a>
                 <a href="${pageContext.request.contextPath}/policy">Chính sách bảo hành</a>
             </nav>
+
+            <div style="display: none;">
+                <a href="${pageContext.request.contextPath}/demo/a01-idor?id=1">Test IDOR</a>
+                <a href="${pageContext.request.contextPath}/demo/a05-sqli?username=admin">Test SQLi</a>
+                <form action="${pageContext.request.contextPath}/demo/a06-insecure-design" method="POST">
+                    <input type="number" name="total_amount" value="500000">
+                    <button type="submit">Test Design</button>
+                </form>
+            </div>
         </header>
 
         <main>
@@ -73,7 +82,7 @@
                 // --- Hiệu ứng header ẩn khi cuộn xuống, hiện khi cuộn lên ---
                 let lastScrollY = window.scrollY;
                 const header = document.getElementById("mainHeader");
-
+                
                 window.addEventListener("scroll", () => {
                     if (window.scrollY > lastScrollY && window.scrollY > 100) {
                         // Cuộn xuống -> ẩn header
@@ -85,4 +94,6 @@
                     lastScrollY = window.scrollY;
                 });
             </script>
+        </main>
     </body>
+</html>
